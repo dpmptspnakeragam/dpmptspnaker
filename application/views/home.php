@@ -221,43 +221,43 @@
 					Untuk melihat persyaratan atau info tentang Izin yang akan anda buat, silahkan pilih Standar Operasional Prosedur.
 				</p>
 				<div class="row isi-pelayanan text-center">
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#StandarPelayanan" data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>" data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sp.jpg'); ?>" width="100%">
 							Standar Pelayanan
 						</a>
 					</div>
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalPelayanan">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/fpp.png'); ?>" width="100%">Formulir & Persyaratan Perizinan
 						</a>
 					</div>
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="https://sicantik.go.id/sign-in" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sicantik.jpg'); ?>" width="100%">SiCantik
 						</a>
 					</div>
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalTracking">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sicantiktracking.jpg'); ?>" width="100%">Tracking SiCantik
 						</a>
 					</div>
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="https://ui-login.oss.go.id/login" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/oss.jpg'); ?>" width="100%">OSS RBA
 						</a>
 					</div>
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="https://www.lapor.go.id/" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>" width="100%">Lapor.go.id
 						</a>
 					</div>
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="https://simbg.pu.go.id/" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/simbg.png'); ?>" width="100%">SIMBG
 						</a>
 					</div>
-					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
+					<div class="col-lg-4 col-6 display-4 mb-3">
 						<a href="https://simtaru.agamkab.go.id/" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/simtaru.png'); ?>" width="100%">SIMTARU
 						</a>

@@ -4,13 +4,20 @@
  </div>
 
 
- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
- <script src="<?= base_url(); ?>assets/js/jquery-3.5.1.min.js"></script>
- <script src="<?= base_url(); ?>assets/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
- <script src="<?= base_url(); ?>assets/js/bootstrap.bundle.min.js"></script>
- <script src="<?= base_url(); ?>assets/js/jquery.easing.1.3.js"></script>
- <script src="<?= base_url(); ?>assets/js/script.js"></script>
- <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+ <!-- jQuery -->
+ <script src="<?= base_url('assets/'); ?>js/jquery-3.5.1.min.js"></script>
+
+ <!-- Bootstrap & Plugins -->
+ <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+ <script src="<?= base_url('assets/'); ?>js/bootstrap.min.js"></script>
+ <script src="<?= base_url('assets/'); ?>js/jquery.easing.1.3.js"></script>
+
+ <!-- DataTables -->
+ <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+ <!-- Custom Scripts -->
+ <script src="<?= base_url('assets/'); ?>js/script.js"></script>
+
 
  <script>
    $(function() {
@@ -63,9 +70,9 @@
    });
  </script>
 
- <script>
+ <!-- <script>
    var permintaanData = <?= json_encode($permintaan) ?>;
- </script>
+ </script> -->
  </body>
 
  </html>

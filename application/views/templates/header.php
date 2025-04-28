@@ -2,38 +2,40 @@
 <html lang="en" id="home">
 
 <head>
-  <!-- Required meta tags -->
+  <!-- Meta Tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>DPMPTSP Kabupaten Agam</title>
 
-  <!-- Bootstrap CSS -->
-  <link href="<?= base_url(); ?>assets/css/bootstrap.css" media rel="stylesheet">
-  <link href="<?= base_url(); ?>assets/css/bootstrap.min.css" media rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link href="<?= base_url(); ?>assets/css/datatables.min.css" rel="stylesheet" type="text/css">
-  <link href="<?= base_url(); ?>assets/css/style.css" media rel="stylesheet">
-  <link href="<?= base_url(); ?>assets/img/vectoragam.png" rel="shortcut icon">
-  <link href="<?= base_url(); ?>assets/css/wa.css" media rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="<?= base_url('assets/'); ?>img/vectoragam.png">
 
-  <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-  <link href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" media rel="stylesheet" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" type="text/css" media rel="stylesheet">
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
-  <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
 
+  <!-- CSS -->
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/datatables.min.css">
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/style.css">
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/wa.css">
+  <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/style-skm.css">
 
-  <script defer src="<?= base_url(); ?>assets/js/script.js"></script>
-  <script defer src="<?php echo base_url() ?>/assets/js/Chart.js"></script>
+  <!-- JavaScript (defer jika aman) -->
+  <script defer src="<?= base_url('assets/'); ?>js/script.js"></script>
+  <script defer src="<?= base_url('assets/'); ?>js/Chart.js"></script>
+  <script defer src="<?= base_url('assets/'); ?>js/script-skm.js"></script>
+
+  <!-- External JS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
   <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-
-  <link rel="stylesheet" href="<?= base_url('assets/css/style-skm.css'); ?>">
-  <script src="<?= base_url('assets/js/script-skm.js'); ?>"></script>
-
-  <title>DPMPTSP Kabupaten Agam</title>
 </head>
+
 
 <body>
