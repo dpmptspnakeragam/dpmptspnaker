@@ -7,7 +7,7 @@
     <title>Maintenance</title>
 
     <link rel="icon" href="<?= base_url('assets/img/vectoragam.png'); ?>" type="image/png">
-    <link rel="stylesheet" href="<?= base_url('assets/css'); ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/maintenance.css'); ?>">
 </head>
 
 <body>
