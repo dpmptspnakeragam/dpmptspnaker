@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maintenance</title>
 
-    <link rel="icon" href="<?= base_url('assets/img/vectoragam.png'); ?>" type="image/png">
-    <link rel="stylesheet" href="<?= base_url('assets/css/maintenance.css'); ?>">
+    <link rel="shortcut icon" href="assets/img/vectoragam.png">
+    <link rel="stylesheet" href="assets/css/maintenance.css">
 </head>
 
 <body>
