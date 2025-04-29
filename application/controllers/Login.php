@@ -4,6 +4,13 @@ class Login extends CI_controller
     public function __construct()
     {
         parent::__construct();
+
+        $allowed_ips = $this->config->item('allowed_ips');
+        $user_ip = $this->input->ip_address();
+
+        if (!in_array($user_ip, $allowed_ips)) {
+            show_error('Akses ditolak. IP Anda tidak diizinkan mengakses halaman ini.', 403, 'Forbidden');
+        }
     }
 
     public function index()
