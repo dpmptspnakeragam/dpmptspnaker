@@ -292,8 +292,8 @@ define('VIEWPATH', $view_folder . DIRECTORY_SEPARATOR);
  */
 
 // Define whether the site is in maintenance mode
-// define('MAINTENANCE_MODE', true); // ->> kalau ingin melakukan maintenance
-define('MAINTENANCE_MODE', false); // --> kalau ingin tidak maintenance
+define('MAINTENANCE_MODE', true);
+// define('MAINTENANCE_MODE', false);
 
 if (MAINTENANCE_MODE) {
 	// Directly show the maintenance view
