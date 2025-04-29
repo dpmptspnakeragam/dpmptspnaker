@@ -9,7 +9,7 @@ class Login extends CI_controller
         $user_ip = $this->input->ip_address();
 
         if (!in_array($user_ip, $allowed_ips)) {
-            show_error('Akses ditolak. Anda tidak diizinkan mengakses halaman ini.', 403, 'Forbidden');
+            show_error('ERROR 403!!.', 403, 'Forbidden');
         }
     }
 
