@@ -10,10 +10,18 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <?php foreach ($potensi_investasi->result() as $row) {
+                    <?php
+                    $displayed_investments = [];
+                    foreach ($potensi_investasi->result() as $row) {
+                        if (in_array($row->nama_investasi, $displayed_investments)) {
+                            continue;
+                        }
+                        $displayed_investments[] = $row->nama_investasi;
                     ?>
                         <div class="col-lg-4 display-4 mb-1">
-                            <a href="#" class="pilih-investasi-2 text-center" data-toggle="modal" data-target="#ModalDetailPotensiInvestasi<?php echo $row->id_investasi; ?>"><?= $row->nama_investasi; ?></a>
+                            <a href="#" class="pilih-investasi-2 text-center" data-toggle="modal" data-target="#ModalDetailPotensiInvestasi<?php echo md5($row->nama_investasi); ?>">
+                                <?= $row->nama_investasi; ?>
+                            </a>
                         </div>
                     <?php } ?>
                 </div>
