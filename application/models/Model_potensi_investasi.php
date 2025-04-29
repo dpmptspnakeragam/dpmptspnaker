@@ -4,8 +4,9 @@ class Model_potensi_investasi extends CI_model
 {
     public function tampil_data()
     {
-        $this->db->select('*');
+        $this->db->select('id_investasi, nama_investasi, GROUP_CONCAT(gambar) as gambar, GROUP_CONCAT(deskripsi) as deskripsi');
         $this->db->from('potensi_investasi');
+        $this->db->group_by('id_investasi, nama_investasi');
         $query = $this->db->get();
         return $query;
     }
