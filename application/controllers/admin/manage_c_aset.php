@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class manage_c_aset extends CI_controller
+class Manage_c_aset extends CI_controller
 {
     public function __construct()
     {
