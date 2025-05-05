@@ -7,7 +7,7 @@ class Perizinan_risiko extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('login');
+            redirect('home');
         }
     }
 

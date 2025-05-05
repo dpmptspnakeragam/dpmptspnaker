@@ -1,13 +1,13 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Aset extends CI_controller
+class manage_c_aset extends CI_controller
 {
     public function __construct()
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('login');
+            redirect('home');
         }
         $this->load->helper('download');
     }
@@ -42,7 +42,7 @@ class Aset extends CI_controller
 
         if ($foto_brg == '') {
             $this->session->set_flashdata("gagal", "Foto tidak boleh kosong");
-            redirect('admin/aset');
+            redirect('manage-aset');
         } else {
             $nmfile = "Aset-" . $id_aset;
             $config['upload_path'] = './assets/imgupload/';
@@ -96,7 +96,7 @@ class Aset extends CI_controller
         $this->load->model('Model_aset');
         $this->Model_aset->input($data);
         $this->session->set_flashdata("berhasil", "Tambah data <b>$nama_brg</b> berhasil !");
-        redirect('admin/aset');
+        redirect('manage-aset');
     }
 
     public function ubah()
@@ -171,7 +171,7 @@ class Aset extends CI_controller
         $this->load->model('Model_aset');
         $this->Model_aset->update($data, $id_aset);
         $this->session->set_flashdata("berhasil", "Ubah data <b>$nama_brg</b> berhasil !");
-        redirect('admin/aset');
+        redirect('manage-aset');
     }
 
     public function hapus($id)
@@ -186,7 +186,7 @@ class Aset extends CI_controller
         $this->load->model('Model_aset');
         $this->Model_aset->delete($id);
         $this->session->set_flashdata("gagal", "Hapus data <b>$row->nama_brg</b> berhasil !");
-        redirect('admin/aset');
+        redirect('manage-aset');
     }
 
     public function download($qrcode)

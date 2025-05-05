@@ -10,7 +10,7 @@ class Spkp_antikorupsi extends CI_Controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('login');
+            redirect('home');
         }
         $this->load->model('Model_spkp_antikorupsi');
     }

@@ -8,7 +8,7 @@ class Standar_pelayanan extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('login');
+            redirect('home');
         }
         $this->load->model('Model_standar_pelayanan');
         $this->load->library('upload');

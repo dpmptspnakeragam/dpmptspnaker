@@ -7,7 +7,7 @@ class Grafik_skm extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('login');
+            redirect('home');
         }
         $this->load->model('admin/Model_skm_gambar');
         $this->load->library('upload');

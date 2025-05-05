@@ -5,12 +5,12 @@ class Login extends CI_controller
     {
         parent::__construct();
 
-        $allowed_ips = $this->config->item('allowed_ips');
-        $user_ip = $this->input->ip_address();
+        // $allowed_ips = $this->config->item('allowed_ips');
+        // $user_ip = $this->input->ip_address();
 
-        if (!in_array($user_ip, $allowed_ips)) {
-            show_error('Akses ditolak.', 403, 'Forbidden');
-        }
+        // if (!in_array($user_ip, $allowed_ips)) {
+        //     show_error('Akses ditolak.', 403, 'Forbidden');
+        // }
     }
 
     public function index()
@@ -36,7 +36,8 @@ class Login extends CI_controller
                 'password' => $this->input->post('pssword', TRUE)
             );
 
-            $this->load->model('Model_user'); // load model_user
+            $this->load->model('Model_user');
+
             $hasil = $this->Model_user->cek_user($data);
 
             if ($hasil->num_rows() == 1) {
@@ -48,7 +49,7 @@ class Login extends CI_controller
                     $this->session->set_userdata($sess_data);
                 }
                 if ($this->session->userdata('username') == 'agamdpmptspnaker') {
-                    redirect('admin/home');
+                    redirect('welcome');
                 } elseif ($this->session->userdata('username') == 'pengaduan') {
                     redirect('admin/pengaduan');
                 } elseif ($this->session->userdata('username') == 'asetdpmptspagam') {
