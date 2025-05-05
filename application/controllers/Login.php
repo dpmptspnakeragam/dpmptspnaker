@@ -49,7 +49,7 @@ class Login extends CI_controller
                     $this->session->set_userdata($sess_data);
                 }
                 if ($this->session->userdata('username') == 'agamdpmptspnaker') {
-                    redirect('welcome');
+                    redirect('admin/manage_c_home');
                 } elseif ($this->session->userdata('username') == 'pengaduan') {
                     redirect('admin/pengaduan');
                 } elseif ($this->session->userdata('username') == 'asetdpmptspagam') {

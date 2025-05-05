@@ -1,10 +1,10 @@
 <nav class="navbar header-admin navbar-dark p-0 sticky-top flex-md-nowrap shadow">
-    <a class="navbar-brand brand col-sm-3 col-md-2 mr-0" href="<?= base_url(); ?>welcome">
+    <a class="navbar-brand brand col-sm-3 col-md-2 mr-0" href="<?= base_url('admin/manage_c_home'); ?>">
         <img src="<?= base_url(); ?>assets/img/logo_dpmptsp.png" width="75px" alt="Logo Agam">
     </a>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="<?= base_url('logout'); ?>"><i class="fa fa-sign-out-alt"></i> Log Out</a>
+            <a class="nav-link" href="<?= base_url('admin/manage_c_home/logout'); ?>"><i class="fa fa-sign-out-alt"></i> Log Out</a>
         </li>
     </ul>
 </nav>
@@ -16,13 +16,13 @@
                 <ul class="nav flex-column">
                     <?php if ($this->session->userdata('username') != 'pengaduan'): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url(); ?>welcome">
+                            <a class="nav-link" href="<?= base_url('admin/manage_c_home'); ?>">
                                 <span data-feather="home"></span>
                                 Home <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= base_url(); ?>manage-aset">
+                            <a class="nav-link" href="<?= base_url('admin/manage_c_aset'); ?>">
                                 <span data-feather="archive"></span>
                                 Manajemen Aset
                             </a>

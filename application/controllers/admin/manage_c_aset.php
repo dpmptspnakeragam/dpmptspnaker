@@ -42,7 +42,7 @@ class manage_c_aset extends CI_controller
 
         if ($foto_brg == '') {
             $this->session->set_flashdata("gagal", "Foto tidak boleh kosong");
-            redirect('manage-aset');
+            redirect('manage_aset');
         } else {
             $nmfile = "Aset-" . $id_aset;
             $config['upload_path'] = './assets/imgupload/';
@@ -96,7 +96,7 @@ class manage_c_aset extends CI_controller
         $this->load->model('Model_aset');
         $this->Model_aset->input($data);
         $this->session->set_flashdata("berhasil", "Tambah data <b>$nama_brg</b> berhasil !");
-        redirect('manage-aset');
+        redirect('manage_aset');
     }
 
     public function ubah()
@@ -171,7 +171,7 @@ class manage_c_aset extends CI_controller
         $this->load->model('Model_aset');
         $this->Model_aset->update($data, $id_aset);
         $this->session->set_flashdata("berhasil", "Ubah data <b>$nama_brg</b> berhasil !");
-        redirect('manage-aset');
+        redirect('manage_aset');
     }
 
     public function hapus($id)
@@ -186,7 +186,7 @@ class manage_c_aset extends CI_controller
         $this->load->model('Model_aset');
         $this->Model_aset->delete($id);
         $this->session->set_flashdata("gagal", "Hapus data <b>$row->nama_brg</b> berhasil !");
-        redirect('manage-aset');
+        redirect('manage_aset');
     }
 
     public function download($qrcode)
