@@ -445,11 +445,6 @@
 								</div>
 								<small class="text-danger"><?= form_error('materi_pengaduan'); ?></small>
 							</div>
-							<div class="form-group">
-								<label for="file_pengaduan">Upload File (Opsional)</label>
-								<input type="file" name="file_pengaduan" id="file_pengaduan" class="form-control border-0">
-								<small>File Upload Berupa: (<b>jpg</b>, <b>jpeg</b>, <b>png</b>, <b>pdf</b>, <b>docx</b>)</small>
-							</div>
 							<button type="submit" class="btn-survey">
 								Kirim Pengaduan
 								<i class="fa fa-file-import"></i>
