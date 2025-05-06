@@ -21,19 +21,19 @@ class Model_perizinan extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('perizinan', $data);
+        return $this->db->insert('perizinan', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_izin', $id);
-        $this->db->update('perizinan', $data);
+        return $this->db->update('perizinan', $data);
     }
 
     public function delete($id_izin)
     {
         $this->db->where('id_izin', $id_izin);
-        $this->db->delete('perizinan');
+        return $this->db->delete('perizinan');
     }
     //-----Perizinan-----//
 
@@ -48,19 +48,19 @@ class Model_perizinan extends CI_model
 
     public function input_risiko($data)
     {
-        $this->db->insert('perizinan_risiko', $data);
+        return $this->db->insert('perizinan_risiko', $data);
     }
 
     public function update_risiko($data, $id)
     {
         $this->db->where('id_izin', $id);
-        $this->db->update('perizinan_risiko', $data);
+        return $this->db->update('perizinan_risiko', $data);
     }
 
     public function delete_risiko($id_izin)
     {
         $this->db->where('id_izin', $id_izin);
-        $this->db->delete('perizinan_risiko');
+        return $this->db->delete('perizinan_risiko');
     }
     //-----Perizinan_risiko-----//
 }

@@ -5,21 +5,26 @@ class Potensi_investasi extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_potensi_investasi');
     }
 
     public function index()
     {
-        $this->load->model('Model_potensi_investasi');
         $data['potensi_investasi'] = $this->Model_potensi_investasi->tampil_data();
         $data['idmax'] = $this->Model_potensi_investasi->idmax();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/potensi_investasi', $data);
-        $this->load->view('modal/modal_tambah_potensi_investasi', $data);
-        $this->load->view('edit/edit_potensi_investasi', $data);
-        $this->load->view('templates/footer_admin');
+        $data['home'] = 'Home';
+        $data['title'] = 'Potensi Investasi';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/potensi_investasi', $data, FALSE);
+        $this->load->view('modal/modal_tambah_potensi_investasi', $data, FALSE);
+        $this->load->view('edit/edit_potensi_investasi', $data, FALSE);
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
@@ -31,7 +36,7 @@ class Potensi_investasi extends CI_controller
 
         if ($gambar = '') {
         } else {
-            $nmfile = "investasi-" . time();
+            $nmfile = "potensi-investasi-" . time();
             $config['upload_path'] = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
@@ -47,42 +52,66 @@ class Potensi_investasi extends CI_controller
             'deskripsi' => $deskripsi,
             'gambar' => $gambar
         );
-        $this->load->model('Model_potensi_investasi');
-        $this->Model_potensi_investasi->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data <b>$nama_investasi</b> berhasil !");
-        redirect('admin/potensi_investasi');
+
+        $result = $this->Model_potensi_investasi->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Potensi Investasi berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/potensi_investasi', 'refresh');
     }
 
-    public function ubah()
+    public function edit()
     {
         $id_investasi = $this->input->post('id', true);
         $nama_investasi = $this->input->post('nama_investasi', true);
-        $gambar = $_FILES['gambar']['name'];
         $deskripsi = $this->input->post('deskripsi', true);
+        $old_gambar = $this->input->post('old', true);
+        $gambar = $old_gambar; // Default to old image
 
-        if (empty($_FILES['gambar']['name'])) {
-            $gambar = $this->input->post('old', true);
-        } else {
-            $nmfile = "investasi-" . time();
+        // Proses penggantian gambar jika ada file baru
+        if (!empty($_FILES['gambar']['name'])) {
+            $nmfile = "potensi-investasi-" . time();
             $config['upload_path'] = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
 
             $this->load->library('upload', $config);
+
             if ($this->upload->do_upload('gambar')) {
+                // Hapus gambar lama jika ada
+                if (!empty($old_gambar) && file_exists('./assets/imgupload/' . $old_gambar)) {
+                    unlink('./assets/imgupload/' . $old_gambar);
+                }
+
+                // Gunakan nama file gambar baru
                 $gambar = $this->upload->data('file_name');
+            } else {
+                // Jika gagal upload, tetap gunakan gambar lama
+                $this->session->set_flashdata('error', 'Gagal mengunggah gambar baru. Pastikan format file sesuai.');
+                redirect('admin/peluang_investasi', 'refresh');
             }
         }
+
         $data = array(
             'id_investasi' => $id_investasi,
             'nama_investasi' => $nama_investasi,
             'deskripsi' => $deskripsi,
             'gambar' => $gambar
         );
-        $this->load->model('Model_potensi_investasi');
-        $this->Model_potensi_investasi->update($data, $id_investasi);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$nama_investasi</b> berhasil !");
-        redirect('admin/potensi_investasi');
+
+        $result = $this->Model_potensi_investasi->update($data, $id_investasi);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Potensi Investasi berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/potensi_investasi', 'refresh');
     }
 
     public function hapus($id_investasi)
@@ -93,10 +122,15 @@ class Potensi_investasi extends CI_controller
 
         unlink("./assets/imgupload/$row->gambar");
 
-        $this->load->model('Model_potensi_investasi');
-        $this->Model_potensi_investasi->delete($id_investasi);
-        $this->session->set_flashdata("gagal", "Hapus data <b>$row->nama_investasi</b> berhasil !");
 
-        redirect('admin/potensi_investasi');
+        $result = $this->Model_potensi_investasi->delete($id_investasi);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Potensi Investasi berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/potensi_investasi', 'refresh');
     }
 }

@@ -8,8 +8,9 @@ class Standar_pelayanan extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
         $this->load->model('Model_standar_pelayanan');
         $this->load->library('upload');
     }
@@ -18,13 +19,15 @@ class Standar_pelayanan extends CI_controller
     {
         $data['pdf'] = $this->Model_standar_pelayanan->tampil_data();
         $data['idmax'] = $this->Model_standar_pelayanan->idmax();
+        $data['home'] = 'Home';
+        $data['title'] = 'Standar Pelayanan';
 
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/standar_pelayanan', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/standar_pelayanan', $data, FALSE);
+        $this->load->view('templates/admin_footer');
 
-        // load modal tambah dan edit
         $this->load->view('modal/modal_tambah_standar_pelayanan');
         $this->load->view('edit/edit_standar_pelayanan', $data, FALSE);
     }
@@ -48,10 +51,16 @@ class Standar_pelayanan extends CI_controller
                 'title' => $this->input->post('title'),
                 'file_name' => $fileData['file_name']
             ];
-            $this->Model_standar_pelayanan->tambah_data($data);
-            $this->session->set_flashdata('berhasil', 'Data berhasil ditambahkan');
-            redirect('admin/standar_pelayanan');
+
+            $result = $this->Model_standar_pelayanan->tambah_data($data);
+
+            if ($result) {
+                $this->session->set_flashdata('success', 'File Standar Pelayanan berhasil disimpan.');
+            } else {
+                $this->session->set_flashdata('error', 'Penyimpanan file gagal. Silahkan coba lagi.');
+            }
         }
+        redirect('admin/standar_pelayanan', 'refresh');
     }
 
     public function update($id)
@@ -76,13 +85,20 @@ class Standar_pelayanan extends CI_controller
             $data['file_name'] = $fileData['file_name'];
         }
 
-        $this->Model_standar_pelayanan->update_data($id, $data);
-        $this->session->set_flashdata('berhasil', 'Data berhasil diupdate');
-        redirect('admin/standar_pelayanan');
+
+        $result = $this->Model_standar_pelayanan->update_data($id, $data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'File Standar Pelayanan berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui file gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/standar_pelayanan', 'refresh');
     }
 
 
-    public function delete($id)
+    public function hapus($id)
     {
         // Mengambil nama file
         $file = $this->Model_standar_pelayanan->get_by_id($id)->file_name;
@@ -92,10 +108,15 @@ class Standar_pelayanan extends CI_controller
             unlink('./assets/fileupload/' . $file);
         }
 
-        // Menghapus data dari database
-        $this->Model_standar_pelayanan->delete_data($id);
-        $this->session->set_flashdata('berhasil', 'Data berhasil dihapus');
-        redirect('admin/standar_pelayanan');
+        $result = $this->Model_standar_pelayanan->delete_data($id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'File Standar Pelayanan berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan file gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/standar_pelayanan', 'refresh');
     }
 }
 

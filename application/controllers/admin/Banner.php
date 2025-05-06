@@ -5,80 +5,51 @@ class Banner extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_banner');
     }
 
     public function index()
     {
-        $this->load->model('Model_banner');
         $data['banner'] = $this->Model_banner->tampil_data();
         $data['idmax'] = $this->Model_banner->idmax();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/banner', $data);
-        $this->load->view('modal/modal_tambah_banner', $data);
-        $this->load->view('edit/edit_banner', $data);
-        $this->load->view('templates/footer_admin');
+        $data['home'] = 'Home';
+        $data['title'] = 'Banner';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/banner', $data, FALSE);
+        $this->load->view('modal/modal_tambah_banner', $data, FALSE);
+        $this->load->view('edit/edit_banner', $data, FALSE);
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
     {
         $id_banner = $this->input->post('id', true);
         $teks = $this->input->post('teks', true);
-        $gambar = $_FILES['gambar']['name'];
+        $gambar_baru = $_FILES['gambar']['name'];
 
-        if ($gambar = '') {
-        } else {
+        if (!empty($gambar_baru)) {
+            // Generate nama file baru
             $nmfile = "banner-" . time();
             $config['upload_path'] = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
 
             $this->load->library('upload', $config);
+
             if ($this->upload->do_upload('gambar')) {
-                $gambar = $this->upload->data('file_name');
-            }
-        }
-        $data = array(
-            'id_banner' => $id_banner,
-            'teks' => $teks,
-            'gambar' => $gambar
-        );
-        $this->load->model('Model_banner');
-        $this->Model_banner->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data Banner berhasil !");
-        redirect('admin/banner');
-    }
-
-    public function ubah()
-    {
-        $id_banner = $this->input->post('id', true);
-        $teks = $this->input->post('teks', true);
-        $old_image = $this->input->post('old', true);
-
-        // Jika ada gambar baru diunggah
-        if (!empty($_FILES['gambar']['name'])) {
-            $nmfile = "banner-" . time();
-            $config['upload_path'] = './assets/imgupload/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name'] = $nmfile;
-
-            $this->load->library('upload', $config);
-            if ($this->upload->do_upload('gambar')) {
-                // Hapus gambar lama jika ada
-                if ($old_image) {
-                    $path = './assets/imgupload/' . $old_image;
-                    if (file_exists($path)) {
-                        unlink($path); // Menghapus gambar lama dari folder
-                    }
-                }
                 $gambar = $this->upload->data('file_name');
             } else {
-                $gambar = $old_image; // Gunakan gambar lama jika upload gagal
+                $this->session->set_flashdata('error', 'Upload foto gagal: ' . strip_tags($this->upload->display_errors()));
+                redirect('admin/banner', 'refresh');
             }
         } else {
-            $gambar = $old_image; // Gunakan gambar lama jika tidak ada gambar baru
+            $gambar = null; // Default jika tidak ada gambar
         }
 
         $data = array(
@@ -86,10 +57,67 @@ class Banner extends CI_controller
             'teks' => $teks,
             'gambar' => $gambar
         );
-        $this->load->model('Model_banner');
-        $this->Model_banner->update($data, $id_banner);
-        $this->session->set_flashdata("berhasil", "Ubah data Banner berhasil !");
-        redirect('admin/banner');
+
+        $result = $this->Model_banner->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Banner berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/banner', 'refresh');
+    }
+
+    public function edit()
+    {
+        $id_banner = $this->input->post('id_banner', true);
+        $teks = $this->input->post('teks', true);
+        $gambar_baru = $_FILES['gambar']['name'];
+        $gambar_lama = $this->input->post('old', true);
+
+        if (!empty($gambar_baru)) {
+            // Generate nama file baru
+            $nmfile = "banner-" . time();
+            $config['upload_path'] = './assets/imgupload/';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['file_name'] = $nmfile;
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('gambar')) {
+                $upload_data = $this->upload->data();
+                $gambar = $upload_data['file_name']; // Nama file baru
+
+                // Hapus gambar lama jika ada
+                if (!empty($gambar_lama) && file_exists('./assets/imgupload/' . $gambar_lama)) {
+                    unlink('./assets/imgupload/' . $gambar_lama);
+                }
+            } else {
+                $this->session->set_flashdata('error', 'Upload foto gagal: ' . strip_tags($this->upload->display_errors()));
+                redirect('admin/banner', 'refresh');
+            }
+        } else {
+            $gambar = $gambar_lama; // Gunakan gambar lama jika tidak ada upload baru
+        }
+
+        // Data yang akan diupdate
+        $data = array(
+            'id_banner' => $id_banner,
+            'teks' => $teks,
+            'gambar' => $gambar
+        );
+
+        $result = $this->Model_banner->update($data, $id_banner);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Banner berhasil diperbarui.');
+        } else {
+            log_message('error', 'Gagal memperbarui banner: ' . json_encode($data));
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/banner', 'refresh');
     }
 
     public function hapus($id_banner)
@@ -100,10 +128,14 @@ class Banner extends CI_controller
 
         unlink("./assets/imgupload/$row->gambar");
 
-        $this->load->model('Model_banner');
-        $this->Model_banner->delete($id_banner);
-        $this->session->set_flashdata("gagal", "Hapus data Banner berhasil !");
+        $result = $this->Model_banner->delete($id_banner);
 
-        redirect('admin/banner');
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Banner berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/banner', 'refresh');
     }
 }

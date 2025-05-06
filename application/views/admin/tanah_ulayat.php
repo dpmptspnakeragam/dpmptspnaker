@@ -1,56 +1,75 @@
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
 
-    <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tanah Ulayat Untuk Investasi</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="text-center">Tanah Ulayat Untuk Investasi</h3>
-                <hr>
-                <div class="panel-heading">
-                    <?php if ($this->session->flashdata('gagal')) : ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('gagal'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($this->session->flashdata('berhasil')) : ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('berhasil'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#ModalTambahTanahUlayat"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                </div><br>
-                <!-- start: Accordion -->
-                <div class="container">
-                    <div class="row">
-                        <?php
-                        $no = 1;
-                        foreach ($kecamatan->result() as $row) {
-                        ?>
-                            <div class="col-3">
-                                <a href="<?php echo base_url() ?>admin/tanah_ulayat/rincian/<?php echo $row->id_kecamatan; ?>" class="pilih-ulayat mb-2"><?= $row->kecamatan; ?></a>
-                            </div>
-                        <?php } ?>
+            <div class="col-12">
+                <!-- <hr>
+                <h3 class="text-center">Kepala Dinas <br> Dari Masa Ke Masa</h3>
+                <hr> -->
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel <?= $title; ?></h3>
                     </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-block btn-outline-danger" data-toggle="modal" data-target="#ModalTambahTanahUlayat">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+
+                        <hr>
+                        <div class="d-flex mb-3">
+                            <div class="row">
+                                <?php foreach ($kecamatan->result() as $row) : ?>
+                                    <div class="col-lg-3 col-6 mb-3 text-center">
+                                        <form action="<?= base_url('admin/tanah_ulayat/rincian/') ?><?= $row->id_kecamatan; ?>">
+                                            <button class="btn btn-block btn-outline-danger p-3">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                <?= $row->kecamatan; ?>
+                                            </button>
+                                        </form>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+
+                        <!-- <table id="TabelData1" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">Kecamatan</th>
+                                    <th class="text-center align-middle">Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($kecamatan->result() as $row) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $row->kecamatan; ?></td>
+                                        <td class="text-center align-middle">
+                                            <a href="<?= base_url() ?>admin/tanah_ulayat/rincian/<?= $row->id_kecamatan; ?>" class="btn btn-outline-primary">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table> -->
+                    </div>
+                    <!-- /.card-body -->
                 </div>
-                <!--end: Accordion -->
+                <!-- /.card -->
             </div>
+            <!-- /.col -->
         </div>
+        <!-- /.row -->
     </div>
-    </div>
-    </div>
-</main>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

@@ -1,13 +1,14 @@
-<div class="modal fade" id="ModalTambahBanner" tabindex="-1" role="dialog" aria-labelledby="ModalTambahBeritaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="ModalTambahBanner" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-light">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Banner</h5>
-                <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah <?= $title; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form role="form" action="<?= base_url(); ?>admin/banner/tambah" method="post" enctype="multipart/form-data">
+
+            <form role="form" action="<?= base_url('admin/banner/tambah'); ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <?php foreach ($idmax->result() as $row) {
                     ?>
@@ -17,17 +18,17 @@
                         </div>
                     <?php } ?>
                     <div class="form-group">
-                        <label for="tahun">Banner Teks</label>
-                        <textarea id="ckeditor" class="form-control" name="teks" placeholder="Isi Berita"></textarea>
+                        <label for="tahun">Teks</label>
+                        <textarea class="form-control" name="teks" placeholder="Masukan Teks"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="gambar">Banner Gambar</label>
-                        <input type="file" name="gambar" required>
+                        <label for="gambar">Gambar</label><br>
+                        <input type="file" name="gambar">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Simpan</button>
                 </div>
             </form>
         </div>

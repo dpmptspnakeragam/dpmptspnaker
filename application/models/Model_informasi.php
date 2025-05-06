@@ -33,19 +33,19 @@ class Model_informasi extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('berita', $data);
+        return $this->db->insert('berita', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_berita', $id);
-        $this->db->update('berita', $data);
+        return $this->db->update('berita', $data);
     }
 
     public function delete($id_berita)
     {
         $this->db->where('id_berita', $id_berita);
-        $this->db->delete('berita');
+        return $this->db->delete('berita');
     }
 
     public function tampil_berita_pagination($limit, $start)

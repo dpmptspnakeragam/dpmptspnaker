@@ -7,7 +7,7 @@ class Grafik_izin_tahun extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
 
         // load models
@@ -22,16 +22,16 @@ class Grafik_izin_tahun extends CI_controller
             'tahun_fields' => $this->Model_grafik_izin_tahun->tampil_data_tahun()
         ];
 
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/grafik_izin_tahun', $data);
+        $data['home'] = 'Home';
+        $data['title'] = 'Grafik Izin Tahun';
 
-        // load modal
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/grafik_izin_tahun', $data);
         $this->load->view('modal/modal_tambah_grafik_izin_tahun');
         $this->load->view('edit/edit_grafik_izin_tahun', $data);
-        // end of load modal
-
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()

@@ -23,8 +23,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-// Allow IP Address
-// $config['allowed_ips'] = ['::1'];
+// Local
+// $config['base_url'] = "http://localhost/dpmptsp/";
 
 // Deploy
 $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");

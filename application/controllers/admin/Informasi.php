@@ -5,22 +5,27 @@ class Informasi extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_informasi');
     }
 
     public function index()
     {
-        $this->load->model('Model_informasi');
-        $data['berita'] = $this->Model_informasi->tampil_data();
+        $data['informasi'] = $this->Model_informasi->tampil_data();
         $data['idmax'] = $this->Model_informasi->idmax();
         $data['kategori'] = $this->Model_informasi->kategori();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+        $data['home'] = 'Home';
+        $data['title'] = 'Informasi';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/informasi', $data);
-        $this->load->view('modal/modal_tambah_berita', $data);
+        $this->load->view('modal/modal_tambah_informasi', $data);
         $this->load->view('edit/edit_informasi', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
@@ -29,7 +34,7 @@ class Informasi extends CI_controller
         $judul_berita = $this->input->post('judul_berita', true);
         $tgl_berita = $this->input->post('tgl_berita', true);
         $gambar = $_FILES['gambar']['name'];
-        $rangkuman = $this->input->post('rangkuman', true);
+        // $rangkuman = $this->input->post('rangkuman', true);
         $isi_berita = $this->input->post('isi_berita', true);
         $id_kategori = $this->input->post('id_kategori', true);
 
@@ -49,30 +54,35 @@ class Informasi extends CI_controller
             'id_berita' => $id_berita,
             'id_kategori' => $id_kategori,
             'judul_berita' => $judul_berita,
-            'rangkuman' => $rangkuman,
+            'rangkuman' => $judul_berita,
             'isi_berita' => $isi_berita,
             'tgl_berita' => $tgl_berita,
             'gambar' => $gambar
         );
-        $this->load->model('Model_informasi');
-        $this->Model_informasi->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data <b>$judul_berita</b> berhasil !");
-        redirect('admin/informasi');
+
+        $result = $this->Model_informasi->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Informasi berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/informasi', 'refresh');
     }
 
-    public function ubah()
+    public function edit()
     {
         $id_berita = $this->input->post('id', true);
         $judul_berita = $this->input->post('judul_berita', true);
         $tgl_berita = $this->input->post('tgl_berita', true);
-        $gambar = $_FILES['gambar']['name'];
-        $rangkuman = $this->input->post('rangkuman', true);
+        // $rangkuman = $this->input->post('rangkuman', true);
         $isi_berita = $this->input->post('isi_berita', true);
         $id_kategori = $this->input->post('id_kategori', true);
+        $gambar_lama = $this->input->post('old', true); // Gambar lama yang disimpan sebelumnya
 
-        if (empty($_FILES['gambar']['name'])) {
-            $gambar = $this->input->post('old', true);
-        } else {
+        // Periksa apakah ada gambar baru yang diunggah
+        if (!empty($_FILES['gambar']['name'])) {
             $nmfile = "berita-" . time();
             $config['upload_path'] = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
@@ -80,23 +90,43 @@ class Informasi extends CI_controller
 
             $this->load->library('upload', $config);
             if ($this->upload->do_upload('gambar')) {
-                $gambar = $this->upload->data('file_name');
+                $gambar_baru = $this->upload->data('file_name');
+
+                // Hapus gambar lama jika ada gambar baru
+                if (file_exists('./assets/imgupload/' . $gambar_lama) && $gambar_lama != '') {
+                    unlink('./assets/imgupload/' . $gambar_lama);
+                }
+            } else {
+                // Jika upload gagal, tetap gunakan gambar lama
+                $gambar_baru = $gambar_lama;
             }
+        } else {
+            // Jika tidak ada gambar baru, gunakan gambar lama
+            $gambar_baru = $gambar_lama;
         }
+
+        // Data yang akan diperbarui
         $data = array(
-            'id_berita' => $id_berita,
             'id_kategori' => $id_kategori,
             'judul_berita' => $judul_berita,
-            'rangkuman' => $rangkuman,
+            'rangkuman' => $judul_berita,
             'isi_berita' => $isi_berita,
             'tgl_berita' => $tgl_berita,
-            'gambar' => $gambar
+            'gambar' => $gambar_baru
         );
-        $this->load->model('Model_informasi');
-        $this->Model_informasi->update($data, $id_berita);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$judul_berita</b> berhasil !");
-        redirect('admin/informasi');
+
+        // Update data ke database
+        $result = $this->Model_informasi->update($data, $id_berita);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Informasi berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/informasi', 'refresh');
     }
+
 
     public function hapus($id_berita)
     {
@@ -106,10 +136,14 @@ class Informasi extends CI_controller
 
         unlink("./assets/imgupload/$row->gambar");
 
-        $this->load->model('Model_informasi');
-        $this->Model_informasi->delete($id_berita);
-        $this->session->set_flashdata("gagal", "Hapus data <b>$row->judul_berita</b> berhasil !");
+        $result = $this->Model_informasi->delete($id_berita);
 
-        redirect('admin/informasi');
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Informasi berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/informasi', 'refresh');
     }
 }

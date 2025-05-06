@@ -21,19 +21,19 @@ class Model_standar_pelayanan extends CI_Model
 
     public function tambah_data($data)
     {
-        $this->db->insert('standar_pelayanan', $data);
+        return $this->db->insert('standar_pelayanan', $data);
     }
 
     public function update_data($id, $data)
     {
         $this->db->where('id_sp', $id);
-        $this->db->update('standar_pelayanan', $data);
+        return $this->db->update('standar_pelayanan', $data);
     }
 
     public function delete_data($id)
     {
         $this->db->where('id_sp', $id);
-        $this->db->delete('standar_pelayanan');
+        return $this->db->delete('standar_pelayanan');
     }
 
     public function get_by_id($id)

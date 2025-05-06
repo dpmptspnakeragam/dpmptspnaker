@@ -1,14 +1,15 @@
-<div class="modal fade" id="ModalTambahSarpras" tabindex="-1" role="dialog" aria-labelledby="ModalTambahBeritaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="ModalTambahSarpras" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-light">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Sarana & Prasarana</h5>
-                <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah <?= $title; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form role="form" action="<?= base_url(); ?>admin/sarpras/tambah" method="post" enctype="multipart/form-data">
+
+            <form role="form" action="<?= base_url('admin/sarpras/tambah'); ?>" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
                     <?php foreach ($idmax->result() as $row) {
                     ?>
                         <div hidden class="form-group">
@@ -17,18 +18,18 @@
                         </div>
                     <?php } ?>
                     <div class="form-group">
-                        <label for="tahun">Nama Sarana & Prasarana</label>
-                        <input type="teks" class="form-control" name="teks" placeholder="Nama" required>
+                        <label for="tahun">Nama</label>
+                        <input type="teks" class="form-control" name="teks" placeholder="Nama Sarana & Prasarana" required>
                     </div>
                     <div class="form-group">
-                        <label for="gambar">Gambar Sarana & Prasarana</label>
-                        <input type="file" name="gambar">
+                        <label for="gambar">Gambar</label><br>
+                        <input type="file" name="gambar" required>
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Simpan</button>
+                </div>
             </form>
         </div>
     </div>

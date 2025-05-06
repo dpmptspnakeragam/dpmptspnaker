@@ -17,7 +17,7 @@
                                 <div class="card-body shadow bg-light card-kabid">
                                     <img class="shadow img-responsive img-kabid" src="<?= base_url() ?>assets/imgupload/<?= $row->gambar; ?>" alt="<?= $row->nama; ?>">
                                     <p class="display-4 nama-kabid mt-3"><b><?= $row->nama; ?></b></p>
-                                    <p class="ket-kabid">NIP. <?= $row->nip; ?><br><?= $row->golongan; ?><br><b><?= $row->jabatan; ?></b></p>
+                                    <p class="ket-kabid"><?= $row->jenis_nip; ?>. <?= $row->nip; ?><br><?= $row->golongan; ?><br><b><?= $row->jabatan; ?></b></p>
                                 </div>
                             </div>
                         <?php } ?>

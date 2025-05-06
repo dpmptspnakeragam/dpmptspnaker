@@ -7,7 +7,7 @@ class Pengaduan extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
         $this->load->model('Model_pengaduan');
     }
@@ -15,55 +15,47 @@ class Pengaduan extends CI_controller
     public function index()
     {
         $data['pengaduan'] = $this->Model_pengaduan->tampil_data();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/pengaduan', $data);
-        $this->load->view('modal/modal_tambah_pengaduan');
-        $this->load->view('edit/edit_pengaduan', $data);
-        $this->load->view('templates/footer_admin');
+        $data['home'] = 'Home';
+        $data['title'] = 'Pengaduan';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/pengaduan', $data, FALSE);
+        $this->load->view('modal/modal_tambah_pengaduan', $data, FALSE);
+        $this->load->view('edit/edit_pengaduan', $data, FALSE);
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
     {
-        $this->form_validation->set_rules('nama', 'Nama', 'required');
-        $this->form_validation->set_rules('alamat', 'Alamat', 'required');
-        $this->form_validation->set_rules('hp', 'Nomor WhatsApp', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('jenis_pengaduan', 'Jenis Pengaduan', 'required');
-        $this->form_validation->set_rules('lokasi_kejadian', 'Lokasi Kejadian', 'required');
-        $this->form_validation->set_rules('waktu_kejadian', 'Waktu Kejadian', 'required');
-        $this->form_validation->set_rules('status', 'Status Pengaduan', 'required');
-        $this->form_validation->set_rules('materi_pengaduan', 'Uraian Pengaduan', 'required');
+        $input = [
+            'no_pengaduan' => $this->input->post('no_pengaduan'),
+            'nama' => $this->input->post('nama'),
+            'alamat' => $this->input->post('alamat'),
+            'hp' => $this->input->post('hp'),
+            'email' => $this->input->post('email'),
+            'jenis_pengaduan' => $this->input->post('jenis_pengaduan'),
+            'lokasi_kejadian' => $this->input->post('lokasi_kejadian'),
+            'waktu_kejadian' => $this->input->post('waktu_kejadian'),
+            'materi_pengaduan' => $this->input->post('materi_pengaduan'),
+            'status' => $this->input->post('status')
+        ];
 
-        if ($this->form_validation->run() == TRUE) {
+        $data = $this->security->xss_clean($input);
 
-            $no_pengaduan = $this->input->post('no_pengaduan');
+        $result = $this->Model_pengaduan->insert_pengaduan($data);
 
-            $input = [
-                'no_pengaduan' => $no_pengaduan,
-                'nama' => $this->input->post('nama'),
-                'alamat' => $this->input->post('alamat'),
-                'hp' => $this->input->post('hp'),
-                'email' => $this->input->post('email'),
-                'jenis_pengaduan' => $this->input->post('jenis_pengaduan'),
-                'lokasi_kejadian' => $this->input->post('lokasi_kejadian'),
-                'waktu_kejadian' => $this->input->post('waktu_kejadian'),
-                'materi_pengaduan' => $this->input->post('materi_pengaduan'),
-                'status' => $this->input->post('status')
-            ];
-
-            $data = $this->security->xss_clean($input);
-            $this->Model_pengaduan->insert_pengaduan($data);
-
-            $this->session->set_flashdata('berhasil', "Pengaduan berhasil disimpan dengan Nomor <b>$no_pengaduan</b>. Tracking sudah bisa dilakukan, Terimakasih!!");
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Pengaduan berhasil disimpan.');
         } else {
-            $this->session->set_flashdata('gagal', 'Pengaduan gagal disimpan. Perhatikan semua inputan!!');
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
         }
 
-        redirect('admin/pengaduan');
+        redirect('admin/pengaduan', 'refresh');
     }
 
-    public function ubah()
+    public function edit()
     {
         $id = $this->input->post('id', true);
         $no_pengaduan = $this->input->post('no_pengaduan', true);
@@ -90,10 +82,16 @@ class Pengaduan extends CI_controller
             'materi_pengaduan' => $materi_pengaduan,
             'status' => $status
         );
-        $this->load->model('Model_pengaduan');
-        $this->Model_pengaduan->update($data, $id);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$nama</b> berhasil !");
-        redirect('admin/pengaduan');
+
+        $result = $this->Model_pengaduan->update($data, $id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Pengaduan berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/pengaduan', 'refresh');
     }
 
     public function hapus($id)
@@ -102,9 +100,24 @@ class Pengaduan extends CI_controller
         $query = $this->db->get('pengaduan');
         $row = $query->row();
 
-        $this->load->model('Model_pengaduan');
-        $this->Model_pengaduan->delete($id);
-        $this->session->set_flashdata("gagal", "Hapus data <b>$row->nama</b> berhasil !");
-        redirect('admin/pengaduan');
+        if ($row) {
+            $file_path = FCPATH . 'assets/imgupload/' . $row->file_pengaduan;
+
+            if (file_exists($file_path) && is_file($file_path)) {
+                unlink($file_path);
+            }
+
+            $result = $this->Model_pengaduan->delete($id);
+
+            if ($result) {
+                $this->session->set_flashdata('success', 'Data Pengaduan berhasil dihapus.');
+            } else {
+                $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+            }
+        } else {
+            $this->session->set_flashdata("error", "Data ID tidak ditemukan. Silahkan hubungi pengembang.");
+        }
+
+        redirect('admin/pengaduan', 'refresh');
     }
 }

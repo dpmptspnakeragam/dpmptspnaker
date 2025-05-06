@@ -7,21 +7,26 @@ class Regulasi extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_regulasi');
     }
 
     public function index()
     {
-        $this->load->model('Model_regulasi');
+        $data['home'] = 'Home';
+        $data['title'] = 'Regulasi';
         $data['regulasi'] = $this->Model_regulasi->tampil_data();
         $data['idmax'] = $this->Model_regulasi->idmax();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/regulasi', $data);
         $this->load->view('modal/modal_tambah_regulasi');
         $this->load->view('edit/edit_regulasi', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
@@ -64,10 +69,15 @@ class Regulasi extends CI_controller
             'file' => $file
         );
 
-        $this->load->model('Model_regulasi');
-        $this->Model_regulasi->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data <b>$judul</b> berhasil!");
-        redirect('admin/regulasi');
+        $result = $this->Model_regulasi->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Regulasi berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/regulasi', 'refresh');
     }
 
     public function ubah()
@@ -120,10 +130,15 @@ class Regulasi extends CI_controller
             'file' => $file
         );
 
-        $this->load->model('Model_regulasi');
-        $this->Model_regulasi->update($data, $id);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$judul</b> berhasil!");
-        redirect('admin/regulasi');
+        $result = $this->Model_regulasi->update($data, $id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Regulasi berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/regulasi', 'refresh');
     }
 
     public function hapus($id)
@@ -132,11 +147,18 @@ class Regulasi extends CI_controller
         $query = $this->db->get('regulasi');
         $row = $query->row();
 
-        unlink("./assets/fileupload/$row->file");
+        if (!empty($row->file) && file_exists("./assets/fileupload/$row->file")) {
+            unlink("./assets/fileupload/$row->file");
+        }
 
-        $this->load->model('Model_regulasi');
-        $this->Model_regulasi->delete($id);
-        $this->session->set_flashdata("gagal", "Hapus data <b>$row->judul</b> berhasil !");
-        redirect('admin/regulasi');
+        $result = $this->Model_regulasi->delete($id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Regulasi berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/regulasi', 'refresh');
     }
 }

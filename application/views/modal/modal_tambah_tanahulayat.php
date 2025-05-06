@@ -1,53 +1,68 @@
-<div class="modal fade" id="ModalTambahTanahUlayat" tabindex="-1" role="dialog" aria-labelledby="ModalTambahTanahUlayat" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="ModalTambahTanahUlayat" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-light">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Tanah Ulayat Untuk Investasi</h5>
-                <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah <?= $title; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form role="form" action="<?= base_url(); ?>admin/tanah_ulayat/tambah" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label>Kecamatan</label>
-                        <select id="kecamatan" name="kecamatan" class="form-control">
-                            <option value="">Pilih Kecamatan</option>
-                            <?php foreach ($kecamatan->result() as $kec) {
-                            ?>
-                                <option value="<?php echo $kec->id_kecamatan; ?>">
-                                    <?php echo $kec->kecamatan; ?>
-                                </option>
-                            <?php
-                            }
-                            ?>
-                        </select>
+
+            <form role="form" action="<?= base_url('admin/tanah_ulayat/tambah'); ?>" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Kecamatan</label>
+                                <select id="kecamatan" name="kecamatan" class="form-control" required>
+                                    <option value="" selected disabled>Pilih Kecamatan</option>
+                                    <?php foreach ($kecamatan->result() as $kec) {
+                                    ?>
+                                        <option value="<?= $kec->id_kecamatan; ?>">
+                                            <?= $kec->kecamatan; ?>
+                                        </option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="pelatihan">Lokasi</label>
+                                <input type="text" class="form-control" name="lokasi" placeholder="Lokasi Tanah Ulayat" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="pelatihan">Luas</label>
+                                <input type="text" class="form-control" name="luas" placeholder="Luas Tanah Ulayat" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="pelatihan">Status Kepemilikan</label>
+                                <input type="text" class="form-control" name="status" placeholder="Status Kepemilikan Tanah Ulayat" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="pelatihan">Jenis Investasi</label>
+                                <input type="text" class="form-control" name="jenis" placeholder="Jenis Investasi Tanah Ulayat" required>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="pelatihan">Bentuk Kerjasama</label>
+                                <input type="text" class="form-control" name="bentuk" placeholder="Bentuk Kerjasama Investasi Tanah Ulayat" required>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="pelatihan">Lokasi</label>
-                        <input type="text" class="form-control" name="lokasi" placeholder="Lokasi Tanah Ulayat">
-                    </div>
-                    <div class="form-group">
-                        <label for="pelatihan">Luas Tanah</label>
-                        <input type="text" class="form-control" name="luas" placeholder="Luas Tanah Ulayat">
-                    </div>
-                    <div class="form-group">
-                        <label for="pelatihan">Status Kepemilikan</label>
-                        <input type="text" class="form-control" name="status" placeholder="Status Kepemilikan Tanah Ulayat">
-                    </div>
-                    <div class="form-group">
-                        <label for="pelatihan">Jenis Investasi</label>
-                        <input type="text" class="form-control" name="jenis" placeholder="Jenis Investasi Tanah Ulayat">
-                    </div>
-                    <div class="form-group">
-                        <label for="pelatihan">Bentuk Kerjasama</label>
-                        <input type="text" class="form-control" name="bentuk" placeholder="Bentuk Kerjasama Investasi Tanah Ulayat">
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                    <button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Simpan</button>
+                </div>
             </form>
         </div>
     </div>

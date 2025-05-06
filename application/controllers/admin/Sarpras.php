@@ -5,21 +5,26 @@ class Sarpras extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_sarpras');
     }
 
     public function index()
     {
-        $this->load->model('Model_sarpras');
+        $data['home'] = 'Home';
+        $data['title'] = 'Sarana & Prasarana';
         $data['sarpras'] = $this->Model_sarpras->tampil_data();
         $data['idmax'] = $this->Model_sarpras->idmax();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/sarpras', $data);
         $this->load->view('modal/modal_tambah_sarpras', $data);
         $this->load->view('edit/edit_sarpras', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
@@ -45,40 +50,70 @@ class Sarpras extends CI_controller
             'teks' => $teks,
             'gambar' => $gambar
         );
-        $this->load->model('Model_sarpras');
-        $this->Model_sarpras->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data Sarana & Prasarana berhasil !");
-        redirect('admin/sarpras');
+
+        $result = $this->Model_sarpras->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Sarana & Prasarana berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/sarpras', 'refresh');
     }
 
-    public function ubah()
+    public function edit()
     {
         $id_sarpras = $this->input->post('id', true);
         $teks = $this->input->post('teks', true);
-        $gambar = $_FILES['gambar']['name'];
+        $gambar_lama = $this->input->post('old', true);
+        $gambar_baru = $_FILES['gambar']['name'];
 
-        if (empty($_FILES['gambar']['name'])) {
-            $gambar = $this->input->post('old', true);
-        } else {
+        // Cek apakah ada gambar baru yang diunggah
+        if (!empty($gambar_baru)) {
+            // Konfigurasi upload file
             $nmfile = "sarpras-" . time();
             $config['upload_path'] = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
 
             $this->load->library('upload', $config);
+
             if ($this->upload->do_upload('gambar')) {
+                // Hapus gambar lama jika ada
+                if (file_exists('./assets/imgupload/' . $gambar_lama) && $gambar_lama != '') {
+                    unlink('./assets/imgupload/' . $gambar_lama);
+                }
+
+                // Ambil nama file baru
                 $gambar = $this->upload->data('file_name');
+            } else {
+                // Jika upload gagal, gunakan gambar lama
+                $gambar = $gambar_lama;
+                $this->session->set_flashdata('error', 'Upload gambar baru gagal. Menggunakan gambar lama.');
             }
+        } else {
+            // Tidak ada perubahan pada gambar
+            $gambar = $gambar_lama;
         }
+
+        // Siapkan data untuk update
         $data = array(
             'id_sarpras' => $id_sarpras,
             'teks' => $teks,
             'gambar' => $gambar
         );
-        $this->load->model('Model_sarpras');
-        $this->Model_sarpras->update($data, $id_sarpras);
-        $this->session->set_flashdata("berhasil", "Ubah data Sarana & Prasarana berhasil !");
-        redirect('admin/sarpras');
+
+        // Update data ke database
+        $result = $this->Model_sarpras->update($data, $id_sarpras);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Sarana & Prasarana berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/sarpras', 'refresh');
     }
 
     public function hapus($id_sarpras)
@@ -89,10 +124,14 @@ class Sarpras extends CI_controller
 
         unlink("./assets/imgupload/$row->gambar");
 
-        $this->load->model('Model_sarpras');
-        $this->Model_sarpras->delete($id_sarpras);
-        $this->session->set_flashdata("gagal", "Hapus data Sarana & Prasarana berhasil !");
+        $result = $this->Model_sarpras->delete($id_sarpras);
 
-        redirect('admin/sarpras');
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Sarana & Prasarana berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/sarpras', 'refresh');
     }
 }

@@ -20,18 +20,18 @@ class Model_banner extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('banner', $data);
+        return $this->db->insert('banner', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_banner', $id);
-        $this->db->update('banner', $data);
+        return $this->db->update('banner', $data);
     }
 
     public function delete($id_banner)
     {
         $this->db->where('id_banner', $id_banner);
-        $this->db->delete('banner');
+        return $this->db->delete('banner');
     }
 }

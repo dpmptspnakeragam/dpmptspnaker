@@ -29,19 +29,19 @@ class Model_potensi_investasi extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('potensi_investasi', $data);
+        return $this->db->insert('potensi_investasi', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_investasi', $id);
-        $this->db->update('potensi_investasi', $data);
+        return $this->db->update('potensi_investasi', $data);
     }
 
     public function delete($id_investasi)
     {
         $this->db->where('id_investasi', $id_investasi);
-        $this->db->delete('potensi_investasi');
+        return $this->db->delete('potensi_investasi');
     }
 
     public function tampil_investasi_pagination($limit, $start)

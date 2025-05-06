@@ -9,25 +9,53 @@ class Skm extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
         $this->load->model('Model_skm');
     }
 
     public function index()
     {
-        $data['skm'] = $this->Model_skm->get_data_skm();
+        $BulanIni = date('n');
+        $TahunIni = date('Y');
 
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/skm', $data);
-        $this->load->view('templates/footer_admin');
+        // tentukan semester berdasarkan bulan
+        $semester = ($BulanIni >= 1 && $BulanIni <= 6) ? 1 : 2;
+
+        // tentukan range bulan berdasarkan semester
+        if ($semester == 1) {
+            $awalBulan = 1;
+            $akhirBulan = 6;
+            $awalTahun = $TahunIni; // Tahun awal semester 1 adalah tahun saat ini
+            $akhirTahun = $TahunIni;
+        } else {
+            $awalBulan = 7;
+            $akhirBulan = 12;
+            $awalTahun = $TahunIni; // Tahun awal semester 2 adalah tahun saat ini
+            $akhirTahun = $TahunIni;
+        }
+
+        $data['skm'] = $this->Model_skm->get_data_skm($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
+        $data['home'] = 'Home';
+        $data['title'] = 'SKM';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/skm', $data, FALSE);
+        $this->load->view('templates/admin_footer');
     }
 
     public function delete($id_skm)
     {
-        $this->Model_skm->hapus_skm($id_skm);
-        $this->session->set_flashdata('berhasil', 'Data SKM berhasil dihapus.');
+        $result = $this->Model_skm->hapus_data_terkait($id_skm);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data SKM, SPKP, dan SPAK berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
         redirect('admin/skm', 'refresh');
     }
 
@@ -50,5 +78,30 @@ class Skm extends CI_controller
         $dompdf->setPaper('Legal', 'portrait');
         $dompdf->render();
         $dompdf->stream('Survey Kepuasan Masyarakat (' . $id_skm . ').pdf', array('Attachment' => false));
+    }
+
+    public function filter()
+    {
+        $bulan_awal = $this->input->get('bulan_awal') ?? 1;
+        $bulan_akhir = $this->input->get('bulan_akhir') ?? date('n');
+        $tahun = $this->input->get('tahun') ?? date('Y');
+
+        $result = $this->Model_skm->get_filter_data_skm($bulan_awal, $bulan_akhir, $tahun);
+
+        $data = array(
+            'home' => 'Home',
+            'title' => 'SKM',
+            'skm' => $result,
+        );
+
+        if (empty($result)) {
+            $this->session->set_flashdata('warning', 'Filter Data tidak ditemukan.');
+        }
+
+        $this->load->view('templates/admin_header', $data);
+        $this->load->view('templates/admin_navbar', $data);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/skm', $data);
+        $this->load->view('templates/admin_footer');
     }
 }

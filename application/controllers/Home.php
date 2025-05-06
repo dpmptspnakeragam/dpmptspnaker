@@ -13,9 +13,9 @@ class Home extends CI_Controller
 		$this->API = "https://sicantikws.layanan.go.id/api/TemplateData/keluaran/24218.json";
 
 		$this->load->model('Model_informasi');
-		$this->load->model('Model_investasi');
+		$this->load->model('Model_peluang_investasi');
 		$this->load->model('Model_grafik');
-		$this->load->model('Model_runningteks');
+		$this->load->model('Model_running_teks');
 		$this->load->model('Model_banner');
 		$this->load->model('Model_grafik_investasi');
 		$this->load->model('Model_grafik_skm');
@@ -32,6 +32,8 @@ class Home extends CI_Controller
 
 		$this->load->model('Model_standar_pelayanan');
 		$this->load->model('admin/Model_skm_gambar');
+
+		$this->load->model('Model_pesan');
 	}
 
 	public function index()
@@ -86,12 +88,12 @@ class Home extends CI_Controller
 
 			'periode_grafik_oss'	=> $this->Model_grafik_nib->tampil_data_periode(),
 			'banner'				=> $this->Model_banner->tampil_data(),
-			'teks' 					=> $this->Model_runningteks->tampil_data(),
+			'teks' 					=> $this->Model_running_teks->tampil_data(),
 			'grafik' 				=> $this->Model_grafik->tampil_data(),
 			'grafik_investasi' 		=> $this->Model_grafik_investasi->tampil_data(),
 			'grafik_skm'			=> $this->Model_grafik_skm->tampil_data(),
 			'berita' 				=> $this->Model_informasi->informasi(),
-			'investasi' 			=> $this->Model_investasi->tampil_data(),
+			'investasi' 			=> $this->Model_peluang_investasi->tampil_data(),
 			'potensi_investasi' 	=> $this->Model_potensi_investasi->tampil_data(),
 			'kabid' 				=> $this->Model_pegawai->tampil_kabid(),
 			'pegawai' 				=> $this->Model_pegawai->tampil_pegawai(),
@@ -107,6 +109,8 @@ class Home extends CI_Controller
 
 			'pdf' 					=> $this->Model_standar_pelayanan->tampil_data(),
 			'skm_gambar'			=> $this->Model_skm_gambar->tampil_data(),
+
+			'adminonline'			=> $this->Model_pesan->get_online_admins()
 		];
 
 		// $data['grafik_tahun'] = $this->Model_grafik_izin_tahun->tampil_data();
@@ -171,6 +175,26 @@ class Home extends CI_Controller
 			$date = new DateTime();
 			$formatted_date = $date->format('Y-m-d H:i:s');
 
+			// Default file name
+			$file_name = null;
+
+			// Proses upload file jika ada
+			if (!empty($_FILES['file_pengaduan']['name'])) {
+				$config['upload_path']   = './assets/imgupload/';
+				$config['allowed_types'] = 'jpg|jpeg|png|pdf|docx';
+				$config['max_size']      = 22000; // Max 22MB
+				$config['file_name']     = 'PENGADUAN_' . $unique_id . '_' . time();
+
+				$this->load->library('upload', $config);
+
+				if ($this->upload->do_upload('file_pengaduan')) {
+					$file_name = $this->upload->data('file_name');
+				} else {
+					$this->session->set_flashdata('error_pengaduan', $this->upload->display_errors());
+					redirect('#pengaduan');
+				}
+			}
+
 			// Input data
 			$input = [
 				'no_pengaduan' => $unique_id,
@@ -182,10 +206,11 @@ class Home extends CI_Controller
 				'lokasi_kejadian' => $this->input->post('lokasi_kejadian'),
 				'waktu_kejadian' => $formatted_date,
 				'materi_pengaduan' => $this->input->post('materi_pengaduan'),
+				'file_pengaduan' => $file_name,
 				'status' => 'Proses'
 			];
 
-			// Sanitize the input data
+			// Sanitize and save data
 			$data = $this->security->xss_clean($input);
 			$this->Model_pengaduan->insert_pengaduan($data);
 

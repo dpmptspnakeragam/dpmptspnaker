@@ -7,7 +7,7 @@ class Grafik_investasi extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
     }
 
@@ -17,13 +17,18 @@ class Grafik_investasi extends CI_controller
         $data['grafik_investasi'] = $this->Model_grafik_investasi->tampil_data();
         $data['periode_grafik_investasi'] = $this->Model_grafik_investasi->tampil_data_periode();
         $data['idmax'] = $this->Model_grafik_investasi->idmax();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+
+        $data['home'] = 'Home';
+        $data['title'] = 'Grafik Investasi';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/grafik_investasi', $data);
         $this->load->view('modal/modal_tambah_grafik_investasi');
         $this->load->view('edit/edit_grafik_investasi', $data);
         $this->load->view('edit/edit_periode_grafik_investasi', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()

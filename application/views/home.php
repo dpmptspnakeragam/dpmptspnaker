@@ -221,43 +221,43 @@
 					Untuk melihat persyaratan atau info tentang Izin yang akan anda buat, silahkan pilih Standar Operasional Prosedur.
 				</p>
 				<div class="row isi-pelayanan text-center">
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#StandarPelayanan" data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>" data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sp.jpg'); ?>" width="100%">
 							Standar Pelayanan
 						</a>
 					</div>
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalPelayanan">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/fpp.png'); ?>" width="100%">Formulir & Persyaratan Perizinan
 						</a>
 					</div>
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://sicantik.go.id/sign-in" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sicantik.jpg'); ?>" width="100%">SiCantik
 						</a>
 					</div>
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalTracking">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sicantiktracking.jpg'); ?>" width="100%">Tracking SiCantik
 						</a>
 					</div>
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://ui-login.oss.go.id/login" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/oss.jpg'); ?>" width="100%">OSS RBA
 						</a>
 					</div>
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://www.lapor.go.id/" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>" width="100%">Lapor.go.id
 						</a>
 					</div>
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://simbg.pu.go.id/" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/simbg.png'); ?>" width="100%">SIMBG
 						</a>
 					</div>
-					<div class="col-lg-4 col-6 display-4 mb-3">
+					<div class="col col-sm-12 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://simtaru.agamkab.go.id/" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/simtaru.png'); ?>" width="100%">SIMTARU
 						</a>
@@ -338,116 +338,124 @@
 						<p class="h2">Formulir Pengaduan Online DPMPTSP Kab. Agam</p>
 					</div>
 
-					<?= form_open('home/kirim_pengaduan'); ?>
-					<div class="card-body" style="max-height: 65vh; overflow-y: auto;">
+					<form method="post" enctype="multipart/form-data" action="<?= base_url('home/kirim_pengaduan'); ?>">
+						<div class="card-body" style="max-height: 65vh; overflow-y: auto;">
 
-						<?php if ($this->session->flashdata('error_pengaduan')) : ?>
-							<div class="alert alert-danger alert-dismissible fade show persistent-alert" role="alert" data-alert-key="error_pengaduan">
-								<?= $this->session->flashdata('error_pengaduan'); ?>
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						<?php endif; ?>
+							<?php if ($this->session->flashdata('error_pengaduan')) : ?>
+								<div class="alert alert-danger alert-dismissible fade show persistent-alert" role="alert" data-alert-key="error_pengaduan">
+									<?= $this->session->flashdata('error_pengaduan'); ?>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							<?php endif; ?>
 
-						<?php if ($this->session->flashdata('berhasil_pengaduan')) : ?>
-							<div class="alert alert-success alert-dismissible fade show persistent-alert" role="alert" data-alert-key="berhasil_pengaduan">
-								<?= $this->session->flashdata('berhasil_pengaduan'); ?>
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-						<?php endif; ?>
+							<?php if ($this->session->flashdata('berhasil_pengaduan')) : ?>
+								<div class="alert alert-success alert-dismissible fade show persistent-alert" role="alert" data-alert-key="berhasil_pengaduan">
+									<?= $this->session->flashdata('berhasil_pengaduan'); ?>
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							<?php endif; ?>
 
-						<!-- Hapus Alert dengan klik tombol x (Close) -->
-						<script>
-							document.addEventListener('DOMContentLoaded', function() {
-								var alerts = document.querySelectorAll('.alert.persistent-alert');
+							<!-- Hapus Alert dengan klik tombol x (Close) -->
+							<script>
+								document.addEventListener('DOMContentLoaded', function() {
+									var alerts = document.querySelectorAll('.alert.persistent-alert');
 
-								alerts.forEach(function(alert) {
-									alert.querySelector('.close').addEventListener('click', function() {
-										var alertKey = alert.getAttribute('data-alert-key');
+									alerts.forEach(function(alert) {
+										alert.querySelector('.close').addEventListener('click', function() {
+											var alertKey = alert.getAttribute('data-alert-key');
 
-										// Use AJAX to clear the flashdata
-										var xhr = new XMLHttpRequest();
-										xhr.open('POST', '<?= base_url('Home/clear_flashdata'); ?>', true);
-										xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-										xhr.send('alert_key=' + alertKey);
+											// Use AJAX to clear the flashdata
+											var xhr = new XMLHttpRequest();
+											xhr.open('POST', '<?= base_url('Home/clear_flashdata'); ?>', true);
+											xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+											xhr.send('alert_key=' + alertKey);
+										});
 									});
 								});
-							});
-						</script>
+							</script>
 
-						<div class="form-group">
-							<label for="nama">Nama</label>
-							<div class="input-group">
-								<input name="nama" type="text" class="form-control" placeholder="Masukan Nama" value="<?= set_value('nama'); ?>" required>
-								<div class="input-group-append">
-									<div class="input-group-text">
-										<span class="fas fa-user-tag"></span>
+							<div class="form-group">
+								<label for="nama">Nama</label>
+								<div class="input-group">
+									<input name="nama" type="text" class="form-control" placeholder="Masukan Nama" value="<?= set_value('nama'); ?>" required>
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fas fa-user-tag"></span>
+										</div>
 									</div>
 								</div>
+								<small class="text-danger"><?= form_error('nama'); ?></small>
 							</div>
-							<small class="text-danger"><?= form_error('nama'); ?></small>
-						</div>
-						<div class="form-group">
-							<label for="alamat">Alamat</label>
-							<div class="input-group">
-								<input name="alamat" type="text" class="form-control" placeholder="Masukan Alamat" value="<?= set_value('alamat'); ?>" required>
-								<div class="input-group-append">
-									<div class="input-group-text">
-										<span class="fas fa-map-marker"></span>
+							<div class="form-group">
+								<label for="alamat">Alamat</label>
+								<div class="input-group">
+									<input name="alamat" type="text" class="form-control" placeholder="Masukan Alamat" value="<?= set_value('alamat'); ?>" required>
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fas fa-map-marker"></span>
+										</div>
 									</div>
 								</div>
+								<small class="text-danger"><?= form_error('alamat'); ?></small>
 							</div>
-							<small class="text-danger"><?= form_error('alamat'); ?></small>
-						</div>
-						<div class="form-group">
-							<label for="hp">Nomor WhatsApp</label>
-							<div class="input-group">
-								<input name="hp" type="number" class="form-control" placeholder="Masukan Nomor Whatsapp" value="<?= set_value('hp'); ?>" required>
-								<div class="input-group-append">
-									<div class="input-group-text">
-										<span class="fab fa-whatsapp"></span>
+							<div class="form-group">
+								<label for="hp">Nomor WhatsApp</label>
+								<div class="input-group">
+									<input name="hp" type="number" class="form-control" placeholder="Masukan Nomor Whatsapp" value="<?= set_value('hp'); ?>" required>
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fab fa-whatsapp"></span>
+										</div>
 									</div>
 								</div>
+								<small class="text-danger"><?= form_error('hp'); ?></small>
 							</div>
-							<small class="text-danger"><?= form_error('hp'); ?></small>
-						</div>
-						<div class="form-group">
-							<label for="email">Email</label>
-							<div class="input-group">
-								<input name="email" type="email" class="form-control" placeholder="Masukan Email" value="<?= set_value('email'); ?>" required>
-								<div class="input-group-append">
-									<div class="input-group-text">
-										<span class="fas fa-envelope"></span>
+							<div class="form-group">
+								<label for="email">Email</label>
+								<div class="input-group">
+									<input name="email" type="email" class="form-control" placeholder="Masukan Email" value="<?= set_value('email'); ?>" required>
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fas fa-envelope"></span>
+										</div>
 									</div>
 								</div>
+								<small class="text-danger"><?= form_error('email'); ?></small>
 							</div>
-							<small class="text-danger"><?= form_error('email'); ?></small>
-						</div>
-						<div class="form-group">
-							<label for="lokasi_kejadian">Lokasi Kejadian</label>
-							<div class="input-group">
-								<input name="lokasi_kejadian" type="text" class="form-control" placeholder="Masukan Lokasi Kejadian" required value="<?= set_value('lokasi_kejadian'); ?>">
-								<div class="input-group-append">
-									<div class="input-group-text">
-										<span class="fas fa-map-marked-alt"></span>
+							<div class="form-group">
+								<label for="lokasi_kejadian">Lokasi Kejadian</label>
+								<div class="input-group">
+									<input name="lokasi_kejadian" type="text" class="form-control" placeholder="Masukan Lokasi Kejadian" required value="<?= set_value('lokasi_kejadian'); ?>">
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="fas fa-map-marked-alt"></span>
+										</div>
 									</div>
 								</div>
+								<small class="text-danger"><?= form_error('lokasi_kejadian'); ?></small>
 							</div>
-							<small class="text-danger"><?= form_error('lokasi_kejadian'); ?></small>
-						</div>
-						<div class="form-group">
-							<label for="materi_pengaduan">Uraian Pengaduan</label>
-							<div class="input-group">
-								<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control" cols="20" rows="3" placeholder="Masukan Uraian Pengaduan" required><?= set_value('materi_pengaduan'); ?></textarea>
+							<div class="form-group">
+								<label for="materi_pengaduan">Uraian Pengaduan</label>
+								<div class="input-group">
+									<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control" cols="20" rows="3" placeholder="Masukan Uraian Pengaduan" required><?= set_value('materi_pengaduan'); ?></textarea>
+								</div>
+								<small class="text-danger"><?= form_error('materi_pengaduan'); ?></small>
 							</div>
-							<small class="text-danger"><?= form_error('materi_pengaduan'); ?></small>
+							<div class="form-group">
+								<label for="file_pengaduan">Upload File (Opsional)</label>
+								<input type="file" name="file_pengaduan" id="file_pengaduan" class="form-control border-0">
+								<small>File Upload Berupa: (<b>jpg</b>, <b>jpeg</b>, <b>png</b>, <b>pdf</b>, <b>docx</b>)</small>
+							</div>
+							<button type="submit" class="btn-survey">
+								Kirim Pengaduan
+								<i class="fa fa-file-import"></i>
+							</button>
 						</div>
-						<button type="submit" class="btn btn-primary btn-block"><i class="fas fa-check"></i> Kirim Pengaduan</button>
-					</div>
-					<?= form_close(); ?>
+					</form>
 				</div>
 			</div>
 			<div class="col-lg-12 col-sm-12 mb-4">
@@ -464,15 +472,26 @@
 	<div class="container-fluid text-center">
 		<div class="row">
 			<div class="col-lg-12 mt-4">
-				<h1 class="judul-investasi"><b>Survey Kepuasan Masyarakat (SKM) Online</b></h1>
+				<h1 class="judul-investasi">
+					<b>
+						Survey Kepuasan Masyarakat (SKM) Online
+						<br>
+						dan
+						<br>
+						Survey Persepsi Kualitas Pelayanan (SPKP) Online
+					</b>
+				</h1>
 				<hr class="garis-judul">
 			</div>
 		</div>
-		<div class="row pb-4 pt-3 pl-4 pr-4">
+		<div class="row ">
 			<div class="col-12 mb-3">
 				<div class="text-center">
-					<p style="font-size:20px;">Untuk mengisi kuesioner Survey Kepuasan Masyarakat (SKM) secara online, silahkan klik tombol dibawah ini</p>
-					<a href="<?= base_url(); ?>skm" class="pilih-profil border-white text-white">Lakukan Survey</a>
+					<p style="font-size:20px;">Untuk mengisi kuesioner Survey Kepuasan Masyarakat (SKM) dan Survey Persepsi Kualitas Pelayanan (SPKP) secara online, silahkan klik tombol dibawah ini:</p>
+					<a href="<?= base_url(); ?>skm" class="pilih-profil border-white text-white">
+						<i class="fa fa-list-ol" aria-hidden="true"></i>
+						Isi Survey
+					</a>
 				</div>
 			</div>
 
@@ -1493,7 +1512,246 @@
   </a>
 </div>---->
 
-<!--Start of Tawk.to Script-->
+<!-- ----------------------------- Tombol Chat (Floating Chat Button) ----------------------------- -->
+<!-- Tombol Chat untuk Membuka Modal -->
+<!-- <div id="chat-button">
+	<span id="chat-text">Hubungi Kami</span>
+	<img src="<?= base_url(); ?>assets/img/logo-chat.png" alt="Chat Icon">
+</div> -->
+
+<!-- Modal Chat (Bootstrap) -->
+<!-- <div class="modal fade" id="chat-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="chatModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered chat-modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="chatModalLabel">Chat with Admin</h5>
+				<div class="admin-status">
+					<span class="status-indicator <?= $adminonline ? 'online' : 'offline'; ?>"></span>
+					<span class="status-text <?= $adminonline ? 'online' : 'offline'; ?>">
+						<?= $adminonline ? 'Online' : 'Offline'; ?>
+					</span>
+				</div>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeChat()">
+					<span class="text-white" aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="chat-body">
+			</div>
+			<div class="modal-footer">
+				<input type="file" id="image-input" class="form-control border-0" accept="image/*">
+				<textarea id="message-input" class="form-control" placeholder="Tulis balasan..."></textarea>
+				<button class="btn btn-block btn-outline-maroon m-2" id="btn-kirim-pesan" onclick="sendMessage()">Kirim</button>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<!-- JavaScript for Chat Modal -->
+<!-- <script>
+	let lastMessageId = 0;
+	let isSending = false; // Menghindari pengiriman ganda
+	const chatButton = document.getElementById('chat-button');
+	const chatBody = document.getElementById('chat-body');
+	let intervalId;
+
+	function loadNewMessages() {
+		let device_id = localStorage.getItem('device_id');
+		if (!device_id) {
+			device_id = crypto.randomUUID();
+			localStorage.setItem('device_id', device_id);
+		}
+
+		fetch(`<?= base_url('pesan/load_messages'); ?>?last_id=${lastMessageId}&device_id=${device_id}`)
+			.then(response => response.json())
+			.then(data => {
+				const {
+					messages,
+					admins
+				} = data;
+
+				// Tambahkan pesan baru ke dalam chat
+				if (messages.length > 0) {
+					let newMessageAdded = false;
+					messages.forEach(message => {
+						const messageDiv = document.createElement('div');
+						messageDiv.className = `chat-message ${message.user_type}-message`;
+
+						const avatarSrc = message.user_type === 'admin' ?
+							'<?= base_url('assets/img/admin-avatar.png'); ?>' :
+							'<?= base_url('assets/img/user-avatar.png'); ?>';
+
+						const messageDate = new Date(message.created_at);
+						const formattedDate = messageDate.toLocaleString('id-ID', {
+							day: '2-digit',
+							month: 'short',
+							year: 'numeric',
+							hour: '2-digit',
+							minute: '2-digit',
+							hour12: false
+						});
+
+						messageDiv.innerHTML = `
+                        <div class="chat-avatar-wrapper">
+                            <img src="${avatarSrc}" alt="${message.user_type === 'admin' ? 'Admin' : 'User'} Avatar" class="chat-avatar">
+                            ${message.user_type === 'admin' && admins.length > 0 ?
+                                `<span class="online-status ${admins[0].online ? 'online' : 'offline'}"></span>` : ''}
+                        </div>
+                        <div>
+                            <div>${message.message}</div>
+                            ${message.image_url ? `<img src="${message.image_url}" alt="Image" class="chat-image">` : ''}
+                            <small class="message-date ${message.user_type === 'admin' ? 'admin-date' : 'user-date'}">
+                                ${formattedDate}
+                            </small>
+                        </div>
+                    `;
+
+						chatBody.appendChild(messageDiv);
+						lastMessageId = Math.max(lastMessageId, message.id);
+						newMessageAdded = true;
+					});
+
+					if (newMessageAdded) {
+						chatBody.scrollTop = chatBody.scrollHeight;
+					}
+				}
+			})
+			.catch(error => console.error('Gagal memuat pesan:', error));
+	}
+
+	function sendMessage() {
+		if (isSending) return;
+
+		const message = document.getElementById('message-input').value.trim();
+		const imageFile = document.getElementById('image-input').files[0];
+		const sendButton = document.getElementById('btn-kirim-pesan');
+
+		if (message === '' && !imageFile) {
+			alert('Silakan masukkan pesan atau pilih gambar yang akan dikirim.');
+			return;
+		}
+
+		isSending = true;
+		sendButton.disabled = true;
+		sendButton.innerHTML = 'Mengirim...';
+
+		let device_id = localStorage.getItem('device_id');
+		if (!device_id) {
+			device_id = crypto.randomUUID();
+			localStorage.setItem('device_id', device_id);
+		}
+
+		fetch('https://ip-api.com/json')
+			.then(response => response.json())
+			.then(locationData => {
+				const location = `${locationData.city}, ${locationData.country}`;
+				const formData = new FormData();
+				formData.append('message', message);
+				formData.append('location', location);
+				formData.append('device_id', device_id);
+				if (imageFile) formData.append('image', imageFile);
+
+				fetch('<?= base_url('pesan/save_message'); ?>', {
+						method: 'POST',
+						body: formData
+					})
+					.then(response => response.json())
+					.then(data => {
+						if (data.status === 'success') {
+							document.getElementById('message-input').value = '';
+							document.getElementById('image-input').value = '';
+							loadNewMessages();
+						} else {
+							alert(data.message);
+						}
+					})
+					.catch(error => {
+						alert('Terjadi kesalahan saat mengirim pesan. Silakan coba lagi nanti.');
+					})
+					.finally(() => {
+						isSending = false;
+						sendButton.disabled = false;
+						sendButton.innerHTML = 'Kirim';
+					});
+			})
+			.catch(error => {
+				console.error('Error getting IP location:', error);
+				isSending = false;
+				sendButton.disabled = false;
+				sendButton.innerHTML = 'Kirim';
+			});
+	}
+
+	function showWelcomeMessage() {
+		const currentTime = new Date().getTime();
+
+		const welcomeMessage1 = document.createElement('div');
+		welcomeMessage1.className = 'chat-message admin-message';
+		welcomeMessage1.innerHTML = `
+        <img src="<?= base_url('assets/img/admin-avatar.png'); ?>" alt="Admin Avatar" class="chat-avatar">
+        <div>
+            <div>
+                Assalamualaikum, silahkan ketik pertanyaan dan nomor WA untuk kami hubungi (jika sedang offline).
+            </div>
+            <small class="message-date admin-date">
+                ${new Date(currentTime).toLocaleString('id-ID', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                })}
+            </small>
+        </div>
+    `;
+
+		const welcomeMessage2 = document.createElement('div');
+		welcomeMessage2.className = 'chat-message admin-message';
+		welcomeMessage2.innerHTML = `
+        <img src="<?= base_url('assets/img/admin-avatar.png'); ?>" alt="Admin Avatar" class="chat-avatar">
+        <div>
+            <div>
+               Mohon tunggu beberapa menit, Admin segera membalas. Terima kasih.
+            </div>
+            <small class="message-date admin-date">
+                ${new Date(currentTime).toLocaleString('id-ID', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                })}
+            </small>
+        </div>
+    `;
+
+		chatBody.appendChild(welcomeMessage1);
+		// chatBody.appendChild(welcomeMessage2);
+
+		chatBody.scrollTop = chatBody.scrollHeight;
+	}
+
+	chatButton.addEventListener('click', function() {
+		const chatModal = new bootstrap.Modal(document.getElementById('chat-modal'));
+		chatModal.show();
+
+		setTimeout(() => {
+			loadNewMessages();
+			showWelcomeMessage();
+		}, 500);
+
+		if (!intervalId) {
+			intervalId = setInterval(loadNewMessages, 5000);
+		}
+	});
+
+	document.getElementById('chat-modal').addEventListener('hidden.bs.modal', function() {
+		if (intervalId) clearInterval(intervalId);
+	});
+</script> -->
+
+<!--Script Tawk.to-->
 <script type="text/javascript">
 	var Tawk_API = Tawk_API || {},
 		Tawk_LoadStart = new Date();

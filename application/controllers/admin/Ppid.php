@@ -7,21 +7,26 @@ class Ppid extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_ppid');
     }
 
     public function index()
     {
-        $this->load->model('Model_ppid');
+        $data['home'] = 'Home';
+        $data['title'] = 'PPID';
         $data['ppid'] = $this->Model_ppid->tampil_data();
         $data['idmax'] = $this->Model_ppid->idmax();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/ppid', $data);
         $this->load->view('modal/modal_tambah_ppid');
         $this->load->view('edit/edit_ppid', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
@@ -49,44 +54,69 @@ class Ppid extends CI_controller
             'judul' => $judul,
             'file' => $file
         );
-        $this->load->model('Model_ppid');
-        $this->Model_ppid->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data <b>$judul</b> berhasil !");
-        redirect('admin/ppid');
+
+        $result = $this->Model_ppid->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data PPID berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/ppid', 'refresh');
     }
 
     public function ubah()
     {
         $id = $this->input->post('id', true);
         $judul = $this->input->post('judul', true);
-        $file = $_FILES['file']['name'];
+        $fileLama = $this->input->post('old', true);
+        $fileBaru = $_FILES['file']['name'];
 
-        if (empty($_FILES['file']['name'])) {
-            $file = $this->input->post('old', true);
-        } else {
+        // Inisialisasi nilai awal file
+        $file = $fileLama;
+
+        // Jika ada file baru yang diunggah
+        if (!empty($fileBaru)) {
             $nmfile = "ppid-" . time();
             $config['upload_path'] = './assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
             $this->load->library('upload', $config);
+
+            // Proses unggah file baru
             if ($this->upload->do_upload('file')) {
+                // Hapus file lama jika ada
+                if (file_exists('./assets/fileupload/' . $fileLama)) {
+                    unlink('./assets/fileupload/' . $fileLama);
+                }
+                // Ambil nama file baru
                 $file = $this->upload->data('file_name');
             } else {
+                // Jika gagal mengunggah file baru
                 $this->session->set_flashdata("gagal", "Maaf, file <b>$judul</b> gagal diunggah. Format file tidak sesuai !");
                 redirect('admin/ppid');
             }
         }
 
+        // Data untuk diperbarui
         $data = array(
             'id_ppid' => $id,
             'judul' => $judul,
             'file' => $file
         );
-        $this->load->model('Model_ppid');
-        $this->Model_ppid->update($data, $id);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$judul</b> berhasil !");
-        redirect('admin/ppid');
+
+        // Update data ke database
+        $result = $this->Model_ppid->update($data, $id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data PPID berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/ppid', 'refresh');
     }
 
     public function hapus($id)
@@ -95,11 +125,18 @@ class Ppid extends CI_controller
         $query = $this->db->get('ppid');
         $row = $query->row();
 
-        unlink("./assets/fileupload/$row->file");
+        if (!empty($row->file) && file_exists("./assets/fileupload/$row->file")) {
+            unlink("./assets/fileupload/$row->file");
+        }
 
-        $this->load->model('Model_ppid');
-        $this->Model_ppid->delete($id);
-        $this->session->set_flashdata("gagal", "Hapus data <b>$row->judul</b> berhasil !");
-        redirect('admin/ppid');
+        $result = $this->Model_ppid->delete($id);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data PPID berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/ppid', 'refresh');
     }
 }

@@ -5,35 +5,54 @@ class Tanah_ulayat extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_tanah_ulayat');
     }
 
     public function index()
     {
-        $this->load->model('Model_tanah_ulayat');
         $data['kecamatan'] = $this->Model_tanah_ulayat->tampil_kecamatan();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+        $data['home'] = 'Home';
+        $data['title'] = 'Tanah Ulayat';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/tanah_ulayat', $data);
         $this->load->view('modal/modal_tambah_tanahulayat');
-        //$this->load->view('modal/modal_tambah_tanah_ulayat', $data);
-        //$this->load->view('edit/edit_tanah_ulayat', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function rincian($id_kecamatan)
     {
-        $this->load->model('Model_tanah_ulayat');
         $id_kecamatan = $id_kecamatan;
-        $kecamatan = $this->Model_tanah_ulayat->tampil_kecamatan();
-        $get_kecamatan = $this->Model_tanah_ulayat->get_kecamatan($id_kecamatan);
-        $tanah_ulayat = $this->Model_tanah_ulayat->tampil_data($id_kecamatan);
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/rincian_ulayat', array('id_kecamatan' => $id_kecamatan, 'kecamatan' => $kecamatan, 'tanah_ulayat' => $tanah_ulayat, 'get_kecamatan' => $get_kecamatan));
-        $this->load->view('edit/edit_tanahulayat', $tanah_ulayat);
-        $this->load->view('templates/footer_admin');
+        $kecamatan = $this->Model_tanah_ulayat->tampil_kecamatan(); // Mendapatkan semua kecamatan
+        $get_kecamatan = $this->Model_tanah_ulayat->get_kecamatan($id_kecamatan); // Mendapatkan kecamatan berdasarkan ID
+        $tanah_ulayat = $this->Model_tanah_ulayat->tampil_data($id_kecamatan); // Mendapatkan data tanah ulayat
+
+        $data['home'] = 'Home';
+
+        // Pastikan $get_kecamatan tidak null sebelum mengakses properti
+        if ($get_kecamatan) {
+            $data['title'] = $get_kecamatan->kecamatan; // Properti 'kecamatan' diambil dari objek
+        } else {
+            $data['title'] = 'Kecamatan Tidak Ditemukan';
+        }
+
+        // Load views
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/rincian_ulayat', array(
+            'id_kecamatan' => $id_kecamatan,
+            'kecamatan' => $kecamatan,
+            'tanah_ulayat' => $tanah_ulayat,
+            'get_kecamatan' => $get_kecamatan
+        ));
+        $this->load->view('edit/edit_tanahulayat', array('tanah_ulayat' => $tanah_ulayat));
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
@@ -55,13 +74,19 @@ class Tanah_ulayat extends CI_controller
             'jenis' => $jenis,
             'bentuk' => $bentuk
         );
-        $this->load->model('Model_tanah_ulayat');
-        $this->Model_tanah_ulayat->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data <b>$lokasi</b> berhasil !");
-        echo '<script>history.back(self)</script>';
+
+        $result = $this->Model_tanah_ulayat->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Tanah Ulayat berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/tanah_ulayat', 'refresh');
     }
 
-    public function ubah()
+    public function edit()
     {
         $id_ulayat = $this->input->post('id', true);
         $kecamatan = $this->input->post('kecamatan', true);
@@ -80,9 +105,15 @@ class Tanah_ulayat extends CI_controller
             'jenis' => $jenis,
             'bentuk' => $bentuk
         );
-        $this->load->model('Model_tanah_ulayat');
-        $this->Model_tanah_ulayat->update($data, $id_ulayat);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$lokasi</b> berhasil !");
+
+        $result = $this->Model_tanah_ulayat->update($data, $id_ulayat);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data ' . $lokasi . ' berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
         echo '<script>history.back(self)</script>';
     }
 
@@ -92,9 +123,13 @@ class Tanah_ulayat extends CI_controller
         $query = $this->db->get('tanah_ulayat');
         $row = $query->row();
 
-        $this->load->model('Model_tanah_ulayat');
-        $this->Model_tanah_ulayat->delete($id_ulayat);
-        $this->session->set_flashdata("gagal", "Hapus data <b>$row->lokasi</b> berhasil !");
+        $result = $this->Model_tanah_ulayat->delete($id_ulayat);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data ' . $row->lokasi . ' berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
 
         echo '<script>history.back(self)</script>';
     }

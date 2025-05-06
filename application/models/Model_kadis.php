@@ -13,18 +13,18 @@ class Model_kadis extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('kadis', $data);
+        return $this->db->insert('kadis', $data);
     }
 
-    public function update($data, $id)
+    public function update($data, $id_kadis)
     {
-        $this->db->where('id_kadis', $id);
-        $this->db->update('kadis', $data);
+        $this->db->where('id_kadis', $id_kadis);
+        return $this->db->update('kadis', $data);
     }
 
     public function delete($id_kadis)
     {
         $this->db->where('id_kadis', $id_kadis);
-        $this->db->delete('kadis');
+        return $this->db->delete('kadis');
     }
 }

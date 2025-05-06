@@ -13,6 +13,6 @@ class Model_pengaturan extends CI_model
     public function update($data, $id)
     {
         $this->db->where('id_setting', $id);
-        $this->db->update('setting_dinas', $data);
+        return $this->db->update('setting_dinas', $data);
     }
 }

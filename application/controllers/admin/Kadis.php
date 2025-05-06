@@ -5,20 +5,26 @@ class Kadis extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
+
+        $this->load->model('Model_kadis');
     }
 
     public function index()
     {
-        $this->load->model('Model_kadis');
+
         $data['kadis'] = $this->Model_kadis->tampil_kadis();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
-        $this->load->view('admin/kadis', $data);
+        $data['home'] = 'Home';
+        $data['title'] = 'Kepala Dinas';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
+        $this->load->view('admin/kadis', $data, FALSE);
         $this->load->view('modal/modal_tambah_kadis', $data);
         $this->load->view('edit/edit_kadis', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()
@@ -46,44 +52,65 @@ class Kadis extends CI_controller
             'periode' => $periode,
             'foto' => $foto
         );
-        $this->load->model('Model_kadis');
-        $this->Model_kadis->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data <b>$nama</b> berhasil !");
-        redirect('admin/kadis');
+
+        $result = $this->Model_kadis->input($data);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Kadis berhasil disimpan.');
+        } else {
+            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/kadis', 'refresh');
     }
 
     public function edit()
     {
         $id_kadis = $this->input->post('id_kadis', true);
         $nama = $this->input->post('nama', true);
-        $foto = $_FILES['foto']['name'];
         $periode = $this->input->post('periode', true);
+        $foto_baru = $_FILES['foto']['name'];
+        $foto_lama = $this->input->post('old', true);
 
-        if (empty($_FILES['foto']['name'])) {
-            $foto = $this->input->post('old', true);
-        } else {
-            $nmfile = "kadis-" . $nama;
+        if (!empty($foto_baru)) {
+            // $nmfile = "kadis-" . time() . "-" . str_replace(' ', '-', strtolower($nama));
+            $nmfile = "kadis-" . time();
             $config['upload_path'] = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
+            $config['max_size'] = 22048; // Maksimal 22MB
 
             $this->load->library('upload', $config);
+
             if ($this->upload->do_upload('foto')) {
                 $foto = $this->upload->data('file_name');
-                $fotolama = $this->input->post('old', true);
-                unlink("./assets/imgupload/" . $fotolama);
+
+                if (!empty($foto_lama) && file_exists('./assets/imgupload/' . $foto_lama)) {
+                    unlink('./assets/imgupload/' . $foto_lama);
+                }
+            } else {
+                $this->session->set_flashdata('error', 'Upload foto gagal: ' . $this->upload->display_errors('', ''));
+                redirect('admin/kadis', 'refresh');
             }
+        } else {
+            $foto = $foto_lama;
         }
-        $data = array(
-            'id_kadis' => $id_kadis,
+
+        $data = [
             'nama' => $nama,
             'periode' => $periode,
-            'foto' => $foto
-        );
-        $this->load->model('Model_kadis');
-        $this->Model_kadis->update($data, $id_kadis);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$nama</b> berhasil !");
-        redirect('admin/kadis');
+            'foto' => $foto,
+        ];
+
+        $result = $this->Model_kadis->update($data, $id_kadis);
+
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Kadis berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+        }
+
+        redirect('admin/kadis', 'refresh');
     }
 
     public function hapus($id_kadis)
@@ -92,12 +119,18 @@ class Kadis extends CI_controller
         $query = $this->db->get('kadis');
         $row = $query->row();
 
-        unlink("./assets/imgupload/$row->foto");
+        if (!empty($row->foto) && file_exists("./assets/imgupload/$row->foto")) {
+            unlink("./assets/imgupload/$row->foto");
+        }
 
-        $this->load->model('Model_kadis');
-        $this->Model_kadis->delete($id_kadis);
-        $this->session->set_flashdata("gagal", "Hapus data <b>$row->nama</b> berhasil !");
+        $result = $this->Model_kadis->delete($id_kadis);
 
-        redirect('admin/kadis');
+        if ($result) {
+            $this->session->set_flashdata('success', 'Data Kadis berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+        }
+
+        redirect('admin/kadis', 'refresh');
     }
 }

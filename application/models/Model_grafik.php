@@ -29,24 +29,24 @@ class Model_grafik extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('grafik', $data);
+        return  $this->db->insert('grafik', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_grafik', $id);
-        $this->db->update('grafik', $data);
+        return  $this->db->update('grafik', $data);
     }
 
     public function update_periode($data, $id)
     {
         $this->db->where('id_periode', $id);
-        $this->db->update('periode_grafik', $data);
+        return $this->db->update('periode_grafik', $data);
     }
 
     public function delete($id_grafik)
     {
         $this->db->where('id_grafik', $id_grafik);
-        $this->db->delete('grafik');
+        return $this->db->delete('grafik');
     }
 }

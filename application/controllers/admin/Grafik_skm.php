@@ -7,7 +7,7 @@ class Grafik_skm extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
         $this->load->model('admin/Model_skm_gambar');
         $this->load->library('upload');
@@ -24,15 +24,19 @@ class Grafik_skm extends CI_controller
         $data['skm_gambar'] = $this->Model_skm_gambar->tampil_data();
         $data['idmaxx'] = $this->Model_skm_gambar->idmax();
 
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+        $data['home'] = 'Home';
+        $data['title'] = 'Grafik SKM';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/grafik_skm', $data);
         $this->load->view('modal/modal_tambah_grafik_skm');
         $this->load->view('modal/modal_tambah_skm_gambar');
         $this->load->view('edit/edit_grafik_skm', $data);
         $this->load->view('edit/edit_periode_grafik_skm', $data);
         $this->load->view('edit/edit_skm_gambar', $data);
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     public function tambah()

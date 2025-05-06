@@ -1,75 +1,112 @@
 <?php foreach ($pengaturan->result() as $row) {
 }
 ?>
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
 
-    <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Pengaturan</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="text-center">Pengaturan</h3>
-                <hr>
-                <div class="panel-heading">
-                    <?php if ($this->session->flashdata('gagal')) : ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('gagal'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+            <div class="col-12">
+                <!-- <hr>
+                <h3 class="text-center">Kepala Dinas <br> Dari Masa Ke Masa</h3>
+                <hr> -->
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel <?= $title; ?></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-warning btn-block" data-toggle="modal" data-target="#EditPengaturan<?= $row->id_setting; ?>">
+                                <i class="fa fa-edit p-1" aria-hidden="true"></i>
+                                Edit Data
                             </button>
                         </div>
-                    <?php endif; ?>
-                    <?php if ($this->session->flashdata('berhasil')) : ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('berhasil'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+
+                        <div class="row">
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card card-maroon">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Sejarah</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <span><?= $row->sejarah; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card card-maroon">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Visi</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <span><?= $row->visi; ?></span>
+                                    </div>
+                                </div>
+                                <div class="card card-maroon">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Misi</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <span><?= $row->misi; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card card-maroon">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Tugas</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <span><?= $row->tugas; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card card-maroon">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">fungsi</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <span><?= $row->fungsi; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card card-maroon">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Struktur Organisasi</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="<?= base_url('assets/imgupload/') . $row->struktur; ?>" target="_blank">
+                                            <img src="<?= base_url('assets/imgupload/') . $row->struktur; ?>" style="width:100%;" class="elevation-1 img-thumbnail">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-lg-6">
+                                <div class="card card-maroon">
+                                    <div class="card-header">
+                                        <h3 class="card-title font-weight-bold">Maklumat Pelayanan</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="<?= base_url('assets/imgupload/') . $row->maklumat; ?>" target="_blank">
+                                            <img src="<?= base_url('assets/imgupload/') . $row->maklumat; ?>" style="width:100%;" class="elevation-1 img-thumbnail">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    <?php endif; ?>
-                    <button href="" type="button" class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#EditPengaturan<?php echo $row->id_setting; ?>"><i class="fa fa-plus fa-fw"></i>Edit Data</button>
-                </div><br>
-                <div class="row">
-                    <div class="col-12 col-md-6 col-lg-6 mb-3">
-                        <h6><strong>Sejarah</strong></h6>
-                        <p><?= $row->sejarah; ?></p>
+                        <!-- /.card-body -->
                     </div>
-                    <div class="col-12 col-md-6 col-lg-6 mb-3">
-                        <h6><strong>Visi</strong></h6>
-                        <p><?= $row->visi; ?></p>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 mb-3">
-                        <h6><strong>Misi</strong></h6>
-                        <p><?= $row->misi; ?></p>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 mb-3">
-                        <h6><strong>Tugas</strong></h6>
-                        <p><?= $row->tugas; ?></p>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 mb-3">
-                        <h6><strong>Fungsi</strong></h6>
-                        <p><?= $row->fungsi; ?></p>
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6 mb-3">
-                        <h6><strong>Struktur Organisasi</strong></h6>
-                        <img src="<?= base_url(); ?>assets/imgupload/<?= $row->struktur; ?>" style="width:100%;" class="img-responsive">
-                    </div>
-                    <div class="col-12 col-md-6 col-lg-6">
-                        <h6><strong>Maklumat Pelayanan</strong></h6>
-                        <img src="<?= base_url(); ?>assets/imgupload/<?= $row->maklumat; ?>" style="width:100%;" class="img-responsive">
-                    </div>
+                    <!-- /.card -->
                 </div>
+                <!-- /.col -->
             </div>
+            <!-- /.row -->
         </div>
     </div>
-    </div>
-    </div>
-</main>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

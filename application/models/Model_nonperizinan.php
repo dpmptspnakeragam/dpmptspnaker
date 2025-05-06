@@ -20,18 +20,18 @@ class Model_nonperizinan extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('nonperizinan', $data);
+        return $this->db->insert('nonperizinan', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_izin', $id);
-        $this->db->update('nonperizinan', $data);
+        return $this->db->update('nonperizinan', $data);
     }
 
     public function delete($id_izin)
     {
         $this->db->where('id_izin', $id_izin);
-        $this->db->delete('nonperizinan');
+        return $this->db->delete('nonperizinan');
     }
 }

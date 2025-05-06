@@ -5,7 +5,7 @@ class Reklame extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
     }
 

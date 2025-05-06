@@ -20,18 +20,18 @@ class Model_aset extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('aset', $data);
+        return $this->db->insert('aset', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_aset', $id);
-        $this->db->update('aset', $data);
+        return $this->db->update('aset', $data);
     }
 
     public function delete($id_aset)
     {
         $this->db->where('id_aset', $id_aset);
-        $this->db->delete('aset');
+        return $this->db->delete('aset');
     }
 }

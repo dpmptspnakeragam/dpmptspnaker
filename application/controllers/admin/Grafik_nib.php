@@ -7,7 +7,7 @@ class Grafik_nib extends CI_controller
     {
         parent::__construct();
         if ($this->session->userdata('username') == "") {
-            redirect('home');
+            redirect('login');
         }
     }
 
@@ -19,8 +19,13 @@ class Grafik_nib extends CI_controller
         $data['grafik_kecamatan'] = $this->Model_grafik_nib->tampil_data_kecamatan();
         $data['grafik_kbli'] = $this->Model_grafik_nib->tampil_data_kbli();
         $data['periode_grafik'] = $this->Model_grafik_nib->tampil_data_periode();
-        $this->load->view('templates/header_admin');
-        $this->load->view('templates/navbar_admin');
+
+        $data['home'] = 'Home';
+        $data['title'] = 'Grafik SKM';
+
+        $this->load->view('templates/admin_header', $data, FALSE);
+        $this->load->view('templates/admin_navbar', $data, FALSE);
+        $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/grafik_nib', $data);
         $this->load->view('modal/modal_tambah_grafik_nib');
         $this->load->view('edit/edit_grafik_nib');
@@ -31,7 +36,7 @@ class Grafik_nib extends CI_controller
         $this->load->view('modal/modal_tambah_grafik_kbli');
         $this->load->view('edit/edit_grafik_kbli');
         $this->load->view('edit/edit_periode_grafik_nib');
-        $this->load->view('templates/footer_admin');
+        $this->load->view('templates/admin_footer');
     }
 
     //-----------Grafik PMDN/PMA & UMK/Non UMK------//

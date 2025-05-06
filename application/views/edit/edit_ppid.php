@@ -1,16 +1,16 @@
-<?php foreach ($ppid->result() as $row) {
-?>
-    <div class="modal fade" id="EditPpid<?php echo $row->id_ppid; ?>" role="dialog" aria-labelledby="ModalTambahppidLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+<?php foreach ($ppid->result() as $row) : ?>
+    <div class="modal fade" id="EditPPID<?php echo $row->id_ppid; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit ppid</h5>
-                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Update <?= $title; ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form role="form" action="<?= base_url(); ?>admin/ppid/ubah" method="post" enctype="multipart/form-data">
+
+                <form role="form" action="<?= base_url('admin/ppid/ubah'); ?>" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
                         <div class="form-group" hidden>
                             <input type="text" class="form-control hidden" id="id" name="id" value="<?php echo $row->id_ppid; ?>">
                         </div>
@@ -27,13 +27,14 @@
                                 </div>
                             </div>
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Update</button>
+                    </div>
                 </form>
+
             </div>
         </div>
     </div>
-<?php } ?>
+<?php endforeach; ?>

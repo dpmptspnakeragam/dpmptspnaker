@@ -20,18 +20,18 @@ class Model_sarpras extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('sarpras', $data);
+        return $this->db->insert('sarpras', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_sarpras', $id);
-        $this->db->update('sarpras', $data);
+        return $this->db->update('sarpras', $data);
     }
 
     public function delete($id_sarpras)
     {
         $this->db->where('id_sarpras', $id_sarpras);
-        $this->db->delete('sarpras');
+        return $this->db->delete('sarpras');
     }
 }

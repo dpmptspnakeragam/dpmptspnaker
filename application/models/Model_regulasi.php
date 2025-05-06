@@ -20,18 +20,18 @@ class Model_regulasi extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('regulasi', $data);
+        return $this->db->insert('regulasi', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_regulasi', $id);
-        $this->db->update('regulasi', $data);
+        return $this->db->update('regulasi', $data);
     }
 
     public function delete($id_regulasi)
     {
         $this->db->where('id_regulasi', $id_regulasi);
-        $this->db->delete('regulasi');
+        return $this->db->delete('regulasi');
     }
 }

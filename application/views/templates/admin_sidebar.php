@@ -1,7 +1,7 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-light-maroon">
 			<!-- Brand Logo -->
-			<a href="<?= base_url('admin/manage_c_home'); ?>" class="brand-link elevation-2">
+			<a href="<?= base_url('admin/home'); ?>" class="brand-link elevation-2">
 				<!-- Small logo for minimized sidebar -->
 				<img src="<?= base_url('assets/img/agam.png'); ?>" alt="DPMPTSP Logo" class="brand-image">
 
@@ -32,7 +32,7 @@
 
 							<!-- Informasi -->
 							<li class="nav-item">
-								<a href="<?= base_url('admin/manage_c_home'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['admin/manage_c_home'])) echo "active"; ?>">
+								<a href="<?= base_url('admin/home'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['home'])) echo "active"; ?>">
 									<i class="nav-icon fas fa-home"></i>
 									<p>Home</p>
 								</a>
@@ -40,7 +40,7 @@
 
 							<!-- Manajemen Aset -->
 							<li class="nav-item">
-								<a href="<?= base_url('admin/manage_c_aset'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['manage_c_aset'])) echo "active"; ?>">
+								<a href="<?= base_url('admin/aset'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['aset'])) echo "active"; ?>">
 									<i class="nav-icon fas fa-archive"></i>
 									<p>Manajemen Aset</p>
 								</a>
@@ -48,7 +48,7 @@
 
 							<!-- Manajemen User -->
 							<li class="nav-item">
-								<a href="<?= base_url('admin/manage_c_user'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['manage_c_user'])) echo "active"; ?>">
+								<a href="<?= base_url('admin/user'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['user'])) echo "active"; ?>">
 									<i class="nav-icon fas fa-user-cog"></i>
 									<p>Manajemen User</p>
 								</a>
@@ -364,7 +364,7 @@
 							</li>
 
 							<!-- Pesan -->
-							<li class="nav-item">
+							<li class="nav-item" hidden>
 								<a href="<?= base_url('admin/pesan'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['pesan'])) echo "active"; ?>">
 									<i class="nav-icon fas fa-envelope"></i>
 									<p>Pesan</p>

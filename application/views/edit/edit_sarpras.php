@@ -1,40 +1,39 @@
-<?php foreach ($sarpras->result() as $row) {
-?>
-    <div class="modal fade" id="EditSarpras<?php echo $row->id_sarpras; ?>" role="dialog" aria-labelledby="ModalTambahBeritaLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+<?php foreach ($sarpras->result() as $row) : ?>
+    <div class="modal fade" id="EditSarpras<?= $row->id_sarpras; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Sarana & Prasarana</h5>
-                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Update <?= $title; ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form role="form" action="<?= base_url(); ?>admin/sarpras/ubah" method="post" enctype="multipart/form-data">
+
+                <form role="form" action="<?= base_url('admin/sarpras/edit'); ?>" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
                         <div class="form-group" hidden>
-                            <input type="text" class="form-control hidden" id="id" name="id" value="<?php echo $row->id_sarpras; ?>">
+                            <input type="text" class="form-control hidden" id="id" name="id" value="<?= $row->id_sarpras; ?>">
                         </div>
                         <div class="form-group">
-                            <label for="tahun">Nama Sarana & Prasarana</label>
-                            <input type="teks" class="form-control" name="teks" placeholder="Nama" value="<?php echo $row->teks; ?>" required>
+                            <label for="tahun">Nama</label>
+                            <input type="teks" class="form-control" name="teks" placeholder="Nama Sarana & Prasarana" value="<?= $row->teks; ?>" required>
                         </div>
-                        <div class=" row">
-                            <div class="form-group">
-                                <label class="control-label col-md-12 col-sm-12 col-xs-12" for="gambar">Gambar Sarana & Prasarana</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <img src="<?= base_url(); ?>assets/imgupload/<?php echo $row->gambar; ?>" width='80' height='60' />
-                                    <input name="gambar" type="file" id="gambar" />
-                                    <input name="old" type="hidden" id="old" value="<?php echo $row->gambar; ?>" />
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="foto">Foto</label>
+                            <br>
+                            <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-size-64 img-thumbnail">
+                            <br>
+                            <input type="file" name="gambar" class="mt-3">
+                            <input type="hidden" name="old" value="<?= $row->gambar; ?>">
                         </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Update</button>
+                    </div>
                 </form>
+
             </div>
         </div>
     </div>
-<?php } ?>
+<?php endforeach; ?>

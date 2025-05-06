@@ -13,10 +13,10 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-sm-12 col-lg-6">
                                 <img class="img-responsive img-investasi" src="<?= base_url() ?>assets/imgupload/<?= $row->gambar; ?>" alt="<?= $row->nama_investasi; ?>">
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-12 col-lg-6">
                                 <div class="container-fluid">
                                     <p class=""><?= $row->deskripsi; ?></p>
                                 </div>

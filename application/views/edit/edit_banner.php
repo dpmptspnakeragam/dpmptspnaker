@@ -1,64 +1,38 @@
-<script src="<?php echo base_url(); ?>assets/ckeditor/ckeditor.js"></script>
-<?php foreach ($banner->result() as $row) {
-?>
-    <div class="modal fade" id="EditBanner<?php echo $row->id_banner; ?>" role="dialog" aria-labelledby="ModalTambahBeritaLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+<?php foreach ($banner->result() as $row) : ?>
+    <div class="modal fade" id="EditBanner<?= $row->id_banner; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-dark">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Banner</h5>
-                    <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Update <?= $title; ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form role="form" action="<?= base_url(); ?>admin/banner/ubah" method="post" enctype="multipart/form-data">
-                        <div class="form-group" hidden>
-                            <input type="text" class="form-control hidden" id="id" name="id" value="<?php echo $row->id_banner; ?>">
+
+                <form role="form" action="<?= base_url('admin/banner/edit'); ?>" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <input type="hidden" name="id_banner" value="<?= $row->id_banner; ?>">
+
+                        <div class="form-group">
+                            <label for="tahun">Teks</label>
+                            <textarea class="form-control" name="teks" placeholder="Masukan Teks"><?= $row->teks; ?></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="tahun">Banner Teks</label>
-                            <textarea id="editbanner<?= $row->id_banner; ?>" class="form-control" name="teks" placeholder="Isi Berita"><?php echo $row->teks; ?></textarea>
-                            <!-- <script type="text/javascript">
-                                CKEDITOR.replace('editbanner<?= $row->id_banner; ?>');
-                            </script> -->
+                            <label for="foto">Gambar</label>
+                            <br>
+                            <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-size-64 img-thumbnail">
+                            <br>
+                            <input type="file" name="gambar" class="mt-3">
+                            <input type="hidden" name="old" value="<?= $row->gambar; ?>">
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="preview-gambar">Preview Gambar</label>
-                                <div class="form-group">
-                                    <img src="<?= base_url('assets/imgupload/' . $row->gambar); ?>" class="img-thumbnail w-auto" style="max-width: 15%;">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="gambar">Upload Gambar</label>
-                                <div class="form-group">
-                                    <input name="gambar" type="file" id="gambar">
-                                    <input name="old" type="hidden" id="old" value="<?php echo $row->gambar; ?>" required>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="row">
-                            <div class="form-group">
-                                <label class="control-label col-md-12 col-sm-12 col-xs-12" for="gambar">Preview Gambar:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <img src="<?= base_url(); ?>assets/imgupload/<?php echo $row->gambar; ?>" class="img-thumbnail w-25 mb-2"><br>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-12 col-sm-12 col-xs-12" for="gambar">Upload Gambar:</label>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input name="gambar" type="file" id="gambar" />
-                                    <input name="old" type="hidden" id="old" value="<?php echo $row->gambar; ?>" />
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Update</button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
-<?php } ?>
+<?php endforeach; ?>

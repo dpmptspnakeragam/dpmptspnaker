@@ -1,157 +1,152 @@
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
 
-    <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Grafik Izin Keluar</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="text-center">Grafik Izin Terbit</h3>
-                <h5 class="text-center"> Periode
-                    <?php
-                    $no = 1;
-                    foreach ($periode_grafik->result() as $graph) {
-                    ?>
-                        <?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?> <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditPeriodeGrafik<?php echo $graph->id_periode; ?>" title="Edit"><i class="fa fa-edit"></i></a>
 
-                    <?php } ?>
-                </h5>
-                <hr>
-                <div class="panel-heading">
-                    <?php if ($this->session->flashdata('gagal')) : ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('gagal'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($this->session->flashdata('berhasil')) : ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('berhasil'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#ModalTambahGrafik"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                </div><br>
-                <!-- start: Accordion -->
-                <div class="table-responsive">
-                    <table class="table table-striped table-borderless table-hover" id="dataTables-example">
-                        <thead class="bg-dark text-light">
-                            <tr>
-                                <th class="text-center">No.</th>
-                                <th class="text-center">Izin</th>
-                                <th class="text-center">Jumlah</th>
-                                <th class="text-center"><i class="fa fa-cog"></i> Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel <?= $title; ?></h3>
+                    </div>
+                    <div class="card-body text-center">
+                        <h4>Periode</h4>
+                        <span>
                             <?php
                             $no = 1;
-                            foreach ($grafik->result() as $row) {
+                            foreach ($periode_grafik->result() as $graph) {
                             ?>
-                                <tr class="odd gradeX">
-                                    <td><?= $no++; ?></td>
-                                    <td><?= $row->izin; ?></td>
-                                    <td><?= $row->jumlah; ?></td>
-                                    <td class="text-center">
-                                        <div class="btn-group">
-                                            <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditGrafik<?php echo $row->id_grafik; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a class="btn btn-outline-danger btn-sm btn-circle" href="<?php echo base_url() ?>admin/grafik_izin/hapus/<?php echo $row->id_grafik; ?>" title="Hapus" onclick="javascript: return confirm('Anda yakin hapus <?= $row->izin; ?>?')"><i class="fa fa-times"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?> <br> <a class="btn btn-outline-danger btn-block mt-2" href="#" data-toggle="modal" data-target="#EditPeriodeGrafik<?php echo $graph->id_periode; ?>" title="Edit"><i class="fa fa-edit"></i> Ubah Periode</a>
+
                             <?php } ?>
-                        </tbody>
-                    </table>
+                        </span>
+                    </div>
+
+                    <hr class="mt-0 mb-0">
+
+                    <div class="card-body">
+
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafik">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+
+                        <table id="TabelData1" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">Nama Izin</th>
+                                    <th class="text-center align-middle">Jumlah Izin</th>
+                                    <th class="text-center align-middle">Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($grafik->result() as $row) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $row->izin; ?></td>
+                                        <td class="text-center align-middle"><?= $row->jumlah; ?></td>
+                                        <td class="text-center align-middle">
+                                            <button type="button" data-toggle="modal" data-target="#ModalEditGrafik<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#ModalDeleteGrafik<?= $row->id_grafik; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <!--end: Accordion -->
             </div>
-            <div class="col-lg-12 bg-dark text-light">
-                <canvas id="myChart"></canvas>
-                <?php
-                //Inisialisasi nilai variabel awal
-                $nama_izin = "";
-                $total = null;
-                foreach ($grafik->result() as $item) {
-                    $nama = $item->izin;
-                    $nama_izin .= "'$nama'" . ", ";
-                    $jum = $item->jumlah;
-                    $total .= "$jum" . ", ";
-                }
-                ?>
+
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title"><?= $title; ?></h3>
+                    </div>
+                    <!-- /.card-header -->
+
+                    <div class="card-body">
+                        <canvas id="myChart"></canvas>
+
+                        <?php
+                        // Pastikan data ada sebelum diproses
+                        $nama_izin = [];
+                        $total = [];
+
+                        foreach ($grafik->result() as $row) {
+                            $nama_izin[] = $row->izin;
+                            $total[] = $row->jumlah;
+                        }
+
+                        // Ubah menjadi JSON agar bisa digunakan di JavaScript
+                        $nama_izin_json = json_encode($nama_izin);
+                        $total_json = json_encode($total);
+                        ?>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var chart = new Chart(ctx, {
+                                    type: 'bar', // Bisa diganti dengan 'line', 'pie', dll.
+                                    data: {
+                                        labels: <?= $nama_izin_json; ?>,
+                                        datasets: [{
+                                            // label: "Jumlah " + new Date().getFullYear(),
+                                            label: "Jumlah",
+                                            backgroundColor: 'rgba(219, 22, 47, 0.7)', // Warna batang
+                                            borderColor: 'rgba(219, 22, 47, 1)', // Warna garis tepi
+                                            borderWidth: 1,
+                                            data: <?= $total_json; ?>
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<?php foreach ($grafik->result() as $row) : ?>
+    <div class="modal fade" id="ModalDeleteGrafik<?= $row->id_grafik; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Hapus <?= $title; ?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin menghapus data <strong class="font-weight-bold text-maroon"><?= $row->izin; ?></strong> ini?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                    <a href="<?= base_url('admin/grafik_izin/hapus/' . $row->id_grafik); ?>" class="btn btn-outline-danger">Hapus</a>
+                </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
-</main>
-<script>
-    var tahun = new Date().getFullYear();
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'bar',
-        // The data for our dataset
-        data: {
-            labels: [<?php echo $nama_izin; ?>],
-            datasets: [{
-                label: "Data Izin Keluar DPMPTSP-Naker Kab.Agam Tahun " + tahun + "",
-                backgroundColor: '#db162f',
-                data: [<?php echo $total; ?>]
-            }]
-        },
-        // Configuration options go here
-        options: {
-            legend: {
-                labels: {
-                    fontColor: 'white'
-                }
-            },
-            "hover": {
-                "animationDuration": 0
-            },
-            "animation": {
-                "duration": 1,
-                "onComplete": function() {
-                    var chartInstance = this.chart,
-                        ctx = chartInstance.ctx;
-
-                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'bottom';
-
-                    this.data.datasets.forEach(function(dataset, i) {
-                        var meta = chartInstance.controller.getDatasetMeta(i);
-                        meta.data.forEach(function(bar, index) {
-                            var data = dataset.data[index];
-                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                        });
-                    });
-                }
-            },
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        fontColor: 'white'
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        fontColor: 'white'
-                    }
-                }]
-            }
-        }
-    });
-</script>
+<?php endforeach; ?>

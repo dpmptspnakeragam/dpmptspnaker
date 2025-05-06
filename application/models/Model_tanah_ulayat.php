@@ -25,23 +25,23 @@ class Model_tanah_ulayat extends CI_model
         $this->db->from('kecamatan');
         $this->db->where('id_kecamatan', $id_kecamatan);
         $query = $this->db->get();
-        return $query;
+        return $query->row();
     }
 
     public function input($data)
     {
-        $this->db->insert('tanah_ulayat', $data);
+        return $this->db->insert('tanah_ulayat', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_ulayat', $id);
-        $this->db->update('tanah_ulayat', $data);
+        return $this->db->update('tanah_ulayat', $data);
     }
 
     public function delete($id_ulayat)
     {
         $this->db->where('id_ulayat', $id_ulayat);
-        $this->db->delete('tanah_ulayat');
+        return $this->db->delete('tanah_ulayat');
     }
 }

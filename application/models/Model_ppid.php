@@ -20,18 +20,18 @@ class Model_ppid extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('ppid', $data);
+        return $this->db->insert('ppid', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_ppid', $id);
-        $this->db->update('ppid', $data);
+        return $this->db->update('ppid', $data);
     }
 
     public function delete($id_ppid)
     {
         $this->db->where('id_ppid', $id_ppid);
-        $this->db->delete('ppid');
+        return $this->db->delete('ppid');
     }
 }
