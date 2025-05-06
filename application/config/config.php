@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 // Allow IP Address
-$config['allowed_ips'] = ['::1'];
+// $config['allowed_ips'] = ['::1'];
 
 // Deploy
 $config['base_url'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
