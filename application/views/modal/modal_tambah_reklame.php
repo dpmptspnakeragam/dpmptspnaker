@@ -9,6 +9,8 @@
             </div>
             <div class="modal-body">
                 <form role="form" action="<?= base_url(); ?>admin/reklame/tambah" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                        value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12 col-md-6">

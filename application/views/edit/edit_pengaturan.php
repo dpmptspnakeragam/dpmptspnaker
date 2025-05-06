@@ -1,6 +1,6 @@
-<script src="<?php echo base_url(); ?>assets/ckeditor/ckeditor.js"></script>
+<script src="<?= base_url(); ?>assets/ckeditor/ckeditor.js"></script>
 <?php foreach ($pengaturan->result() as $row) : ?>
-    <div class="modal fade" id="EditPengaturan<?php echo $row->id_setting; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="EditPengaturan<?= $row->id_setting; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -13,7 +13,7 @@
                 <form role="form" action="<?= base_url('admin/pengaturan/edit'); ?>" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group" hidden>
-                            <input type="text" class="form-control hidden" id="id" name="id" value="<?php echo $row->id_setting; ?>">
+                            <input type="text" class="form-control hidden" id="id" name="id" value="<?= $row->id_setting; ?>">
                         </div>
                         <div class="row">
                             <div class="col-12">
@@ -21,7 +21,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title font-weight-bold">Sejarah</h3>
                                     </div>
-                                    <textarea id="editsejarah" type="text" class="form-control" rows="5" name="sejarah" placeholder="Sejarah" required><?php echo $row->sejarah; ?></textarea>
+                                    <textarea id="editsejarah" type="text" class="form-control" rows="5" name="sejarah" placeholder="Sejarah" required><?= $row->sejarah; ?></textarea>
                                     <script type="text/javascript">
                                         CKEDITOR.replace('editsejarah');
                                     </script>
@@ -32,7 +32,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title font-weight-bold">Visi</h3>
                                     </div>
-                                    <textarea id="editvisi" type="text" class="form-control" rows="5" name="visi" placeholder="Visi" required><?php echo $row->visi; ?></textarea>
+                                    <textarea id="editvisi" type="text" class="form-control" rows="5" name="visi" placeholder="Visi" required><?= $row->visi; ?></textarea>
                                     <script type="text/javascript">
                                         CKEDITOR.replace('editvisi');
                                     </script>
@@ -43,7 +43,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title font-weight-bold">Misi</h3>
                                     </div>
-                                    <textarea id="editmisi" type="text" class="form-control" rows="5" name="misi" placeholder="Misi" required><?php echo $row->misi; ?></textarea>
+                                    <textarea id="editmisi" type="text" class="form-control" rows="5" name="misi" placeholder="Misi" required><?= $row->misi; ?></textarea>
                                     <script type="text/javascript">
                                         CKEDITOR.replace('editmisi');
                                     </script>
@@ -54,7 +54,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title font-weight-bold">Tugas</h3>
                                     </div>
-                                    <textarea id="edittugas" type="text" class="form-control" rows="5" name="tugas" placeholder="Tugas" required><?php echo $row->tugas; ?></textarea>
+                                    <textarea id="edittugas" type="text" class="form-control" rows="5" name="tugas" placeholder="Tugas" required><?= $row->tugas; ?></textarea>
                                     <script type="text/javascript">
                                         CKEDITOR.replace('edittugas');
                                     </script>
@@ -65,7 +65,7 @@
                                     <div class="card-header">
                                         <h3 class="card-title font-weight-bold">Fungsi</h3>
                                     </div>
-                                    <textarea id="editfungsi" type="text" class="form-control" rows="5" name="fungsi" placeholder="Fungsi" required><?php echo $row->fungsi; ?></textarea>
+                                    <textarea id="editfungsi" type="text" class="form-control" rows="5" name="fungsi" placeholder="Fungsi" required><?= $row->fungsi; ?></textarea>
                                     <script type="text/javascript">
                                         CKEDITOR.replace('editfungsi');
                                     </script>

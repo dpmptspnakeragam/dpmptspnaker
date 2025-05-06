@@ -9,6 +9,8 @@
             </div>
 
             <form role="form" action="<?= base_url('admin/pengaduan/tambah'); ?>" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                    value="<?= $this->security->get_csrf_hash(); ?>">
                 <div class="modal-body">
                     <?php
                     $unique_id = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));

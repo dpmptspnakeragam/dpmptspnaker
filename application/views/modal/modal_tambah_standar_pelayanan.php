@@ -9,6 +9,8 @@
             </div>
 
             <form action="<?= base_url('admin/standar_pelayanan/tambah'); ?>" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                    value="<?= $this->security->get_csrf_hash(); ?>">
                 <div class="modal-body">
                     <?php foreach ($idmax->result() as $row) {
                     ?>

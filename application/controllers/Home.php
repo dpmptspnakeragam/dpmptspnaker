@@ -165,64 +165,83 @@ class Home extends CI_Controller
 	{
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required');
-		$this->form_validation->set_rules('hp', 'Nomor WhatsApp', 'required');
+		$this->form_validation->set_rules('hp', 'Nomor WhatsApp', 'required|numeric|min_length[10]|max_length[15]');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('lokasi_kejadian', 'Lokasi Kejadian', 'required');
 		$this->form_validation->set_rules('materi_pengaduan', 'Uraian Pengaduan', 'required');
 
-		if ($this->form_validation->run() == TRUE) {
+		if ($this->form_validation->run() === TRUE) {
 			$unique_id = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
-			$date = new DateTime();
-			$formatted_date = $date->format('Y-m-d H:i:s');
+			$formatted_date = date('Y-m-d H:i:s');
 
-			// Default file name
 			$file_name = null;
 
-			// Proses upload file jika ada
+			// Proses Upload File
 			if (!empty($_FILES['file_pengaduan']['name'])) {
 				$config['upload_path']   = './assets/imgupload/';
 				$config['allowed_types'] = 'jpg|jpeg|png|pdf|docx';
-				$config['max_size']      = 22000; // Max 22MB
+				$config['max_size']      = 22000; // 22MB
 				$config['file_name']     = 'PENGADUAN_' . $unique_id . '_' . time();
 
 				$this->load->library('upload', $config);
 
-				if ($this->upload->do_upload('file_pengaduan')) {
-					$file_name = $this->upload->data('file_name');
-				} else {
+				if (!$this->upload->do_upload('file_pengaduan')) {
 					$this->session->set_flashdata('error_pengaduan', $this->upload->display_errors());
 					redirect('#pengaduan');
+					return;
 				}
+
+				// Validasi MIME type
+				$file_mime = mime_content_type($_FILES['file_pengaduan']['tmp_name']);
+				$allowed_mimes = [
+					'image/jpeg',
+					'image/png',
+					'application/pdf',
+					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+				];
+
+				if (!in_array($file_mime, $allowed_mimes)) {
+					unlink($this->upload->data('full_path')); // Hapus file jika tidak valid
+					$this->session->set_flashdata('error_pengaduan', 'Tipe file tidak diperbolehkan.');
+					redirect('#pengaduan');
+					return;
+				}
+
+				$file_name = $this->upload->data('file_name');
 			}
 
-			// Input data
+			// Data Input
 			$input = [
-				'no_pengaduan' => $unique_id,
-				'nama' => $this->input->post('nama'),
-				'alamat' => $this->input->post('alamat'),
-				'hp' => $this->input->post('hp'),
-				'email' => $this->input->post('email'),
-				'jenis_pengaduan' => 'Online',
-				'lokasi_kejadian' => $this->input->post('lokasi_kejadian'),
-				'waktu_kejadian' => $formatted_date,
-				'materi_pengaduan' => $this->input->post('materi_pengaduan'),
-				'file_pengaduan' => $file_name,
-				'status' => 'Proses'
+				'no_pengaduan'     => $unique_id,
+				'nama'             => $this->input->post('nama', TRUE),
+				'alamat'           => $this->input->post('alamat', TRUE),
+				'hp'               => $this->input->post('hp', TRUE),
+				'email'            => $this->input->post('email', TRUE),
+				'jenis_pengaduan'  => 'Online',
+				'lokasi_kejadian'  => $this->input->post('lokasi_kejadian', TRUE),
+				'waktu_kejadian'   => $formatted_date,
+				'materi_pengaduan' => $this->input->post('materi_pengaduan', TRUE),
+				'file_pengaduan'   => $file_name,
+				'status'           => 'Proses'
 			];
 
-			// Sanitize and save data
-			$data = $this->security->xss_clean($input);
-			$this->Model_pengaduan->insert_pengaduan($data);
+			// Simpan ke Database
+			$this->Model_pengaduan->insert_pengaduan($input);
 
-			// Send email
+			// Kirim Email
 			$this->email->from('pengaduan@dpmptsp.agamkab.go.id', 'DPMPTSP Kabupaten Agam');
-			$this->email->to($this->input->post('email'));
+			$this->email->to($input['email']);
 			$this->email->subject('Pengaduan Berhasil Dikirim');
 			$this->email->message("
-            Pengaduan Anda dengan nomor <b>$unique_id</b> telah berhasil disimpan, 
-            silahkan melakukan tracking di 
+            Pengaduan Anda dengan nomor <b>{$unique_id}</b> telah berhasil disimpan.<br>
+            Silakan melakukan tracking di 
             <a href='https://dpmptsp.agamkab.go.id#pengaduan'>https://dpmptsp.agamkab.go.id#pengaduan</a> 
-            untuk mengetahui <b>Proses Pengaduan</b>. Terima kasih.");
+            untuk mengetahui <b>Proses Pengaduan</b>.<br><br>
+            Terima kasih.
+        ");
+
+			$this->email->send();
+
 			$this->session->set_flashdata('berhasil_pengaduan', "Pengaduan berhasil disimpan dengan Nomor <b>$unique_id</b>. Lakukan Tracking Pengaduan untuk mengetahui informasi lebih lanjut. Terima kasih!!");
 		} else {
 			$this->session->set_flashdata('error_pengaduan', 'Pengaduan gagal disimpan. Perhatikan semua inputan!!');

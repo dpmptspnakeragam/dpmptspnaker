@@ -10,6 +10,8 @@
 
             <form role="form" action="<?= base_url('admin/banner/tambah'); ?>" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                        value="<?= $this->security->get_csrf_hash(); ?>">
                     <?php foreach ($idmax->result() as $row) {
                     ?>
                         <div hidden class="form-group">

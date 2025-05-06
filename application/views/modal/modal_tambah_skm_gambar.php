@@ -8,6 +8,8 @@
                 </button>
             </div>
             <form role="form" action="<?= base_url(); ?>admin/grafik_skm/tambah_skm_gambar" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                    value="<?= $this->security->get_csrf_hash(); ?>">
                 <div class="modal-body">
                     <?php foreach ($idmaxx->result() as $row) { ?>
                         <div class="form-group" hidden>

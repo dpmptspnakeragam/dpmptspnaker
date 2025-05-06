@@ -10,7 +10,9 @@
                 </button>
             </div>
 
-            <form role="form" action="<?= base_url('admin/nonperizinan/tambah'); ?>" method="POST" enctype="multipart/form-data">
+            <form role="form" action="<?= base_url('admin/non_perizinan/tambah'); ?>" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                    value="<?= $this->security->get_csrf_hash(); ?>">
                 <div class="modal-body">
                     <div class="row">
                         <?php foreach ($idmax->result() as $row) {

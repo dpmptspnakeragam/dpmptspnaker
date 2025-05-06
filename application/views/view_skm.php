@@ -77,13 +77,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center mb-2">
-                                        <form action="<?= base_url('skm/form'); ?>">
-                                            <button type="submit" class="btn-survey">
+                                        <a href="<?= base_url('skm/form'); ?>">
+                                            <button type="submit" class="tombol-pengaduan">
                                                 <i class="fa fa-list-ol mt-1" aria-hidden="true" style="font-size: 23px;"></i>
                                                 <br>
                                                 Isi Survey Disini
                                             </button>
-                                        </form>
+                                        </a>
                                     </div>
                                 </div>
                                 <hr>

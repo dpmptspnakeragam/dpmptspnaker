@@ -47,6 +47,9 @@
                                     <div class="col-12">
                                         <form role="form" action="<?= base_url('skm/tambah_skm'); ?>" method="post">
 
+                                            <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                                                value="<?= $this->security->get_csrf_hash(); ?>">
+
                                             <?php foreach ($idmax_skm->result() as $row) : ?>
                                                 <div class="form-group" hidden>
                                                     <label class=" control-label">Id</label>
@@ -463,7 +466,7 @@
                                                 <input type="hidden" name="rating_r5" value="<?= set_value('rating_r5'); ?>">
                                             </div>
                                             <!-- <a href="<?= base_url('skm'); ?>" class="btn btn-secondary">Batal</a> -->
-                                            <button type="submit" class="btn-survey mt-2">
+                                            <button type="submit" class="tombol-pengaduan mt-2">
                                                 Kirim Survey
                                                 <i class="fa fa-file-import"></i>
                                             </button>

@@ -89,6 +89,25 @@ body {
 	padding: 5px;
 }
 
+.tombol-pengaduan {
+	padding: 5px;
+	text-decoration: none;
+	color: maroon;
+	display: inline-block;
+	width: 100%;
+	border: 2px solid;
+	border-radius: 5px;
+	transition-duration: 0.5s;
+}
+
+.tombol-pengaduan:hover {
+	background-color: maroon;
+	color: white;
+	transition-duration: 0.5s;
+	border-radius: 30px;
+	padding: 5px;
+}
+
 /* custom pagination */
 .custom-pagination {
 	margin-bottom: 30px;

@@ -10,6 +10,8 @@
 
             <form role="form" action="<?= base_url('admin/aset/tambah'); ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                        value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="row">
                         <div class="col-lg-6 col-sm-12">
                             <?php foreach ($idmax->result() as $row) {

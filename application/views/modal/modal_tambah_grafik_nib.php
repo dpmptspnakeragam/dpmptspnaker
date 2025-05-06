@@ -9,6 +9,8 @@
             </div>
             <div class="modal-body">
                 <form role="form" action="<?= base_url(); ?>admin/grafik_nib/tambah_nib" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                        value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="form-group">
                         <label>PMDN/PMA & UMK/Non UMK</label>
                         <select required name="nib" class="form-control">

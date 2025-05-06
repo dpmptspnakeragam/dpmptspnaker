@@ -9,6 +9,8 @@
             </div>
             <div class="modal-body">
                 <form role="form" action="<?= base_url(); ?>admin/grafik_nib/tambah_risiko" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                        value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="form-group">
                         <label>Risiko</label>
                         <select required name="risiko" class="form-control">

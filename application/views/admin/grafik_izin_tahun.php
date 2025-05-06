@@ -35,6 +35,8 @@
                     <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalTambah"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
 
                     <form class="form-inline mt-3" action="<?php echo base_url('admin/grafik_izin_tahun/tambah_field_tahun'); ?>" method="post">
+                        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                            value="<?= $this->security->get_csrf_hash(); ?>">
                         <div class="form-group">
                             <input type="text" name="tahun" class="form-control form-control-sm mr-2" placeholder="Tahun" required>
                         </div>
@@ -42,6 +44,8 @@
                     </form>
 
                     <form class="form-inline mt-3" action="<?php echo base_url('admin/grafik_izin_tahun/hapus_field_tahun'); ?>" method="post">
+                        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                            value="<?= $this->security->get_csrf_hash(); ?>">
                         <div class="form-group">
                             <select name="tahun" class="form-control form-control-sm mr-2" required>
                                 <option selected disabled>Pilih Tahun</option>

@@ -11,6 +11,8 @@
                 </div>
                 <div class="modal-body">
                     <form role="form" action="<?= base_url(); ?>admin/pegawai/ubah_kabid" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                            value="<?= $this->security->get_csrf_hash(); ?>">
                         <div class="form-group" hidden>
                             <input type="text" class="form-control hidden" id="id" name="id_kabid" value="<?php echo $row->id_kabid; ?>">
                         </div>

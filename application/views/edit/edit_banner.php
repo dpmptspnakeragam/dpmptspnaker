@@ -10,6 +10,8 @@
                 </div>
 
                 <form role="form" action="<?= base_url('admin/banner/edit'); ?>" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                        value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="modal-body">
                         <input type="hidden" name="id_banner" value="<?= $row->id_banner; ?>">
 
