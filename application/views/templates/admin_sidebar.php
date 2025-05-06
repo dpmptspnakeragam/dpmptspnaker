@@ -137,7 +137,7 @@
 													[
 														'standar_pelayanan',
 														'perizinan',
-														'nonperizinan',
+														'non_perizinan',
 														'perizinan_risiko',
 													]
 												) ? 'menu-open' : ''; ?>">
@@ -146,7 +146,7 @@
 																[
 																	'standar_pelayanan',
 																	'perizinan',
-																	'nonperizinan',
+																	'non_perizinan',
 																	'perizinan_risiko',
 																]
 															) ? 'active' : ''; ?>">
@@ -170,8 +170,8 @@
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="<?= base_url('admin/nonperizinan'); ?>" class="nav-link <?= $this->uri->segment(2) == 'nonperizinan' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'nonperizinan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'nonperizinan' ? 'text-maroon' : ''; ?>"></i>
+										<a href="<?= base_url('admin/non_perizinan'); ?>" class="nav-link <?= $this->uri->segment(2) == 'non_perizinan' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'non_perizinan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'non_perizinan' ? 'text-maroon' : ''; ?>"></i>
 											<p>Non Perizinan</p>
 										</a>
 									</li>
