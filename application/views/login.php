@@ -43,7 +43,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-danger btn-block">
+                            <button type="submit" class="btn btn-outline-danger btn-block">
                                 <i class="fas fa-sign-in-alt"></i> Sign In
                             </button>
                         </div>
