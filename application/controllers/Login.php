@@ -11,7 +11,9 @@ class Login extends CI_controller
     {
         //$this->load->model('Model_alumni_lpks');
         //$data ['alumnilpk'] = $this->Model_alumni_lpks->tampil_data();
+        $this->load->view('templates/login_header');
         $this->load->view('login');
+        $this->load->view('templates/login_footer');
     }
 
     public function cek_login()
@@ -23,7 +25,9 @@ class Login extends CI_controller
             'required' => 'Kolom %s wajib diisi.'
         ]);
         if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/login_header');
             $this->load->view('login');
+            $this->load->view('templates/login_footer');
         } else {
             $data = array(
                 'username' => $this->input->post('usrname', TRUE),
