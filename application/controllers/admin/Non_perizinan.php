@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Nonperizinan extends CI_controller
+class Non_perizinan extends CI_controller
 {
     public function __construct()
     {
@@ -24,7 +24,7 @@ class Nonperizinan extends CI_controller
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);
         $this->load->view('templates/admin_sidebar', $data, FALSE);
-        $this->load->view('admin/nonperizinan', $data, FALSE);
+        $this->load->view('admin/non_perizinan', $data, FALSE);
         $this->load->view('modal/modal_tambah_nonperizinan');
         $this->load->view('edit/edit_nonperizinan', $data, FALSE);
         $this->load->view('templates/admin_footer');
@@ -71,7 +71,7 @@ class Nonperizinan extends CI_controller
         } else {
             $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
         }
-        redirect('admin/nonperizinan', 'refresh');
+        redirect('admin/non_perizinan', 'refresh');
     }
 
     public function edit()
@@ -126,7 +126,7 @@ class Nonperizinan extends CI_controller
             $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
         }
 
-        redirect('admin/nonperizinan', 'refresh');
+        redirect('admin/non_perizinan', 'refresh');
     }
 
     public function hapus($id)
@@ -145,6 +145,6 @@ class Nonperizinan extends CI_controller
             $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
         }
 
-        redirect('admin/nonperizinan', 'refresh');
+        redirect('admin/non_perizinan', 'refresh');
     }
 }
