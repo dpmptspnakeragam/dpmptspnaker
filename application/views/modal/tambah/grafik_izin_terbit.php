@@ -8,7 +8,7 @@
                 </button>
             </div>
 
-            <form role="form" action="<?= base_url('admin/grafik_izin/tambah'); ?>" method="POST" enctype="multipart/form-data">
+            <form role="form" action="<?= base_url('admin/grafik_izin_terbit/tambah'); ?>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                     value="<?= $this->security->get_csrf_hash(); ?>">
                 <div class="modal-body">

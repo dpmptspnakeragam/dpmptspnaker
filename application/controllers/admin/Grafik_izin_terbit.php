@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Grafik_izin extends CI_controller
+class Grafik_izin_terbit extends CI_controller
 {
     public function __construct()
     {
@@ -23,10 +23,11 @@ class Grafik_izin extends CI_controller
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);
         $this->load->view('templates/admin_sidebar', $data, FALSE);
-        $this->load->view('admin/grafik', $data, FALSE);
-        $this->load->view('modal/modal_tambah_grafik', $data, FALSE);
-        $this->load->view('edit/edit_grafik', $data, FALSE);
-        $this->load->view('edit/edit_periode_grafik', $data, FALSE);
+        $this->load->view('admin/grafik_izin_terbit', $data, FALSE);
+        $this->load->view('modal/edit/periode_grafik_izin_terbit', $data, FALSE);
+        $this->load->view('modal/tambah/grafik_izin_terbit', $data, FALSE);
+        $this->load->view('modal/edit/grafik_izin_terbit', $data, FALSE);
+        $this->load->view('modal/hapus/grafik_izin_terbit', $data, FALSE);
         $this->load->view('templates/admin_footer');
     }
 
@@ -50,7 +51,7 @@ class Grafik_izin extends CI_controller
             $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
         }
 
-        redirect('admin/grafik_izin', 'refresh');
+        redirect('admin/grafik_izin_terbit', 'refresh');
     }
 
     public function edit()
@@ -73,7 +74,7 @@ class Grafik_izin extends CI_controller
             $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
         }
 
-        redirect('admin/grafik_izin', 'refresh');
+        redirect('admin/grafik_izin_terbit', 'refresh');
     }
 
     public function edit_periode()
@@ -96,7 +97,7 @@ class Grafik_izin extends CI_controller
             $this->session->set_flashdata('error', 'Perbarui data periode gagal. Silahkan coba lagi');
         }
 
-        redirect('admin/grafik_izin', 'refresh');
+        redirect('admin/grafik_izin_terbit', 'refresh');
     }
 
     public function hapus($id)
@@ -115,6 +116,6 @@ class Grafik_izin extends CI_controller
             $this->session->set_flashdata('error', 'Data tidak ditemukan');
         }
 
-        redirect('admin/grafik_izin', 'refresh');
+        redirect('admin/grafik_izin_terbit', 'refresh');
     }
 }

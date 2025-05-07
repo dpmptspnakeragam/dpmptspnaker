@@ -1,27 +1,17 @@
 		<!-- Main Sidebar Container -->
 		<aside class="main-sidebar sidebar-light-maroon">
-			<!-- Brand Logo -->
 			<a href="<?= base_url('admin/home'); ?>" class="brand-link elevation-2">
-				<!-- Small logo for minimized sidebar -->
 				<img src="<?= base_url('assets/img/agam.png'); ?>" alt="DPMPTSP Logo" class="brand-image">
 
-				<!-- Normal logo for full sidebar -->
 				<img src="<?= base_url('assets/img/logo_dpmptspwarna.png'); ?>" alt="DPMPTSP Logo Warna" class="brand-image">
 			</a>
 
 			<!-- Sidebar -->
 			<div class="sidebar">
 
-				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel mt-2 pb-2 mb-1 d-flex">
-					<!-- <div style="margin-left: 10px;">
-						<img src="<?= base_url('assets/img/admin-avatar.png'); ?>" class="img-circle elevation-2" alt="User Image">
-					</div> -->
 					<div class="info d-flex justify-content-between align-items-center w-100">
 						<span class="d-block"><?= $this->session->userdata('nama') ?></span>
-						<!-- <a href="<?= base_url('logout'); ?>" data-toggle="modal" data-target="#logoutModal">
-							<i class="fas fa-sign-out-alt"></i>
-						</a> -->
 					</div>
 				</div>
 
@@ -245,7 +235,7 @@
 							<li class="nav-item <?= in_array(
 													$this->uri->segment(2),
 													[
-														'grafik_izin',
+														'grafik_izin_terbit',
 														'grafik_izin_tahun',
 														'grafik_investasi',
 														'grafik_skm',
@@ -255,7 +245,7 @@
 								<a href="" class="nav-link <?= in_array(
 																$this->uri->segment(2),
 																[
-																	'grafik_izin',
+																	'grafik_izin_terbit',
 																	'grafik_izin_tahun',
 																	'grafik_investasi',
 																	'grafik_skm',
@@ -270,8 +260,8 @@
 								</a>
 								<ul class="nav nav-treeview">
 									<li class="nav-item">
-										<a href="<?= base_url('admin/grafik_izin'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_izin' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'grafik_izin' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin' ? 'text-maroon' : ''; ?>"></i>
+										<a href="<?= base_url('admin/grafik_izin_terbit'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'text-maroon' : ''; ?>"></i>
 											<p>Grafik Izin Terbit</p>
 										</a>
 									</li>
