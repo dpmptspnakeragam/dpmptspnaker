@@ -16,7 +16,13 @@
     <div class="content-wrapper informasi mt-5">
         <div class="container-fluid mb-0">
             <div class="row">
-                <?php foreach ($berita->result() as $row) { ?>
+                <?php foreach ($berita->result() as $row) {
+                    $gambar     = $row->gambar ?? '';
+                    $imagePath  = FCPATH . 'assets/imgupload/' . $gambar;
+                    $imageSrc   = (!empty($gambar) && file_exists($imagePath))
+                        ? base_url('assets/imgupload/' . $gambar)
+                        : base_url('assets/img/agam.jpg');
+                ?>
                     <div class="col-lg-4 col-6 mt-4">
                         <div class="card kartu-info shadow">
                             <div class="card-header">
@@ -24,7 +30,7 @@
                             </div>
                             <div class="card-body">
                                 <small class="tgl_berita2 text-light mt-3 p-1"><?= date_indo($row->tgl_berita) ?>, Kategori : <?= $row->kategori; ?></small>
-                                <img class="gambar-info img-responsive mt-3 mb-3" src="<?= base_url() ?>assets/imgupload/<?= $row->gambar; ?>" alt="<?= $row->judul_berita; ?>">
+                                <img class="gambar-info img-responsive mt-3 mb-3" src="<?= $imageSrc; ?>" alt="<?= $row->judul_berita; ?>">
                                 <small class="tgl_berita2 text-light mt-3 p-1">
                                     <a href="#" data-toggle="modal" data-target="#DetailInformasi<?php echo $row->id_berita; ?>">Selengkapnya >></a>
                                 </small>

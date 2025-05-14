@@ -370,12 +370,6 @@ a:hover {
 	padding: 5px;
 }
 
-.gambar-berita2 {
-	height: 100%;
-	width: 50%;
-	margin-left: auto;
-	margin-right: auto;
-}
 
 /* tutup informasi */
 
@@ -1209,9 +1203,9 @@ video {
 		transition-duration: 1s;
 	}
 
-	.gambar-berita2:hover {
-		transform: scale(1.5);
-	}
+	/* .gambar-berita2:hover {
+		transform: scale(1);
+	} */
 
 	.ringkasan {
 		font-size: 12px;

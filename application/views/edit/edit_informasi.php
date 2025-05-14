@@ -62,7 +62,11 @@
                                 <div class="form-group">
                                     <label for="foto">Gambar</label>
                                     <br>
-                                    <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-size-64 img-thumbnail">
+                                    <?php if (!empty($row->gambar) && file_exists(FCPATH . 'assets/imgupload/' . $row->gambar)) : ?>
+                                        <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-size-64 img-thumbnail">
+                                    <?php else: ?>
+                                        <span class="text-muted">Tidak ada gambar</span>
+                                    <?php endif; ?>
                                     <br>
                                     <input type="file" name="gambar" class="mt-3">
                                     <input type="hidden" name="old" value="<?= $row->gambar; ?>">

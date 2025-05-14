@@ -46,9 +46,13 @@
                                         <td class="align-middle"><?= $row->isi_berita; ?></td>
                                         <td class="text-center align-middle"><?= date('d-m-Y', strtotime($row->tgl_berita)); ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/imgupload/') . $row->gambar; ?>" target="_blank">
-                                                <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-thumbnail" style="max-width: 300px;">
-                                            </a>
+                                            <?php if (!empty($row->gambar) && file_exists(FCPATH . 'assets/imgupload/' . $row->gambar)) : ?>
+                                                <a href="<?= base_url('assets/imgupload/') . $row->gambar; ?>" target="_blank">
+                                                    <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-thumbnail" style="max-width: 300px;">
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-muted">Tidak ada gambar</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#EditInformasi<?= $row->id_berita; ?>" class="btn btn-outline-warning mt-1 mb-1">

@@ -95,21 +95,25 @@
 										<?php
 									}
 								}
+								$imagePath = FCPATH . 'assets/imgupload/' . $row->gambar;
+								$imageSrc = (!empty($row->gambar) && file_exists($imagePath))
+									? base_url('assets/imgupload/' . $row->gambar)
+									: base_url('assets/img/agam.jpg');
 										?>
 										<div class="item__third">
 											<a href="#" data-toggle="modal" data-target="#DetailInformasi<?php echo $row->id_berita; ?>">
 												<div class="container">
 													<div class="row">
-														<img class="gambar-carousel mt-5" src="<?= base_url() ?>assets/imgupload/<?= $row->gambar; ?>" alt="<?= $row->judul_berita; ?>">
+														<img class="gambar-carousel mt-5" src="<?= $imageSrc; ?>" alt="<?= $row->judul_berita; ?>">
 													</div>
 												</div>
 												<div class="carousel-caption text-left">
 													<div class="row">
 														<p class="judul-informasi mb-2 pl-2 pr-2"><?= $row->judul_berita; ?></p>
 													</div>
-													<di class="row">
+													<div class="row">
 														<small class="tgl_berita bg-dark p-1"><?= date_indo($row->tgl_berita); ?></small>
-													</di>
+													</div>
 											</a>
 											<div class="text-center tombol-informasi">
 												<small><a href="<?= base_url(); ?>informasi" class="informasi-lainnya">> Berita Lainnnya < </a></small>
