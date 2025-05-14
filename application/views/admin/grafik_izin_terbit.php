@@ -1,9 +1,7 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-
         <div class="row">
-
             <div class="col-12">
                 <div class="card card-outline card-maroon">
                     <div class="card-header">
@@ -21,8 +19,14 @@
                             <?php } ?>
                         </span>
                     </div>
+                </div>
+            </div>
 
-                    <hr class="mt-0 mb-0">
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel <?= $title; ?></h3>
+                    </div>
 
                     <div class="card-body">
 
@@ -123,8 +127,6 @@
                 <!-- /.card -->
             </div>
         </div>
-        <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
 </section>
 <!-- /.content -->

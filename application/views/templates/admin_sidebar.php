@@ -236,7 +236,7 @@
 													$this->uri->segment(2),
 													[
 														'grafik_izin_terbit',
-														'grafik_izin_tahun',
+														'grafik_izin_terbit_tahun',
 														'grafik_investasi',
 														'grafik_skm',
 														'grafik_nib',
@@ -246,7 +246,7 @@
 																$this->uri->segment(2),
 																[
 																	'grafik_izin_terbit',
-																	'grafik_izin_tahun',
+																	'grafik_izin_terbit_tahun',
 																	'grafik_investasi',
 																	'grafik_skm',
 																	'grafik_nib',
@@ -266,8 +266,8 @@
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="<?= base_url('admin/grafik_izin_tahun'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_izin_tahun' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'grafik_izin_tahun' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin_tahun' ? 'text-maroon' : ''; ?>"></i>
+										<a href="<?= base_url('admin/grafik_izin_terbit_tahun'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'text-maroon' : ''; ?>"></i>
 											<p>Grafik Izin Terbit (Tahun)</p>
 										</a>
 									</li>

@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Grafik_izin_tahun extends CI_controller
+class Grafik_izin_terbit_tahun extends CI_controller
 {
     public function __construct()
     {
@@ -23,14 +23,18 @@ class Grafik_izin_tahun extends CI_controller
         ];
 
         $data['home'] = 'Home';
-        $data['title'] = 'Grafik Izin Tahun';
+        $data['title'] = 'Grafik Izin Terbit (Tahun)';
 
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);
         $this->load->view('templates/admin_sidebar', $data, FALSE);
-        $this->load->view('admin/grafik_izin_tahun', $data);
-        $this->load->view('modal/modal_tambah_grafik_izin_tahun');
-        $this->load->view('edit/edit_grafik_izin_tahun', $data);
+
+        $this->load->view('admin/grafik_izin_terbit_tahun', $data, FALSE);
+
+        $this->load->view('modal/tambah/grafik_izin_terbit_tahun', $data, FALSE);
+        $this->load->view('modal/edit/grafik_izin_terbit_tahun', $data, FALSE);
+        $this->load->view('modal/hapus/grafik_izin_terbit_tahun', $data, FALSE);
+
         $this->load->view('templates/admin_footer');
     }
 
@@ -54,12 +58,12 @@ class Grafik_izin_tahun extends CI_controller
         }
 
         $this->Model_grafik_izin_tahun->input($data);
-        $this->session->set_flashdata("berhasil", "Tambah data <b>$izin</b> berhasil !");
-        redirect('admin/grafik_izin_tahun');
+        $this->session->set_flashdata("success", "Tambah data <b>$izin</b> berhasil !");
+        redirect('admin/grafik_izin_terbit_tahun');
     }
 
 
-    public function ubah()
+    public function edit()
     {
         $id = $this->input->post('id', true);
         $izin = $this->input->post('izin', true);
@@ -79,8 +83,8 @@ class Grafik_izin_tahun extends CI_controller
         }
 
         $this->Model_grafik_izin_tahun->update($data, $id);
-        $this->session->set_flashdata("berhasil", "Ubah data <b>$izin</b> berhasil !");
-        redirect('admin/grafik_izin_tahun');
+        $this->session->set_flashdata("success", "Ubah data <b>$izin</b> berhasil !");
+        redirect('admin/grafik_izin_terbit_tahun');
     }
 
 
@@ -90,12 +94,12 @@ class Grafik_izin_tahun extends CI_controller
 
         if ($row) {
             $this->Model_grafik_izin_tahun->delete($id);
-            $this->session->set_flashdata("berhasil", "Hapus data <b>{$row->izin}</b> berhasil !");
+            $this->session->set_flashdata("success", "Hapus data <b>{$row->izin}</b> berhasil !");
         } else {
-            $this->session->set_flashdata("gagal", "Data tidak ditemukan atau sudah dihapus.");
+            $this->session->set_flashdata("error", "Data tidak ditemukan atau sudah dihapus.");
         }
 
-        redirect('admin/grafik_izin_tahun');
+        redirect('admin/grafik_izin_terbit_tahun');
     }
 
 
@@ -112,19 +116,19 @@ class Grafik_izin_tahun extends CI_controller
                 $year = str_replace('thn', '', $field->Field);
                 if ($year == $tahun) {
                     $this->session->set_flashdata("gagal", "Tahun <b>$tahun</b> sudah ada!");
-                    redirect('admin/grafik_izin_tahun');
+                    redirect('admin/grafik_izin_terbit_tahun');
                     return;
                 }
             }
 
             // Jika tahun belum ada, tambahkan field tahun baru
             $this->Model_grafik_izin_tahun->add_tahun($field_name);
-            $this->session->set_flashdata("berhasil", "Tahun <b>$tahun</b> berhasil ditambahkan!");
+            $this->session->set_flashdata("success", "Tahun <b>$tahun</b> berhasil ditambahkan!");
         } else {
-            $this->session->set_flashdata("gagal", "Tahun tidak boleh kosong!");
+            $this->session->set_flashdata("error", "Tahun tidak boleh kosong!");
         }
 
-        redirect('admin/grafik_izin_tahun');
+        redirect('admin/grafik_izin_terbit_tahun');
     }
 
 
@@ -148,14 +152,14 @@ class Grafik_izin_tahun extends CI_controller
             if ($exists) {
                 // Hapus field tahun dari database
                 $this->Model_grafik_izin_tahun->delete_tahun($field_name);
-                $this->session->set_flashdata("berhasil", "Tahun <b>$tahun</b> berhasil dihapus!");
+                $this->session->set_flashdata("success", "Tahun <b>$tahun</b> berhasil dihapus!");
             } else {
-                $this->session->set_flashdata("gagal", "Tahun <b>$tahun</b> tidak ditemukan!");
+                $this->session->set_flashdata("error", "Tahun <b>$tahun</b> tidak ditemukan!");
             }
         } else {
-            $this->session->set_flashdata("gagal", "Tahun tidak boleh kosong!");
+            $this->session->set_flashdata("error", "Tahun tidak boleh kosong!");
         }
 
-        redirect('admin/grafik_izin_tahun');
+        redirect('admin/grafik_izin_terbit_tahun');
     }
 }

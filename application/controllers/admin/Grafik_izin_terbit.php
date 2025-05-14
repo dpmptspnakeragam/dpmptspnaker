@@ -23,11 +23,15 @@ class Grafik_izin_terbit extends CI_controller
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);
         $this->load->view('templates/admin_sidebar', $data, FALSE);
+
         $this->load->view('admin/grafik_izin_terbit', $data, FALSE);
-        $this->load->view('modal/edit/periode_grafik_izin_terbit', $data, FALSE);
+
         $this->load->view('modal/tambah/grafik_izin_terbit', $data, FALSE);
         $this->load->view('modal/edit/grafik_izin_terbit', $data, FALSE);
         $this->load->view('modal/hapus/grafik_izin_terbit', $data, FALSE);
+
+        $this->load->view('modal/edit/periode_grafik_izin_terbit', $data, FALSE);
+
         $this->load->view('templates/admin_footer');
     }
 

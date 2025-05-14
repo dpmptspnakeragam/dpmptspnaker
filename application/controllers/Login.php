@@ -49,7 +49,7 @@ class Login extends CI_controller
                     $this->Model_user->update_online_status($sess->id, 1);
                 }
 
-                if ($this->session->userdata('username') == 'agamdpmptspnaker') {
+                if ($this->session->userdata('username') == 'agamdpmptsp') {
                     redirect('admin/home');
                 } elseif ($this->session->userdata('username') == 'pengaduan') {
                     redirect('admin/pengaduan');
