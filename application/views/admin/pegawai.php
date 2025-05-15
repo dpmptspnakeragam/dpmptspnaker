@@ -40,7 +40,7 @@
                                 <?php $count = 1; ?>
                                 <?php foreach ($pegawai->result() as $row) : ?>
                                     <tr>
-                                        <td class="text-center align-middle"><?= $count; ?></td>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->nama; ?></td>
                                         <td class="text-center align-middle"><?= $row->jenis_nip; ?></td>
                                         <td class="text-center align-middle"><?= $row->nip; ?></td>
