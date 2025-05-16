@@ -29,12 +29,12 @@
                         <table class="table table-striped table-borderless table-hover" id="dataTable" width="100%" cellspacing="0">
                             <thead class="bg-dark text-light">
                                 <tr>
-                                    <th>Jenis Izin</th>
-                                    <th>Dasar Hukum</th>
-                                    <th>Biaya</th>
-                                    <th>Lama Proses</th>
-                                    <th>Formulir</th>
-                                    <th>Persyaratan</th>
+                                    <th class="text-center align-middle">Jenis Izin</th>
+                                    <th class="text-center align-middle">Dasar Hukum</th>
+                                    <th class="text-center align-middle">Biaya</th>
+                                    <th class="text-center align-middle">Lama Proses</th>
+                                    <th class="text-center align-middle">Formulir</th>
+                                    <th class="text-center align-middle">Persyaratan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,14 +43,14 @@
                                 foreach ($nonperizinan->result() as $row) {
                                 ?>
                                     <tr>
-                                        <td><?= $row->nama_izin; ?></td>
-                                        <td><?= $row->hukum; ?></td>
-                                        <td><?= $row->biaya; ?></td>
-                                        <td><?= $row->lamaproses; ?></td>
-                                        <td>
+                                        <td class="text-center align-middle"><?= $row->nama_izin; ?></td>
+                                        <td class="text-center align-middle"><?= $row->hukum; ?></td>
+                                        <td class="text-center align-middle"><?= $row->biaya; ?></td>
+                                        <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
+                                        <td class="text-center align-middle">
                                             <div class="btn-group">
-                                                <a href="<?= base_url(); ?>assets/fileupload/<?= $row->form; ?>" class="tombol-aksi">
-                                                    <i class="fa fa-download "></i>
+                                                <a href="<?= base_url(); ?>assets/fileupload/<?= $row->form; ?>" class="tombol-aksi" target="_blank">
+                                                    <i class="fa fa-download "></i> Download
                                                 </a>
                                             </div>
                                         </td>
