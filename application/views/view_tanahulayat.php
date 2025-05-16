@@ -1,5 +1,5 @@
 <?php
-foreach ($get_kecamatan->result() as $kec) {
+foreach ($get_kecamatan as $kec) {
 }
 ?>
 
@@ -28,6 +28,7 @@ foreach ($get_kecamatan->result() as $kec) {
             <!-- Example DataTables Card-->
             <div class="container-fluid">
                 <div class="card mb-3">
+                    <?php $kec = $get_kecamatan; ?>
                     <div class="card-header">
                         <i class="fa fa-table"></i> Kecamatan <?= $kec->kecamatan; ?>
                     </div>
