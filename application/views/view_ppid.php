@@ -46,7 +46,7 @@
                                             <td><?= $row->judul; ?></td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <a href="<?= base_url(); ?>assets/fileupload/<?= $row->file; ?>" class="tombol-aksi">
+                                                    <a href="<?= base_url(); ?>assets/fileupload/<?= $row->file; ?>" class="tombol-aksi" target="_blank">
                                                         <i class="fa fa-download ">
                                                         </i> Lihat
                                                     </a>

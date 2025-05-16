@@ -22,8 +22,7 @@
                             </div>
                             <?php if (file_exists('./assets/fileupload/' . $file->file_name)) : ?>
                                 <div class="card-footer text-center">
-                                    <a href="<?= base_url('assets/fileupload/' . $file->file_name); ?>" class="btn btn-primary" download>Download File</a>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    <a href="<?= base_url('assets/fileupload/' . $file->file_name); ?>" class="tombol-pengaduan" target="_blank" download> <i class="fa fa-download" aria-hidden="true"></i> Download File</a>
                                 </div>
                             <?php endif; ?>
                         </div>
