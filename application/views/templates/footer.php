@@ -1,6 +1,6 @@
- <div class="col-12 footer text-center pt-1 pb-3">
+ <div class="col-12 footer text-center mb-4 p-2">
    <!-- <p class="mb-0">Version: 1.0.2</p> -->
-   <p>Copyright &copy; 2020 - <?= date("Y"); ?> Powered by Web Programmer DPMPTSP Kabupaten Agam</p>
+   <span>Copyright &copy; 2020 - <?= date("Y"); ?> Powered by Web Programmer DPMPTSP Kabupaten Agam</span>
  </div>
 
 

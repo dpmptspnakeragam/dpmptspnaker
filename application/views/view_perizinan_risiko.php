@@ -5,7 +5,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <div class="collapse navbar-collapse mt-2" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="tutup" href="<?= base_url(); ?>home"><i class="fa fa-arrow-left"></i> Kembali</a>
@@ -62,39 +62,37 @@
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card mb-3">
                     <div class="card-header">
                         <i class="fa fa-table"></i> Persyaratan
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-borderless table-hover" id="dataTable" width="100%" cellspacing="0">
-                                    <thead class="bg-dark text-light">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-borderless table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead class="bg-dark text-light">
+                                    <tr>
+                                        <th class="text-center align-middle">No.</th>
+                                        <th class="text-center align-middle">Jenis Risiko</th>
+                                        <th class="text-center align-middle">Biaya</th>
+                                        <th class="text-center align-middle">Lama Proses</th>
+                                        <th class="text-center align-middle">Persyaratan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $count = 1;
+                                    foreach ($perizinan->result() as $row) {
+                                    ?>
                                         <tr>
-                                            <th class="text-center align-middle">No.</th>
-                                            <th class="text-center align-middle">Jenis Risiko</th>
-                                            <th class="text-center align-middle">Biaya</th>
-                                            <th class="text-center align-middle">Lama Proses</th>
-                                            <th class="text-center align-middle">Persyaratan</th>
+                                            <td class="text-center align-middle"><?= $count++; ?></td>
+                                            <td class="text-center align-middle"><?= $row->jenis; ?></td>
+                                            <td class="text-center align-middle"><?= $row->biaya; ?></td>
+                                            <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
+                                            <td class="align-middle"><?= $row->syarat; ?></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        $count = 1;
-                                        foreach ($perizinan->result() as $row) {
-                                        ?>
-                                            <tr>
-                                                <td class="text-center align-middle"><?= $count++; ?></td>
-                                                <td class="text-center align-middle"><?= $row->jenis; ?></td>
-                                                <td class="text-center align-middle"><?= $row->biaya; ?></td>
-                                                <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
-                                                <td class="align-middle"><?= $row->syarat; ?></td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
