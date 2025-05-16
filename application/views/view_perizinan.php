@@ -51,8 +51,8 @@
                       <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
                       <td class="text-center align-middle">
                         <div class="btn-group">
-                          <a class="tombol-aksi" href="<?= base_url(); ?>assets/fileupload/<?= $row->form; ?>">
-                            <i class="fa fa-download "></i> Lihat
+                          <a class="tombol-aksi" href="<?= base_url(); ?>assets/fileupload/<?= $row->form; ?>" target="_blank">
+                            <i class="fa fa-download "></i> Download
                           </a>
                         </div>
                       </td>
