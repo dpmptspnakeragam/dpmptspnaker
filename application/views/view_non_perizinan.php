@@ -29,6 +29,7 @@
                         <table class="table table-striped table-borderless table-hover" id="dataTable" width="100%" cellspacing="0">
                             <thead class="bg-dark text-light">
                                 <tr>
+                                    <th class="text-center align-middle">No.</th>
                                     <th class="text-center align-middle">Jenis Izin</th>
                                     <th class="text-center align-middle">Dasar Hukum</th>
                                     <th class="text-center align-middle">Biaya</th>
@@ -39,10 +40,11 @@
                             </thead>
                             <tbody>
                                 <?php
-                                $no = 1;
+                                $count = 1;
                                 foreach ($nonperizinan->result() as $row) {
                                 ?>
                                     <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->nama_izin; ?></td>
                                         <td class="text-center align-middle"><?= $row->hukum; ?></td>
                                         <td class="text-center align-middle"><?= $row->biaya; ?></td>
