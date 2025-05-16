@@ -89,7 +89,7 @@
                                                 <td class="text-center align-middle"><?= $row->jenis; ?></td>
                                                 <td class="text-center align-middle"><?= $row->biaya; ?></td>
                                                 <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
-                                                <td class="text-center align-middle"><?= $row->syarat; ?></td>
+                                                <td class="align-middle"><?= $row->syarat; ?></td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
