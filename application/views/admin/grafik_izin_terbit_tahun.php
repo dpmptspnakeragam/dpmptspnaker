@@ -105,6 +105,68 @@
                 </div>
             </div>
 
+            <!-- Chart -->
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Grafik Jumlah Izin Terbit per Tahun</h3>
+                    </div>
+
+                    <div class="card-body">
+                        <canvas id="chartIzinTahun"></canvas>
+
+                        <?php
+                        // Ambil tahun dari nama field (tanpa 'thn')
+                        $label_tahun = [];
+                        foreach ($tahun_fields as $tahun) {
+                            $label_tahun[] = str_replace('thn', '', $tahun->Field);
+                        }
+
+                        // Bangun data untuk setiap izin
+                        $datasets = [];
+                        foreach ($grafik as $row) {
+                            $data_per_tahun = [];
+                            foreach ($tahun_fields as $tahun) {
+                                $data_per_tahun[] = (int)$row->{$tahun->Field};
+                            }
+
+                            // Random warna tiap izin
+                            $warna = sprintf('rgba(%d, %d, %d, 0.7)', rand(100, 255), rand(100, 255), rand(100, 255));
+
+                            $datasets[] = [
+                                'label' => $row->izin,
+                                'data' => $data_per_tahun,
+                                'backgroundColor' => $warna,
+                                'borderColor' => str_replace('0.7', '1', $warna),
+                                'borderWidth' => 1
+                            ];
+                        }
+                        ?>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var ctx = document.getElementById('chartIzinTahun').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'bar', // Bisa diganti ke 'line'
+                                    data: {
+                                        labels: <?= json_encode($label_tahun); ?>,
+                                        datasets: <?= json_encode($datasets); ?>
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
