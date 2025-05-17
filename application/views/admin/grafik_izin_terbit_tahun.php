@@ -9,14 +9,14 @@
                     <div class="card-header">
                         <h3 class="card-title">Tambah Tahun</h3>
                     </div>
-                    <form class="form-inline" action="<?php echo base_url('admin/grafik_izin_terbit_tahun/tambah_field_tahun'); ?>" method="post">
+                    <form action="<?php echo base_url('admin/grafik_izin_terbit_tahun/tambah_field_tahun'); ?>" method="post">
                         <div class="card-body">
                             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                                 value="<?= $this->security->get_csrf_hash(); ?>">
                             <div class="form-group">
-                                <input type="text" name="tahun" class="form-control form-control-sm mr-2" placeholder="Masukan Tahun" required>
+                                <input type="text" name="tahun" class="form-control form-control-sm" placeholder="Masukan Tahun" required>
                             </div>
-                            <button type="submit" class="btn btn-outline-danger mt-3">
+                            <button type="submit" class="btn btn-outline-danger btn-block">
                                 <i class="fa fa-plus p-1" aria-hidden="true"></i>
                                 Tambah Tahun
                             </button>
@@ -31,19 +31,19 @@
                     <div class="card-header">
                         <h3 class="card-title">Hapus Tahun</h3>
                     </div>
-                    <form class="form-inline" action="<?php echo base_url('admin/grafik_izin_terbit_tahun/hapus_field_tahun'); ?>" method="post">
+                    <form action="<?php echo base_url('admin/grafik_izin_terbit_tahun/hapus_field_tahun'); ?>" method="post">
                         <div class="card-body">
                             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                                 value="<?= $this->security->get_csrf_hash(); ?>">
                             <div class="form-group">
-                                <select name="tahun" class="form-control form-control-sm mr-2" required>
+                                <select name="tahun" class="form-control form-control-sm" required>
                                     <option selected disabled>Pilih Tahun</option>
                                     <?php foreach ($tahun_fields as $tahun) : ?>
                                         <option value="<?= str_replace('thn', '', $tahun->Field); ?>"><?= str_replace('thn', '', $tahun->Field); ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-outline-danger mt-3">
+                            <button type="submit" class="btn btn-outline-danger btn-block">
                                 <i class="fa fa-trash-alt p-1" aria-hidden="true"></i>
                                 Hapus Tahun
                             </button>

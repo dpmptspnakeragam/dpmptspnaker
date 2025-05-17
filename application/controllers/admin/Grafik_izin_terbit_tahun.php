@@ -157,7 +157,7 @@ class Grafik_izin_terbit_tahun extends CI_controller
                 $this->session->set_flashdata("error", "Tahun <b>$tahun</b> tidak ditemukan!");
             }
         } else {
-            $this->session->set_flashdata("error", "Tahun tidak boleh kosong!");
+            $this->session->set_flashdata("error", "Pilih Tahun!");
         }
 
         redirect('admin/grafik_izin_terbit_tahun');
