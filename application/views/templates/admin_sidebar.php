@@ -237,7 +237,7 @@
 													[
 														'grafik_izin_terbit',
 														'grafik_izin_terbit_tahun',
-														'grafik_investasi',
+														'grafik_realisasi_investasi',
 														'grafik_skm',
 														'grafik_nib',
 													]
@@ -247,7 +247,7 @@
 																[
 																	'grafik_izin_terbit',
 																	'grafik_izin_terbit_tahun',
-																	'grafik_investasi',
+																	'grafik_realisasi_investasi',
 																	'grafik_skm',
 																	'grafik_nib',
 																]
@@ -272,8 +272,8 @@
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="<?= base_url('admin/grafik_investasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_investasi' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'grafik_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_investasi' ? 'text-maroon' : ''; ?>"></i>
+										<a href="<?= base_url('admin/grafik_realisasi_investasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'text-maroon' : ''; ?>"></i>
 											<p>Grafik Realisasi Investasi</p>
 										</a>
 									</li>
