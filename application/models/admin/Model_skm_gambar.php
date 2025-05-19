@@ -30,7 +30,7 @@ class Model_skm_gambar extends CI_model
 
     public function insertGambar($data)
     {
-        $this->db->insert('skm_gambar', $data);
+        return $this->db->insert('skm_gambar', $data);
     }
 
     public function updateGambar($id, $data)
@@ -42,6 +42,6 @@ class Model_skm_gambar extends CI_model
     public function deleteGambar($id)
     {
         $this->db->where('id_skm_gambar', $id);
-        $this->db->delete('skm_gambar');
+        return $this->db->delete('skm_gambar');
     }
 }

@@ -29,24 +29,24 @@ class Model_grafik_skm extends CI_model
 
     public function input($data)
     {
-        $this->db->insert('grafik_skm', $data);
+        return  $this->db->insert('grafik_skm', $data);
     }
 
     public function update($data, $id)
     {
         $this->db->where('id_grafik', $id);
-        $this->db->update('grafik_skm', $data);
+        return $this->db->update('grafik_skm', $data);
     }
 
     public function update_periode($data, $id)
     {
         $this->db->where('id_periode', $id);
-        $this->db->update('periode_grafik_skm', $data);
+        return $this->db->update('periode_grafik_skm', $data);
     }
 
     public function delete($id_grafik)
     {
         $this->db->where('id_grafik', $id_grafik);
-        $this->db->delete('grafik_skm');
+        return $this->db->delete('grafik_skm');
     }
 }

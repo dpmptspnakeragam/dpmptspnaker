@@ -1,201 +1,209 @@
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
-    <div class="container">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Grafik Survey Kepuasan Masyarakat</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 mb-3">
-                <h3 class="text-center">Grafik Survey Kepuasan Masyarakat</h3>
-                <h5 class="text-center">Periode
-                    <?php
-                    $no = 1;
-                    foreach ($periode_grafik_skm->result() as $graph) {
-                    ?>
-                        <?= date("Y", strtotime($graph->tgl_awal)); ?> s/d <?= date("Y", strtotime($graph->tgl_akhir)); ?> <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditPeriodeGrafikSkm<?php echo $graph->id_periode; ?>" title="Edit"><i class="fa fa-edit"></i></a>
 
-                    <?php } ?>
-                </h5>
-                <hr>
-                <div class="panel-heading">
-                    <?php if ($this->session->flashdata('gagal')) : ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('gagal'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($this->session->flashdata('berhasil')) : ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('berhasil'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#ModalTambahGrafikSkm"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                </div>
-            </div>
-
-            <br>
-
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-3">
-                        <div class="card table-responsive shadow-sm">
-                            <table class="card-header table table-striped table-borderless table-hover">
-                                <thead class="bg-dark text-light">
-                                    <tr>
-                                        <th class="text-center">No.</th>
-                                        <th class="text-center">Tahun</th>
-                                        <th class="text-center">Semester I</th>
-                                        <th class="text-center">Semester II</th>
-                                        <th class="text-center"><i class="fa fa-cog"></i> Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($grafik_skm->result() as $row) {
-                                    ?>
-                                        <tr class="odd gradeX">
-                                            <td><?= $no++; ?></td>
-                                            <td><?= $row->tahun; ?></td>
-                                            <td><?= $row->nilai; ?></td>
-                                            <td><?= $row->nilai2; ?></td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditGrafikSkm<?php echo $row->id_grafik; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-outline-danger btn-sm btn-circle" href="<?php echo base_url() ?>admin/grafik_skm/hapus/<?php echo $row->id_grafik; ?>" title="Hapus" onclick="javascript: return confirm('Anda yakin hapus <?= $row->tahun; ?>?')"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
+            <!-- Card Periode -->
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Periode <?= $title; ?></h3>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-3">
-                        <div class="card shadow-sm">
-                            <div class="card-header text-center bg-dark text-white">
-                                <label>Grafik SKM</label>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="myChart"></canvas>
-                            </div>
-                            <?php
-                            //Inisialisasi nilai variabel awal
-                            $tahun_skm = "";
-                            $total = null;
-                            $total2 = null;
-                            foreach ($grafik_skm->result() as $item) {
-                                $nama = $item->tahun;
-                                $tahun_skm .= "'$nama'" . ", ";
-                                $jum = $item->nilai;
-                                $total .= "$jum" . ", ";
-                                $jum2 = $item->nilai2;
-                                $total2 .= "$jum2" . ", ";
-                            }
-                            ?>
-                            <script>
-                                var tahun = new Date().getFullYear();
-                                var ctx = document.getElementById('myChart').getContext('2d');
-                                var data = {
-                                    labels: [<?php echo $tahun_skm; ?>],
-                                    datasets: [{
-                                        label: "Semester I",
-                                        backgroundColor: '#0037B3',
-                                        data: [<?php echo $total; ?>]
-                                    }, {
-                                        label: "Semester II",
-                                        backgroundColor: '#70BAFF',
-                                        data: [<?php echo $total2; ?>]
-                                    }]
-                                };
-                                var chart = new Chart(ctx, {
-                                    type: 'bar',
-                                    data: data,
-                                    options: {
-                                        "hover": {
-                                            "animationDuration": 0
-                                        },
-                                        "animation": {
-                                            "duration": 1,
-                                            "onComplete": function() {
-                                                var chartInstance = this.chart,
-                                                    ctx = chartInstance.ctx;
-
-                                                ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                                                ctx.textAlign = 'center';
-                                                ctx.textBaseline = 'bottom';
-
-                                                this.data.datasets.forEach(function(dataset, i) {
-                                                    var meta = chartInstance.controller.getDatasetMeta(i);
-                                                    meta.data.forEach(function(bar, index) {
-                                                        var data = dataset.data[index];
-                                                        ctx.fillText(data, bar._model.x, bar._model.y - 5);
-                                                    });
-                                                });
-                                            }
-                                        },
-                                    }
-                                });
-                            </script>
-                        </div>
+                    <div class="card-body text-center">
+                        <h4>Periode</h4>
+                        <span>
+                            <?php foreach ($periode_grafik_skm->result() as $graph) : ?>
+                                <!-- Tahun <?= date("Y", strtotime($graph->tgl_awal)); ?> s/d <?= date("Y", strtotime($graph->tgl_akhir)); ?> -->
+                                <?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?>
+                                <a class="btn btn-outline-danger btn-block mt-2" href="#" data-toggle="modal" data-target="#EditPeriodeGrafikSKM<?= $graph->id_periode; ?>" title="Edit">
+                                    <i class="fa fa-edit"></i> Ubah Periode
+                                </a>
+                            <?php endforeach; ?>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-12">
-                <div class="card table-responsive shadow-sm">
-                    <div class="card-header text-center">
-                        <span>Indeks Kepuasan Masyarakat (IKM)</span>
+            <!-- Card Grafik SKM -->
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel <?= $title; ?></h3>
                     </div>
+
                     <div class="card-body">
-                        <button type="button" class="btn btn-outline-primary btn-sm mb-3" data-toggle="modal" data-target="#TambahIKM"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                        <table class="table table-striped table-borderless table-hover">
-                            <thead class="bg-dark text-light">
+
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafikSKM">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+
+                        <table id="TabelData1" class="table table-bordered table-sm table-hover">
+                            <thead>
                                 <tr>
-                                    <th class="text-center">No.</th>
-                                    <th class="text-center">Judul</th>
-                                    <th class="text-center">Preview</th>
-                                    <th class="text-center"><i class="fa fa-cog"></i> Aksi</th>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">Tahun</th>
+                                    <th class="text-center align-middle">Semester I</th>
+                                    <th class="text-center align-middle">Semester II</th>
+                                    <th class="text-center align-middle">Aksi</th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                <?php
-                                $no = 1;
-                                foreach ($skm_gambar as $data) {
-                                ?>
-                                    <tr class="odd gradeX">
-                                        <td class="text-center"><?= $no++; ?></td>
-                                        <td class="text-center"><?= $data['title']; ?></td>
+                                <?php $count = 1; ?>
+                                <?php foreach ($grafik_skm->result() as $row) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $row->tahun; ?></td>
+                                        <td class="text-center align-middle"><?= $row->nilai; ?></td>
+                                        <td class="text-center align-middle"><?= $row->nilai2; ?></td>
+
                                         <td class="text-center align-middle">
-                                            <img src="<?= base_url('assets/imgupload/' . $data['file_name']); ?>" style="width:250px;" class="img-responsive">
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="btn-group">
-                                                <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditIKM<?= $data['id_skm_gambar']; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                                <a class="btn btn-outline-danger btn-sm btn-circle" href="<?php echo base_url() ?>admin/grafik_skm/hapus_skm_gambar/<?= $data['id_skm_gambar']; ?>" title="Hapus" onclick="javascript: return confirm('Anda yakin hapus <?= $data['file_name']; ?>?')"><i class="fa fa-times"></i></a>
-                                            </div>
+                                            <button type="button" data-toggle="modal" data-target="#ModalEditGrafikSKM<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#ModalDeleteGrafikSKM<?= $row->id_grafik; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+            <!-- Card Chart Grafik SKM -->
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Grafik Nilai SKM</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="chartSKM"></canvas>
+
+                        <?php
+                        // Siapkan array untuk data chart
+                        $tahun = [];
+                        $semester1 = [];
+                        $semester2 = [];
+
+                        foreach ($grafik_skm->result() as $row) {
+                            $tahun[] = $row->tahun;
+                            $semester1[] = $row->nilai;
+                            $semester2[] = $row->nilai2;
+                        }
+
+                        // Konversi ke JSON
+                        $tahun_json = json_encode($tahun);
+                        $semester1_json = json_encode($semester1);
+                        $semester2_json = json_encode($semester2);
+                        ?>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                var ctx = document.getElementById('chartSKM').getContext('2d');
+                                var chartSKM = new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: <?= $tahun_json ?>,
+                                        datasets: [{
+                                                label: 'Semester I',
+                                                backgroundColor: 'rgba(54, 163, 235, 0.83)',
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $semester1_json ?>
+                                            },
+                                            {
+                                                label: 'Semester II',
+                                                backgroundColor: 'rgba(219, 22, 47, 0.7)',
+                                                borderColor: 'rgba(219, 22, 47, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $semester2_json ?>
+                                            }
+                                        ]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                title: {
+                                                    display: true,
+                                                    text: 'Nilai SKM'
+                                                }
+                                            },
+                                            x: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Tahun'
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card IKM -->
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel Indeks Kepuasan Masyarakat (IKM)</h3>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahIKM">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+
+                        <table id="TabelData2" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">Judul</th>
+                                    <th class="text-center align-middle">Preview</th>
+                                    <th class="text-center align-middle">Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($skm_gambar as $data) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $data['title']; ?></td>
+                                        <td class="text-center align-middle">
+                                            <img src="<?= base_url('assets/imgupload/' . $data['file_name']); ?>" style="width:250px;" class="img-responsive">
+                                        </td>
+
+                                        <td class="text-center align-middle">
+                                            <button type="button" data-toggle="modal" data-target="#ModalEditIKM<?= $data['id_skm_gambar']; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#ModalDeleteIKM<?= $data['id_skm_gambar']; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    </div>
-    </div>
-</main>
+</section>
+<!-- /.content -->

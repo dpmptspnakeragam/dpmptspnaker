@@ -1,5 +1,5 @@
 <?php foreach ($skm_gambar as $row) { ?>
-    <div class="modal fade" id="EditIKM<?= $row['id_skm_gambar']; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalEditIKM<?= $row['id_skm_gambar']; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-warning text-dark">

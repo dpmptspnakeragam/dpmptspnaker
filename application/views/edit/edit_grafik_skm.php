@@ -1,6 +1,6 @@
 <?php foreach ($grafik_skm->result() as $row) {
 ?>
-    <div class="modal fade" id="EditGrafikSkm<?php echo $row->id_grafik; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalEditGrafikSKM<?php echo $row->id_grafik; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-warning text-dark">
