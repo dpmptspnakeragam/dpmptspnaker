@@ -129,11 +129,11 @@ class Skm extends CI_Controller
     {
         // $this->load->model('Model_skm');
         // $data['ppid'] = $this->Model_ppid->tampil_data();
-        $data['idmax_skm'] = $this->Model_skm->idmax_skm();
-        $data['idmax_rating'] = $this->Model_skm->idmax_rating();
-        $data['idmax_spak'] = $this->Model_skm->idmax_spak();
+        // $data['idmax_skm'] = $this->Model_skm->idmax_skm();
+        // $data['idmax_rating'] = $this->Model_skm->idmax_rating();
+        // $data['idmax_spak'] = $this->Model_skm->idmax_spak();
         $this->load->view('templates/header');
-        $this->load->view('form_skm', $data);
+        $this->load->view('form_skm');
         $this->load->view('templates/footer');
     }
 
@@ -187,18 +187,168 @@ class Skm extends CI_Controller
     }
 
     // ------------------ User
+    // public function tambah_skm()
+    // {
+    //     date_default_timezone_set('Asia/Jakarta');
+    //     $date = new DateTime();
+    //     $formatted_date = $date->format('Y-m-d H:i:s');
+
+    //     $this->_rules_skm();
+
+    //     if ($this->form_validation->run() == TRUE) {
+
+    //         $input_skm = [
+    //             'id_skm'        => $this->input->post('id_skm'),
+    //             'nama'          => $this->input->post('nama'),
+    //             'no_hp'         => $this->input->post('no_hp'),
+    //             'jk'            => $this->input->post('jk'),
+    //             'umur'          => $this->input->post('umur'),
+    //             'pendidikan'    => $this->input->post('pendidikan'),
+    //             'pekerjaan'     => $this->input->post('pekerjaan'),
+    //             'layanan'       => $this->input->post('layanan'),
+    //             'u1'            => $this->input->post('u1'),
+    //             'u2'            => $this->input->post('u2'),
+    //             'u3'            => $this->input->post('u3'),
+    //             'u4'            => $this->input->post('u4'),
+    //             'u5'            => $this->input->post('u5'),
+    //             'u6'            => $this->input->post('u6'),
+    //             'u7'            => $this->input->post('u7'),
+    //             'u8'            => $this->input->post('u8'),
+    //             'u9'            => $this->input->post('u9'),
+    //             'date'          => $formatted_date
+    //         ];
+    //         $data_skm = $this->security->xss_clean($input_skm);
+    //         $this->Model_skm->simpan_skm($data_skm);
+
+    //         $input_spkp = [
+    //             'id_spkp'       => $this->input->post('id_spkp'),
+    //             'date'          => $formatted_date,
+    //             'z1'            => $this->input->post('rating_z1'),
+    //             'z2'            => $this->input->post('rating_z2'),
+    //             'z3'            => $this->input->post('rating_z3'),
+    //             'z4'            => $this->input->post('rating_z4'),
+    //             'z5'            => $this->input->post('rating_z5'),
+    //             'z6'            => $this->input->post('rating_z6'),
+    //             'z7'            => $this->input->post('rating_z7'),
+    //             'z8'            => $this->input->post('rating_z8'),
+    //         ];
+    //         $data_spkp = $this->security->xss_clean($input_spkp);
+    //         $this->Model_skm->simpan_spkp($data_spkp);
+
+    //         $input_spak = [
+    //             'id_spak'       => $this->input->post('id_spak'),
+    //             'id_spkp'       => $this->input->post('id_spkp'),
+    //             'id_skm'        => $this->input->post('id_skm'),
+    //             'date'          => $formatted_date,
+    //             'r1'            => $this->input->post('rating_r1'),
+    //             'r2'            => $this->input->post('rating_r2'),
+    //             'r3'            => $this->input->post('rating_r3'),
+    //             'r4'            => $this->input->post('rating_r4'),
+    //             'r5'            => $this->input->post('rating_r5'),
+    //         ];
+    //         $data_spak = $this->security->xss_clean($input_spak);
+    //         $this->Model_skm->simpan_spak($data_spak);
+
+    //         $this->session->set_flashdata('berhasil', 'Pengisian konsioner berhasil. Terima kasih');
+    //         redirect('skm');
+    //     } else {
+    //         $data['idmax_skm'] = $this->Model_skm->idmax_skm();
+    //         $data['idmax_rating'] = $this->Model_skm->idmax_rating();
+    //         $data['idmax_spak'] = $this->Model_skm->idmax_spak();
+    //         $this->load->view('templates/header');
+    //         $this->load->view('form_skm', $data);
+    //         $this->load->view('templates/footer');
+    //     }
+    // }
+
+    // public function tambah_skm()
+    // {
+    //     date_default_timezone_set('Asia/Jakarta');
+    //     $formatted_date = date('Y-m-d H:i:s');
+
+    //     $this->_rules_skm();
+
+    //     if ($this->form_validation->run() == TRUE) {
+    //         // Ambil ID terakhir dan tambah 1
+    //         $id_skm   = $this->Model_skm->idmax_skm() + 1;
+    //         $id_spkp  = $this->Model_skm->idmax_rating() + 1;
+    //         $id_spak  = $this->Model_skm->idmax_spak() + 1;
+
+    //         // Data SKM
+    //         $input_skm = [
+    //             'id_skm'        => $id_skm,
+    //             'nama'          => $this->input->post('nama'),
+    //             'no_hp'         => $this->input->post('no_hp'),
+    //             'jk'            => $this->input->post('jk'),
+    //             'umur'          => $this->input->post('umur'),
+    //             'pendidikan'    => $this->input->post('pendidikan'),
+    //             'pekerjaan'     => $this->input->post('pekerjaan'),
+    //             'layanan'       => $this->input->post('layanan'),
+    //             'u1'            => $this->input->post('u1'),
+    //             'u2'            => $this->input->post('u2'),
+    //             'u3'            => $this->input->post('u3'),
+    //             'u4'            => $this->input->post('u4'),
+    //             'u5'            => $this->input->post('u5'),
+    //             'u6'            => $this->input->post('u6'),
+    //             'u7'            => $this->input->post('u7'),
+    //             'u8'            => $this->input->post('u8'),
+    //             'u9'            => $this->input->post('u9'),
+    //             'date'          => $formatted_date
+    //         ];
+    //         $this->Model_skm->simpan_skm($this->security->xss_clean($input_skm));
+
+    //         // Data SPKP
+    //         $input_spkp = [
+    //             'id_spkp' => $id_spkp,
+    //             'date'    => $formatted_date,
+    //             'z1'      => $this->input->post('rating_z1'),
+    //             'z2'      => $this->input->post('rating_z2'),
+    //             'z3'      => $this->input->post('rating_z3'),
+    //             'z4'      => $this->input->post('rating_z4'),
+    //             'z5'      => $this->input->post('rating_z5'),
+    //             'z6'      => $this->input->post('rating_z6'),
+    //             'z7'      => $this->input->post('rating_z7'),
+    //             'z8'      => $this->input->post('rating_z8'),
+    //         ];
+    //         $this->Model_skm->simpan_spkp($this->security->xss_clean($input_spkp));
+
+    //         // Data SPAK
+    //         $input_spak = [
+    //             'id_spak' => $id_spak,
+    //             'id_spkp' => $id_spkp,
+    //             'id_skm'  => $id_skm,
+    //             'date'    => $formatted_date,
+    //             'r1'      => $this->input->post('rating_r1'),
+    //             'r2'      => $this->input->post('rating_r2'),
+    //             'r3'      => $this->input->post('rating_r3'),
+    //             'r4'      => $this->input->post('rating_r4'),
+    //             'r5'      => $this->input->post('rating_r5'),
+    //         ];
+    //         $this->Model_skm->simpan_spak($this->security->xss_clean($input_spak));
+
+    //         $this->session->set_flashdata('berhasil', 'Pengisian kuesioner berhasil. Terima kasih!');
+    //         redirect('skm');
+    //     } else {
+    //         $data['idmax_skm'] = $this->Model_skm->idmax_skm() + 1;
+    //         $data['idmax_rating'] = $this->Model_skm->idmax_rating() + 1;
+    //         $data['idmax_spak'] = $this->Model_skm->idmax_spak() + 1;
+
+    //         $this->load->view('templates/header');
+    //         $this->load->view('form_skm', $data);
+    //         $this->load->view('templates/footer');
+    //     }
+    // }
+
     public function tambah_skm()
     {
         date_default_timezone_set('Asia/Jakarta');
-        $date = new DateTime();
-        $formatted_date = $date->format('Y-m-d H:i:s');
+        $formatted_date = date('Y-m-d H:i:s');
 
         $this->_rules_skm();
 
         if ($this->form_validation->run() == TRUE) {
-
+            // Data SKM tanpa id_skm (auto increment)
             $input_skm = [
-                'id_skm'        => $this->input->post('id_skm'),
                 'nama'          => $this->input->post('nama'),
                 'no_hp'         => $this->input->post('no_hp'),
                 'jk'            => $this->input->post('jk'),
@@ -219,9 +369,10 @@ class Skm extends CI_Controller
             ];
             $data_skm = $this->security->xss_clean($input_skm);
             $this->Model_skm->simpan_skm($data_skm);
+            $id_skm = $this->db->insert_id();
 
+            // Data SPKP tanpa id_spkp
             $input_spkp = [
-                'id_spkp'       => $this->input->post('id_spkp'),
                 'date'          => $formatted_date,
                 'z1'            => $this->input->post('rating_z1'),
                 'z2'            => $this->input->post('rating_z2'),
@@ -234,11 +385,12 @@ class Skm extends CI_Controller
             ];
             $data_spkp = $this->security->xss_clean($input_spkp);
             $this->Model_skm->simpan_spkp($data_spkp);
+            $id_spkp = $this->db->insert_id();
 
+            // Data SPAK tanpa id_spak, tapi butuh id_spkp dan id_skm
             $input_spak = [
-                'id_spak'       => $this->input->post('id_spak'),
-                'id_spkp'       => $this->input->post('id_spkp'),
-                'id_skm'        => $this->input->post('id_skm'),
+                'id_spkp'       => $id_spkp,
+                'id_skm'        => $id_skm,
                 'date'          => $formatted_date,
                 'r1'            => $this->input->post('rating_r1'),
                 'r2'            => $this->input->post('rating_r2'),
@@ -249,14 +401,11 @@ class Skm extends CI_Controller
             $data_spak = $this->security->xss_clean($input_spak);
             $this->Model_skm->simpan_spak($data_spak);
 
-            $this->session->set_flashdata('berhasil', 'Pengisian konsioner berhasil. Terima kasih');
+            $this->session->set_flashdata('berhasil', 'Pengisian kuesioner berhasil. Terima kasih!');
             redirect('skm');
         } else {
-            $data['idmax_skm'] = $this->Model_skm->idmax_skm();
-            $data['idmax_rating'] = $this->Model_skm->idmax_rating();
-            $data['idmax_spak'] = $this->Model_skm->idmax_spak();
             $this->load->view('templates/header');
-            $this->load->view('form_skm', $data);
+            $this->load->view('form_skm');
             $this->load->view('templates/footer');
         }
     }

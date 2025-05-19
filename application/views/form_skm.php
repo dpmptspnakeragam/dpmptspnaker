@@ -50,13 +50,6 @@
                                             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                                                 value="<?= $this->security->get_csrf_hash(); ?>">
 
-                                            <?php foreach ($idmax_skm->result() as $row) : ?>
-                                                <div class="form-group" hidden>
-                                                    <label class=" control-label">Id</label>
-                                                    <input type="text" class="form-control" id="id" name="id_skm" value="<?= $row->idmax_skm + 1; ?>">
-                                                </div>
-                                            <?php endforeach; ?>
-
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -93,7 +86,7 @@
                                                             <small class="text-danger">*</small>
                                                         </label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="umur" placeholder="Masukan Usia" aria-label="Username" aria-describedby="basic-addon1" value="<?= set_value('umur'); ?>">
+                                                            <input type="number" class="form-control" name="umur" placeholder="Masukan Usia" aria-label="Username" aria-describedby="basic-addon1" value="<?= set_value('umur'); ?>">
                                                             <div class="input-group-prepend">
                                                                 <span class="input-group-text" id="basic-addon1">Tahun</span>
                                                             </div>
@@ -262,13 +255,6 @@
                                             <p class="text-center"> PENDAPAT ANDA TENTANG PERSEPSI KUALITAS PELAYANAN (SPKP) </p>
                                             <hr>
 
-                                            <?php foreach ($idmax_rating->result() as $row) : ?>
-                                                <div class="form-group" hidden>
-                                                    <label class="control-label">Id</label>
-                                                    <input type="text" class="form-control" id="id" name="id_spkp" value="<?= $row->idmax_rating + 1; ?>">
-                                                </div>
-                                            <?php endforeach; ?>
-
                                             <small class="font-italic font-weight-bold">Berikan nilai bintang antara 1-6 pada setiap pernyataan, dimana semakin banyak bintang menunjukan bahwa Bapak/Ibu semakin setuju bahwa kualitas pelayanan pada unit layanan ini semakin baik:</small>
                                             <div class="form-group mt-2">
                                                 <span>1. Informasi pelayanan pada unit layanan ini tersedia melalui media sosial elektronik maupun non elektronik.</span>
@@ -386,13 +372,6 @@
                                             <hr>
                                             <p class="text-center"> PENDAPAT ANDA TENTANG PERSEPSI ANTI KORUPSI </p>
                                             <hr>
-
-                                            <?php foreach ($idmax_spak->result() as $row) : ?>
-                                                <div class="form-group" hidden>
-                                                    <label class="control-label">Id</label>
-                                                    <input type="text" class="form-control" id="id" name="id_spak" value="<?= $row->idmax_spak + 1; ?>">
-                                                </div>
-                                            <?php endforeach; ?>
 
                                             <small class="font-italic font-weight-bold">Berikan nilai bintang antara 1 - 6 pada setiap pernyataan, dimana semakin banyak bintang menunjukan bahwa Bapak/Ibu semakin setuju bahwa kualitas pelayanan pada unit layanan ini semakin baik:</small>
                                             <div class="form-group mt-2">

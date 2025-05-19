@@ -55,29 +55,26 @@ class Model_skm extends CI_model
         return $query;
     }
 
-    public function idmax_skm()
-    {
-        $this->db->select_max('id_skm', 'idmax_skm');
-        $this->db->from('skm');
-        $query = $this->db->get();
-        return $query;
-    }
+    // public function idmax_skm()
+    // {
+    //     $this->db->select_max('id_skm', 'idmax_skm');
+    //     $query = $this->db->get('skm')->row();
+    //     return $query ? $query->idmax_skm : null;
+    // }
 
-    public function idmax_rating()
-    {
-        $this->db->select_max('id_spkp', 'idmax_rating');
-        $this->db->from('spkp');
-        $query = $this->db->get();
-        return $query;
-    }
+    // public function idmax_rating()
+    // {
+    //     $this->db->select_max('id_spkp', 'idmax_rating');
+    //     $query = $this->db->get('spkp')->row();
+    //     return $query ? $query->idmax_rating : null;
+    // }
 
-    public function idmax_spak()
-    {
-        $this->db->select_max('id_spak', 'idmax_spak');
-        $this->db->from('spak');
-        $query = $this->db->get();
-        return $query;
-    }
+    // public function idmax_spak()
+    // {
+    //     $this->db->select_max('id_spak', 'idmax_spak');
+    //     $query = $this->db->get('spak')->row();
+    //     return $query ? $query->idmax_spak : null;
+    // }
 
     public function simpan_skm($data_skm)
     {
