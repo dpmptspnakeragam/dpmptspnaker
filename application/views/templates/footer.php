@@ -57,7 +57,7 @@
              <?= $this->session->set_flashdata('berhasil', ''); ?>
            }
          <?php endif; ?>
-       }, 6000);
+       }, 15000);
      });
    });
  </script>
