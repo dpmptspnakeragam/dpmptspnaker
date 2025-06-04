@@ -1,6 +1,6 @@
 <?php foreach ($grafik_risiko->result() as $row) {
 ?>
-    <div class="modal fade" id="EditGrafikRisiko<?php echo $row->id_grafik; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalEditGrafikResiko<?php echo $row->id_grafik; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-warning text-dark">

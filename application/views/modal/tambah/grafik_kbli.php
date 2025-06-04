@@ -1,4 +1,4 @@
-<div class="modal fade" id="ModalTambahGrafikKbli" tabindex="-1" role="dialog" aria-labelledby="ModalTambahgrafikLabel" aria-hidden="true">
+<div class="modal fade" id="ModalTambahGrafikKBLI" tabindex="-1" role="dialog" aria-labelledby="ModalTambahgrafikLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-light">

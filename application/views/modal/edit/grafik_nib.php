@@ -1,6 +1,6 @@
-<?php foreach ($grafik_kecamatan->result() as $row) {
+<?php foreach ($grafik_nib->result() as $row) {
 ?>
-    <div class="modal fade" id="EditGrafikKecamatan<?php echo $row->id_grafik; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalEditGrafikNIB<?php echo $row->id_grafik; ?>" role="dialog" aria-labelledby="ModalTambahGrafikLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-warning text-dark">
@@ -10,15 +10,21 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form role="form" action="<?= base_url(); ?>admin/grafik_nib/ubah_kecamatan" method="post" enctype="multipart/form-data">
+                    <form role="form" action="<?= base_url(); ?>admin/grafik_nib/ubah" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                             value="<?= $this->security->get_csrf_hash(); ?>">
                         <div class="form-group" hidden>
                             <input type="text" class="form-control hidden" id="id" name="id" value="<?php echo $row->id_grafik; ?>">
                         </div>
                         <div class="form-group">
-                            <label>Kecamatan</label>
-                            <input class="form-control" name="kecamatan" value="<?php echo $row->kecamatan; ?>" required>
+                            <label>PMDN/PMA & UMK/Non UMK</label>
+                            <select name="nib" class="form-control">
+                                <option value="<?php echo $row->nib; ?>" selected><?php echo $row->nib; ?></option>
+                                <option>PMDN</option>
+                                <option>PMA</option>
+                                <option>UMK</option>
+                                <option>Non UMK</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="pelatihan">Jumlah</label>

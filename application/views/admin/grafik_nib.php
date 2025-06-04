@@ -1,422 +1,471 @@
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-
-    <div class="container">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Grafik NIB</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <h3 class="text-center">Grafik NIB Yang Diterbitkan</h3>
-                <h5 class="text-center"> Periode
-                    <?php
-                    $no = 1;
-                    foreach ($periode_grafik->result() as $graph) {
-                    ?>
-                        <?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?> <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditPeriodeGrafikOss<?php echo $graph->id_periode; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-
-                    <?php } ?>
-                </h5>
-                <hr>
-                <div class="panel-heading">
-                    <?php if ($this->session->flashdata('gagal')) : ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('gagal'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ($this->session->flashdata('berhasil')) : ?>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <?= $this->session->flashdata('berhasil'); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                </div><br>
-                <!-- start: Accordion -->
-                <div class="row">
-                    <div class="col-6">
-                        <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#ModalTambahGrafikNIB"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                        <hr>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-borderless table-hover">
-                                <thead class="bg-dark text-light">
-                                    <tr>
-                                        <th class="text-center">No.</th>
-                                        <th class="text-center">PMDN/PMA & UMK/Non UMK</th>
-                                        <th class="text-center">Jumlah</th>
-                                        <th class="text-center"><i class="fa fa-cog"></i> Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($grafik_nib->result() as $row) {
-                                    ?>
-                                        <tr class="odd gradeX">
-                                            <td><?= $no++; ?></td>
-                                            <td><?= $row->nib; ?></td>
-                                            <td><?= $row->jumlah; ?></td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditGrafikNIB<?php echo $row->id_grafik; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-outline-danger btn-sm btn-circle" href="<?php echo base_url() ?>admin/grafik_nib/hapus_nib/<?php echo $row->id_grafik; ?>" title="Hapus" onclick="javascript: return confirm('Anda yakin hapus <?= $row->nib; ?>?')"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <canvas id="grafiknib" width="100%"></canvas>
-                        <?php
-                        $nama_nib = "";
-                        $total = null;
-                        foreach ($grafik_nib->result() as $item) {
-                            $nama = $item->nib;
-                            $nama_nib .= "'$nama'" . ", ";
-                            $jum = $item->jumlah;
-                            $total .= "$jum" . ", ";
-                        }
-                        ?>
-                        <script>
-                            var kanvasnib = document.getElementById("grafiknib").getContext("2d");
-
-                            Chart.defaults.global.defaultFontFamily = "Lato";
-                            Chart.defaults.global.defaultFontSize = 12;
-
-                            var nilai = {
-                                labels: [<?php echo $nama_nib; ?>],
-                                datasets: [{
-                                    label: "Jumlah",
-                                    data: [<?php echo $total; ?>],
-                                    backgroundColor: ['#8bfd43', '#fdfd43', '#8bfd43', '#fdfd43']
-                                }]
-                            };
-
-                            var chartOptions = {
-                                legend: {
-                                    display: true,
-                                    position: 'top',
-                                    labels: {
-                                        boxWidth: 80,
-                                        fontColor: 'black'
-                                    }
-                                }
-                            };
-
-                            var lineChart = new Chart(kanvasnib, {
-                                type: 'bar',
-                                data: nilai,
-                                options: chartOptions
-                            });
-                        </script>
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel <?= $title; ?></h3>
                     </div>
-                    <div class="col-6">
-                        <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#ModalTambahGrafikRisiko"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                        <hr>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-borderless table-hover">
-                                <thead class="bg-dark text-light">
-                                    <tr>
-                                        <th class="text-center">No.</th>
-                                        <th class="text-center">Risiko</th>
-                                        <th class="text-center">Jumlah</th>
-                                        <th class="text-center"><i class="fa fa-cog"></i> Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($grafik_risiko->result() as $row) {
-                                    ?>
-                                        <tr class="odd gradeX">
-                                            <td><?= $no++; ?></td>
-                                            <td><?= $row->risiko; ?></td>
-                                            <td><?= $row->jumlah; ?></td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditGrafikRisiko<?php echo $row->id_grafik; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-outline-danger btn-sm btn-circle" href="<?php echo base_url() ?>admin/grafik_nib/hapus_risiko/<?php echo $row->id_grafik; ?>" title="Hapus" onclick="javascript: return confirm('Anda yakin hapus <?= $row->risiko; ?>?')"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <canvas id="grafikrisiko" width="100%"></canvas>
-                        <?php
-                        $nama_risiko = "";
-                        $total = null;
-                        foreach ($grafik_risiko->result() as $item) {
-                            $nama = $item->risiko;
-                            $nama_risiko .= "'$nama'" . ", ";
-                            $jum = $item->jumlah;
-                            $total .= "$jum" . ", ";
-                        }
-                        ?>
-                        <script>
-                            var kanvasrisiko = document.getElementById("grafikrisiko").getContext("2d");
+                    <div class="card-body text-center">
+                        <h4>Periode</h4>
+                        <span>
+                            <?php
+                            $no = 1;
+                            foreach ($periode_grafik->result() as $graph) {
+                            ?>
+                                <?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?> <br> <a class="btn btn-outline-danger btn-block mt-2" href="#" data-toggle="modal" data-target="#EditPeriodeGrafikNIB<?= $graph->id_periode; ?>" title="Edit"><i class="fa fa-edit"></i> Ubah Periode</a>
 
-                            Chart.defaults.global.defaultFontFamily = "Lato";
-                            Chart.defaults.global.defaultFontSize = 12;
-
-                            var nilai = {
-                                labels: [<?php echo $nama_risiko; ?>],
-                                datasets: [{
-                                    label: "Jumlah",
-                                    data: [<?php echo $total; ?>],
-                                    backgroundColor: ['#8bfd43', '#fdfd43', '#fe9643', '#ff4442']
-                                }]
-                            };
-
-                            var chartOptions = {
-                                legend: {
-                                    display: true,
-                                    position: 'top',
-                                    labels: {
-                                        boxWidth: 80,
-                                        fontColor: 'black'
-                                    }
-                                }
-                            };
-
-                            var lineChart = new Chart(kanvasrisiko, {
-                                type: 'doughnut',
-                                data: nilai,
-                                options: chartOptions
-                            });
-                        </script>
+                            <?php } ?>
+                        </span>
                     </div>
                 </div>
-                <hr>
-                <div class="row">
-                    <div class="col-6">
-                        <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#ModalTambahGrafikKecamatan"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                        <hr>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-borderless table-hover">
-                                <thead class="bg-dark text-light">
-                                    <tr>
-                                        <th class="text-center">No.</th>
-                                        <th class="text-center">Kecamatan</th>
-                                        <th class="text-center">Jumlah</th>
-                                        <th class="text-center"><i class="fa fa-cog"></i> Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($grafik_kecamatan->result() as $row) {
-                                    ?>
-                                        <tr class="odd gradeX">
-                                            <td><?= $no++; ?></td>
-                                            <td><?= $row->kecamatan; ?></td>
-                                            <td><?= $row->jumlah; ?></td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditGrafikKecamatan<?php echo $row->id_grafik; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-outline-danger btn-sm btn-circle" href="<?php echo base_url() ?>admin/grafik_nib/hapus_kecamatan/<?php echo $row->id_grafik; ?>" title="Hapus" onclick="javascript: return confirm('Anda yakin hapus <?= $row->kecamatan; ?>?')"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <canvas id="grafikkecamatan" width="100%"></canvas>
-                        <?php
-                        $nama_kecamatan = "";
-                        $total = null;
-                        foreach ($grafik_kecamatan->result() as $item) {
-                            $nama = $item->kecamatan;
-                            $nama_kecamatan .= "'$nama'" . ", ";
-                            $jum = $item->jumlah;
-                            $total .= "$jum" . ", ";
-                        }
-                        ?>
-                        <script>
-                            var kanvaskecamatan = document.getElementById("grafikkecamatan").getContext("2d");
+            </div>
 
-                            Chart.defaults.global.defaultFontFamily = "Lato";
-                            Chart.defaults.global.defaultFontSize = 12;
-
-                            var nilai = {
-                                labels: [<?php echo $nama_kecamatan; ?>],
-                                datasets: [{
-                                    label: "Jumlah",
-                                    data: [<?php echo $total; ?>],
-                                    backgroundColor: ['#8bfd43', '#8bfd43', '#8bfd43', '#8bfd43', '#fdfd43', '#fdfd43', '#fdfd43', '#fdfd43', '#fe9643', '#fe9643', '#fe9643', '#fe9643', '#ff4442', '#ff4442', '#ff4442', '#ff4442']
-                                }]
-                            };
-
-                            var chartOptions = {
-                                indexAxis: 'y',
-                                legend: {
-                                    display: true,
-                                    position: 'top',
-                                    labels: {
-                                        boxWidth: 80,
-                                        fontColor: 'black'
-                                    }
-                                },
-                                scales: {
-                                    xAxes: [{
-                                        ticks: {
-                                            min: 0 // Edit the value according to what you need
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        stacked: true
-                                    }]
-                                }
-                            };
-
-                            var lineChart = new Chart(kanvaskecamatan, {
-                                type: 'horizontalBar',
-                                data: nilai,
-                                options: chartOptions
-                            });
-                        </script>
+            <!-- ------------------------------Grafik NIB------------------------------ -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel Grafik NIB Diterbitkan</h3>
                     </div>
-                    <div class="col-6">
-                        <button href="" type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#ModalTambahGrafikKbli"><i class="fa fa-plus fa-fw"></i>Tambah Data</button>
-                        <hr>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-borderless table-hover">
-                                <thead class="bg-dark text-light">
-                                    <tr>
-                                        <th class="text-center">No.</th>
-                                        <th class="text-center">KBLI</th>
-                                        <th class="text-center">Jumlah</th>
-                                        <th class="text-center"><i class="fa fa-cog"></i> Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $no = 1;
-                                    foreach ($grafik_kbli->result() as $row) {
-                                    ?>
-                                        <tr class="odd gradeX">
-                                            <td><?= $no++; ?></td>
-                                            <td><?= $row->kbli; ?></td>
-                                            <td><?= $row->jumlah; ?></td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <a class="btn btn-outline-warning btn-sm btn-circle" href="#" data-toggle="modal" data-target="#EditGrafikKbli<?php echo $row->id_grafik; ?>" title="Edit"><i class="fa fa-edit"></i></a>
-                                                    <a class="btn btn-outline-danger btn-sm btn-circle" href="<?php echo base_url() ?>admin/grafik_nib/hapus_kbli/<?php echo $row->id_grafik; ?>" title="Hapus" onclick="javascript: return confirm('Anda yakin hapus <?= $row->kbli; ?>?')"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafikNIB">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
                         </div>
-                        <canvas id="grafikkbli" width="100%"></canvas>
-                        <?php
-                        $nama_kbli = "";
-                        $total = null;
-                        foreach ($grafik_kbli->result() as $item) {
-                            $kbli = $item->kbli;
-                            $nama_kbli .= "'$kbli'" . ", ";
-                            $jum = $item->jumlah;
-                            $total .= "$jum" . ", ";
-                        }
-                        ?>
-                        <script>
-                            var kanvaskbli = document.getElementById("grafikkbli").getContext("2d");
+                        <table id="TabelData1" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">PMDN/PMA & UMK/Non UMK</th>
+                                    <th class="text-center align-middle">Jumlah</th>
+                                    <th class="text-center align-middle">Aksi</th>
+                                </tr>
+                            </thead>
 
-                            Chart.defaults.global.defaultFontFamily = "Lato";
-                            Chart.defaults.global.defaultFontSize = 12;
+                            <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($grafik_nib->result() as $row) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $row->nib; ?></td>
+                                        <td class="text-center align-middle"><?= $row->jumlah; ?></td>
+                                        <td class="text-center align-middle">
+                                            <button type="button" data-toggle="modal" data-target="#ModalEditGrafikNIB<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#ModalDeleteGrafikNIB<?= $row->id_grafik; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Grafik NIB Diterbitkan</h3>
+                    </div>
+                    <div class="card-body">
+                        <?php if ($grafik_nib->num_rows() > 0): ?>
+                            <canvas id="grafikNIB"></canvas>
 
-                            var nilai = {
-                                labels: [<?php echo $nama_kbli; ?>],
-                                datasets: [{
-                                    label: "Jumlah",
-                                    data: [<?php echo $total; ?>],
-                                    backgroundColor: ['#42ccff', '#8bfd43', '#fdfd43', '#fe9643', '#ff4442']
-                                }]
-                            };
+                            <?php
+                            $nib_label = [];
+                            $nib_total = [];
 
-                            var chartOptions = {
-                                indexAxis: 'y',
-                                legend: {
-                                    display: true,
-                                    position: 'top',
-                                    labels: {
-                                        boxWidth: 80,
-                                        fontColor: 'black'
-                                    }
-                                },
-                                scales: {
-                                    xAxes: [{
-                                        ticks: {
-                                            min: 0 // Edit the value according to what you need
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        stacked: true,
-                                        ticks: {
-                                            mirror: true
-                                        }
-                                    }]
-                                },
-                                events: false,
-                                showTooltips: false,
-                                animation: {
-                                    duration: 500,
-                                    easing: "easeOutQuart",
-                                    onComplete: function() {
-                                        var ctx = this.chart.ctx;
-                                        ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontFamily, 'normal', Chart.defaults.global.defaultFontFamily);
-                                        ctx.textAlign = 'left';
-                                        ctx.textBaseline = 'bottom';
-                                        this.data.datasets.forEach(function(dataset) {
-                                            console.log(dataset);
-                                            for (var i = 0; i < dataset.data.length; i++) {
-                                                var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model,
-                                                    scale_max = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._yScale.maxHeight;
-                                                left = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._xScale.left;
-                                                offset = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._xScale.longestLabelWidth;
-                                                ctx.fillStyle = '#000';
-                                                var y_pos = model.y - 5;
-                                                var label = model.label;
-                                                // Make sure data value does not get overflown and hidden
-                                                // when the bar's value is too close to max value of scale
-                                                // Note: The y value is reverse, it counts from top down
-                                                if ((scale_max - model.y) / scale_max >= 0.93)
-                                                    y_pos = model.y + 20;
-                                                // ctx.fillText(dataset.data[i], model.x, y_pos);
-                                                ctx.fillText(label, left + 10, model.y + 8);
+                            foreach ($grafik_nib->result() as $row) {
+                                $nib_label[] = $row->nib;
+                                $nib_total[] = $row->jumlah;
+                            }
+
+                            $nib_label_json = json_encode($nib_label, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            $nib_total_json = json_encode($nib_total, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            ?>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var ctx = document.getElementById('grafikNIB').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: <?= $nib_label_json; ?>,
+                                            datasets: [{
+                                                label: "Jumlah",
+                                                backgroundColor: 'rgba(219, 22, 47, 0.7)',
+                                                borderColor: 'rgba(219, 22, 47, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $nib_total_json; ?>
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true,
+                                                    title: {
+                                                        display: true,
+                                                        text: 'Jumlah'
+                                                    }
+                                                }
                                             }
-                                        });
-                                    }
-                                }
-                            };
-
-                            var lineChart = new Chart(kanvaskbli, {
-                                type: 'horizontalBar',
-                                data: nilai,
-                                options: chartOptions
-                            });
-                        </script>
+                                        }
+                                    });
+                                });
+                            </script>
+                        <?php else: ?>
+                            <p class="text-center text-muted"><b>Data grafik belum tersedia.</b></p>
+                        <?php endif; ?>
                     </div>
                 </div>
-                <!--end: Accordion -->
             </div>
+            <!-- ------------------------------Grafik NIB------------------------------ -->
+
+            <!-- ------------------------------Grafik Risiko------------------------------ -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel Grafik Sebaran Proyek Bedasarkan Risiko</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafikResiko">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+                        <table id="TabelData2" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">Risiko</th>
+                                    <th class="text-center align-middle">Jumlah</th>
+                                    <th class="text-center align-middle">Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($grafik_risiko->result() as $row) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $row->risiko; ?></td>
+                                        <td class="text-center align-middle"><?= $row->jumlah; ?></td>
+                                        <td class="text-center align-middle">
+                                            <button type="button" data-toggle="modal" data-target="#ModalEditGrafikResiko<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#ModalDeleteGrafikResiko<?= $row->id_grafik; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Grafik Sebaran Proyek Bedasarkan Risiko</h3>
+                    </div>
+                    <div class="card-body">
+                        <?php if ($grafik_risiko->num_rows() > 0): ?>
+                            <canvas id="grafikRisiko"></canvas>
+
+                            <?php
+                            $risiko_label = [];
+                            $risiko_total = [];
+
+                            foreach ($grafik_risiko->result() as $row) {
+                                $risiko_label[] = $row->risiko;
+                                $risiko_total[] = $row->jumlah;
+                            }
+
+                            $risiko_label_json = json_encode($risiko_label, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            $risiko_total_json = json_encode($risiko_total, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            ?>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var ctx = document.getElementById('grafikRisiko').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'pie',
+                                        data: {
+                                            labels: <?= $risiko_label_json; ?>,
+                                            datasets: [{
+                                                label: "Jumlah Risiko",
+                                                backgroundColor: [
+                                                    '#FF6384', '#36A2EB', '#FFCE56', '#8E44AD',
+                                                    '#2ECC71', '#E67E22', '#1ABC9C', '#34495E'
+                                                ],
+                                                data: <?= $risiko_total_json; ?>
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'bottom'
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+                        <?php else: ?>
+                            <p class="text-center text-muted"><b>Data grafik belum tersedia.</b></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <!-- ------------------------------Grafik Risiko------------------------------ -->
+
+            <!-- ------------------------------Grafik Kecamatan------------------------------ -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel Grafik Sebaran Proyek Per Kecamatan Usaha</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafikKecamatan">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+                        <table id="TabelData3" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">Kecamatan</th>
+                                    <th class="text-center align-middle">Jumlah</th>
+                                    <th class="text-center align-middle">Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($grafik_kecamatan->result() as $row) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $row->kecamatan; ?></td>
+                                        <td class="text-center align-middle"><?= $row->jumlah; ?></td>
+                                        <td class="text-center align-middle">
+                                            <button type="button" data-toggle="modal" data-target="#ModalEditGrafikPerKecamatan<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#ModalDeleteGrafikPerKecamatan<?= $row->id_grafik; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Grafik Grafik Sebaran Proyek Per Kecamatan Usaha</h3>
+                    </div>
+                    <div class="card-body">
+                        <?php if ($grafik_kecamatan->num_rows() > 0): ?>
+                            <canvas id="grafikKecamatan"></canvas>
+
+                            <?php
+                            $kecamatan_label = [];
+                            $kecamatan_total = [];
+
+                            foreach ($grafik_kecamatan->result() as $row) {
+                                $kecamatan_label[] = $row->kecamatan;
+                                $kecamatan_total[] = $row->jumlah;
+                            }
+
+                            $kecamatan_label_json = json_encode($kecamatan_label, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            $kecamatan_total_json = json_encode($kecamatan_total, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            ?>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var ctx = document.getElementById('grafikKecamatan');
+                                    ctx.height = 460; // atur tinggi canvas agar lebih tinggi dan bar lebih longgar
+                                    var chart = new Chart(ctx.getContext('2d'), {
+                                        type: 'horizontalBar',
+                                        data: {
+                                            labels: <?= $kecamatan_label_json; ?>,
+                                            datasets: [{
+                                                label: "Jumlah",
+                                                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $kecamatan_total_json; ?>,
+                                                barThickness: 25,
+                                                maxBarThickness: 40
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            scales: {
+                                                xAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        labelString: 'Jumlah'
+                                                    }
+                                                }],
+                                                yAxes: [{
+                                                    ticks: {
+                                                        padding: 10,
+                                                        fontSize: 12
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        labelString: 'KBLI'
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+                        <?php else: ?>
+                            <p class="text-center text-muted"><b>Data grafik belum tersedia.</b></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <!-- ------------------------------Grafik Kecamatan------------------------------ -->
+
+            <!-- ------------------------------Grafik KBLI------------------------------ -->
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Tabel Grafik Top 5 KBLI</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafikKBLI">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Data
+                            </button>
+                        </div>
+                        <table id="TabelData4" class="table table-bordered table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center align-middle">No.</th>
+                                    <th class="text-center align-middle">KBLI</th>
+                                    <th class="text-center align-middle">Jumlah</th>
+                                    <th class="text-center align-middle">Aksi</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $count = 1; ?>
+                                <?php foreach ($grafik_kbli->result() as $row) : ?>
+                                    <tr>
+                                        <td class="text-center align-middle"><?= $count++; ?></td>
+                                        <td class="text-center align-middle"><?= $row->kbli; ?></td>
+                                        <td class="text-center align-middle"><?= $row->jumlah; ?></td>
+                                        <td class="text-center align-middle">
+                                            <button type="button" data-toggle="modal" data-target="#ModalEditGrafikKBLI<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal" data-target="#ModalDeleteGrafikKBLI<?= $row->id_grafik; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Grafik Grafik Top 5 KBLI</h3>
+                    </div>
+                    <div class="card-body">
+                        <?php if ($grafik_kbli->num_rows() > 0): ?>
+                            <canvas id="grafikKBLI"></canvas>
+
+                            <?php
+                            $kbli_label = [];
+                            $kbli_total = [];
+
+                            foreach ($grafik_kbli->result() as $row) {
+                                $kbli_label[] = $row->kbli;
+                                $kbli_total[] = (int)$row->jumlah;
+                            }
+
+                            $kbli_label_json = json_encode($kbli_label, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            $kbli_total_json = json_encode($kbli_total, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
+                            ?>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var ctx = document.getElementById('grafikKBLI').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'horizontalBar',
+                                        data: {
+                                            labels: <?= $kbli_label_json; ?>,
+                                            datasets: [{
+                                                label: "Jumlah",
+                                                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $kbli_total_json; ?>
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            scales: {
+                                                xAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        labelString: 'Jumlah'
+                                                    }
+                                                }],
+                                                yAxes: [{
+                                                    ticks: {
+                                                        padding: 10,
+                                                        fontSize: 12
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        labelString: 'Kecamatan'
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+                        <?php else: ?>
+                            <p class="text-center text-muted"><b>Data grafik belum tersedia.</b></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <!-- ------------------------------Grafik KBLI------------------------------ -->
         </div>
     </div>
-    </div>
-    </div>
-</main>
+</section>
+<!-- /.content -->

@@ -75,53 +75,52 @@
                     <div class="card-header">
                         <h3 class="card-title"><?= $title; ?></h3>
                     </div>
-                    <!-- /.card-header -->
 
                     <div class="card-body">
-                        <canvas id="myChart"></canvas>
+                        <?php if ($grafik->num_rows() > 0): ?>
+                            <canvas id="myChart"></canvas>
 
-                        <?php
-                        // Pastikan data ada sebelum diproses
-                        $nama_izin = [];
-                        $total = [];
+                            <?php
+                            $nama_izin = [];
+                            $total = [];
 
-                        foreach ($grafik->result() as $row) {
-                            $nama_izin[] = $row->izin;
-                            $total[] = $row->jumlah;
-                        }
+                            foreach ($grafik->result() as $row) {
+                                $nama_izin[] = $row->izin;
+                                $total[] = $row->jumlah;
+                            }
 
-                        // Ubah menjadi JSON agar bisa digunakan di JavaScript
-                        $nama_izin_json = json_encode($nama_izin);
-                        $total_json = json_encode($total);
-                        ?>
-
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function() {
-                                var ctx = document.getElementById('myChart').getContext('2d');
-                                var chart = new Chart(ctx, {
-                                    type: 'bar', // Bisa diganti dengan 'line', 'pie', dll.
-                                    data: {
-                                        labels: <?= $nama_izin_json; ?>,
-                                        datasets: [{
-                                            // label: "Jumlah " + new Date().getFullYear(),
-                                            label: "Jumlah",
-                                            backgroundColor: 'rgba(219, 22, 47, 0.7)', // Warna batang
-                                            borderColor: 'rgba(219, 22, 47, 1)', // Warna garis tepi
-                                            borderWidth: 1,
-                                            data: <?= $total_json; ?>
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        scales: {
-                                            y: {
-                                                beginAtZero: true
+                            $nama_izin_json = json_encode($nama_izin);
+                            $total_json = json_encode($total);
+                            ?>
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    var chart = new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: <?= $nama_izin_json; ?>,
+                                            datasets: [{
+                                                label: "Jumlah Izin",
+                                                backgroundColor: 'rgba(219, 22, 47, 0.7)',
+                                                borderColor: 'rgba(219, 22, 47, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $total_json; ?>
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
                                             }
                                         }
-                                    }
+                                    });
                                 });
-                            });
-                        </script>
+                            </script>
+                        <?php else: ?>
+                            <p class="text-center text-muted"><b>Data grafik belum tersedia.</b></p>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!-- /.card -->

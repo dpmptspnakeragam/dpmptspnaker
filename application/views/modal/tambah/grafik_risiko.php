@@ -1,4 +1,4 @@
-<div class="modal fade" id="ModalTambahGrafikRisiko" tabindex="-1" role="dialog" aria-labelledby="ModalTambahgrafikLabel" aria-hidden="true">
+<div class="modal fade" id="ModalTambahGrafikResiko" tabindex="-1" role="dialog" aria-labelledby="ModalTambahgrafikLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary text-light">

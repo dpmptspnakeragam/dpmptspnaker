@@ -111,7 +111,7 @@ class Grafik_skm extends CI_controller
         $result = $this->Model_grafik_skm->update_periode($data, $id);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Periode Grafik SKM berhasil diperbarui ');
+            $this->session->set_flashdata('success', 'Periode Grafik SKM berhasil diperbarui');
         } else {
             $this->session->set_flashdata('error', 'Perbarui periode gagal. Silahkan coba lagi');
         }
@@ -149,17 +149,13 @@ class Grafik_skm extends CI_controller
         $this->upload->initialize($config);
 
         if ($this->upload->do_upload('file_upload')) {
-            // Dapatkan data file yang diunggah
             $file_data = $this->upload->data();
 
-            // Buat nama file baru yang unik
             $file_extension = pathinfo($file_data['file_name'], PATHINFO_EXTENSION);
             $unique_file_name = 'skm_gambar_' . uniqid() . '.' . $file_extension;
 
-            // Pindahkan file dengan nama baru yang unik
             rename($file_data['full_path'], $file_data['file_path'] . $unique_file_name);
 
-            // Simpan data ke database
             $data = [
                 'title' => $title,
                 'file_name' => $unique_file_name
@@ -190,25 +186,19 @@ class Grafik_skm extends CI_controller
         $this->upload->initialize($config);
 
         if ($this->upload->do_upload('file_upload')) {
-            // Dapatkan data gambar yang sudah ada
             $gambar_lama = $this->Model_skm_gambar->getGambarById($id);
 
-            // Hapus gambar lama jika ada
             if (file_exists('./assets/imgupload/' . $gambar_lama['file_name'])) {
                 unlink('./assets/imgupload/' . $gambar_lama['file_name']);
             }
 
-            // Dapatkan data file baru yang diunggah
             $file_data = $this->upload->data();
 
-            // Buat nama file baru yang unik
             $file_extension = pathinfo($file_data['file_name'], PATHINFO_EXTENSION);
             $unique_file_name = 'skm_gambar_' . uniqid() . '.' . $file_extension;
 
-            // Pindahkan file dengan nama baru yang unik
             rename($file_data['full_path'], $file_data['file_path'] . $unique_file_name);
 
-            // Update data di database
             $data = [
                 'title' => $title,
                 'file_name' => $unique_file_name
@@ -218,7 +208,6 @@ class Grafik_skm extends CI_controller
 
             $this->session->set_flashdata('success', 'Data Gambar IKM berhasil diperbarui.');
         } else {
-            // Jika tidak ada file yang diunggah, hanya update title
             $data = [
                 'title' => $title
             ];
@@ -235,12 +224,10 @@ class Grafik_skm extends CI_controller
     {
         $gambar = $this->Model_skm_gambar->getGambarById($id);
 
-        // Hapus gambar dari direktori
         if (file_exists('./assets/imgupload/' . $gambar['file_name'])) {
             unlink('./assets/imgupload/' . $gambar['file_name']);
         }
 
-        // Hapus data dari database
         $this->Model_skm_gambar->deleteGambar($id);
 
         $this->session->set_flashdata('success', 'Data Gambar IKM berhasil dihapus');
