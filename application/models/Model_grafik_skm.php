@@ -44,6 +44,11 @@ class Model_grafik_skm extends CI_model
         return $this->db->update('periode_grafik_skm', $data);
     }
 
+    public function get_by_id_skm($id_grafik)
+    {
+        return $this->db->get_where('grafik_skm', ['id_grafik' => $id_grafik])->row();
+    }
+
     public function delete($id_grafik)
     {
         $this->db->where('id_grafik', $id_grafik);

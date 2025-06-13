@@ -33,12 +33,12 @@ class Grafik_skm extends CI_controller
 
         $this->load->view('admin/grafik_skm', $data);
 
-        $this->load->view('modal/modal_tambah_grafik_skm');
-        $this->load->view('edit/edit_grafik_skm', $data);
+        $this->load->view('modal/tambah/grafik_skm');
+        $this->load->view('modal/edit/grafik_skm', $data);
         $this->load->view('modal/hapus/grafik_skm', $data);
 
-        $this->load->view('modal/modal_tambah_skm_gambar');
-        $this->load->view('edit/edit_skm_gambar', $data);
+        $this->load->view('modal/tambah/skm_gambar');
+        $this->load->view('modal/edit/skm_gambar', $data);
         $this->load->view('modal/hapus/grafik_skm_gambar', $data);
 
         $this->load->view('modal/edit/periode_grafik_skm', $data);
@@ -63,15 +63,15 @@ class Grafik_skm extends CI_controller
         $result = $this->Model_grafik_skm->input($data);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Data Grafik SKM berhasil ditambahkan.');
+            $this->session->set_flashdata('success', "Data Tahun $tahun berhasil ditambahkan.");
         } else {
-            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+            $this->session->set_flashdata('error', "Penyimpanan data tahun $tahun gagal. Silahkan coba lagi.");
         }
 
         redirect('admin/grafik_skm', 'refresh');
     }
 
-    public function ubah()
+    public function edit()
     {
         $id = $this->input->post('id', true);
         $tahun = $this->input->post('tahun', true);
@@ -88,9 +88,9 @@ class Grafik_skm extends CI_controller
         $result = $this->Model_grafik_skm->update($data, $id);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Data Grafik SKM berhasil diperbarui.');
+            $this->session->set_flashdata('success', "Data Tahun $tahun berhasil diperbarui.");
         } else {
-            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+            $this->session->set_flashdata('error', "Perbarui data tahun $tahun gagal. Silakan coba lagi.");
         }
 
         redirect('admin/grafik_skm', 'refresh');
@@ -121,18 +121,20 @@ class Grafik_skm extends CI_controller
 
     public function hapus($id)
     {
-        $query = $this->db->get_where('grafik_skm', ['id_grafik' => $id]);
+        $data_skm = $this->Model_grafik_skm->get_by_id_skm($id);
 
-        if ($query->num_rows() > 0) {
+        if ($data_skm) {
+            $skm = $data_skm->tahun;
+
             $result = $this->Model_grafik_skm->delete($id);
 
             if ($result) {
-                $this->session->set_flashdata('success', 'Data Grafik SKM berhasil dihapus');
+                $this->session->set_flashdata('success', "Data <b>$skm</b> berhasil dihapus.");
             } else {
-                $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi');
+                $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
             }
         } else {
-            $this->session->set_flashdata('error', 'Data tidak ditemukan');
+            $this->session->set_flashdata('error', 'Data tidak ditemukan.');
         }
 
         redirect('admin/grafik_skm', 'refresh');
@@ -164,9 +166,9 @@ class Grafik_skm extends CI_controller
             $result = $this->Model_skm_gambar->insertGambar($data);
 
             if ($result) {
-                $this->session->set_flashdata('success', 'Data Gambar IKM berhasil ditambahkan.');
+                $this->session->set_flashdata('success', "Data $title berhasil ditambahkan.");
             } else {
-                $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+                $this->session->set_flashdata('error', "Penyimpanan data $title gagal. Silahkan coba lagi.");
             }
         } else {
             $this->session->set_flashdata("error", "Terjadi kesalahan. Silahkan coba lagi.");
@@ -206,7 +208,7 @@ class Grafik_skm extends CI_controller
 
             $this->Model_skm_gambar->updateGambar($id, $data);
 
-            $this->session->set_flashdata('success', 'Data Gambar IKM berhasil diperbarui.');
+            $this->session->set_flashdata('success', "Data $title berhasil diperbarui.");
         } else {
             $data = [
                 'title' => $title
@@ -214,7 +216,7 @@ class Grafik_skm extends CI_controller
 
             $this->Model_skm_gambar->updateGambar($id, $data);
 
-            $this->session->set_flashdata('success', 'Data Gambar IKM berhasil diperbarui.');
+            $this->session->set_flashdata('success', "Data $title berhasil diperbarui.");
         }
 
         redirect('admin/grafik_skm', 'refresh');
@@ -222,15 +224,25 @@ class Grafik_skm extends CI_controller
 
     public function hapus_skm_gambar($id)
     {
-        $gambar = $this->Model_skm_gambar->getGambarById($id);
+        $datagambar = $this->Model_skm_gambar->get_by_id_gambar($id);
 
-        if (file_exists('./assets/imgupload/' . $gambar['file_name'])) {
-            unlink('./assets/imgupload/' . $gambar['file_name']);
+        if ($datagambar) {
+            $gambar = $datagambar['title'];
+
+            if (!empty($datagambar['file_name']) && file_exists('./assets/imgupload/' . $datagambar['file_name'])) {
+                unlink('./assets/imgupload/' . $datagambar['file_name']);
+            }
+
+            $result = $this->Model_skm_gambar->deleteGambar($id);
+
+            if ($result) {
+                $this->session->set_flashdata('success', "Data <b>$gambar</b> berhasil dihapus.");
+            } else {
+                $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Data tidak ditemukan.');
         }
-
-        $this->Model_skm_gambar->deleteGambar($id);
-
-        $this->session->set_flashdata('success', 'Data Gambar IKM berhasil dihapus');
 
         redirect('admin/grafik_skm', 'refresh');
     }

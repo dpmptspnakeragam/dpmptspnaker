@@ -23,11 +23,6 @@ class Model_skm_gambar extends CI_model
         return $this->db->insert('skm_gambar', $data);
     }
 
-    public function getGambarById($id)
-    {
-        return $this->db->get_where('skm_gambar', ['id_skm_gambar' => $id])->row_array();
-    }
-
     public function insertGambar($data)
     {
         return $this->db->insert('skm_gambar', $data);
@@ -37,6 +32,11 @@ class Model_skm_gambar extends CI_model
     {
         $this->db->where('id_skm_gambar', $id);
         return $this->db->update('skm_gambar', $data);
+    }
+
+    public function get_by_id_gambar($id)
+    {
+        return $this->db->get_where('skm_gambar', ['id_skm_gambar' => $id])->row_array();
     }
 
     public function deleteGambar($id)
