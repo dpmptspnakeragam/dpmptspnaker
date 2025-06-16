@@ -73,7 +73,7 @@ class Grafik_nib extends CI_controller
         redirect('admin/grafik_nib', 'refresh');
     }
 
-    public function ubah()
+    public function edit()
     {
         $id = $this->input->post('id', true);
         $nib = $this->input->post('nib', true);
