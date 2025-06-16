@@ -44,12 +44,6 @@
                                             <input class="form-control" id="judul" name="judul_berita" placeholder="Judul Berita" required>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-6">
-                            <div class="form-group">
-                                <label for="rangkuman">Rangkuman</label>
-                                <textarea type="text" id="rangkuman" class="form-control ckeditor" rows="3" name="rangkuman" placeholder="Rangkuman Berita" required></textarea>
-                            </div>
-                        </div> -->
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label for="isiberita">Isi</label>

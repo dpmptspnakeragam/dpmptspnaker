@@ -35,32 +35,45 @@ class Informasi extends CI_controller
         $id_berita = $this->input->post('id', true);
         $judul_berita = $this->input->post('judul_berita', true);
         $tgl_berita = $this->input->post('tgl_berita', true);
-        $gambar = $_FILES['gambar']['name'];
-        // $rangkuman = $this->input->post('rangkuman', true);
         $isi_berita = $this->input->post('isi_berita', true);
         $id_kategori = $this->input->post('id_kategori', true);
 
-        if ($gambar = '') {
-        } else {
+        $gambar_final = null; // Default jika tidak upload gambar
+
+        // Cek apakah ada file gambar diupload
+        if (!empty($_FILES['gambar']['name'])) {
             $nmfile = "berita-" . time();
             $config['upload_path'] = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
 
+            // Pastikan folder ada
+            if (!is_dir($config['upload_path'])) {
+                mkdir($config['upload_path'], 0777, true);
+            }
+
             $this->load->library('upload', $config);
+
             if ($this->upload->do_upload('gambar')) {
-                $gambar = $this->upload->data('file_name');
+                $gambar_final = $this->upload->data('file_name');
+            } else {
+                // Tangani error upload
+                $error = $this->upload->display_errors();
+                $this->session->set_flashdata('error', 'Upload gambar gagal: ' . strip_tags($error));
+                redirect('admin/informasi');
+                return;
             }
         }
-        $data = array(
-            'id_berita' => $id_berita,
-            'id_kategori' => $id_kategori,
-            'judul_berita' => $judul_berita,
-            'rangkuman' => $judul_berita,
-            'isi_berita' => $isi_berita,
-            'tgl_berita' => $tgl_berita,
-            'gambar' => $gambar
-        );
+
+        $data = [
+            'id_berita'     => $id_berita,
+            'id_kategori'   => $id_kategori,
+            'judul_berita'  => $judul_berita,
+            'rangkuman'     => $judul_berita,
+            'isi_berita'    => $isi_berita,
+            'tgl_berita'    => $tgl_berita,
+            'gambar'        => $gambar_final
+        ];
 
         $result = $this->Model_informasi->input($data);
 
@@ -70,7 +83,7 @@ class Informasi extends CI_controller
             $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
         }
 
-        redirect('admin/informasi', 'refresh');
+        redirect('admin/informasi');
     }
 
     public function edit()
