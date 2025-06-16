@@ -1,3 +1,4 @@
+<script src="<?= base_url(); ?>assets/ckeditor/ckeditor.js"></script>
 <?php foreach ($informasi->result() as $row) : ?>
     <div class="modal fade" id="EditInformasi<?php echo $row->id_berita; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">

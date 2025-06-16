@@ -22,9 +22,11 @@ class Informasi extends CI_controller
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);
         $this->load->view('templates/admin_sidebar', $data, FALSE);
-        $this->load->view('admin/informasi', $data);
-        $this->load->view('modal/modal_tambah_informasi', $data);
-        $this->load->view('edit/edit_informasi', $data);
+
+        $this->load->view('admin/informasi', $data, FALSE);
+        $this->load->view('modal/edit/informasi', $data, FALSE);
+        $this->load->view('modal/hapus/informasi', $data, FALSE);
+
         $this->load->view('templates/admin_footer');
     }
 

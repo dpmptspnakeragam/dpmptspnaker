@@ -114,11 +114,40 @@
 							</li>
 
 							<!-- Informasi -->
-							<li class="nav-item">
-								<a href="<?= base_url('admin/informasi'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['informasi'])) echo "active"; ?>">
+							<li class="nav-item <?= in_array(
+													$this->uri->segment(2),
+													[
+														'tambah_informasi',
+														'informasi',
+													]
+												) ? 'menu-open' : ''; ?>">
+								<a href="" class="nav-link <?= in_array(
+																$this->uri->segment(2),
+																[
+																	'tambah_informasi',
+																	'informasi',
+																]
+															) ? 'active' : ''; ?>">
 									<i class="nav-icon fas fa-info"></i>
-									<p>Informasi</p>
+									<p>
+										Informasi
+										<i class="right fas fa-angle-left"></i>
+									</p>
 								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item">
+										<a href="<?= base_url('admin/tambah_informasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'tambah_informasi' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'tambah_informasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'tambah_informasi' ? 'text-maroon' : ''; ?>"></i>
+											<p>Tambah Informasi</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="<?= base_url('admin/informasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'informasi' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'informasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'informasi' ? 'text-maroon' : ''; ?>"></i>
+											<p>Tabel Informasi</p>
+										</a>
+									</li>
+								</ul>
 							</li>
 
 							<!-- Layanan -->
