@@ -136,7 +136,14 @@ class Informasi extends CI_controller
         $query = $this->db->get('berita');
         $row = $query->row();
 
-        unlink("./assets/imgupload/$row->gambar");
+        if ($row && !empty($row->gambar)) {
+            $file_path = "./assets/imgupload/" . $row->gambar;
+
+            // Cek apakah file benar-benar ada dan bukan direktori
+            if (file_exists($file_path) && is_file($file_path)) {
+                unlink($file_path);
+            }
+        }
 
         $result = $this->Model_informasi->delete($id_berita);
 
