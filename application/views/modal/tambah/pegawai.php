@@ -72,29 +72,23 @@
                                 <label class="control-label" for="golongan">Golongan</label>
                                 <select required name="golongan" class="form-control" onchange="" required>
                                     <option selected disabled>Pilih Golongan</option>
-                                    <option>IV/e</option>
-                                    <option>IV/d</option>
-                                    <option>IV/c</option>
-                                    <option>IV/b</option>
-                                    <option>IV/a</option>
-                                    <option>III/d</option>
-                                    <option>III/c</option>
-                                    <option>III/b</option>
-                                    <option>III/a</option>
-                                    <option>II/d</option>
-                                    <option>II/c</option>
-                                    <option>II/b</option>
-                                    <option>II/a</option>
-                                    <option>I/d</option>
-                                    <option>I/c</option>
-                                    <option>I/b</option>
-                                    <option>I/a</option>
+                                    <option>I</option>
+                                    <option>II</option>
+                                    <option>III</option>
+                                    <option>IV</option>
+                                    <option>V</option>
+                                    <option>VI</option>
+                                    <option>VII</option>
+                                    <option>VIII</option>
+                                    <option>IX</option>
+                                    <option>X</option>
+                                    <option>XI</option>
                                     <option>CPNS</option>
                                     <option>PPPK</option>
                                     <option>PTT</option>
                                     <option>Tenaga Kontrak</option>
-                                    <option>THL</option>
                                     <option>Tenaga Outsourcing</option>
+                                    <option>THL</option>
                                 </select>
                             </div>
                         </div>

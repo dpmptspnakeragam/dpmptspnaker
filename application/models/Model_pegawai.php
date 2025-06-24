@@ -59,9 +59,13 @@ class Model_pegawai extends CI_model
         $this->db->update('kabid', $data);
     }
 
+    public function get_by_id_pegawai($id_pegawai)
+    {
+        return $this->db->get_where('pegawai', ['id_pegawai' => $id_pegawai])->row();
+    }
+
     public function delete($id_pegawai)
     {
-        $this->db->where('id_pegawai', $id_pegawai);
-        return $this->db->delete('pegawai');
+        return $this->db->delete('pegawai', ['id_pegawai' => $id_pegawai]);
     }
 }

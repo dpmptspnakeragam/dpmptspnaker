@@ -25,8 +25,11 @@ class Pegawai extends CI_controller
         $this->load->view('templates/admin_navbar', $data, FALSE);
         $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/pegawai', $data);
-        $this->load->view('modal/modal_tambah_pegawai', $data);
-        $this->load->view('edit/edit_pegawai', $data);
+
+        $this->load->view('modal/tambah/pegawai', $data);
+        $this->load->view('modal/edit/pegawai', $data);
+        $this->load->view('modal/hapus/pegawai', $data);
+
         $this->load->view('edit/edit_kabid', $data);
         $this->load->view('templates/admin_footer');
     }
@@ -72,9 +75,9 @@ class Pegawai extends CI_controller
         $result = $this->Model_pegawai->input($data);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Data Pegawai berhasil disimpan.');
+            $this->session->set_flashdata('success', "Data $nama berhasil disimpan.");
         } else {
-            $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
+            $this->session->set_flashdata('error', "Penyimpanan data $nama gagal. Silahkan coba lagi.");
         }
 
         redirect('admin/pegawai', 'refresh');
@@ -130,9 +133,9 @@ class Pegawai extends CI_controller
         $result = $this->Model_pegawai->update_pegawai($data, $id_pegawai);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Data Pegawai berhasil diperbarui.');
+            $this->session->set_flashdata('success', "Data $nama berhasil diperbarui.");
         } else {
-            $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
+            $this->session->set_flashdata('error', "Perbarui data $nama gagal. Silahkan coba lagi.");
         }
 
         redirect('admin/pegawai', 'refresh');
@@ -177,20 +180,27 @@ class Pegawai extends CI_controller
 
     public function hapus($id_pegawai)
     {
-        $this->db->where('id_pegawai', $id_pegawai);
-        $query = $this->db->get('pegawai');
-        $row = $query->row();
+        // Ambil data pegawai berdasarkan ID
+        $data_pegawai = $this->Model_pegawai->get_by_id_pegawai($id_pegawai);
 
-        if (!empty($row->gambar) && file_exists("./assets/imgupload/$row->gambar")) {
-            unlink("./assets/imgupload/$row->gambar");
-        }
+        if ($data_pegawai) {
+            // Hapus gambar jika ada
+            if (!empty($data_pegawai->gambar) && file_exists("./assets/imgupload/{$data_pegawai->gambar}")) {
+                unlink("./assets/imgupload/{$data_pegawai->gambar}");
+            }
 
-        $result = $this->Model_pegawai->delete($id_pegawai);
+            $pegawai = $data_pegawai->nama;
 
-        if ($result) {
-            $this->session->set_flashdata('success', 'Data Pegawai berhasil dihapus.');
+            // Hapus data dari database
+            $result = $this->Model_pegawai->delete($id_pegawai);
+
+            if ($result) {
+                $this->session->set_flashdata('success', "Data <b>$pegawai</b> berhasil dihapus.");
+            } else {
+                $this->session->set_flashdata('error', "Penghapusan data <b>$pegawai</b> gagal. Silahkan coba lagi.");
+            }
         } else {
-            $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
+            $this->session->set_flashdata('error', 'Data tidak ditemukan.');
         }
 
         redirect('admin/pegawai', 'refresh');
