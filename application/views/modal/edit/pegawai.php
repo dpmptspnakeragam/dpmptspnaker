@@ -70,36 +70,8 @@
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="golongan">Golongan</label>
-                                    <?php
-                                    $golonganOptions = [
-                                        "I",
-                                        "II",
-                                        "III",
-                                        "IV",
-                                        "V",
-                                        "VI",
-                                        "VII",
-                                        "VIII",
-                                        "IX",
-                                        "X",
-                                        "XI",
-                                        "CPNS",
-                                        "PPPK",
-                                        "PTT",
-                                        "Tenaga Kontrak",
-                                        "Tenaga Outsourcing",
-                                        "THL"
-                                    ];
-                                    ?>
-                                    <select required name="golongan" class="form-control">
-                                        <option disabled <?= empty($row->golongan) ? 'selected' : '' ?>>Pilih Golongan</option>
-                                        <?php foreach ($golonganOptions as $opt): ?>
-                                            <option value="<?= $opt ?>" <?= ($row->golongan == $opt) ? 'selected' : '' ?>>
-                                                <?= $opt ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                    <label for="golongan">Golongan</label>
+                                    <input class="form-control" id="golongan" name="golongan" placeholder="Golongan" value="<?= $row->golongan; ?>" required>
                                 </div>
                             </div>
                         </div>

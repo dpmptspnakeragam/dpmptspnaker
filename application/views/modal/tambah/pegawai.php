@@ -69,27 +69,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="control-label" for="golongan">Golongan</label>
-                                <select required name="golongan" class="form-control" onchange="" required>
-                                    <option selected disabled>Pilih Golongan</option>
-                                    <option>I</option>
-                                    <option>II</option>
-                                    <option>III</option>
-                                    <option>IV</option>
-                                    <option>V</option>
-                                    <option>VI</option>
-                                    <option>VII</option>
-                                    <option>VIII</option>
-                                    <option>IX</option>
-                                    <option>X</option>
-                                    <option>XI</option>
-                                    <option>CPNS</option>
-                                    <option>PPPK</option>
-                                    <option>PTT</option>
-                                    <option>Tenaga Kontrak</option>
-                                    <option>Tenaga Outsourcing</option>
-                                    <option>THL</option>
-                                </select>
+                                <label for="golongan">Golongan</label>
+                                <input class="form-control" id="golongan" name="golongan" placeholder="Golongan" required>
                             </div>
                         </div>
                     </div>
