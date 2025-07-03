@@ -159,11 +159,11 @@ class Model_spkp_antikorupsi extends CI_Model
 
     public function get_data_by_id($id_spkp)
     {
-        $this->db->select('spkp.*, spak.*, skm.*'); // Memilih semua kolom dari kedua tabel
+        $this->db->select('spkp.*, spak.*, skm.*');
         $this->db->from('spkp');
-        $this->db->where('spkp.id_spkp', $id_spkp); // Menggunakan alias untuk kolom id_spkp
-        $this->db->join('spak', 'spak.id_spkp = spkp.id_spkp', 'left'); // Menggunakan alias untuk penggabungan
-        $this->db->join('skm', 'skm.id_skm = spkp.id_spkp', 'left'); // Menggunakan alias untuk penggabungan
+        $this->db->where('spkp.id_spkp', $id_spkp);
+        $this->db->join('spak', 'spak.id_spkp = spkp.id_spkp', 'left');
+        $this->db->join('skm', 'skm.id_skm = spak.id_skm', 'left'); // ← perubahan penting
         $query = $this->db->get();
         return $query->result();
     }
