@@ -101,86 +101,174 @@ Nilai SPKP & SPAK = (NRR_Z - NRR_R) × 50
                         <div class="card-body text-center">
                             <h3>Nilai IKM</h3>
                             <h4 class="text-maroon"><?= kategori_mutu($skm['ikm']); ?> <br> <?= $skm['ikm']; ?></h4>
-                            <p>Total Responden: <?= number_format($skm['jumlah']); ?></p>
-                            <p>Laki-laki: <?= number_format($skm['lk']); ?> / Perempuan: <?= number_format($skm['pr']); ?></p>
-
-                            <hr>
-                            <strong>Pendidikan:</strong>
-                            <div class="row mt-1 mb-1">
+                            <div class="row">
                                 <div class="col-6">
                                     <div class="text-right">
-                                        <span>SD</span><br>
-                                        <span>SMP</span><br>
-                                        <span>SMA</span><br>
-                                        <span>D1-D3</span><br>
-                                        <span>S1</span><br>
-                                        <span>S2</span><br>
+                                        <span>Total Responden</span><br>
+                                        <span>Laki-laki</span><br>
+                                        <span>Perempuan</span><br>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="text-left">
-                                        <span>: <?= $skm['sd']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['smp']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['sma']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['d1']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['s1']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['s2']; ?> ORANG</span><br>
+                                        <span>: <?= number_format($skm['jumlah']); ?> ORANG</span><br>
+                                        <span>: <?= number_format($skm['lk']); ?> ORANG</span><br>
+                                        <span>: <?= number_format($skm['pr']); ?> ORANG</span><br>
                                     </div>
                                 </div>
                             </div>
-
-                            <strong>Pekerjaan:</strong>
-                            <div class="row mt-1 mb-1">
-                                <div class="col-6">
-                                    <div class="text-right">
-                                        <span>PNS</span><br>
-                                        <span>TNI</span><br>
-                                        <span>POLRI</span><br>
-                                        <span>Swasta</span><br>
-                                        <span>Wirausaha</span><br>
-                                        <span>Lainnya</span><br>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="text-left">
-                                        <span>: <?= $skm['pns']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['tni']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['polri']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['swasta']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['wirausaha']; ?> ORANG</span><br>
-                                        <span>: <?= $skm['lainnya']; ?> ORANG</span><br>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <hr>
-                            <strong>Nilai SKM (U1 - U9) :</strong><br>
-                            <?php foreach ($skm['u'] as $i => $nilai): ?>
-                                U<?= $i; ?>: <?= round($nilai, 2); ?><br>
-                            <?php endforeach; ?>
-
                             <hr>
                             <div class="row">
-                                <div class="col-12">
-                                    <h3>Nilai Survey</h3>
-                                    <h4 class="text-maroon">
-                                        <?= kategori_mutu($skm['spkp_spak']); ?><br>
-                                        <?= $skm['spkp_spak']; ?>
-                                    </h4>
+                                <div class="col-6 mb-3"><strong>Pendidikan:</strong>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <span>SD</span><br>
+                                                <span>SMP</span><br>
+                                                <span>SMA</span><br>
+                                                <span>D1-D3</span><br>
+                                                <span>S1</span><br>
+                                                <span>S2</span><br>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-left">
+                                                <span>: <?= $skm['sd']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['smp']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['sma']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['d1']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['s1']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['s2']; ?> ORANG</span><br>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <strong>Nilai SPKP (Z1 - Z8) :</strong><br>
-                                    <?php foreach ($skm['z'] as $i => $nilai): ?>
-                                        Z<?= $i; ?>: <?= round($nilai, 2); ?><br>
-                                    <?php endforeach; ?>
-                                </div>
-                                <div class="col-6">
-                                    <strong>Nilai SPAK (R1 - R5) :</strong><br>
-                                    <?php foreach ($skm['r'] as $i => $nilai): ?>
-                                        R<?= $i; ?>: <?= round($nilai, 2); ?><br>
-                                    <?php endforeach; ?>
+                                <div class="col-6"><strong>Pekerjaan:</strong>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="text-right">
+                                                <span>PNS</span><br>
+                                                <span>TNI</span><br>
+                                                <span>POLRI</span><br>
+                                                <span>Swasta</span><br>
+                                                <span>Wirausaha</span><br>
+                                                <span>Lainnya</span><br>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="text-left">
+                                                <span>: <?= $skm['pns']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['tni']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['polri']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['swasta']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['wirausaha']; ?> ORANG</span><br>
+                                                <span>: <?= $skm['lainnya']; ?> ORANG</span><br>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="card card-danger">
+                                <div class="card-header">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-chart-line"></i>
+                                        Nilai SKM (U1 - U9)
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-sm table-bordered">
+                                        <thead class="text-center bg-light">
+                                            <tr>
+                                                <th>U1</th>
+                                                <th>U2</th>
+                                                <th>U3</th>
+                                                <th>U4</th>
+                                                <th>U5</th>
+                                                <th>U6</th>
+                                                <th>U7</th>
+                                                <th>U8</th>
+                                                <th>U9</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <?php foreach ($skm['u'] as $nilai): ?>
+                                                    <td><?= round($nilai, 2); ?></td>
+                                                <?php endforeach; ?>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <h3>Nilai Survey</h3>
+                            <h4 class="text-maroon">
+                                <?= kategori_mutu($skm['spkp_spak']); ?><br>
+                                <?= $skm['spkp_spak']; ?>
+                            </h4>
+                            <div class="card card-danger">
+                                <div class="card-header">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-chart-line"></i>
+                                        Nilai SPKP (Z1 - Z8)
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-sm table-bordered">
+                                        <thead class="text-center bg-light">
+                                            <tr>
+                                                <th>Z1</th>
+                                                <th>Z2</th>
+                                                <th>Z3</th>
+                                                <th>Z4</th>
+                                                <th>Z5</th>
+                                                <th>Z6</th>
+                                                <th>Z7</th>
+                                                <th>Z8</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <?php foreach ($skm['z'] as $nilai): ?>
+                                                    <td><?= round($nilai, 2); ?></td>
+                                                <?php endforeach; ?>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card card-danger">
+                                <div class="card-header">
+                                    <h5 class="card-title">
+                                        <i class="fas fa-chart-line"></i>
+                                        Nilai SPAK (R1 - R5)
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-sm table-bordered">
+                                        <thead class="text-center bg-light">
+                                            <tr>
+                                                <th>R1</th>
+                                                <th>R2</th>
+                                                <th>R3</th>
+                                                <th>R4</th>
+                                                <th>R5</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <?php foreach ($skm['r'] as $nilai): ?>
+                                                    <td><?= round($nilai, 2); ?></td>
+                                                <?php endforeach; ?>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
