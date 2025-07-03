@@ -343,7 +343,7 @@
 													[
 														'skm',
 														'spkp_antikorupsi',
-														'rekap_survey',
+														'dataikm',
 													]
 												) ? 'menu-open' : ''; ?>">
 								<a href="" class="nav-link <?= in_array(
@@ -351,7 +351,7 @@
 																[
 																	'skm',
 																	'spkp_antikorupsi',
-																	'rekap_survey',
+																	'dataikm',
 																]
 															) ? 'active' : ''; ?>">
 									<i class="nav-icon fas fa-poll"></i>
@@ -374,9 +374,9 @@
 										</a>
 									</li>
 									<li class="nav-item">
-										<a href="<?= base_url('admin/rekap_survey'); ?>" class="nav-link <?= $this->uri->segment(2) == 'rekap_survey' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'rekap_survey' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'rekap_survey' ? 'text-maroon' : ''; ?>"></i>
-											<p>Rekap IKM</p>
+										<a href="<?= base_url('admin/dataikm'); ?>" class="nav-link <?= $this->uri->segment(2) == 'dataikm' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'dataikm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'dataikm' ? 'text-maroon' : ''; ?>"></i>
+											<p>Data IKM Tahunan</p>
 										</a>
 									</li>
 								</ul>
