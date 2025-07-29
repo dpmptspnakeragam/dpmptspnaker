@@ -124,6 +124,7 @@ Nilai SPKP & SPAK = (NRR_Z - NRR_R) × 50
                                 <div class="col-6">
                                     <div class="text-right">
                                         <span>
+                                            <span></span><br>
                                             < 20 tahun</span><br>
                                                 <span>20 - 29 tahun</span><br>
                                                 <span>30 - 39 tahun</span><br>
@@ -134,7 +135,7 @@ Nilai SPKP & SPAK = (NRR_Z - NRR_R) × 50
                                 </div>
                                 <div class="col-6">
                                     <div class="text-left">
-                                        <!-- <span>&nbsp;</span><br> -->
+                                        <span>&nbsp;</span><br>
                                         <span>: <?= $skm['umur']['<20']; ?> ORANG</span><br>
                                         <span>: <?= $skm['umur']['20-29']; ?> ORANG</span><br>
                                         <span>: <?= $skm['umur']['30-39']; ?> ORANG</span><br>
