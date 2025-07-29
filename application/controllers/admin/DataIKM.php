@@ -185,12 +185,12 @@ class DataIKM extends CI_Controller
 
             // Umur
             'umur' => [
-                '<20' => $m->jmlh_umur('<', 20, $awalBulan, $akhirBulan, $tahun),
-                '20-29' => $m->jmlh_umur_range(20, 29, $awalBulan, $akhirBulan, $tahun),
-                '30-39' => $m->jmlh_umur_range(30, 39, $awalBulan, $akhirBulan, $tahun),
-                '40-49' => $m->jmlh_umur_range(40, 49, $awalBulan, $akhirBulan, $tahun),
-                '50-59' => $m->jmlh_umur_range(50, 59, $awalBulan, $akhirBulan, $tahun),
-                '60+' => $m->jmlh_umur('>=', 60, $awalBulan, $akhirBulan, $tahun),
+                '<20'   => $m->jmlh_umur('<', 20, $awalBulan, $akhirBulan, $tahun) ?: 0,
+                '20-29' => $m->jmlh_umur_range(20, 29, $awalBulan, $akhirBulan, $tahun) ?: 0,
+                '30-39' => $m->jmlh_umur_range(30, 39, $awalBulan, $akhirBulan, $tahun) ?: 0,
+                '40-49' => $m->jmlh_umur_range(40, 49, $awalBulan, $akhirBulan, $tahun) ?: 0,
+                '50-59' => $m->jmlh_umur_range(50, 59, $awalBulan, $akhirBulan, $tahun) ?: 0,
+                '60+'   => $m->jmlh_umur('>=', 60, $awalBulan, $akhirBulan, $tahun) ?: 0,
             ],
 
             // Pendidikan
