@@ -117,6 +117,34 @@ Nilai SPKP & SPAK = (NRR_Z - NRR_R) × 50
                                     </div>
                                 </div>
                             </div>
+
+                            <hr>
+                            <strong>Usia Responden:</strong>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-right">
+                                        <span>
+                                            < 20 tahun</span><br>
+                                                <span>20 - 29 tahun</span><br>
+                                                <span>30 - 39 tahun</span><br>
+                                                <span>40 - 49 tahun</span><br>
+                                                <span>50 - 59 tahun</span><br>
+                                                <span>60+ tahun</span><br>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-left">
+                                        <!-- <span>&nbsp;</span><br> -->
+                                        <span>: <?= $skm['umur']['<20']; ?> ORANG</span><br>
+                                        <span>: <?= $skm['umur']['20-29']; ?> ORANG</span><br>
+                                        <span>: <?= $skm['umur']['30-39']; ?> ORANG</span><br>
+                                        <span>: <?= $skm['umur']['40-49']; ?> ORANG</span><br>
+                                        <span>: <?= $skm['umur']['50-59']; ?> ORANG</span><br>
+                                        <span>: <?= $skm['umur']['60+']; ?> ORANG</span><br>
+                                    </div>
+                                </div>
+                            </div>
+
                             <hr>
                             <div class="row">
                                 <div class="col-6 mb-3"><strong>Pendidikan:</strong>

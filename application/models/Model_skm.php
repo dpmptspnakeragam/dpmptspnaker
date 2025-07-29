@@ -421,6 +421,28 @@ class Model_skm extends CI_model
         return $query->result();
     }
 
+    // Start menampilkan umur
+    public function jmlh_umur($operator, $umur, $awalBulan, $akhirBulan, $tahun)
+    {
+        $this->db->where("umur $operator", $umur);
+        $this->db->where('YEAR(date)', $tahun);
+        $this->db->where('MONTH(date) >=', $awalBulan);
+        $this->db->where('MONTH(date) <=', $akhirBulan);
+        return $this->db->get('skm')->num_rows();
+    }
+
+    public function jmlh_umur_range($min, $max, $awalBulan, $akhirBulan, $tahun)
+    {
+        $this->db->where('umur >=', $min);
+        $this->db->where('umur <=', $max);
+        $this->db->where('YEAR(date)', $tahun);
+        $this->db->where('MONTH(date) >=', $awalBulan);
+        $this->db->where('MONTH(date) <=', $akhirBulan);
+        return $this->db->get('skm')->num_rows();
+    }
+    // End of menampilkan umur
+
+
     public function hapus_data_terkait($id_skm)
     {
         $this->db->trans_start();
