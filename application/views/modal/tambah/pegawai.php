@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <!-- <div class="col-6">
                             <div class="form-group">
                                 <label for="jenis_nip">Type NIP</label>
                                 <select class="form-control" name="jenis_nip" id="jenis_nip" required>
@@ -43,7 +43,15 @@
                                     <option value="NIPPPK">NIPPPK</option>
                                 </select>
                             </div>
+                        </div> -->
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="type_nip">Type NIP</label>
+                                <input type="text" class="form-control" name="jenis_nip" placeholder="Masukan Type NIP" required>
+                            </div>
                         </div>
+
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="persyaratan">NIP</label>

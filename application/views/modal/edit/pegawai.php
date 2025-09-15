@@ -33,8 +33,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-lg-6 col-sm-12">
-                                <!-- <div class="form-group">
+                            <!-- <div class="col-lg-6 col-sm-12">
+                                <div class="form-group">
                                     <label class="control-label" for="jabatan">Bidang</label>
                                     <select required name="id_kabid" class="form-control">
                                         <option value="<?= $row->id_kabid; ?>"><?= $row->jabatan_kabid; ?></option>
@@ -43,7 +43,7 @@
                                             <option value="<?= $row2->id_kabid; ?>"><?= $row2->jabatan_kabid; ?></option>;
                                         <?php } ?>
                                     </select>
-                                </div> -->
+                                </div>
                                 <div class="form-group">
                                     <label for="type_nip">Type NIP</label>
                                     <select class="form-control" name="jenis_nip" id="type_nip" required>
@@ -52,7 +52,15 @@
                                         <option value="NIPPPK" <?= ($row->jenis_nip == 'NIPPPK') ? 'selected' : ''; ?>>NIPPPK</option>
                                     </select>
                                 </div>
+                            </div> -->
+
+                            <div class="col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label for="type_nip">Type NIP</label>
+                                    <input type="text" class="form-control" name="jenis_nip" placeholder="Type NIP" value="<?= $row->jenis_nip; ?>" required>
+                                </div>
                             </div>
+
                             <div class="col-lg-6 col-sm-12">
                                 <div class="form-group">
                                     <label for="persyaratan">NIP</label>
