@@ -245,6 +245,7 @@ class Home extends CI_Controller
               <ul>
                 <li><b>Nomor Pengaduan:</b> ' . $unique_id . '</li>
                 <li><b>Lokasi Kejadian:</b> ' . htmlspecialchars($input['lokasi_kejadian']) . '</li>
+                <li><b>Uraian Pengaduan:</b> ' . htmlspecialchars($input['materi_pengaduan']) . '</li>
                 <li><b>Tanggal:</b> ' . date("d F Y H:i") . '</li>
               </ul>
               <p>Untuk memantau perkembangan pengaduan, silakan klik tombol di bawah ini 👇</p>
