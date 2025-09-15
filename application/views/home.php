@@ -333,8 +333,8 @@
 			<div class="col-lg-6 col-md-6 col-sm-12">
 				<img class="shadow mekanisme-pengaduan mb-4" src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%">
 				<h4><strong>Info Kontak Pengaduan</strong></h4>
-				<p class="mt-0 mb-0"><i class="fab fa-whatsapp"></i> WhatsApp : <b>0813 7479 5952</b></p>
-				<p class="mt-0 mb-0">Atau <i class="far fa-arrow-alt-circle-right"></i>
+				<p class="mt-0 mb-0"><i class="fab fa-whatsapp"></i> WhatsApp : <b>0813 7479 5952</b>
+					Atau <i class="far fa-arrow-alt-circle-right"></i>
 					<b>
 						<a href="https://wa.me/6281374795952?text=Assalamualaikum+Admin,+" target="_blank">
 							Klik Link WhatsApp Disini
@@ -343,14 +343,14 @@
 				</p>
 				<p class="mt-0"><i class="far fa-envelope"></i> Email : dpmptspagam@gmail.com</p>
 			</div>
-			<div class="col-lg-6 col-md-6 col-sm-12 form-pengaduan mb-4">
+			<div class="col-lg-6 col-md-6 col-sm-12">
 				<div class="card shadow">
 					<div class="card-header">
-						<p class="h2">Formulir Pengaduan Online DPMPTSP Kab. Agam</p>
+						<p class="h2 text-center">Formulir Pengaduan Online <br> DPMPTSP Kab. Agam</p>
 					</div>
 
 					<form method="post" enctype="multipart/form-data" action="<?= base_url('home/kirim_pengaduan'); ?>">
-						<div class="card-body" style="max-height: 65vh; overflow-y: auto;">
+						<div class="card-body">
 
 							<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
@@ -391,73 +391,98 @@
 								});
 							</script>
 
-							<div class="form-group">
-								<label for="nama">Nama</label>
-								<div class="input-group">
-									<input name="nama" type="text" class="form-control" placeholder="Masukan Nama" value="<?= set_value('nama'); ?>" required>
-									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fas fa-user-tag"></span>
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="nama">Nama</label>
+										<div class="input-group">
+											<input name="nama" type="text" class="form-control" placeholder="Masukan Nama" value="<?= set_value('nama'); ?>" required>
+											<div class="input-group-append">
+												<div class="input-group-text">
+													<span class="fas fa-user-tag"></span>
+												</div>
+											</div>
 										</div>
+										<small class="text-danger"><?= form_error('nama'); ?></small>
 									</div>
 								</div>
-								<small class="text-danger"><?= form_error('nama'); ?></small>
-							</div>
-							<div class="form-group">
-								<label for="alamat">Alamat</label>
-								<div class="input-group">
-									<input name="alamat" type="text" class="form-control" placeholder="Masukan Alamat" value="<?= set_value('alamat'); ?>" required>
-									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fas fa-map-marker"></span>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="alamat">Alamat</label>
+										<div class="input-group">
+											<textarea name="alamat" id="alamat" class="form-control" cols="20" rows="1" placeholder="Masukan Alamat" required><?= set_value('alamat'); ?></textarea>
 										</div>
+										<small class="text-danger"><?= form_error('alamat'); ?></small>
 									</div>
 								</div>
-								<small class="text-danger"><?= form_error('alamat'); ?></small>
-							</div>
-							<div class="form-group">
-								<label for="hp">Nomor WhatsApp</label>
-								<div class="input-group">
-									<input name="hp" type="number" class="form-control" placeholder="Masukan Nomor Whatsapp" value="<?= set_value('hp'); ?>" required>
-									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fab fa-whatsapp"></span>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="hp">WhatsApp</label>
+										<div class="input-group">
+											<input name="hp" type="number" class="form-control" placeholder="Masukan Whatsapp" value="<?= set_value('hp'); ?>" required>
+											<div class="input-group-append">
+												<div class="input-group-text">
+													<span class="fab fa-whatsapp"></span>
+												</div>
+											</div>
 										</div>
+										<small class="text-danger"><?= form_error('hp'); ?></small>
 									</div>
 								</div>
-								<small class="text-danger"><?= form_error('hp'); ?></small>
-							</div>
-							<div class="form-group">
-								<label for="email">Email</label>
-								<div class="input-group">
-									<input name="email" type="email" class="form-control" placeholder="Masukan Email" value="<?= set_value('email'); ?>" required>
-									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fas fa-envelope"></span>
+								<!-- <div class="col-6">
+									<div class="form-group">
+										<label for="alamat">Alamat</label>
+										<div class="input-group">
+											<input name="alamat" type="text" class="form-control" placeholder="Masukan Alamat" value="<?= set_value('alamat'); ?>" required>
+											<div class="input-group-append">
+												<div class="input-group-text">
+													<span class="fas fa-map-marker"></span>
+												</div>
+											</div>
 										</div>
+										<small class="text-danger"><?= form_error('alamat'); ?></small>
+									</div>
+								</div> -->
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="email">Email</label>
+										<div class="input-group">
+											<input name="email" type="email" class="form-control" placeholder="Masukan Email" value="<?= set_value('email'); ?>" required>
+											<div class="input-group-append">
+												<div class="input-group-text">
+													<span class="fas fa-envelope"></span>
+												</div>
+											</div>
+										</div>
+										<small class="text-danger"><?= form_error('email'); ?></small>
 									</div>
 								</div>
-								<small class="text-danger"><?= form_error('email'); ?></small>
-							</div>
-							<div class="form-group">
-								<label for="lokasi_kejadian">Lokasi Kejadian</label>
-								<div class="input-group">
-									<input name="lokasi_kejadian" type="text" class="form-control" placeholder="Masukan Lokasi Kejadian" required value="<?= set_value('lokasi_kejadian'); ?>">
-									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fas fa-map-marked-alt"></span>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="lokasi_kejadian">Lokasi Kejadian</label>
+										<div class="input-group">
+											<input name="lokasi_kejadian" type="text" class="form-control" placeholder="Masukan Lokasi Kejadian" required value="<?= set_value('lokasi_kejadian'); ?>">
+											<div class="input-group-append">
+												<div class="input-group-text">
+													<span class="fas fa-map-marked-alt"></span>
+												</div>
+											</div>
 										</div>
+										<small class="text-danger"><?= form_error('lokasi_kejadian'); ?></small>
 									</div>
 								</div>
-								<small class="text-danger"><?= form_error('lokasi_kejadian'); ?></small>
-							</div>
-							<div class="form-group">
-								<label for="materi_pengaduan">Uraian Pengaduan</label>
-								<div class="input-group">
-									<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control" cols="20" rows="3" placeholder="Masukan Uraian Pengaduan" required><?= set_value('materi_pengaduan'); ?></textarea>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label for="materi_pengaduan">Uraian Pengaduan</label>
+										<div class="input-group">
+											<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control" cols="20" rows="3" placeholder="Masukan Uraian Pengaduan" required><?= set_value('materi_pengaduan'); ?></textarea>
+										</div>
+										<small class="text-danger"><?= form_error('materi_pengaduan'); ?></small>
+									</div>
 								</div>
-								<small class="text-danger"><?= form_error('materi_pengaduan'); ?></small>
 							</div>
+						</div>
+						<div class="card-footer">
 							<button type="submit" class="tombol-pengaduan">
 								Kirim Pengaduan
 								<i class="fa fa-file-import"></i>
@@ -466,7 +491,7 @@
 					</form>
 				</div>
 			</div>
-			<div class="col-lg-12 col-sm-12 mb-4">
+			<div class="col-lg-12 col-sm-12 mb-4 mt-4">
 				<button type="button" class="pilih-profil border-none" data-toggle="modal" data-target="#ModalTrackingPengaduan"><i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan</button>
 			</div>
 		</div>

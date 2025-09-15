@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-$config = array(
-    'protocol'          => 'sendmail',
-    'smtp_host'         => 'mail.dpmptsp.agamkab.go.id',
-    'smtp_port'         => 587,
-    'smtp_user'         => 'pengaduan@dpmptsp.agamkab.go.id',
-    'smtp_pass'         => 'p_ptsp@99agam',
-    'smtp_crypto'       => 'tls',
-    'mailtype'          => 'html',
-    'charset'           => 'UTF-8',
-    'newline'           => "\r\n",
-);
+$config['protocol']    = 'smtp';
+$config['smtp_host']   = 'smtp.gmail.com';
+$config['smtp_port']   = 587;
+$config['smtp_user']   = 'dpmptspagam@gmail.com';
+$config['smtp_pass']   = 'wqwfcbbmtiadnnut';
+$config['smtp_crypto'] = 'tls';
+$config['mailtype']    = 'html';
+$config['charset']     = 'utf-8';
+$config['newline']     = "\r\n";
+$config['crlf']        = "\r\n";
+$config['wordwrap']    = TRUE;
