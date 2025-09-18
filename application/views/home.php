@@ -333,14 +333,14 @@
 			<div class="col-lg-6 col-md-6 col-sm-12">
 				<img class="shadow mekanisme-pengaduan mb-4" src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%">
 				<h4><strong>Info Kontak Pengaduan</strong></h4>
-				<!-- <p class="mt-0 mb-0"><i class="fab fa-whatsapp"></i> WhatsApp : <b>0813 7479 5952</b>
+				<p class="mt-0 mb-0"><i class="fab fa-whatsapp"></i> WhatsApp : <b>0853 7163 8593</b>
 					Atau <i class="far fa-arrow-alt-circle-right"></i>
 					<b>
-						<a href="https://wa.me/6281374795952?text=Assalamualaikum+Admin,+" target="_blank">
+						<a href="https://wa.me/6285371638593?text=Assalamualaikum+Admin,+" target="_blank">
 							Klik Link WhatsApp Disini
 						</a>
 					</b>
-				</p> -->
+				</p>
 				<p class="mt-0"><i class="far fa-envelope"></i> Email : dpmptspagam@gmail.com</p>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-12">
