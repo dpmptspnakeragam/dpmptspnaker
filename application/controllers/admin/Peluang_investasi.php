@@ -29,31 +29,34 @@ class Peluang_investasi extends CI_controller
 
     public function tambah()
     {
-        $id_investasi = $this->input->post('id', true);
+        $id_investasi   = $this->input->post('id', true);
         $nama_investasi = $this->input->post('nama_investasi', true);
-        $gambar = $_FILES['gambar']['name'];
-        $deskripsi = $this->input->post('deskripsi', true);
+        $deskripsi      = $this->input->post('deskripsi', true);
+        $gambar         = $_FILES['gambar']['name'];
+        $file_name      = null;
 
-        if ($gambar = '') {
-        } else {
+        if (!empty($gambar)) {
             $nmfile = "peluang-investasi-" . time();
-            $config['upload_path'] = './assets/imgupload/';
+            $config['upload_path']   = './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name'] = $nmfile;
+            $config['file_name']     = $nmfile;
 
             $this->load->library('upload', $config);
+
             if ($this->upload->do_upload('gambar')) {
-                $gambar = $this->upload->data('file_name');
+                $file_name = $this->upload->data('file_name');
             } else {
-                $this->session->set_flashdata('error', 'Gagal mengunggah gambar baru. Pastikan format file sesuai.');
+                $this->session->set_flashdata('error', $this->upload->display_errors());
                 redirect('admin/peluang_investasi', 'refresh');
+                return;
             }
         }
+
         $data = array(
-            'id_investasi' => $id_investasi,
+            'id_investasi'   => $id_investasi,
             'nama_investasi' => $nama_investasi,
-            'deskripsi' => $deskripsi,
-            'gambar' => $gambar
+            'deskripsi'      => $deskripsi,
+            'gambar'         => $file_name
         );
 
         $result = $this->Model_peluang_investasi->input($data);
