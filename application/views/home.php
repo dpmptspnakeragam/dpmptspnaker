@@ -1344,13 +1344,15 @@
 					Hari Jum'at Pukul 07:30 - 16:30
 					<br>
 				</p>
-				<p>
-					<!---<i class="fa fa-phone">
-          </i> 0752-66354 / 081364609770
-          <br>--->
-					<i class="fa fa-envelope">
-					</i> dpmptspagam@gmail.com
+				<p class="mt-0 mb-0"><i class="fab fa-whatsapp"></i> WhatsApp : <b>0853 7163 8593</b>
+					Atau <i class="far fa-arrow-alt-circle-right"></i>
+					<b>
+						<a href="https://wa.me/6285371638593?text=Assalamualaikum+Admin,+" target="_blank">
+							Klik Link WhatsApp Disini
+						</a>
+					</b>
 				</p>
+				<p class="mt-0"><i class="far fa-envelope"></i> Email : dpmptspagam@gmail.com</p>
 				<ul class="list-inline social-buttons mt-10">
 					<li class="list-inline-item">
 						<a href="https://twitter.com/DpmptspA" data-toggle="tooltip" data-placement="top" title="Twitter DPMPTSP AGAM" style="color:white;">
