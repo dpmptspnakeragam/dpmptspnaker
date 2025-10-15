@@ -17,18 +17,8 @@
                             <input type="text" class="form-control hidden" id="id" name="id" value="<?= $row->id_investasi; ?>">
                         </div>
                         <div class="form-group">
-                            <label for="pelatihan">Potensi Investasi</label>
-                            <select class="form-control" name="nama_investasi" required>
-                                <option disabled>Pilih Potensi Investasi</option>
-                                <option value="Pertanian" <?= $row->nama_investasi == 'Pertanian' ? 'selected' : ''; ?>>Pertanian</option>
-                                <option value="Perkebunan" <?= $row->nama_investasi == 'Perkebunan' ? 'selected' : ''; ?>>Perkebunan</option>
-                                <option value="Peternakan" <?= $row->nama_investasi == 'Peternakan' ? 'selected' : ''; ?>>Peternakan</option>
-                                <option value="Perikanan" <?= $row->nama_investasi == 'Perikanan' ? 'selected' : ''; ?>>Perikanan</option>
-                                <option value="Pariwisata" <?= $row->nama_investasi == 'Pariwisata' ? 'selected' : ''; ?>>Pariwisata</option>
-                                <option value="UMKM" <?= $row->nama_investasi == 'UMKM' ? 'selected' : ''; ?>>UMKM</option>
-                                <option value="Buah-Buahan" <?= $row->nama_investasi == 'Buah-Buahan' ? 'selected' : ''; ?>>Buah-Buahan</option>
-                                <option value="Holtikultura" <?= $row->nama_investasi == 'Holtikultura' ? 'selected' : ''; ?>>Holtikultura</option>
-                            </select>
+                            <label for="potensi_investasi">Potensi Investasi</label>
+                            <input id="potensi_investasi" class="form-control " name="nama_investasi" placeholder="Nama Investasi" value="<?= $row->nama_investasi; ?>" required></input>
                         </div>
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>

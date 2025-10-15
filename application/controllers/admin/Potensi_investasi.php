@@ -22,8 +22,8 @@ class Potensi_investasi extends CI_controller
         $this->load->view('templates/admin_navbar', $data, FALSE);
         $this->load->view('templates/admin_sidebar', $data, FALSE);
         $this->load->view('admin/potensi_investasi', $data, FALSE);
-        $this->load->view('modal/modal_tambah_potensi_investasi', $data, FALSE);
-        $this->load->view('edit/edit_potensi_investasi', $data, FALSE);
+        $this->load->view('modal/tambah/potensi_investasi', $data, FALSE);
+        $this->load->view('modal/edit/potensi_investasi', $data, FALSE);
         $this->load->view('templates/admin_footer');
     }
 

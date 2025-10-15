@@ -41,7 +41,7 @@
                                         <td class="align-middle"><?= $row->deskripsi; ?></td>
                                         <td class="text-center align-middle">
                                             <a href="<?= base_url('assets/imgupload/') . $row->gambar; ?>" target="_blank">
-                                                <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-thumbnail" style="max-width: 300px;">
+                                                <img src="<?= base_url('assets/imgupload/') . $row->gambar; ?>" class="elevation-2 img-thumbnail" style="max-width: 200px;">
                                             </a>
                                         </td>
                                         <td class="text-center align-middle">

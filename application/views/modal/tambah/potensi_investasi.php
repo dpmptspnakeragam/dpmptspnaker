@@ -22,18 +22,8 @@
                         </div>
                     <?php } ?>
                     <div class="form-group">
-                        <label>Peluang Investasi</label>
-                        <select class="form-control" name="nama_investasi" required>
-                            <option value="" disabled selected>Pilih Peluang Investasi</option>
-                            <option value="Pertanian">Pertanian</option>
-                            <option value="Perkebunan">Perkebunan</option>
-                            <option value="Peternakan">Peternakan</option>
-                            <option value="Perikanan">Perikanan</option>
-                            <option value="Pariwisata">Pariwisata</option>
-                            <option value="UMKM">UMKM</option>
-                            <option value="Buah-Buahan">Buah-Buahan</option>
-                            <option value="Holtikultura">Holtikultura</option>
-                        </select>
+                        <label for="potensi_investasi">Potensi Investasi</label>
+                        <input id="potensi_investasi" class="form-control " name="nama_investasi" placeholder="Nama Investasi" required></input>
                     </div>
                     <div class="form-group">
                         <label for="deskripsi">Deskripsi</label>
