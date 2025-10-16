@@ -219,14 +219,14 @@
 					</p>
 				<?php } ?>
 			</div>
-			<div class="col-lg-6 col-md-6 col-12">
+			<div class="col-lg-5 col-md-5 col-12">
 				<?php
 				foreach ($pengaturan->result() as $row) {
 				?>
 					<img style="width:100%;" class="shadow mb-3 isi-pelayanan intro-pelayanan" src="<?= base_url(); ?>assets/imgupload/<?= $row->maklumat; ?>" alt="Maklumat Pelayanan">
 				<?php } ?>
 			</div>
-			<div class="col-lg-6 col-md-6 col-12 text-justify">
+			<div class="col-lg-7 col-md-7 col-12 text-justify">
 				<div class="row isi-pelayanan text-center mt-3">
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#StandarPelayanan" data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>" data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
