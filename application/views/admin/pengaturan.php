@@ -85,18 +85,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-6">
-                                <div class="card card-maroon">
-                                    <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Maklumat Pelayanan</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <a href="<?= base_url('assets/imgupload/') . $row->maklumat; ?>" target="_blank">
-                                            <img src="<?= base_url('assets/imgupload/') . $row->maklumat; ?>" style="width:100%;" class="elevation-1 img-thumbnail">
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>

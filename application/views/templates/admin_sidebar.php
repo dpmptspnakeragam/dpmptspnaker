@@ -28,6 +28,35 @@
 								</a>
 							</li>
 
+							<!-- Pengaturan -->
+							<li class="nav-item <?= in_array(
+													$this->uri->segment(2),
+													[
+														'layanan_publik'
+													]
+												) ? 'menu-open' : ''; ?>">
+								<a href="" class="nav-link <?= in_array(
+																$this->uri->segment(2),
+																[
+																	'layanan_publik'
+																]
+															) ? 'active' : ''; ?>">
+									<i class="nav-icon fas fa-wrench"></i>
+									<p>
+										Pengaturan
+										<i class="right fas fa-angle-left"></i>
+									</p>
+								</a>
+								<ul class="nav nav-treeview">
+									<li class="nav-item">
+										<a href="<?= base_url('admin/layanan_publik'); ?>" class="nav-link <?= $this->uri->segment(2) == 'layanan_publik' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'layanan_publik' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'layanan_publik' ? 'text-maroon' : ''; ?>"></i>
+											<p>Layanan Publik</p>
+										</a>
+									</li>
+								</ul>
+							</li>
+
 							<!-- Manajemen Aset -->
 							<li class="nav-item">
 								<a href="<?= base_url('admin/aset'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['aset'])) echo "active"; ?>">

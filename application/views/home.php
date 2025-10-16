@@ -210,21 +210,24 @@
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-4 col-md-4 col-12 ">
+			<div class="col-12 text-justify">
+				<?php
+				foreach ($pengaturan->result() as $row) {
+				?>
+					<p>
+						<?= $row->layanan; ?>
+					</p>
+				<?php } ?>
+			</div>
+			<div class="col-lg-6 col-md-6 col-12">
 				<?php
 				foreach ($pengaturan->result() as $row) {
 				?>
 					<img style="width:100%;" class="shadow mb-3 isi-pelayanan intro-pelayanan" src="<?= base_url(); ?>assets/imgupload/<?= $row->maklumat; ?>" alt="Maklumat Pelayanan">
 				<?php } ?>
 			</div>
-			<div class="col-lg-8 col-md-8 col-12 text-justify">
-				<p class="isi-pelayanan intro-pelayanan">
-					Kami membuka Layanan Perizinan dan Non Perizinan melalui tatap muka maupun online. Untuk tatap muka secara langsung
-					silahkan kunjungi kantor kami dengan alamat yang tertera pada menu Kontak. Untuk pelayanan melalui online silahkan
-					kunjungi situs yang telah kami sediakan dibawah ini (SiCantik atau OSS) atau bisa juga hubungi nomor HP yang tertera pada menu Kontak.
-					Untuk melihat persyaratan atau info tentang Izin yang akan anda buat, silahkan pilih Standar Operasional Prosedur.
-				</p>
-				<div class="row isi-pelayanan text-center">
+			<div class="col-lg-6 col-md-6 col-12 text-justify">
+				<div class="row isi-pelayanan text-center mt-3">
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#StandarPelayanan" data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>" data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
 							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sp.jpg'); ?>" width="100%">

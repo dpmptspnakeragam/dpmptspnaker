@@ -86,19 +86,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="card card-maroon">
-                                    <div class="card-header">
-                                        <h3 class="card-title font-weight-bold">Maklumat Pelayanan</h3>
-                                    </div>
-                                    <div class="card-body">
-                                        <img src="<?= base_url('assets/imgupload/') . $row->maklumat; ?>" class="elevation-2 img-size-64 img-thumbnail">
-                                        <br>
-                                        <input type="file" name="maklumat" class="mt-3">
-                                        <input type="hidden" name="old2" value="<?= $row->maklumat; ?>">
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
