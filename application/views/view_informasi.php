@@ -50,7 +50,7 @@
                 ?>
                     <div class="col-lg-4 col-6 mt-4 berita-item"
                         data-judul="<?= strtolower($row->judul_berita); ?>"
-                        data-tanggal="<?= strtolower(date_indo($row->tgl_berita)); ?>">
+                        data-tanggal="<?= strtolower(($row->tgl_berita)); ?>">
 
                         <div class="card kartu-info shadow h-100">
                             <div class="card-header">
