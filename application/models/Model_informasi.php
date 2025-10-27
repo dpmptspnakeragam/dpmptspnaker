@@ -48,13 +48,14 @@ class Model_informasi extends CI_model
         return $this->db->delete('berita');
     }
 
-    public function tampil_berita_pagination($limit, $start)
+    // public function tampil_berita_pagination($limit, $start)
+    public function tampil_berita_pagination()
     {
         $this->db->select('*');
         $this->db->from('berita');
         $this->db->join('kategori_berita', 'berita.id_kategori=kategori_berita.id_kategori');
         $this->db->order_by('id_berita', 'DESC');
-        $this->db->limit($limit, $start);
+        // $this->db->limit($limit, $start);
         $query = $this->db->get();
         return $query;
     }

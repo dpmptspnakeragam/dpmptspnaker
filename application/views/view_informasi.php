@@ -36,7 +36,7 @@
     </nav>
 
     <!-- Konten -->
-    <div class="content-wrapper informasi mt-5">
+    <div class="content-wrapper informasi mt-5 mb-4">
         <div class="container-fluid mb-0">
 
             <!-- 🔲 Daftar Berita -->
@@ -85,13 +85,13 @@
         </div>
 
         <!-- Pagination -->
-        <div class="container-fluid">
+        <!-- <div class="container-fluid">
             <div class="row text-center">
                 <div class="col-lg-12 custom-pagination">
                     <?= $pagination; ?>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- ✨ CSS Khusus Gambar -->
