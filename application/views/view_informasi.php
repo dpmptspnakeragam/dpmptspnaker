@@ -38,8 +38,6 @@
     <!-- Konten -->
     <div class="content-wrapper informasi mt-5 mb-4">
         <div class="container-fluid mb-0">
-
-            <!-- 🔲 Daftar Berita -->
             <div class="row" id="beritaContainer">
                 <?php foreach ($berita->result() as $row) {
                     $gambar     = $row->gambar ?? '';
@@ -61,8 +59,6 @@
                                 <small class="d-block mb-3 tgl_berita2">
                                     <?= date_indo($row->tgl_berita) ?>, Kategori: <?= $row->kategori; ?>
                                 </small>
-
-                                <!-- 🔧 Gambar rapi (baik portrait maupun landscape) -->
                                 <div class="img-container">
                                     <img class="gambar-info" src="<?= $imageSrc; ?>" alt="<?= $row->judul_berita; ?>">
                                 </div>
@@ -78,28 +74,17 @@
                 <?php } ?>
             </div>
 
-            <!-- ⚠️ Pesan jika tidak ditemukan -->
             <div id="noResults" class="text-center text-light mt-5" style="display: none;">
                 <h5><i class="fa fa-exclamation-circle text-warning"></i> Berita tidak ditemukan.</h5>
             </div>
         </div>
-
-        <!-- Pagination -->
-        <!-- <div class="container-fluid">
-            <div class="row text-center">
-                <div class="col-lg-12 custom-pagination">
-                    <?= $pagination; ?>
-                </div>
-            </div>
-        </div> -->
     </div>
 
-    <!-- ✨ CSS Khusus Gambar -->
+    <!-- ✨ CSS -->
     <style>
         .img-container {
             width: 100%;
             height: 250px;
-            /* tinggi seragam */
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -110,12 +95,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* potong agar proporsional */
             object-position: center;
             transition: transform 0.3s ease;
         }
 
-        /* efek zoom saat hover */
         .img-container:hover img.gambar-info {
             transform: scale(1.05);
         }
@@ -125,46 +108,48 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Array bulan Indonesia untuk konversi
             const bulanIndo = [
                 "januari", "februari", "maret", "april", "mei", "juni",
                 "juli", "agustus", "september", "oktober", "november", "desember"
             ];
 
             $('#searchInput').on('keyup', function() {
-                var value = $(this).val().toLowerCase();
-                var visibleCount = 0;
+                const value = $(this).val().toLowerCase().trim();
+                let visibleCount = 0;
 
                 $('.berita-item').each(function() {
-                    var judul = $(this).data('judul');
-                    var tanggal = $(this).data('tanggal'); // format YYYY-MM-DD
-                    var tanggalParts = tanggal.split('-'); // ["2021", "05", "27"]
+                    const judul = $(this).data('judul');
+                    const tanggalDB = $(this).data('tanggal'); // format YYYY-MM-DD
+                    let isMatch = false;
 
-                    var tahun = tanggalParts[0];
-                    var bulan = parseInt(tanggalParts[1], 10) - 1; // 0-index
-                    var hari = tanggalParts[2];
+                    // Pecah tanggal database
+                    if (tanggalDB && tanggalDB.includes('-')) {
+                        const parts = tanggalDB.split('-'); // [YYYY, MM, DD]
+                        const yyyy = parts[0];
+                        const mm = parts[1];
+                        const dd = parts[2];
 
-                    // Buat format tanggal baca manusia: "27 Mei 2021"
-                    var tanggalIndo = hari + " " + bulanIndo[bulan] + " " + tahun;
+                        const format1 = `${yyyy}-${mm}-${dd}`; // aslinya
+                        const format2 = `${dd}-${mm}-${yyyy}`; // versi kebalik
+                        const format3 = `${dd} ${bulanIndo[parseInt(mm, 10) - 1]} ${yyyy}`; // versi bahasa Indonesia
 
-                    // Cek kecocokan
-                    var isMatch =
-                        judul.includes(value) ||
-                        tanggal.includes(value) ||
-                        tanggalIndo.toLowerCase().includes(value);
+                        // cek semua kemungkinan
+                        if (
+                            judul.includes(value) ||
+                            format1.includes(value) ||
+                            format2.includes(value) ||
+                            format3.includes(value)
+                        ) {
+                            isMatch = true;
+                        }
+                    }
 
                     $(this).toggle(isMatch);
                     if (isMatch) visibleCount++;
                 });
 
-                // Tampilkan / sembunyikan pesan jika tidak ada hasil
-                if (visibleCount === 0) {
-                    $('#noResults').show();
-                } else {
-                    $('#noResults').hide();
-                }
+                $('#noResults').toggle(visibleCount === 0);
             });
         });
     </script>
-
 </body>
