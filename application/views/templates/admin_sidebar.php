@@ -28,22 +28,24 @@
 								</a>
 							</li>
 
-							<!-- Pengaturan -->
+							<!-- Pengaturan Teks -->
 							<li class="nav-item <?= in_array(
 													$this->uri->segment(2),
 													[
-														'layanan_publik'
+														'layanan_publik',
+														'profil_dinas'
 													]
 												) ? 'menu-open' : ''; ?>">
 								<a href="" class="nav-link <?= in_array(
 																$this->uri->segment(2),
 																[
-																	'layanan_publik'
+																	'layanan_publik',
+																	'profil_dinas'
 																]
 															) ? 'active' : ''; ?>">
 									<i class="nav-icon fas fa-wrench"></i>
 									<p>
-										Pengaturan
+										Pengaturan Teks
 										<i class="right fas fa-angle-left"></i>
 									</p>
 								</a>
@@ -52,6 +54,12 @@
 										<a href="<?= base_url('admin/layanan_publik'); ?>" class="nav-link <?= $this->uri->segment(2) == 'layanan_publik' ? 'active' : ''; ?>">
 											<i class="<?= $this->uri->segment(2) == 'layanan_publik' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'layanan_publik' ? 'text-maroon' : ''; ?>"></i>
 											<p>Layanan Publik</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="<?= base_url('admin/profil_dinas'); ?>" class="nav-link <?= $this->uri->segment(2) == 'profil_dinas' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'profil_dinas' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'profil_dinas' ? 'text-maroon' : ''; ?>"></i>
+											<p>Profil Dinas</p>
 										</a>
 									</li>
 								</ul>
@@ -66,12 +74,12 @@
 							</li>
 
 							<!-- Manajemen User -->
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a href="<?= base_url('admin/user'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['user'])) echo "active"; ?>">
 									<i class="nav-icon fas fa-user-cog"></i>
 									<p>Manajemen User</p>
 								</a>
-							</li>
+							</li> -->
 
 							<!-- Profile -->
 							<li class="nav-item <?= in_array(
@@ -81,8 +89,7 @@
 														'pegawai',
 														'regulasi',
 														'ppid',
-														'sarpras',
-														'pengaturan'
+														'sarpras'
 													]
 												) ? 'menu-open' : ''; ?>">
 								<a href="" class="nav-link <?= in_array(
@@ -92,8 +99,7 @@
 																	'pegawai',
 																	'regulasi',
 																	'ppid',
-																	'sarpras',
-																	'pengaturan'
+																	'sarpras'
 																]
 															) ? 'active' : ''; ?>">
 									<i class="nav-icon fas fa-address-card"></i>
@@ -131,12 +137,6 @@
 										<a href="<?= base_url('admin/sarpras'); ?>" class="nav-link <?= $this->uri->segment(2) == 'sarpras' ? 'active' : ''; ?>">
 											<i class="<?= $this->uri->segment(2) == 'sarpras' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'sarpras' ? 'text-maroon' : ''; ?>"></i>
 											<p>Sarana & Prasarana</p>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href="<?= base_url('admin/pengaturan'); ?>" class="nav-link <?= $this->uri->segment(2) == 'pengaturan' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'pengaturan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'pengaturan' ? 'text-maroon' : ''; ?>"></i>
-											<p>Pengaturan Teks</p>
 										</a>
 									</li>
 								</ul>

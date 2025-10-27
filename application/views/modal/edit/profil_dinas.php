@@ -10,7 +10,7 @@
                     </button>
                 </div>
 
-                <form role="form" action="<?= base_url('admin/pengaturan/edit'); ?>" method="POST" enctype="multipart/form-data">
+                <form role="form" action="<?= base_url('admin/profil_dinas/edit'); ?>" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                         value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="modal-body">
