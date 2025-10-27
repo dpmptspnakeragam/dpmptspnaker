@@ -124,16 +124,34 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        // 🔍 Fungsi Pencarian
         $(document).ready(function() {
+            // Array bulan Indonesia untuk konversi
+            const bulanIndo = [
+                "januari", "februari", "maret", "april", "mei", "juni",
+                "juli", "agustus", "september", "oktober", "november", "desember"
+            ];
+
             $('#searchInput').on('keyup', function() {
                 var value = $(this).val().toLowerCase();
                 var visibleCount = 0;
 
                 $('.berita-item').each(function() {
+                    var judul = $(this).data('judul');
+                    var tanggal = $(this).data('tanggal'); // format YYYY-MM-DD
+                    var tanggalParts = tanggal.split('-'); // ["2021", "05", "27"]
+
+                    var tahun = tanggalParts[0];
+                    var bulan = parseInt(tanggalParts[1], 10) - 1; // 0-index
+                    var hari = tanggalParts[2];
+
+                    // Buat format tanggal baca manusia: "27 Mei 2021"
+                    var tanggalIndo = hari + " " + bulanIndo[bulan] + " " + tahun;
+
+                    // Cek kecocokan
                     var isMatch =
-                        $(this).data('judul').includes(value) ||
-                        $(this).data('tanggal').includes(value);
+                        judul.includes(value) ||
+                        tanggal.includes(value) ||
+                        tanggalIndo.toLowerCase().includes(value);
 
                     $(this).toggle(isMatch);
                     if (isMatch) visibleCount++;
@@ -148,4 +166,5 @@
             });
         });
     </script>
+
 </body>
