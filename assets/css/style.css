@@ -281,11 +281,32 @@ h6,
 	color: maroon;
 }
 
+/* Batasi lebar container gambar dalam carousel */
+.berita-carousel .container {
+	max-width: 850px;
+	/* Ubah ukuran sesuai keinginan, misal 500px */
+	margin: 0 auto;
+	/* Biar tetap di tengah */
+}
+
+/* Sesuaikan gambar agar proporsional */
 .gambar-carousel {
-	max-height: 230px;
 	width: 100%;
+	max-height: 230px;
 	border-radius: 15px;
 	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+	object-fit: cover;
+	object-position: center;
+	transition: all 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+	/* efek smooth */
+	transform: scale(1);
+	/* posisi awal */
+}
+
+.gambar-carousel:hover {
+	transform: scale(1.05);
+	box-shadow: 10px 10px 25px rgba(0, 0, 0, 0.4);
+	cursor: pointer;
 }
 
 .gambar-risiko {
@@ -295,7 +316,10 @@ h6,
 
 .gambar-berita {
 	height: 100%;
-	width: 100%;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	transition-duration: 1s;
 }
 
 .gambar-info {
@@ -1198,18 +1222,6 @@ video {
 		background-color: maroon;
 		padding: 5px;
 	}
-
-	.gambar-berita2 {
-		height: 100%;
-		width: 50%;
-		margin-left: auto;
-		margin-right: auto;
-		transition-duration: 1s;
-	}
-
-	/* .gambar-berita2:hover {
-		transform: scale(1);
-	} */
 
 	.ringkasan {
 		font-size: 12px;

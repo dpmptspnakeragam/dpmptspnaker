@@ -14,7 +14,7 @@
                 <div class="modal-body">
                     <div class="container text-justify">
                         <div class="row">
-                            <img class="gambar-berita2" src="<?= base_url() ?>assets/imgupload/<?= $row->gambar; ?>" alt="<?= $row->judul_berita; ?>">
+                            <img class="gambar-berita" src="<?= base_url() ?>assets/imgupload/<?= $row->gambar; ?>" alt="<?= $row->judul_berita; ?>">
                             <div class="container">
                                 <p class="judul-informasi2 mb-0"><?= $row->judul_berita; ?></p><br>
                                 <small class="tgl_berita2 text-light"><?= date_indo($row->tgl_berita) ?>, Kategori : <?= $row->kategori; ?></small>
