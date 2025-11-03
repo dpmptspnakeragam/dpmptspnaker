@@ -58,7 +58,7 @@
                                                 <span class="text-danger">File tidak ditemukan</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="align-middle"><?= $row->syarat; ?></td>
+                                        <td class="align-middle"><?= html_entity_decode($row->syarat); ?></td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#EditPerizinan<?= $row->id_izin; ?>" class="btn btn-outline-warning mt-1 mb-1">
                                                 <i class="fas fa-edit"></i>

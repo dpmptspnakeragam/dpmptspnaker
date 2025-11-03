@@ -45,6 +45,11 @@
                   $count = 1;
                   foreach ($perizinan->result() as $row) {
                   ?>
+                    <?php
+                    // Path file di folder assets/fileupload/
+                    $file_path = FCPATH . 'assets/fileupload/' . $row->form;
+                    $file_exists = (!empty($row->form) && file_exists($file_path));
+                    ?>
                     <tr>
                       <td class="text-center align-middle"><?= $count++; ?></td>
                       <td class="text-center align-middle"><?= $row->nama_izin; ?></td>
@@ -53,12 +58,16 @@
                       <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
                       <td class="text-center align-middle">
                         <div class="btn-group">
-                          <a class="tombol-aksi" href="<?= base_url(); ?>assets/fileupload/<?= $row->form; ?>" target="_blank">
-                            <i class="fa fa-download "></i> Download
-                          </a>
+                          <?php if ($file_exists): ?>
+                            <a class="tombol-aksi" href="<?= base_url(); ?>assets/fileupload/<?= $row->form; ?>" target="_blank">
+                              <i class="fa fa-download "></i> Download
+                            </a>
+                          <?php else: ?>
+                            <span class="text-danger">File tidak ditemukan</span>
+                          <?php endif; ?>
                         </div>
                       </td>
-                      <td><?= $row->syarat; ?></td>
+                      <td><?= html_entity_decode($row->syarat); ?></td>
                     </tr>
                   <?php } ?>
                 </tbody>
