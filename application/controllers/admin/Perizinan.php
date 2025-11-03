@@ -130,14 +130,23 @@ class Perizinan extends CI_controller
 
     public function hapus($id)
     {
+        // Ambil data berdasarkan id
         $this->db->where('id_izin', $id);
         $query = $this->db->get('perizinan');
         $row = $query->row();
 
-        unlink("./assets/fileupload/$row->form");
+        // Cek apakah file ada sebelum dihapus
+        if ($row && !empty($row->form)) {
+            $file_path = FCPATH . 'assets/fileupload/' . $row->form;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+        }
 
+        // Hapus data dari database
         $result = $this->Model_perizinan->delete($id);
 
+        // Notifikasi hasil
         if ($result) {
             $this->session->set_flashdata('success', 'Data Perizinan berhasil dihapus.');
         } else {

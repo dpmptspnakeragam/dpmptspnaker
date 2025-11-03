@@ -38,6 +38,11 @@
                             <tbody>
                                 <?php $count = 1; ?>
                                 <?php foreach ($perizinan->result() as $row) : ?>
+                                    <?php
+                                    // Path file di folder assets/fileupload/
+                                    $file_path = FCPATH . 'assets/fileupload/' . $row->form;
+                                    $file_exists = (!empty($row->form) && file_exists($file_path));
+                                    ?>
                                     <tr>
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->nama_izin; ?></td>
@@ -45,22 +50,29 @@
                                         <td class="text-center align-middle"><?= $row->biaya; ?></td>
                                         <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/fileupload/' . $row->form); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->form; ?>">
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
+                                            <?php if ($file_exists): ?>
+                                                <a href="<?= base_url('assets/fileupload/' . $row->form); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->form; ?>">
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-danger">File tidak ditemukan</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="align-middle"><?= $row->syarat; ?></td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#EditPerizinan<?= $row->id_izin; ?>" class="btn btn-outline-warning mt-1 mb-1">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button type="button" data-toggle="modal" data-target="#deletePerizinan<?= $row->id_izin; ?>" class="btn btn-outline-danger mt-1 mb-1">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
+                                            <?php if ($file_exists): ?>
+                                                <button type="button" data-toggle="modal" data-target="#deletePerizinan<?= $row->id_izin; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
+
                         </table>
                     </div>
                     <!-- /.card-body -->
