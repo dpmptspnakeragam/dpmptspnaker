@@ -27,6 +27,7 @@ class Non_perizinan extends CI_controller
         $this->load->view('admin/non_perizinan', $data, FALSE);
         $this->load->view('modal/modal_tambah_nonperizinan');
         $this->load->view('edit/edit_nonperizinan', $data, FALSE);
+        $this->load->view('modal/hapus/non_perizinan', $data, FALSE);
         $this->load->view('templates/admin_footer');
     }
 
