@@ -20,13 +20,13 @@
                         </div>
                     <?php } ?>
                     <div class="form-group">
-                        <label for="pelatihan">Judul</label>
-                        <input class="form-control" name="judul" placeholder="Judul Regulasi" required>
+                        <label for="judul">Judul</label>
+                        <input class="form-control" id="judul" name="judul" placeholder="Judul Regulasi" required>
 
                     </div>
                     <div class="form-group">
-                        <label for="pelatihan">Tentang</label>
-                        <input class="form-control" name="tentang" placeholder="Tentang Regulasi" required>
+                        <label for="tentang">Tentang</label>
+                        <input class="form-control" id="tentang" name="tentang" placeholder="Tentang Regulasi" required>
 
                     </div>
                     <div class="form-group">
