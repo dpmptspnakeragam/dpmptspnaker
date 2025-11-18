@@ -35,14 +35,23 @@
                             <tbody>
                                 <?php $count = 1; ?>
                                 <?php foreach ($regulasi->result() as $row) : ?>
+                                    <?php
+                                    // path file di folder assets/fileupload/
+                                    $file_path = FCPATH . 'assets/fileupload/' . $row->file;
+                                    $file_exists = (!empty($row->file) && file_exists($file_path));
+                                    ?>
                                     <tr>
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle"><?= $row->tentang; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/fileupload/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
+                                            <?php if ($file_exists): ?>
+                                                <a href="<?= base_url('assets/fileupload/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="text-danger">File tidak ditemukan</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#EditRegulasi<?= $row->id_regulasi; ?>" class="btn btn-outline-warning mt-1 mb-1">
