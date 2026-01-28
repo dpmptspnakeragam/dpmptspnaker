@@ -121,7 +121,7 @@ class Skm extends CI_Controller
         // -------------------------------------- end of SPKP and SPAK --------------------------------------
 
         $this->load->view('templates/header');
-        $this->load->view('view_skm',  $data);
+        $this->load->view('view_skm', $data);
         $this->load->view('templates/footer');
     }
 
@@ -344,28 +344,32 @@ class Skm extends CI_Controller
         date_default_timezone_set('Asia/Jakarta');
         $formatted_date = date('Y-m-d H:i:s');
 
+        $date = $this->input->post('date_all');
+        $date = date('Y-m-d H:i:s', strtotime($date));
+
         $this->_rules_skm();
 
         if ($this->form_validation->run() == TRUE) {
             // Data SKM tanpa id_skm (auto increment)
             $input_skm = [
-                'nama'          => $this->input->post('nama'),
-                'no_hp'         => $this->input->post('no_hp'),
-                'jk'            => $this->input->post('jk'),
-                'umur'          => $this->input->post('umur'),
-                'pendidikan'    => $this->input->post('pendidikan'),
-                'pekerjaan'     => $this->input->post('pekerjaan'),
-                'layanan'       => $this->input->post('layanan'),
-                'u1'            => $this->input->post('u1'),
-                'u2'            => $this->input->post('u2'),
-                'u3'            => $this->input->post('u3'),
-                'u4'            => $this->input->post('u4'),
-                'u5'            => $this->input->post('u5'),
-                'u6'            => $this->input->post('u6'),
-                'u7'            => $this->input->post('u7'),
-                'u8'            => $this->input->post('u8'),
-                'u9'            => $this->input->post('u9'),
-                'date'          => $formatted_date
+                'date' => $date,
+                'nama' => $this->input->post('nama'),
+                'no_hp' => $this->input->post('no_hp'),
+                'jk' => $this->input->post('jk'),
+                'umur' => $this->input->post('umur'),
+                'pendidikan' => $this->input->post('pendidikan'),
+                'pekerjaan' => $this->input->post('pekerjaan'),
+                'layanan' => $this->input->post('layanan'),
+                'u1' => $this->input->post('u1'),
+                'u2' => $this->input->post('u2'),
+                'u3' => $this->input->post('u3'),
+                'u4' => $this->input->post('u4'),
+                'u5' => $this->input->post('u5'),
+                'u6' => $this->input->post('u6'),
+                'u7' => $this->input->post('u7'),
+                'u8' => $this->input->post('u8'),
+                'u9' => $this->input->post('u9')
+                // 'date' => $formatted_date
             ];
             $data_skm = $this->security->xss_clean($input_skm);
             $this->Model_skm->simpan_skm($data_skm);
@@ -373,15 +377,15 @@ class Skm extends CI_Controller
 
             // Data SPKP tanpa id_spkp
             $input_spkp = [
-                'date'          => $formatted_date,
-                'z1'            => $this->input->post('rating_z1'),
-                'z2'            => $this->input->post('rating_z2'),
-                'z3'            => $this->input->post('rating_z3'),
-                'z4'            => $this->input->post('rating_z4'),
-                'z5'            => $this->input->post('rating_z5'),
-                'z6'            => $this->input->post('rating_z6'),
-                'z7'            => $this->input->post('rating_z7'),
-                'z8'            => $this->input->post('rating_z8'),
+                'date' => $date,
+                'z1' => $this->input->post('rating_z1'),
+                'z2' => $this->input->post('rating_z2'),
+                'z3' => $this->input->post('rating_z3'),
+                'z4' => $this->input->post('rating_z4'),
+                'z5' => $this->input->post('rating_z5'),
+                'z6' => $this->input->post('rating_z6'),
+                'z7' => $this->input->post('rating_z7'),
+                'z8' => $this->input->post('rating_z8'),
             ];
             $data_spkp = $this->security->xss_clean($input_spkp);
             $this->Model_skm->simpan_spkp($data_spkp);
@@ -389,14 +393,14 @@ class Skm extends CI_Controller
 
             // Data SPAK tanpa id_spak, tapi butuh id_spkp dan id_skm
             $input_spak = [
-                'id_spkp'       => $id_spkp,
-                'id_skm'        => $id_skm,
-                'date'          => $formatted_date,
-                'r1'            => $this->input->post('rating_r1'),
-                'r2'            => $this->input->post('rating_r2'),
-                'r3'            => $this->input->post('rating_r3'),
-                'r4'            => $this->input->post('rating_r4'),
-                'r5'            => $this->input->post('rating_r5'),
+                'id_spkp' => $id_spkp,
+                'id_skm' => $id_skm,
+                'date' => $date,
+                'r1' => $this->input->post('rating_r1'),
+                'r2' => $this->input->post('rating_r2'),
+                'r3' => $this->input->post('rating_r3'),
+                'r4' => $this->input->post('rating_r4'),
+                'r5' => $this->input->post('rating_r5'),
             ];
             $data_spak = $this->security->xss_clean($input_spak);
             $this->Model_skm->simpan_spak($data_spak);
