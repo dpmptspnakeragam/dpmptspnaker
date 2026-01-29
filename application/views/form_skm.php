@@ -53,7 +53,7 @@
                                             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                                                 value="<?= $this->security->get_csrf_hash(); ?>">
 
-                                            <div class="form-group">
+                                            <!-- <div class="form-group">
                                                 <label for="date_all">
                                                     Tanggal Survey
                                                     <small class="text-danger">*</small>
@@ -62,7 +62,7 @@
                                                     placeholder="Masukan Tanggal Sekarang"
                                                     value="<?= set_value('date_all'); ?>">
                                                 <small class="text-danger mb-0"><?= form_error('date_all'); ?></small>
-                                            </div>
+                                            </div> -->
 
                                             <div class="row">
                                                 <div class="col-md-6">

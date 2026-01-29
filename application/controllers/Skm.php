@@ -352,7 +352,7 @@ class Skm extends CI_Controller
         if ($this->form_validation->run() == TRUE) {
             // Data SKM tanpa id_skm (auto increment)
             $input_skm = [
-                'date' => $date,
+                'date' => $formatted_date,
                 'nama' => $this->input->post('nama'),
                 'no_hp' => $this->input->post('no_hp'),
                 'jk' => $this->input->post('jk'),
@@ -377,7 +377,7 @@ class Skm extends CI_Controller
 
             // Data SPKP tanpa id_spkp
             $input_spkp = [
-                'date' => $date,
+                'date' => $formatted_date,
                 'z1' => $this->input->post('rating_z1'),
                 'z2' => $this->input->post('rating_z2'),
                 'z3' => $this->input->post('rating_z3'),
@@ -395,7 +395,7 @@ class Skm extends CI_Controller
             $input_spak = [
                 'id_spkp' => $id_spkp,
                 'id_skm' => $id_skm,
-                'date' => $date,
+                'date' => $formatted_date,
                 'r1' => $this->input->post('rating_r1'),
                 'r2' => $this->input->post('rating_r2'),
                 'r3' => $this->input->post('rating_r3'),
