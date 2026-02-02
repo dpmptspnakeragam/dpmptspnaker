@@ -8,7 +8,7 @@
 					<img class="mb-4 mr-1 jumbotronimg agam" src="<?= base_url(); ?>assets/img/agam.png" alt="logoagam">
 					<!-- <img class="mb-4 ml-2 jumbotronimg hut" src="<?= base_url(); ?>assets/img/hut_ri_77.png" alt="logoagam"> -->
 				</div>
-				<h1 class="jumbotronteks welcome">SELAMAT DATANG</h1>
+				<h1 class="jumbotronteks welcome">SALAMAIK DATANG</h1>
 				<h1 class="jumbotronteks nama"><strong>DINAS PENANAMAN MODAL <br> PELAYANAN TERPADU SATU PINTU <br> KABUPATEN AGAM</strong></h1>
 			</div>
 			<!-- <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center text-center">
