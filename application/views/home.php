@@ -685,14 +685,25 @@
 						<canvas id="myChart"></canvas>
 						<?php
 						$nama_izin = "";
-						$total = null;
+						$total = "";
+						$grand_total = 0; // WAJIB ADA INI
+
 						foreach ($grafik->result() as $item) {
 							$nama = $item->izin;
 							$nama_izin .= "'$nama'" . ", ";
-							$jum = $item->jumlah;
+
+							$jum = (int)$item->jumlah;
 							$total .= "$jum" . ", ";
+
+							$grand_total += $jum; // jumlahkan
 						}
 						?>
+						<div class="mt-1 text-center">
+							<h6 style="color:white;">
+								Total Izin Diterbitkan :
+								<strong><?= number_format($grand_total, 0, ',', '.'); ?></strong> Izin
+							</h6>
+						</div>
 						<script>
 							var tahun = new Date().getFullYear();
 							var ctx = document.getElementById('myChart').getContext('2d');
@@ -867,23 +878,49 @@
 						<hr style="border: 1px solid; background-color: white;">
 						<canvas id="myChart4"></canvas>
 						<?php
-						$datasets = [];
 						$labels = [];
+						$datasets = [];
+						$total_per_tahun = []; // untuk simpan total tiap tahun
+
+						// Ambil label izin
 						foreach ($grafik_tahun as $item) {
 							$labels[] = $item->izin;
 						}
+
+						// Loop setiap kolom tahun
 						foreach ($tahun_fields as $field) {
+
+							$field_name = $field->Field; // contoh: thn2023
+							$tahun = str_replace('thn', '', $field_name);
+
 							$data_values = [];
+							$total_tahun = 0;
+
 							foreach ($grafik_tahun as $item) {
-								$data_values[] = $item->{$field->Field};
+								$nilai = (int) $item->$field_name;
+								$data_values[] = $nilai;
+								$total_tahun += $nilai;
 							}
+
+							$total_per_tahun[$tahun] = $total_tahun;
+
 							$datasets[] = [
-								'label' => "Tahun " . str_replace('thn', '', $field->Field),
-								'backgroundColor' => '#' . substr(md5(rand()), 0, 6),
+								'label' => "Tahun " . $tahun,
+								'backgroundColor' => '#' . substr(md5($tahun), 0, 6),
 								'data' => $data_values
 							];
 						}
 						?>
+						<div class="mt-1 text-center">
+							<h6 style="color: white;">Total Izin Diterbitkan Per Tahun:
+								<?php foreach ($total_per_tahun as $tahun => $total): ?>
+									<div>
+										Tahun <?= $tahun ?> : <strong><?= number_format($total); ?> </strong>Izin
+									</div>
+								<?php endforeach; ?>
+							</h6>
+						</div>
+
 						<script>
 							var ctx = document.getElementById('myChart4').getContext('2d');
 							var data = {
