@@ -729,9 +729,7 @@
 									var ctx = document.getElementById('myChartHome').getContext('2d');
 
 									var originalLabels = <?= json_encode($nama_bidang, JSON_UNESCAPED_UNICODE); ?>;
-									var labelsBidang = originalLabels.map(function() {
-										return '';
-									});
+									var labelsBidang = originalLabels; // show nama bidang under bars
 									var totalBidang = <?= json_encode($total_bidang); ?>;
 									var detailJenis = <?= json_encode($detail_jenis, JSON_UNESCAPED_UNICODE); ?>;
 									var maxChart = <?= (int) $max_chart; ?>;

@@ -125,9 +125,7 @@
                                     var ctx = document.getElementById('myChart').getContext('2d');
 
                                     var originalLabels = <?= json_encode($nama_bidang, JSON_UNESCAPED_UNICODE); ?>;
-                                    var labelsBidang = originalLabels.map(function() {
-                                        return '';
-                                    });
+                                    var labelsBidang = originalLabels; // show nama bidang under bars
                                     var detailJenis = <?= json_encode($detail_jenis, JSON_UNESCAPED_UNICODE); ?>;
 
                                     new Chart(ctx, {
@@ -191,6 +189,17 @@
                                                 }
                                             },
                                             scales: {
+                                                xAxes: [{
+                                                    ticks: {
+                                                        fontColor: '#000',
+                                                        autoSkip: false,
+                                                        maxRotation: 45,
+                                                        minRotation: 0
+                                                    },
+                                                    gridLines: {
+                                                        display: false
+                                                    }
+                                                }],
                                                 yAxes: [{
                                                     ticks: {
                                                         beginAtZero: true,
