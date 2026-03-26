@@ -724,6 +724,36 @@
 						</div>
 
 						<?php if (!empty($nama_bidang)) : ?>
+							<style>
+								#chartjs-tooltip {
+									pointer-events: auto;
+									background: #222;
+									color: #fff;
+									border-radius: 6px;
+									padding: 8px;
+									font-size: 13px;
+									box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+									max-height: 240px;
+									overflow: auto;
+									z-index: 9999;
+									position: absolute;
+									display: none;
+								}
+
+								#chartjs-tooltip .title {
+									font-weight: bold;
+									margin-bottom: 6px;
+								}
+
+								#chartjs-tooltip ul {
+									margin: 0;
+									padding-left: 16px;
+								}
+
+								#chartjs-tooltip li {
+									margin: 2px 0;
+								}
+							</style>
 							<script>
 								document.addEventListener("DOMContentLoaded", function() {
 									var ctx = document.getElementById('myChartHome').getContext('2d');
@@ -780,41 +810,43 @@
 												}
 											},
 											tooltips: {
-												callbacks: {
-													title: function(tooltipItems, data) {
-														return null;
-													},
-													label: function(tooltipItem, data) {
-														return null;
-													},
-													afterBody: function(tooltipItems, data) {
-														var t = tooltipItems[0] || {};
-														var idx = (t.index !== undefined) ? t.index : ((t.dataIndex !== undefined) ? t.dataIndex : null);
-														var bidang = '';
-														if (idx !== null && originalLabels && originalLabels[idx]) {
-															bidang = originalLabels[idx];
-														} else if (t.label) {
-															bidang = t.label;
-														} else if (t.xLabel) {
-															bidang = t.xLabel;
-														}
-
-														var detail = detailJenis[bidang] || detailJenis[bidang && bidang.toString().trim()] || [];
-
-														if (!detail || detail.length === 0) {
-															return ['- Tidak ada jenis izin'];
-														}
-
-														var lines = [];
-														detail.forEach(function(item) {
-															lines.push('- ' + item.jenis_izin + ': ' + item.jumlah);
-														});
-
-														return lines;
-													},
-													footer: function(tooltipItems, data) {
-														return '';
+												enabled: false,
+												mode: 'index',
+												intersect: true,
+												custom: function(tooltipModel) {
+													var tooltipEl = document.getElementById('chartjs-tooltip');
+													if (!tooltipEl) {
+														tooltipEl = document.createElement('div');
+														tooltipEl.id = 'chartjs-tooltip';
+														document.body.appendChild(tooltipEl);
 													}
+
+													if (tooltipModel.opacity === 0) {
+														tooltipEl.style.display = 'none';
+														return;
+													}
+
+													var t = (tooltipModel.dataPoints && tooltipModel.dataPoints[0]) ? tooltipModel.dataPoints[0] : (tooltipModel[0] || {});
+													var idx = (t.index !== undefined) ? t.index : ((t.dataIndex !== undefined) ? t.dataIndex : null);
+													var bidang = '';
+													if (idx !== null && originalLabels && originalLabels[idx]) bidang = originalLabels[idx];
+													else if (t.label) bidang = t.label;
+													else if (t.xLabel) bidang = t.xLabel;
+
+													var detail = detailJenis[bidang] || [];
+													var html = '<ul>';
+													if (!detail.length) html += '<li>- Tidak ada jenis izin</li>';
+													else detail.forEach(function(it) {
+														html += '<li>' + it.jenis_izin + ': ' + it.jumlah + '</li>';
+													});
+													html += '</ul>';
+													tooltipEl.innerHTML = html;
+													tooltipEl.style.display = 'block';
+													var canvasRect = this._chart.canvas.getBoundingClientRect();
+													var left = canvasRect.left + window.pageXOffset + (tooltipModel.caretX || 0);
+													var top = canvasRect.top + window.pageYOffset + (tooltipModel.caretY || 0);
+													tooltipEl.style.left = (left + 10) + 'px';
+													tooltipEl.style.top = (top + 10) + 'px';
 												}
 											},
 											scales: {
