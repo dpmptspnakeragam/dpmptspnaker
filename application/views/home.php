@@ -824,14 +824,21 @@
 													// initialize hover listeners once so tooltip can be hovered and scrolled
 													if (!tooltipEl._listenersInitialized) {
 														tooltipEl._keepAlive = false;
+														tooltipEl._hideTimeout = null;
 														tooltipEl.addEventListener('mouseenter', function() {
 															tooltipEl._keepAlive = true;
+															if (tooltipEl._hideTimeout) {
+																clearTimeout(tooltipEl._hideTimeout);
+																tooltipEl._hideTimeout = null;
+															}
 														});
 														tooltipEl.addEventListener('mouseleave', function() {
 															tooltipEl._keepAlive = false;
-															setTimeout(function() {
+															if (tooltipEl._hideTimeout) clearTimeout(tooltipEl._hideTimeout);
+															tooltipEl._hideTimeout = setTimeout(function() {
 																if (!tooltipEl._keepAlive) tooltipEl.style.display = 'none';
-															}, 200);
+																tooltipEl._hideTimeout = null;
+															}, 300);
 														});
 														tooltipEl._listenersInitialized = true;
 													}
@@ -842,10 +849,23 @@
 															tooltipEl.style.display = 'block';
 															tooltipEl.style.left = tooltipEl._lastPos.left + 'px';
 															tooltipEl.style.top = tooltipEl._lastPos.top + 'px';
-														} else {
-															tooltipEl.style.display = 'none';
 															return;
 														}
+
+														// schedule a short delay before hiding to allow pointer to reach tooltip
+														if (!tooltipEl._hideTimeout) {
+															tooltipEl._hideTimeout = setTimeout(function() {
+																tooltipEl.style.display = 'none';
+																tooltipEl._hideTimeout = null;
+															}, 300);
+														}
+														return;
+													}
+
+													// visible tooltip requested; cancel any pending hide
+													if (tooltipEl._hideTimeout) {
+														clearTimeout(tooltipEl._hideTimeout);
+														tooltipEl._hideTimeout = null;
 													}
 
 													var t = (tooltipModel.dataPoints && tooltipModel.dataPoints[0]) ? tooltipModel.dataPoints[0] : (tooltipModel[0] || {});
