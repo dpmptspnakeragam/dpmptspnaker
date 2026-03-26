@@ -821,9 +821,31 @@
 														document.body.appendChild(tooltipEl);
 													}
 
+													// initialize hover listeners once so tooltip can be hovered and scrolled
+													if (!tooltipEl._listenersInitialized) {
+														tooltipEl._keepAlive = false;
+														tooltipEl.addEventListener('mouseenter', function() {
+															tooltipEl._keepAlive = true;
+														});
+														tooltipEl.addEventListener('mouseleave', function() {
+															tooltipEl._keepAlive = false;
+															setTimeout(function() {
+																if (!tooltipEl._keepAlive) tooltipEl.style.display = 'none';
+															}, 200);
+														});
+														tooltipEl._listenersInitialized = true;
+													}
+
 													if (tooltipModel.opacity === 0) {
-														tooltipEl.style.display = 'none';
-														return;
+														// if user hovered the tooltip itself, keep it visible at last position
+														if (tooltipEl._keepAlive && tooltipEl._lastPos) {
+															tooltipEl.style.display = 'block';
+															tooltipEl.style.left = tooltipEl._lastPos.left + 'px';
+															tooltipEl.style.top = tooltipEl._lastPos.top + 'px';
+														} else {
+															tooltipEl.style.display = 'none';
+															return;
+														}
 													}
 
 													var t = (tooltipModel.dataPoints && tooltipModel.dataPoints[0]) ? tooltipModel.dataPoints[0] : (tooltipModel[0] || {});
@@ -847,6 +869,10 @@
 													var top = canvasRect.top + window.pageYOffset + (tooltipModel.caretY || 0);
 													tooltipEl.style.left = (left + 10) + 'px';
 													tooltipEl.style.top = (top + 10) + 'px';
+													tooltipEl._lastPos = {
+														left: (left + 10),
+														top: (top + 10)
+													};
 												}
 											},
 											scales: {
