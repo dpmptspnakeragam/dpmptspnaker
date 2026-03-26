@@ -31,29 +31,45 @@
                     <div class="card-body">
 
                         <div class="d-flex mb-3">
-                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafik">
+                            <button type="button" class="btn btn-outline-danger mr-2" data-toggle="modal" data-target="#ModalTambahGrafik">
                                 <i class="fa fa-plus p-1" aria-hidden="true"></i>
-                                Tambah Data
+                                Tambah Bidang
+                            </button>
+
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafikJenisIzin">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Jenis Izin
                             </button>
                         </div>
 
-                        <table id="TabelData1" class="table table-bordered table-sm table-hover">
+                        <table id="TabelDataIzinTerbit" class="table table-bordered table-sm table-hover">
                             <thead>
                                 <tr>
                                     <th class="text-center align-middle">No.</th>
-                                    <th class="text-center align-middle">Nama Izin</th>
+                                    <th class="text-center align-middle">Nama Bidang</th>
+                                    <th class="text-center align-middle">Jenis Izin</th>
                                     <th class="text-center align-middle">Jumlah Izin</th>
                                     <th class="text-center align-middle">Aksi</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <?php $count = 1; ?>
                                 <?php foreach ($grafik->result() as $row) : ?>
-                                    <tr>
-                                        <td class="text-center align-middle"><?= $count++; ?></td>
-                                        <td class="text-center align-middle"><?= $row->izin; ?></td>
+                                    <tr <?= ($row->level == 0) ? 'style="background-color:#f8f9fa; font-weight:bold;"' : ''; ?>>
+                                        <td class="text-center align-middle">
+                                            <?= ($row->level == 0) ? $count++ : ''; ?>
+                                        </td>
+
+                                        <td class="align-middle">
+                                            <?= ($row->level == 0) ? $row->nama_bidang : ''; ?>
+                                        </td>
+
+                                        <td class="align-middle">
+                                            <?= ($row->level == 0) ? '-' : '&nbsp;&nbsp;&nbsp;&nbsp;└ ' . $row->jenis_izin; ?>
+                                        </td>
+
                                         <td class="text-center align-middle"><?= $row->jumlah; ?></td>
+
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#ModalEditGrafik<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
                                                 <i class="fas fa-edit"></i>
@@ -66,6 +82,7 @@
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>
@@ -77,42 +94,95 @@
                     </div>
 
                     <div class="card-body">
-                        <?php if ($grafik->num_rows() > 0): ?>
-                            <canvas id="myChart"></canvas>
+                        <?php if ($chart_bidang->num_rows() > 0): ?>
+                            <div class="chart-container" style="position: relative; height:400px;">
+                                <canvas id="myChart"></canvas>
+                            </div>
 
                             <?php
-                            $nama_izin = [];
-                            $total = [];
+                            $nama_bidang = [];
+                            $total_bidang = [];
+                            $detail_jenis = [];
 
-                            foreach ($grafik->result() as $row) {
-                                $nama_izin[] = $row->izin;
-                                $total[] = $row->jumlah;
+                            foreach ($chart_bidang->result() as $row) {
+                                $nama_bidang[] = $row->izin;
+                                $total_bidang[] = (int)$row->jumlah;
+                                $detail_jenis[$row->izin] = [];
                             }
 
-                            $nama_izin_json = json_encode($nama_izin);
-                            $total_json = json_encode($total);
+                            if ($chart_jenis->num_rows() > 0) {
+                                foreach ($chart_jenis->result() as $row) {
+                                    $detail_jenis[$row->bidang][] = array(
+                                        'jenis_izin' => $row->jenis_izin,
+                                        'jumlah'     => (int)$row->jumlah
+                                    );
+                                }
+                            }
                             ?>
+
                             <script>
                                 document.addEventListener("DOMContentLoaded", function() {
                                     var ctx = document.getElementById('myChart').getContext('2d');
-                                    var chart = new Chart(ctx, {
+
+                                    var detailJenis = <?= json_encode($detail_jenis, JSON_UNESCAPED_UNICODE); ?>;
+
+                                    new Chart(ctx, {
                                         type: 'bar',
                                         data: {
-                                            labels: <?= $nama_izin_json; ?>,
+                                            labels: <?= json_encode($nama_bidang, JSON_UNESCAPED_UNICODE); ?>,
                                             datasets: [{
-                                                label: "Jumlah Izin",
+                                                label: 'Total Izin per Bidang',
+                                                data: <?= json_encode($total_bidang); ?>,
                                                 backgroundColor: 'rgba(219, 22, 47, 0.7)',
                                                 borderColor: 'rgba(219, 22, 47, 1)',
-                                                borderWidth: 1,
-                                                data: <?= $total_json; ?>
+                                                borderWidth: 1
                                             }]
                                         },
                                         options: {
                                             responsive: true,
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true
+                                            maintainAspectRatio: false,
+                                            legend: {
+                                                display: true
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Grafik Total Izin per Bidang'
+                                            },
+                                            tooltips: {
+                                                callbacks: {
+                                                    title: function(tooltipItems, data) {
+                                                        return tooltipItems[0].label;
+                                                    },
+                                                    // label: function(tooltipItem, data) {
+                                                    //     return 'Jumlah Bidang: ' + tooltipItem.yLabel;
+                                                    // },
+                                                    afterBody: function(tooltipItems, data) {
+                                                        var bidang = tooltipItems[0].label;
+                                                        var detail = detailJenis[bidang] || [];
+
+                                                        if (detail.length === 0) {
+                                                            return ['', 'Tidak ada jenis izin'];
+                                                        }
+
+                                                        var lines = ['', 'Rincian Jenis Izin:'];
+                                                        detail.forEach(function(item) {
+                                                            lines.push('- ' + item.jenis_izin + ': ' + item.jumlah);
+                                                        });
+
+                                                        return lines;
+                                                    },
+                                                    // footer: function(tooltipItems, data) {
+                                                    //     return 'Total: ' + tooltipItems[0].yLabel;
+                                                    // }
                                                 }
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        precision: 0
+                                                    }
+                                                }]
                                             }
                                         }
                                     });
@@ -123,8 +193,8 @@
                         <?php endif; ?>
                     </div>
                 </div>
-                <!-- /.card -->
             </div>
+
         </div>
     </div>
 </section>

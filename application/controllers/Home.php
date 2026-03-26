@@ -80,11 +80,15 @@ class Home extends CI_Controller
 			'pengunjungbulanini' 	=> $bulanini,
 
 			'periode_grafik' 			=> $this->Model_grafik->tampil_data_periode(),
+			'chart_bidang' 				=> $this->Model_grafik->get_chart_bidang(),
+			'chart_jenis'  				=> $this->Model_grafik->get_chart_jenis(),
+
+			'periode_grafik' 			=> $this->Model_grafik->tampil_data_periode(),
 			'periode_grafik_investasi' 	=> $this->Model_grafik_investasi->tampil_data_periode(),
 			'periode_grafik_skm' 		=> $this->Model_grafik_skm->tampil_data_periode(),
 
 			'grafik_tahun'		 		=> $this->Model_grafik_izin_tahun->tampil_data(),
-			'tahun_fields'		 	=> $this->Model_grafik_izin_tahun->tampil_data_tahun(),
+			'tahun_fields'		 		=> $this->Model_grafik_izin_tahun->tampil_data_tahun(),
 
 			'periode_grafik_oss'	=> $this->Model_grafik_nib->tampil_data_periode(),
 			'banner'				=> $this->Model_banner->tampil_data(),

@@ -58,22 +58,32 @@
 <!-- Tabel Data Custom -->
 <script>
     $(function() {
-        function DataTable(selectors) {
+        function initTables(selectors) {
             selectors.forEach(function(selector) {
                 $(selector).DataTable({
-                    "paging": true,
-                    "lengthChange": true,
-                    "searching": true,
-                    "ordering": true,
-                    "info": true,
-                    "autoWidth": false,
-                    "responsive": true,
-                    // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-                }).buttons().container().appendTo($(selector + '_wrapper .col-md-6:eq(0)'));
+                    paging: true,
+                    lengthChange: true,
+                    searching: true,
+                    ordering: true,
+                    info: true,
+                    autoWidth: false,
+                    responsive: true
+                });
             });
         }
 
-        DataTable(["#TabelData1", "#TabelData2", "#TabelData3", "#TabelData4"]);
+        initTables(["#TabelData1", "#TabelData2", "#TabelData3", "#TabelData4"]);
+
+        $('#TabelDataIzinTerbit').DataTable({
+            order: [],
+            ordering: false,
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            info: true,
+            autoWidth: false,
+            responsive: true
+        });
     });
 
     $(function() {

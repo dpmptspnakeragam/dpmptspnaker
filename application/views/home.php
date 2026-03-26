@@ -674,100 +674,175 @@
 						<h5>Grafik Izin Diterbitkan</h5>
 						<hr style="border: 1px solid; background-color: white;">
 
-						<h6 class="text-center"> Periode
-							<?php
-							$no = 1;
-							foreach ($periode_grafik->result() as $graph) {
-							?>
+						<h6 class="text-center">Periode
+							<?php foreach ($periode_grafik->result() as $graph) : ?>
 								<?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?>
-							<?php } ?>
+							<?php endforeach; ?>
 						</h6>
-						<canvas id="myChart"></canvas>
+
+						<div style="position: relative; height: 380px;">
+							<canvas id="myChartHome"></canvas>
+						</div>
+
 						<?php
-						$nama_izin = "";
-						$total = "";
-						$grand_total = 0; // WAJIB ADA INI
+						$nama_bidang   = [];
+						$total_bidang  = [];
+						$detail_jenis  = [];
+						$grand_total   = 0;
 
-						foreach ($grafik->result() as $item) {
-							$nama = $item->izin;
-							$nama_izin .= "'$nama'" . ", ";
+						foreach ($chart_bidang->result() as $item) {
+							$nama = trim($item->izin);
+							$jum  = (int) $item->jumlah;
 
-							$jum = (int)$item->jumlah;
-							$total .= "$jum" . ", ";
-
-							$grand_total += $jum; // jumlahkan
+							$nama_bidang[]  = $nama;
+							$total_bidang[] = $jum;
+							$detail_jenis[$nama] = [];
+							$grand_total += $jum;
 						}
+
+						foreach ($chart_jenis->result() as $item) {
+							$nama_bidang_parent = trim($item->bidang);
+
+							if (!isset($detail_jenis[$nama_bidang_parent])) {
+								$detail_jenis[$nama_bidang_parent] = [];
+							}
+
+							$detail_jenis[$nama_bidang_parent][] = array(
+								'jenis_izin' => trim($item->jenis_izin),
+								'jumlah'     => (int) $item->jumlah
+							);
+						}
+
+						$max_chart = !empty($total_bidang) ? max($total_bidang) + 10 : 10;
 						?>
-						<div class="mt-1 text-center">
+
+						<div class="mt-2 text-center">
 							<h6 style="color:white;">
 								Total Izin Diterbitkan :
 								<strong><?= number_format($grand_total, 0, ',', '.'); ?></strong> Izin
 							</h6>
 						</div>
-						<script>
-							var tahun = new Date().getFullYear();
-							var ctx = document.getElementById('myChart').getContext('2d');
-							var data = {
-								labels: [<?php echo $nama_izin; ?>],
-								datasets: [{
-									label: "Jumlah",
-									backgroundColor: '#db162f',
-									data: [<?php echo $total; ?>]
-								}]
-							};
-							var chart = new Chart(ctx, {
-								showTooltips: false,
-								type: 'bar',
-								data: data,
-								options: {
-									legend: {
-										labels: {
-											fontColor: 'white'
-										}
-									},
-									"hover": {
-										"animationDuration": 0
-									},
-									"animation": {
-										"duration": 1,
-										"onComplete": function() {
-											var chartInstance = this.chart,
-												ctx = chartInstance.ctx;
 
-											ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-											ctx.textAlign = 'center';
-											ctx.textBaseline = 'bottom';
+						<?php if (!empty($nama_bidang)) : ?>
+							<script>
+								document.addEventListener("DOMContentLoaded", function() {
+									var ctx = document.getElementById('myChartHome').getContext('2d');
 
-											this.data.datasets.forEach(function(dataset, i) {
-												var meta = chartInstance.controller.getDatasetMeta(i);
-												meta.data.forEach(function(bar, index) {
-													var data = dataset.data[index];
-													ctx.fillText(data, bar._model.x, bar._model.y - 5);
-												});
-											});
-										}
-									},
-									scales: {
-										xAxes: [{
-											ticks: {
-												fontColor: 'white'
-											}
-										}],
-										yAxes: [{
-											gridLines: {
-												zeroLineColor: 'grey',
-												color: 'grey'
+									var labelsBidang = <?= json_encode($nama_bidang, JSON_UNESCAPED_UNICODE); ?>;
+									var totalBidang = <?= json_encode($total_bidang); ?>;
+									var detailJenis = <?= json_encode($detail_jenis, JSON_UNESCAPED_UNICODE); ?>;
+									var maxChart = <?= (int) $max_chart; ?>;
+
+									new Chart(ctx, {
+										type: 'bar',
+										data: {
+											labels: labelsBidang,
+											datasets: [{
+												label: 'Total Izin per Bidang',
+												backgroundColor: '#db162f',
+												borderColor: '#db162f',
+												borderWidth: 1,
+												data: totalBidang
+											}]
+										},
+										options: {
+											responsive: true,
+											maintainAspectRatio: false,
+											legend: {
+												labels: {
+													fontColor: 'white'
+												}
 											},
-											ticks: {
-												max: Math.max(...data.datasets[0].data) + 10,
-												beginAtZero: true,
-												fontColor: 'white'
+											hover: {
+												animationDuration: 0
+											},
+											animation: {
+												duration: 1,
+												onComplete: function() {
+													var chartInstance = this.chart;
+													var ctx = chartInstance.ctx;
+
+													ctx.font = Chart.helpers.fontString(
+														Chart.defaults.global.defaultFontSize,
+														Chart.defaults.global.defaultFontStyle,
+														Chart.defaults.global.defaultFontFamily
+													);
+													ctx.fillStyle = 'white';
+													ctx.textAlign = 'center';
+													ctx.textBaseline = 'bottom';
+
+													this.data.datasets.forEach(function(dataset, i) {
+														var meta = chartInstance.controller.getDatasetMeta(i);
+														meta.data.forEach(function(bar, index) {
+															var data = dataset.data[index];
+															ctx.fillText(data, bar._model.x, bar._model.y - 5);
+														});
+													});
+												}
+											},
+											tooltips: {
+												callbacks: {
+													title: function(tooltipItems, data) {
+														return tooltipItems[0].label;
+													},
+													// label: function(tooltipItem, data) {
+													// 	return 'Jumlah Bidang: ' + tooltipItem.yLabel;
+													// },
+													afterBody: function(tooltipItems, data) {
+														var bidang = tooltipItems[0].label;
+														var detail = detailJenis[bidang] || [];
+
+														if (detail.length === 0) {
+															return ['', 'Tidak ada jenis izin'];
+														}
+
+														var lines = ['', 'Rincian Jenis Izin:'];
+														detail.forEach(function(item) {
+															lines.push('- ' + item.jenis_izin + ': ' + item.jumlah);
+														});
+
+														return lines;
+													},
+													// footer: function(tooltipItems, data) {
+													// 	return 'Total: ' + tooltipItems[0].yLabel;
+													// }
+												}
+											},
+											scales: {
+												xAxes: [{
+													ticks: {
+														fontColor: 'white'
+													},
+													gridLines: {
+														display: false
+													}
+												}],
+												yAxes: [{
+													gridLines: {
+														zeroLineColor: 'grey',
+														color: 'grey'
+													},
+													ticks: {
+														max: maxChart,
+														beginAtZero: true,
+														fontColor: 'white',
+														callback: function(value) {
+															if (Number.isInteger(value)) {
+																return value;
+															}
+														}
+													}
+												}]
 											}
-										}]
-									}
-								}
-							});
-						</script>
+										}
+									});
+								});
+							</script>
+						<?php else : ?>
+							<div class="mt-3">
+								<h6 style="color:white;">Data grafik belum tersedia.</h6>
+							</div>
+						<?php endif; ?>
 					</div>
 
 					<div class="col-lg-6 col-12 text-center isi-investasi">
