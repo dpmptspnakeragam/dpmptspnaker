@@ -120,7 +120,7 @@
                             }
                             ?>
 
-                            <script>
+                            <!-- <script>
                                 document.addEventListener("DOMContentLoaded", function() {
                                     var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -174,6 +174,75 @@
                                                     // footer: function(tooltipItems, data) {
                                                     //     return 'Total: ' + tooltipItems[0].yLabel;
                                                     // }
+                                                }
+                                            },
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true,
+                                                        precision: 0
+                                                    }
+                                                }]
+                                            }
+                                        }
+                                    });
+                                });
+                            </script> -->
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+
+                                    var detailJenis = <?= json_encode($detail_jenis, JSON_UNESCAPED_UNICODE); ?>;
+
+                                    new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: <?= json_encode($nama_bidang, JSON_UNESCAPED_UNICODE); ?>,
+                                            datasets: [{
+                                                label: '',
+                                                data: <?= json_encode($total_bidang); ?>,
+                                                backgroundColor: 'rgba(219, 22, 47, 0.7)',
+                                                borderColor: 'rgba(219, 22, 47, 1)',
+                                                borderWidth: 1
+                                            }]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            legend: {
+                                                display: false
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Grafik Total Izin per Bidang'
+                                            },
+                                            tooltips: {
+                                                callbacks: {
+                                                    title: function(tooltipItems, data) {
+                                                        return tooltipItems[0].label;
+                                                    },
+                                                    label: function(tooltipItem, data) {
+                                                        return null;
+                                                    },
+                                                    afterBody: function(tooltipItems, data) {
+                                                        var bidang = tooltipItems[0].label;
+                                                        var detail = detailJenis[bidang] || [];
+
+                                                        if (detail.length === 0) {
+                                                            return ['- Tidak ada jenis izin'];
+                                                        }
+
+                                                        var lines = [];
+                                                        detail.forEach(function(item) {
+                                                            lines.push('- ' + item.jenis_izin + ': ' + item.jumlah);
+                                                        });
+
+                                                        return lines;
+                                                    },
+                                                    footer: function(tooltipItems, data) {
+                                                        return '';
+                                                    }
                                                 }
                                             },
                                             scales: {
