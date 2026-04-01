@@ -974,19 +974,39 @@
 							document.addEventListener("DOMContentLoaded", function() {
 								var ctx = document.getElementById('myChart2').getContext('2d');
 
-								// Ambil array rincian dari PHP
+								// Ambil data JSON dari PHP
+								var labelsData = <?= $labels_json; ?>;
+								var targetData = <?= $target_json; ?>;
+								var realisasiData = <?= $realisasi_json; ?>;
 								var rincianData = <?= $rincian_json; ?>;
 
+								// 1. Fungsi pembuat warna RGBA acak
+								function getRandomColor(alpha) {
+									// Dibatasi sampai 200 agar warnanya tidak terlalu terang/putih (karena background gelap)
+									var r = Math.floor(Math.random() * 200);
+									var g = Math.floor(Math.random() * 200);
+									var b = Math.floor(Math.random() * 200);
+									return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+								}
+
+								// 2. Generate HANYA DUA warna acak (satu untuk Target, satu untuk Realisasi)
+								var colorTarget = getRandomColor(0.85);
+								var colorRealisasi = getRandomColor(0.85);
+
 								var data = {
-									labels: <?= $labels_json; ?>,
+									labels: labelsData,
 									datasets: [{
 										label: "Target",
-										backgroundColor: '#f5542e',
-										data: <?= $target_json; ?>
+										backgroundColor: colorTarget, // Langsung pasang 1 warna untuk semua bar Target
+										borderColor: colorTarget.replace(/[\d\.]+\)$/g, '1)'), // Border solid
+										borderWidth: 1,
+										data: targetData
 									}, {
 										label: "Realisasi",
-										backgroundColor: '#008b6e',
-										data: <?= $realisasi_json; ?>
+										backgroundColor: colorRealisasi, // Langsung pasang 1 warna untuk semua bar Realisasi
+										borderColor: colorRealisasi.replace(/[\d\.]+\)$/g, '1)'), // Border solid
+										borderWidth: 1,
+										data: realisasiData
 									}]
 								};
 
@@ -1023,24 +1043,20 @@
 											}
 										},
 										tooltips: {
-											// 🔥 PERUBAHAN KUNCI: Ganti 'index' menjadi 'nearest'
 											mode: 'nearest',
-											intersect: true, // Wajib true agar hanya bereaksi kalau pas kena batang
+											intersect: true,
 
 											callbacks: {
 												title: function(tooltipItems, data) {
-													return ''; // Kosongkan judul agar tidak ada spasi berlebih
+													return '';
 												},
 												label: function(tooltipItem, data) {
 													var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 													var value = tooltipItem.yLabel;
 
-													// JIKA YANG DI-HOVER ADALAH BATANG MERAH (TARGET)
 													if (datasetLabel === 'Target') {
 														return 'Target: ' + value;
-													}
-													// JIKA YANG DI-HOVER ADALAH BATANG HIJAU (REALISASI)
-													else if (datasetLabel === 'Realisasi') {
+													} else if (datasetLabel === 'Realisasi') {
 														var textRincian = rincianData[tooltipItem.index];
 
 														if (textRincian) {
@@ -1073,6 +1089,7 @@
 								});
 							});
 						</script>
+
 					</div>
 
 					<div class="col-lg-12 text-center text-light bg-dark isi-investasi">
