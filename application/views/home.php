@@ -1315,7 +1315,7 @@
 					<div class="col-lg-6 col-12 text-center isi-investasi">
 
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik Sebaran Proyek Bedasarkan Risiko</h5>
+						<h5>Grafik Sebaran Proyek Berdasarkan Risiko</h5>
 						<hr style="border: 1px solid; background-color: white;">
 
 						<div class="chart-container" style="width:70%; margin:auto;">
