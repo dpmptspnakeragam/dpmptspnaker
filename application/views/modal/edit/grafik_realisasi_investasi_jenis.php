@@ -31,15 +31,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Target (Rp/M)</label>
-                            <input type="number" step="0.0001" name="nilai" class="form-control" value="<?= (float)$row->nilai; ?>" required>
-                        </div>
-
-                        <div class="form-group">
                             <label>Realisasi (Rp/M)</label>
                             <input type="number" step="0.0001" name="nilai2" class="form-control" value="<?= (float)$row->nilai2; ?>" required>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>

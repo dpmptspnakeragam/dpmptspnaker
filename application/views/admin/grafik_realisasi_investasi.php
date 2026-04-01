@@ -36,7 +36,7 @@
                         <div class="d-flex mb-3">
                             <button type="button" class="btn btn-outline-danger mr-2" data-toggle="modal" data-target="#ModalTambahGrafikRealisasiInvestasi">
                                 <i class="fa fa-plus p-1" aria-hidden="true"></i>
-                                Tambah Data
+                                Tambah Tahun
                             </button>
 
                             <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahJenisGrafikRealisasiInvestasi">
@@ -68,8 +68,11 @@
                                         </td>
 
                                         <td class="text-left">
-                                            <?= ($row->level == 1) ? '&nbsp;&nbsp;&nbsp;&nbsp;└ ' . $row->jenis_investasi .
-                                                ' (Target: ' . number_format((float)$row->nilai, 2, ',', '.') . ' dan Realisasi: ' . number_format((float)$row->nilai2, 2, ',', '.') . ')' : '' ?>
+                                            <?php if ($row->level == 0) : ?>
+                                                Target: <?= number_format((float)$row->nilai, 2, ',', '.'); ?>
+                                            <?php else : ?>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;└ <?= $row->jenis_investasi; ?> (Realisasi: <?= number_format((float)$row->nilai2, 2, ',', '.'); ?>)
+                                            <?php endif; ?>
                                         </td>
 
                                         <td class="text-center align-middle">
@@ -89,9 +92,9 @@
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-
                             </tbody>
                         </table>
+
                     </div>
                 </div>
             </div>

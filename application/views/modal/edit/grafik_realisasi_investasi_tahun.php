@@ -18,6 +18,11 @@
                             <label for="tahun">Tahun</label>
                             <input type="number" min="2000" max="2099" name="tahun" class="form-control" value="<?= $row->tahun; ?>" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="nilai">Target (Rp/M)</label>
+                            <input type="number" step="0.0001" name="nilai" class="form-control" value="<?= (float)$row->nilai; ?>" required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>

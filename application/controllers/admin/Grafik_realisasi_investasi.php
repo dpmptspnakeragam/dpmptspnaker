@@ -71,6 +71,8 @@ class Grafik_realisasi_investasi extends CI_controller
     public function tambah_tahun()
     {
         $tahun = $this->input->post('tahun', true);
+        // 🔥 Tangkap nilai Target dari form
+        $nilai = (float)$this->input->post('nilai', true);
 
         // VALIDASI KOSONG
         if (empty($tahun)) {
@@ -78,7 +80,7 @@ class Grafik_realisasi_investasi extends CI_controller
             redirect('admin/grafik_realisasi_investasi');
         }
 
-        // 🔥 VALIDASI DUPLIKAT TAHUN
+        // VALIDASI DUPLIKAT TAHUN
         $cek = $this->db->get_where('grafik_investasi', [
             'tahun' => $tahun,
             'tipe' => 'tahun'
@@ -91,19 +93,18 @@ class Grafik_realisasi_investasi extends CI_controller
 
         // SIMPAN DATA
         $data = [
-            'tahun'     => $tahun,
-            // 👇 WAJIB DITAMBAHKAN: Karena di DB kolom ini "Tak Ternilai: Tidak" (NOT NULL)
-            'nilai'     => 0,
-            'nilai2'    => 0,
-            'parent_id' => NULL,
-            'tipe'      => 'tahun',
+            'tahun'           => $tahun,
+            'nilai'           => $nilai, // Masukkan target ke sini
+            'nilai2'          => 0,      // Realisasi biarkan 0 dulu (nanti dijumlah otomatis dari jenis)
+            'parent_id'       => NULL,
+            'tipe'            => 'tahun',
             'jenis_investasi' => NULL
         ];
 
         $result = $this->Model_grafik_investasi->input($data);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Data Tahun Realisasi Investasi berhasil disimpan.');
+            $this->session->set_flashdata('success', 'Data Tahun dan Target berhasil disimpan.');
         } else {
             $this->session->set_flashdata('error', 'Penyimpanan data gagal. Silahkan coba lagi.');
         }
@@ -114,12 +115,9 @@ class Grafik_realisasi_investasi extends CI_controller
     public function tambah_jenis()
     {
         $parent_id = $this->input->post('parent_id', true);
-
-        // 👇 Sesuaikan nama input dari form modal yang sudah kita perbaiki ("jenis_investasi")
         $jenis     = trim($this->input->post('jenis_investasi', true));
 
-        // 👇 UBAH (int) menjadi (float): Karena kolom DB adalah decimal(10,4) dan double(11,4)
-        $nilai     = (float)$this->input->post('nilai', true);
+        // 🔥 HAPUS baris $nilai (Target), karena Jenis hanya punya Realisasi
         $nilai2    = (float)$this->input->post('nilai2', true);
 
         // VALIDASI PILIH TAHUN
@@ -134,12 +132,11 @@ class Grafik_realisasi_investasi extends CI_controller
             redirect('admin/grafik_realisasi_investasi');
         }
 
-        // 👇 AMBIL DATA TAHUN DARI PARENT
-        // Karena kolom 'tahun' di tabel TIDAK BOLEH NULL, kita harus copas nilai tahun dari parent-nya.
+        // AMBIL DATA TAHUN DARI PARENT
         $parent = $this->db->get_where('grafik_investasi', ['id_grafik' => $parent_id])->row();
         $tahun_parent = $parent ? $parent->tahun : '';
 
-        // 🔥 VALIDASI DUPLIKAT (tahun + jenis)
+        // VALIDASI DUPLIKAT (tahun + jenis)
         $cek = $this->db->get_where('grafik_investasi', [
             'parent_id' => $parent_id,
             'jenis_investasi' => $jenis,
@@ -153,10 +150,10 @@ class Grafik_realisasi_investasi extends CI_controller
 
         // SIMPAN DATA
         $data = [
-            'tahun'           => $tahun_parent, // Masukkan tahun dari parent ke sini
+            'tahun'           => $tahun_parent,
             'jenis_investasi' => $jenis,
-            'nilai'           => $nilai,
-            'nilai2'          => $nilai2,
+            'nilai'           => 0,       // Set 0 karena Jenis tidak punya Target
+            'nilai2'          => $nilai2, // Masukkan Realisasi ke sini
             'parent_id'       => $parent_id,
             'tipe'            => 'jenis'
         ];
@@ -164,7 +161,7 @@ class Grafik_realisasi_investasi extends CI_controller
         $result = $this->Model_grafik_investasi->input($data);
 
         if ($result) {
-            $this->session->set_flashdata('success', 'Jenis investasi berhasil ditambahkan');
+            $this->session->set_flashdata('success', 'Jenis investasi dan Realisasi berhasil ditambahkan');
         } else {
             $this->session->set_flashdata('error', 'Gagal menambahkan jenis investasi. Silahkan coba lagi.');
         }
@@ -201,13 +198,15 @@ class Grafik_realisasi_investasi extends CI_controller
     {
         $id_grafik = $this->input->post('id_grafik', true);
         $tahun     = $this->input->post('tahun', true);
+        // 🔥 Tangkap Edit Target dari form
+        $nilai     = (float)$this->input->post('nilai', true);
 
         if (empty($tahun)) {
             $this->session->set_flashdata('error', 'Tahun wajib diisi!');
             redirect('admin/grafik_realisasi_investasi');
         }
 
-        // 🔥 VALIDASI DUPLIKAT (Kecuali ID ini sendiri)
+        // VALIDASI DUPLIKAT (Kecuali ID ini sendiri)
         $cek = $this->db->get_where('grafik_investasi', [
             'tahun' => $tahun,
             'tipe' => 'tahun',
@@ -221,13 +220,14 @@ class Grafik_realisasi_investasi extends CI_controller
 
         // UPDATE DATA TAHUN (PARENT)
         $this->db->where('id_grafik', $id_grafik);
-        $this->db->update('grafik_investasi', ['tahun' => $tahun]);
+        // 🔥 Tambahkan 'nilai' (Target) untuk di-update
+        $this->db->update('grafik_investasi', ['tahun' => $tahun, 'nilai' => $nilai]);
 
-        // 🔥 CASCADE UPDATE: Update juga kolom 'tahun' di semua data JENIS (anaknya)
+        // CASCADE UPDATE: Update juga kolom 'tahun' di semua data JENIS (anaknya)
         $this->db->where('parent_id', $id_grafik);
         $this->db->update('grafik_investasi', ['tahun' => $tahun]);
 
-        $this->session->set_flashdata('success', 'Data Tahun berhasil diupdate.');
+        $this->session->set_flashdata('success', 'Data Tahun dan Target berhasil diupdate.');
         redirect('admin/grafik_realisasi_investasi');
     }
 
@@ -236,7 +236,8 @@ class Grafik_realisasi_investasi extends CI_controller
         $id_grafik = $this->input->post('id_grafik', true);
         $parent_id = $this->input->post('parent_id', true);
         $jenis     = trim($this->input->post('jenis_investasi', true));
-        $nilai     = (float)$this->input->post('nilai', true);
+
+        // 🔥 HAPUS baris $nilai (Target), karena Jenis hanya mengubah Realisasi
         $nilai2    = (float)$this->input->post('nilai2', true);
 
         if (empty($parent_id) || empty($jenis)) {
@@ -248,7 +249,7 @@ class Grafik_realisasi_investasi extends CI_controller
         $parent = $this->db->get_where('grafik_investasi', ['id_grafik' => $parent_id])->row();
         $tahun_parent = $parent ? $parent->tahun : '';
 
-        // 🔥 VALIDASI DUPLIKAT (Cegah nama jenis yang sama di tahun yang sama, kecuali dirinya sendiri)
+        // VALIDASI DUPLIKAT (Cegah nama jenis yang sama di tahun yang sama, kecuali dirinya sendiri)
         $cek = $this->db->get_where('grafik_investasi', [
             'parent_id' => $parent_id,
             'jenis_investasi' => $jenis,
@@ -265,8 +266,7 @@ class Grafik_realisasi_investasi extends CI_controller
         $data = [
             'tahun'           => $tahun_parent,
             'jenis_investasi' => $jenis,
-            'nilai'           => $nilai,
-            'nilai2'          => $nilai2,
+            'nilai2'          => $nilai2, // Update Realisasi ke sini
             'parent_id'       => $parent_id
         ];
 

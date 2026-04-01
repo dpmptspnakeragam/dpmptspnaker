@@ -10,7 +10,6 @@
 
             <form role="form" action="<?= base_url('admin/grafik_realisasi_investasi/tambah_jenis'); ?>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
-
                 <input type="hidden" name="tipe" value="jenis">
 
                 <div class="modal-body">
@@ -29,11 +28,6 @@
                     <div class="form-group">
                         <label for="jenis_investasi">Jenis Investasi</label>
                         <input type="text" id="jenis_investasi" name="jenis_investasi" class="form-control" placeholder="Contoh: PMDN / PMA" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nilai">Target (Rp/M)</label>
-                        <input type="number" step="0.0001" id="nilai" name="nilai" class="form-control" placeholder="0.0000" required>
                     </div>
 
                     <div class="form-group">

@@ -2,17 +2,20 @@
 
 class Model_grafik_investasi extends CI_model
 {
-    // 🔥 PERBAIKAN 1: Menghindari error group_by dengan mengambil tipe 'tahun'
     public function tampil_data()
     {
-        // Query ini akan menjumlahkan secara langsung dari tabel dimana tipenya 'jenis'
-        // dan mengelompokkannya berdasarkan 'parent_id' (yang mana itu adalah id_grafik si Tahun)
         $sql = "
         SELECT 
             p.id_grafik,
             p.tahun,
-            (SELECT COALESCE(SUM(nilai), 0) FROM grafik_investasi WHERE parent_id = p.id_grafik AND tipe = 'jenis') AS nilai,
+            p.nilai,
             (SELECT COALESCE(SUM(nilai2), 0) FROM grafik_investasi WHERE parent_id = p.id_grafik AND tipe = 'jenis') AS nilai2,
+            
+            -- 🔥 PERBAIKAN: Tambahkan CONVERT(jenis_investasi USING utf8) agar tidak bentrok dengan utf8
+            (SELECT GROUP_CONCAT(CONCAT(CONVERT(jenis_investasi USING utf8), ': ', FORMAT(nilai2, 2, 'id_ID')) SEPARATOR ' | ') 
+             FROM grafik_investasi 
+             WHERE parent_id = p.id_grafik AND tipe = 'jenis') as rincian_jenis,
+             
             p.tipe
         FROM grafik_investasi p
         WHERE p.tipe = 'tahun'
@@ -29,10 +32,8 @@ class Model_grafik_investasi extends CI_model
         SELECT 
             p.id_grafik,
             p.tahun,
-            -- Mengambil total 'nilai' dari anak-anaknya berdasarkan parent_id
-            (SELECT COALESCE(SUM(nilai), 0) FROM grafik_investasi WHERE parent_id = p.id_grafik) AS nilai,
-            -- Mengambil total 'nilai2' dari anak-anaknya berdasarkan parent_id
-            (SELECT COALESCE(SUM(nilai2), 0) FROM grafik_investasi WHERE parent_id = p.id_grafik) AS nilai2,
+            p.nilai, -- 🔥 PERBAIKAN: Ambil nilai asli milik Parent (Target)
+            (SELECT COALESCE(SUM(nilai2), 0) FROM grafik_investasi WHERE parent_id = p.id_grafik AND tipe = 'jenis') AS nilai2, -- Ambil SUM(Realisasi) dari anak
             NULL AS jenis_investasi,
             p.parent_id,
             p.tipe,

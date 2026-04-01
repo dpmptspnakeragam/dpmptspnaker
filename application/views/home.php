@@ -952,14 +952,14 @@
 						$tahun_investasi = [];
 						$total = [];
 						$total2 = [];
+						$rincian = []; // 🔥 Array baru untuk menampung rincian per jenis
 
 						foreach ($grafik_investasi->result() as $item) {
-							// HANYA ambil data parent (tipe tahun)
-							// Jika ini tidak difilter, tahun yang sama akan berulang di chart
 							if ($item->tipe == 'tahun') {
 								$tahun_investasi[] = $item->tahun;
 								$total[] = (float) $item->nilai;     // Target
 								$total2[] = (float) $item->nilai2;   // Realisasi
+								$rincian[] = $item->rincian_jenis;   // Teks rincian (PMDN: 10 | PMA: 5 dll)
 							}
 						}
 
@@ -967,21 +967,26 @@
 						$labels_json = json_encode($tahun_investasi);
 						$target_json = json_encode($total, JSON_NUMERIC_CHECK);
 						$realisasi_json = json_encode($total2, JSON_NUMERIC_CHECK);
+						$rincian_json = json_encode($rincian);
 						?>
+
 						<script>
 							document.addEventListener("DOMContentLoaded", function() {
 								var ctx = document.getElementById('myChart2').getContext('2d');
 
+								// Ambil array rincian dari PHP
+								var rincianData = <?= $rincian_json; ?>;
+
 								var data = {
-									labels: <?= $labels_json; ?>, // Hasil dari PHP
+									labels: <?= $labels_json; ?>,
 									datasets: [{
 										label: "Target",
 										backgroundColor: '#f5542e',
-										data: <?= $target_json; ?> // Target
+										data: <?= $target_json; ?>
 									}, {
 										label: "Realisasi",
 										backgroundColor: '#008b6e',
-										data: <?= $realisasi_json; ?> // Realisasi
+										data: <?= $realisasi_json; ?>
 									}]
 								};
 
@@ -1020,15 +1025,27 @@
 										tooltips: {
 											mode: 'index',
 											intersect: false,
-											// 1. Filter agar HANYA dataset 'Realisasi' yang muncul
+											// Tetap filter agar cuma bar Realisasi yang memunculkan kotak hitam
 											filter: function(tooltipItem, data) {
 												var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 												return datasetLabel === 'Realisasi';
 											},
-											// 2. Callbacks untuk menghilangkan Judul (Tahun) di atas tooltip
 											callbacks: {
+												// 1. Kosongkan judul (Tahun)
 												title: function(tooltipItems, data) {
-													return ''; // Mengembalikan string kosong menghilangkan judul
+													return '';
+												},
+												// 2. Ganti label bawaan "Realisasi: [total]" menjadi rincian per jenis
+												label: function(tooltipItem, data) {
+													var textRincian = rincianData[tooltipItem.index];
+
+													// Jika teks rincian ada, pecah dengan ' | ' agar jadi baris-baris baru
+													if (textRincian) {
+														return textRincian.split(' | ');
+													}
+
+													// Jika user baru input Tahun tapi belum input Jenis sama sekali
+													return 'Belum ada rincian jenis';
 												}
 											}
 										},
