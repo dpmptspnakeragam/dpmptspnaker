@@ -1023,29 +1023,31 @@
 											}
 										},
 										tooltips: {
-											mode: 'index',
-											intersect: false,
-											// Tetap filter agar cuma bar Realisasi yang memunculkan kotak hitam
-											filter: function(tooltipItem, data) {
-												var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-												return datasetLabel === 'Realisasi';
-											},
+											// 🔥 PERUBAHAN KUNCI: Ganti 'index' menjadi 'nearest'
+											mode: 'nearest',
+											intersect: true, // Wajib true agar hanya bereaksi kalau pas kena batang
+
 											callbacks: {
-												// 1. Kosongkan judul (Tahun)
 												title: function(tooltipItems, data) {
-													return '';
+													return ''; // Kosongkan judul agar tidak ada spasi berlebih
 												},
-												// 2. Ganti label bawaan "Realisasi: [total]" menjadi rincian per jenis
 												label: function(tooltipItem, data) {
-													var textRincian = rincianData[tooltipItem.index];
+													var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+													var value = tooltipItem.yLabel;
 
-													// Jika teks rincian ada, pecah dengan ' | ' agar jadi baris-baris baru
-													if (textRincian) {
-														return textRincian.split(' | ');
+													// JIKA YANG DI-HOVER ADALAH BATANG MERAH (TARGET)
+													if (datasetLabel === 'Target') {
+														return 'Target: ' + value;
 													}
+													// JIKA YANG DI-HOVER ADALAH BATANG HIJAU (REALISASI)
+													else if (datasetLabel === 'Realisasi') {
+														var textRincian = rincianData[tooltipItem.index];
 
-													// Jika user baru input Tahun tapi belum input Jenis sama sekali
-													return 'Belum ada rincian jenis';
+														if (textRincian) {
+															return textRincian.split(' | ');
+														}
+														return 'Belum ada rincian jenis';
+													}
 												}
 											}
 										},
