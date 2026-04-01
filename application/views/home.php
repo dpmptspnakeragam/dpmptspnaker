@@ -948,88 +948,110 @@
 						</h6>
 						<canvas id="myChart2"></canvas>
 						<?php
-						$tahun_investasi = "";
-						$total = null;
-						$total2 = null;
+						// 1. Kumpulkan data DARI PHP menggunakan Array
+						$tahun_investasi = [];
+						$total = [];
+						$total2 = [];
+
 						foreach ($grafik_investasi->result() as $item) {
-							$nama = $item->tahun;
-							$tahun_investasi .= "'$nama'" . ", ";
-							$jum = $item->nilai;
-							$total .= "$jum" . ", ";
-							$jum2 = $item->nilai2;
-							$total2 .= "$jum2" . ", ";
+							// HANYA ambil data parent (tipe tahun)
+							// Jika ini tidak difilter, tahun yang sama akan berulang di chart
+							if ($item->tipe == 'tahun') {
+								$tahun_investasi[] = $item->tahun;
+								$total[] = (float) $item->nilai;     // Target
+								$total2[] = (float) $item->nilai2;   // Realisasi
+							}
 						}
+
+						// 2. Encode ke JSON agar aman dibaca oleh Javascript
+						$labels_json = json_encode($tahun_investasi);
+						$target_json = json_encode($total, JSON_NUMERIC_CHECK);
+						$realisasi_json = json_encode($total2, JSON_NUMERIC_CHECK);
 						?>
 						<script>
-							var tahun = new Date().getFullYear();
-							var ctx = document.getElementById('myChart2').getContext('2d');
-							var data = {
-								labels: [<?php echo $tahun_investasi; ?>],
-								datasets: [{
-									label: "Target",
-									backgroundColor: '#f5542e',
-									data: [<?php echo $total; ?>]
-								}, {
-									label: "Realisasi",
-									backgroundColor: '#008b6e',
-									data: [<?php echo $total2; ?>]
-								}]
-							};
-							var chart = new Chart(ctx, {
-								type: 'bar',
-								data: data,
-								options: {
-									legend: {
-										labels: {
-											fontColor: 'white'
-										}
-									},
-									"hover": {
-										"animationDuration": 0
-									},
-									"animation": {
-										"duration": 1,
-										"onComplete": function() {
-											var chartInstance = this.chart,
-												ctx = chartInstance.ctx;
+							document.addEventListener("DOMContentLoaded", function() {
+								var ctx = document.getElementById('myChart2').getContext('2d');
 
-											ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-											ctx.textAlign = 'center';
-											ctx.textBaseline = 'bottom';
+								var data = {
+									labels: <?= $labels_json; ?>, // Hasil dari PHP
+									datasets: [{
+										label: "Target",
+										backgroundColor: '#f5542e',
+										data: <?= $target_json; ?> // Target
+									}, {
+										label: "Realisasi",
+										backgroundColor: '#008b6e',
+										data: <?= $realisasi_json; ?> // Realisasi
+									}]
+								};
 
-											this.data.datasets.forEach(function(dataset, i) {
-												var meta = chartInstance.controller.getDatasetMeta(i);
-												meta.data.forEach(function(bar, index) {
-													var data = dataset.data[index];
-													ctx.fillText(data, bar._model.x, bar._model.y - 5);
+								var chart = new Chart(ctx, {
+									type: 'bar',
+									data: data,
+									options: {
+										legend: {
+											labels: {
+												fontColor: 'white'
+											}
+										},
+										"hover": {
+											"animationDuration": 0
+										},
+										"animation": {
+											"duration": 1,
+											"onComplete": function() {
+												var chartInstance = this.chart,
+													ctx = chartInstance.ctx;
+
+												ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+												ctx.textAlign = 'center';
+												ctx.textBaseline = 'bottom';
+												ctx.fillStyle = 'white';
+
+												this.data.datasets.forEach(function(dataset, i) {
+													var meta = chartInstance.controller.getDatasetMeta(i);
+													meta.data.forEach(function(bar, index) {
+														var dataValue = dataset.data[index];
+														ctx.fillText(dataValue, bar._model.x, bar._model.y - 5);
+													});
 												});
-											});
-										}
-									},
-									tooltips: {
-										mode: 'index',
-										intersect: true
-									},
-									responsive: true,
-									scales: {
-										xAxes: [{
-											ticks: {
-												fontColor: 'white'
 											}
-										}],
-										yAxes: [{
-											gridLines: {
-												zeroLineColor: 'grey',
-												color: 'grey'
+										},
+										tooltips: {
+											mode: 'index',
+											intersect: false,
+											// 1. Filter agar HANYA dataset 'Realisasi' yang muncul
+											filter: function(tooltipItem, data) {
+												var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+												return datasetLabel === 'Realisasi';
 											},
-											ticks: {
-												max: Math.max(...data.datasets[0].data) + 650,
-												beginAtZero: true,
-												fontColor: 'white'
+											// 2. Callbacks untuk menghilangkan Judul (Tahun) di atas tooltip
+											callbacks: {
+												title: function(tooltipItems, data) {
+													return ''; // Mengembalikan string kosong menghilangkan judul
+												}
 											}
-										}]
+										},
+										responsive: true,
+										scales: {
+											xAxes: [{
+												ticks: {
+													fontColor: 'white'
+												}
+											}],
+											yAxes: [{
+												gridLines: {
+													zeroLineColor: 'grey',
+													color: 'grey'
+												},
+												ticks: {
+													beginAtZero: true,
+													fontColor: 'white'
+												}
+											}]
+										}
 									}
-								}
+								});
 							});
 						</script>
 					</div>

@@ -3,18 +3,34 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Hapus <?= $title; ?></h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">
+                        Hapus <?= ($row->tipe == 'tahun') ? 'Tahun' : 'Jenis'; ?> Investasi
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus data <strong class="font-weight-bold text-maroon"><?= $row->tahun; ?></strong> ini?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
-                    <a href="<?= base_url('admin/grafik_realisasi_investasi/hapus/' . $row->id_grafik); ?>" class="btn btn-outline-danger">Hapus</a>
-                </div>
+
+                <form action="<?= base_url('admin/grafik_realisasi_investasi/hapus/' . $row->id_grafik); ?>" method="POST">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+
+                    <div class="modal-body">
+                        <?php if ($row->tipe == 'tahun') : ?>
+                            <p class="mb-1">Apakah Anda yakin ingin menghapus data tahun <strong class="font-weight-bold text-maroon"><?= $row->tahun; ?></strong> ini?</p>
+                            <small class="text-danger font-italic"><b>Peringatan:</b> Menghapus tahun ini juga akan menghapus semua data Jenis Investasi di dalamnya secara permanen.</small>
+                        <?php else : ?>
+                            <p class="mb-0">Apakah Anda yakin ingin menghapus Jenis Investasi <strong class="font-weight-bold text-maroon"><?= html_escape($row->jenis_investasi); ?></strong> pada tahun <?= $row->tahun; ?>?</p>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fa fa-trash"></i> Hapus
+                        </button>
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>

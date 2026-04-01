@@ -1,4 +1,3 @@
-<!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -11,7 +10,6 @@
                         <h4>Periode</h4>
                         <span>
                             <?php foreach ($periode_grafik_investasi->result() as $graph) : ?>
-                                <!-- Tahun <?= date("Y", strtotime($graph->tgl_awal)); ?> s/d <?= date("Y", strtotime($graph->tgl_akhir)); ?> -->
                                 <?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?>
                                 <br>
                                 <a class="btn btn-outline-danger btn-block mt-2" href="#" data-toggle="modal" data-target="#EditPeriodeGrafikRealisasasiInvestasi<?= $graph->id_periode; ?>" title="Edit">
@@ -32,40 +30,66 @@
                     <div class="card-body">
 
                         <div class="d-flex mb-3">
-                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahGrafikRealisasiInvestasi">
+
+                        </div>
+
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger mr-2" data-toggle="modal" data-target="#ModalTambahGrafikRealisasiInvestasi">
                                 <i class="fa fa-plus p-1" aria-hidden="true"></i>
                                 Tambah Data
                             </button>
+
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahJenisGrafikRealisasiInvestasi">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Jenis
+                            </button>
                         </div>
 
-                        <table id="TabelData1" class="table table-bordered table-sm table-hover">
+                        <table id="TabelDataIzinTerbit" class="table table-bordered table-sm table-hover">
                             <thead>
                                 <tr>
                                     <th class="text-center align-middle">No.</th>
                                     <th class="text-center align-middle">Tahun</th>
-                                    <th class="text-center align-middle">Target</th>
-                                    <th class="text-center align-middle">Realisasi</th>
+                                    <th class="text-center align-middle">Investasi</th>
                                     <th class="text-center align-middle">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $count = 1; ?>
                                 <?php foreach ($grafik_investasi->result() as $row) : ?>
-                                    <tr>
-                                        <td class="text-center align-middle"><?= $count++; ?></td>
-                                        <td class="text-center align-middle"><?= $row->tahun; ?></td>
-                                        <td class="text-center align-middle"><?= $row->nilai; ?></td>
-                                        <td class="text-center align-middle"><?= $row->nilai2; ?></td>
+                                    <tr <?= ($row->level == 0) ? 'style="background:#f8f9fa;font-weight:bold;"' : ''; ?>>
+
+                                        <td class="text-center">
+                                            <?= ($row->level == 0) ? $count++ : ''; ?>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <?= ($row->level == 0) ? $row->tahun : ''; ?>
+                                        </td>
+
+                                        <td class="text-left">
+                                            <?= ($row->level == 1) ? '&nbsp;&nbsp;&nbsp;&nbsp;└ ' . $row->jenis_investasi .
+                                                ' (Target: ' . number_format((float)$row->nilai, 2, ',', '.') . ' dan Realisasi: ' . number_format((float)$row->nilai2, 2, ',', '.') . ')' : '' ?>
+                                        </td>
+
                                         <td class="text-center align-middle">
-                                            <button type="button" data-toggle="modal" data-target="#EditGrafikRealisasasiInvestasi<?= $row->id_grafik; ?>" class="btn btn-outline-warning mt-1 mb-1">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            <?php if ($row->tipe == 'tahun') : ?>
+                                                <button data-toggle="modal" data-target="#EditTahunGrafikRealisasasiInvestasi<?= $row->id_grafik; ?>" class="btn btn-outline-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            <?php else : ?>
+                                                <button data-toggle="modal" data-target="#EditJenisGrafikRealisasasiInvestasi<?= $row->id_grafik; ?>" class="btn btn-outline-warning">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            <?php endif; ?>
+
                                             <button type="button" data-toggle="modal" data-target="#ModalDeleteGrafikRealisasiInvestasi<?= $row->id_grafik; ?>" class="btn btn-outline-danger mt-1 mb-1">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
+
                             </tbody>
                         </table>
                     </div>
@@ -88,15 +112,20 @@
                         $total2 = [];
 
                         foreach ($grafik_investasi->result() as $item) {
-                            $tahun_investasi[] = $item->tahun;
-                            $total[] = $item->nilai;
-                            $total2[] = $item->nilai2;
+                            // 🔥 PENTING: Wajib difilter agar hanya data TAHUN (Level 0) yang masuk chart
+                            // Tergantung dari query yang dipanggil di controller adminmu,
+                            // bisa menggunakan $item->level == 0 atau $item->tipe == 'tahun'
+                            if ((isset($item->level) && $item->level == 0) || (isset($item->tipe) && $item->tipe == 'tahun')) {
+                                $tahun_investasi[] = $item->tahun;
+                                $total[] = (float) $item->nilai;
+                                $total2[] = (float) $item->nilai2;
+                            }
                         }
 
-                        // Ubah ke format JSON untuk JavaScript
+                        // Mengubah array ke JSON dengan JSON_NUMERIC_CHECK memastikan output berupa angka di JS
                         $tahun_json = json_encode($tahun_investasi);
-                        $total_json = json_encode($total);
-                        $total2_json = json_encode($total2);
+                        $total_json = json_encode($total, JSON_NUMERIC_CHECK);
+                        $total2_json = json_encode($total2, JSON_NUMERIC_CHECK);
                         ?>
 
                         <script>
@@ -124,7 +153,32 @@
                                     },
                                     options: {
                                         responsive: true,
+
+                                        // 🔥 SETUP TOOLTIP SAMA SEPERTI DI HOME 🔥
+                                        tooltips: {
+                                            mode: 'index',
+                                            intersect: false,
+                                            // 1. Menyembunyikan pop-up label untuk 'Target'
+                                            filter: function(tooltipItem, data) {
+                                                var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                                                return datasetLabel === 'Realisasi';
+                                            },
+                                            // 2. Menghilangkan judul tahun di atas tooltip
+                                            callbacks: {
+                                                title: function(tooltipItems, data) {
+                                                    return '';
+                                                }
+                                            }
+                                        },
+
                                         scales: {
+                                            // Format sumbu Y untuk Chart.js v2 (Sering dipakai di Template AdminLTE)
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }],
+                                            // Format sumbu Y untuk Chart.js v3+ (Jaga-jaga jika menggunakan versi terbaru)
                                             y: {
                                                 beginAtZero: true
                                             }
@@ -137,8 +191,6 @@
                 </div>
             </div>
 
-
         </div>
     </div>
 </section>
-<!-- /.content -->
