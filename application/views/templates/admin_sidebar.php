@@ -184,6 +184,7 @@
 													$this->uri->segment(2),
 													[
 														'standar_pelayanan',
+														'sop',
 														'perizinan',
 														'non_perizinan',
 														'perizinan_risiko',
@@ -193,6 +194,7 @@
 																$this->uri->segment(2),
 																[
 																	'standar_pelayanan',
+																	'sop',
 																	'perizinan',
 																	'non_perizinan',
 																	'perizinan_risiko',
@@ -209,6 +211,12 @@
 										<a href="<?= base_url('admin/standar_pelayanan'); ?>" class="nav-link <?= $this->uri->segment(2) == 'standar_pelayanan' ? 'active' : ''; ?>">
 											<i class="<?= $this->uri->segment(2) == 'standar_pelayanan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'standar_pelayanan' ? 'text-maroon' : ''; ?>"></i>
 											<p>Standar Pelayanan</p>
+										</a>
+									</li>
+									<li class="nav-item">
+										<a href="<?= base_url('admin/sop'); ?>" class="nav-link <?= $this->uri->segment(2) == 'sop' ? 'active' : ''; ?>">
+											<i class="<?= $this->uri->segment(2) == 'sop' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'sop' ? 'text-maroon' : ''; ?>"></i>
+											<p>SOP</p>
 										</a>
 									</li>
 									<li class="nav-item">

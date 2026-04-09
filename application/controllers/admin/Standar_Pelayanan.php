@@ -28,8 +28,8 @@ class Standar_pelayanan extends CI_controller
         $this->load->view('admin/standar_pelayanan', $data, FALSE);
         $this->load->view('templates/admin_footer');
 
-        $this->load->view('modal/modal_tambah_standar_pelayanan');
-        $this->load->view('edit/edit_standar_pelayanan', $data, FALSE);
+        $this->load->view('modal/tambah/standar_pelayanan');
+        $this->load->view('modal/edit/standar_pelayanan', $data, FALSE);
     }
 
     public function tambah()

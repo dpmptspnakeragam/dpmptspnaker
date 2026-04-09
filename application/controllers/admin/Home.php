@@ -1,13 +1,9 @@
 <?php
-class Home extends CI_controller
+class Home extends Admin_Utama_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('username') == "") {
-            redirect('login');
-        }
-
         $this->load->model('Model_user');
     }
 
@@ -30,7 +26,12 @@ class Home extends CI_controller
             $this->Model_user->update_online_status($id, 0);
         }
 
-        $this->session->sess_destroy();
+        // PERBAIKAN: Gunakan unset_userdata, JANGAN sess_destroy()
+        $this->session->unset_userdata('logged_in_utama');
+
+        // Opsional: Anda bisa tambahkan pesan flashdata jika mau
+        // $this->session->set_flashdata('pesan', 'Anda berhasil logout dari Web Utama.');
+
         redirect('login');
     }
 }
