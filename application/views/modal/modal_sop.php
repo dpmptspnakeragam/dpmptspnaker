@@ -9,8 +9,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <?php if (!empty($pdf)) : ?>
-                    <?php foreach ($pdf as $file) : ?>
+                <?php if (!empty($pdf_sop)) : ?>
+                    <?php foreach ($pdf_sop as $file) : ?>
                         <div class="card mb-3">
                             <div class="card-body text-center">
                                 <h5 class="card-title"><?= $file->title; ?></h5>

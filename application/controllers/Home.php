@@ -112,6 +112,7 @@ class Home extends CI_Controller
 			'kadis' 				=> $this->Model_kadis->tampil_kadis(),
 
 			'pdf' 					=> $this->Model_standar_pelayanan->tampil_data(),
+			'pdf_sop' 				=> $this->Model_sop->tampil_data(),
 			'skm_gambar'			=> $this->Model_skm_gambar->tampil_data(),
 
 			'adminonline'			=> $this->Model_pesan->get_online_admins()
