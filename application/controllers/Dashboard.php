@@ -1,6 +1,6 @@
 <?php
 
-class dashboard extends CI_controller
+class Dashboard extends CI_controller
 {
     public function __construct()
     {
@@ -33,6 +33,7 @@ class dashboard extends CI_controller
     // Oke
     public function index()
     {
+
         $data['title'] = 'Dashboard Reklame';
 
         $data['setor'] = $this->Model_reklame->hitung_setor();
@@ -98,10 +99,13 @@ class dashboard extends CI_controller
             $data['persen_berlaku'] = 0;
             $data['persen_berlakuhabis'] = 0;
         }
-        $this->load->view('templates/header_reklame');
-        $this->load->view('templates/navbar_reklame');
-        $this->load->view('admin/reklame', $data);
-        $this->load->view('templates/footer_reklame');
+
+        $this->load->view('templates/header_reklame', $data);
+        $this->load->view('templates/navbar_reklame', $data);
+
+        $this->load->view('reklame/dashboard_reklame', $data);
+
+        $this->load->view('templates/footer_reklame', $data);
     }
 
     // Oke
@@ -254,12 +258,16 @@ class dashboard extends CI_controller
             }
         }
 
-        $this->load->view('templates/header_reklame');
-        $this->load->view('templates/navbar_reklame');
-        $this->load->view('data_reklame', $data);
+
+        $this->load->view('templates/header_reklame', $data);
+        $this->load->view('templates/navbar_reklame', $data);
+
+        $this->load->view('reklame/data_reklame', $data);
+
         $this->load->view('modal/modal_tambah_unit_reklame', $data);
         $this->load->view('edit/modal_edit_unit_reklame', $data);
-        $this->load->view('templates/footer_aset');
+
+        $this->load->view('templates/footer_reklame', $data);
     }
 
     // Oke
@@ -451,21 +459,16 @@ class dashboard extends CI_controller
         }
 
         $data['selected_kecamatan'] = $id_kecamatan;
-        $this->load->view('templates/header_reklame');
-        $this->load->view('templates/navbar_reklame');
-        $this->load->view('peta_reklame', $data);
+        $this->load->view('templates/header_reklame', $data);
+        $this->load->view('templates/navbar_reklame', $data);
+        $this->load->view('reklame/peta_reklame', $data);
+        $this->load->view('templates/footer_reklame', $data);
     }
 
     // Oke
     public function laporan()
     {
-        $id_kecamatan = $this->input->post('kec_pasang');
-        $bulan_awal = $this->input->post('bulan_awal');
-        $bulan_akhir = $this->input->post('bulan_akhir');
-        $tahun = $this->input->post('tahun');
-
-        // Kirim ke model dengan rentang bulan
-        $data_reklame = $this->Model_reklame->tampil_data_filtered($id_kecamatan, $bulan_awal, $bulan_akhir, $tahun);
+        $data_reklame = $this->Model_reklame->tampil_data();
 
         $reklame_grouped = [];
 
@@ -498,16 +501,22 @@ class dashboard extends CI_controller
             ];
         }
 
+
         $data['reklame_grouped'] = $reklame_grouped;
         $data['kecamatan'] = $this->Model_reklame->get_kecamatan();
-        $data['selected_kecamatan'] = $id_kecamatan;
-        $data['selected_bulan_awal'] = $bulan_awal;
-        $data['selected_bulan_akhir'] = $bulan_akhir;
-        $data['selected_tahun'] = $tahun;
 
-        $this->load->view('templates/header_reklame');
+        $id_kecamatan = $this->input->post('kec_pasang');
+        if ($id_kecamatan) {
+            $data['nagari'] = $this->Model_reklame->get_nagari_by_kecamatan($id_kecamatan);
+        } else {
+            $data['nagari'] = [];
+        }
+
+        $data['selected_kecamatan'] = $id_kecamatan;
+
+        $this->load->view('templates/header_reklame', $data);
         $this->load->view('templates/navbar_reklame');
-        $this->load->view('laporan', $data);
-        $this->load->view('templates/footer_aset');
+        $this->load->view('reklame/laporan', $data);
+        $this->load->view('templates/footer_reklame');
     }
 }

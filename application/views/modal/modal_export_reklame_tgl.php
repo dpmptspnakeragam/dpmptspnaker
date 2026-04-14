@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form" action="<?php echo base_url() ?>admin/reklame/export_tgl" method="post" enctype="multipart/form-data">
+                <form role="form" action="<?php echo base_url() ?>dashboard/export_tgl" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="form-group col-lg-4">
                             <label for="umur">Tanggal</label>

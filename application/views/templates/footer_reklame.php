@@ -18,10 +18,9 @@
         </div>
     </div>
 </div>
-
 <footer class="footer mt-1 py-3">
     <div class="container-fluid text-center">
-        <span class="text-muted">Copyright 2025 &copy; Habib Oktarian</span>
+        <span class="text-muted">Copyright 2025 &copy; Hizbul Hamdi Algalib</span>
     </div>
 </footer>
 <!-- Optional JavaScript -->

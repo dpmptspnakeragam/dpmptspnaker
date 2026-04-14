@@ -118,36 +118,8 @@ class Model_reklame extends CI_model
         $this->db->select('*');
         $this->db->from('kecamatan');
         $this->db->order_by('nama_kecamatan', 'asc');
-        return $this->db->get()->result_array();
-    }
-
-
-    public function tampil_data_filtered($id_kecamatan = null, $bulan_awal = null, $bulan_akhir = null, $tahun = null)
-    {
-        $this->db->select('r.*, l.alamat_pasang, l.lat, l.long, k.nama_kecamatan, n.nama_nagari');
-        $this->db->from('reklame r');
-        $this->db->join('reklame_lokasi l', 'r.id_reklame = l.id_reklame');
-        $this->db->join('nagari n', 'l.nag_pasang = n.id');
-        $this->db->join('kecamatan k', 'l.kec_pasang = k.id');
-
-        if (!empty($id_kecamatan)) {
-            $this->db->where('k.id', $id_kecamatan);
-        }
-
-        if (!empty($bulan_awal) && !empty($bulan_akhir)) {
-            $this->db->where('MONTH(r.tgl_pasang) >=', $bulan_awal);
-            $this->db->where('MONTH(r.tgl_pasang) <=', $bulan_akhir);
-        } elseif (!empty($bulan_awal)) {
-            $this->db->where('MONTH(r.tgl_pasang)', $bulan_awal);
-        } elseif (!empty($bulan_akhir)) {
-            $this->db->where('MONTH(r.tgl_pasang)', $bulan_akhir);
-        }
-
-        if (!empty($tahun)) {
-            $this->db->where('YEAR(r.tgl_pasang)', $tahun);
-        }
-
-        return $this->db->get()->result_array();
+        $query = $this->db->get()->result();
+        return $query;
     }
 
     public function export_tgl($tgl_dari, $tgl_sampai, $ket)

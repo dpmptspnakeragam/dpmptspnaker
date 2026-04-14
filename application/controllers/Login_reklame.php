@@ -53,11 +53,15 @@ class Login_reklame extends CI_controller
 
                 // 4. Arahkan otomatis berdasarkan Role
                 if ($user_data->role == 'admin') {
-                    redirect('reklame/admin/dashboard'); // Ganti dengan URL rute admin Anda
-                } elseif ($user_data->role == 'petugas') {
-                    redirect('dashboard_reklame/petugas'); // Ganti dengan URL rute petugas Anda
+                    redirect('dashboard');
+                } elseif ($user_data->role == 'satpolpp') {
+                    redirect('reklame/satpolpp/dashboard'); // Sesuaikan dengan folder/rute SATPOL PP
+
+                } elseif ($user_data->role == 'bapenda') {
+                    redirect('reklame/bapenda/dashboard'); // Sesuaikan dengan folder/rute BAPENDA
+
                 } else {
-                    redirect('reklame'); // Rute default jika role tidak spesifik
+                    redirect('reklame'); // Rute default jika role tidak dikenali
                 }
             } else {
                 $this->session->set_flashdata('pesan', 'Maaf, Username atau Password anda <b>Salah</b>');

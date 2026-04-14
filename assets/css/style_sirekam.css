@@ -1,31 +1,45 @@
-.judul-reklame h1 { 
-    text-shadow: 0 0 15px #600574, 0 0 5px #000000; 
+.judul-reklame h1 {
+    text-shadow: 0 0 15px #600574, 0 0 5px #000000;
     font-size: 24px;
-} 
+}
 
-.judul-reklame h4 { 
-    text-shadow: 0 0 15px #600574, 0 0 5px #000000; 
+.judul-reklame h4 {
+    text-shadow: 0 0 15px #600574, 0 0 5px #000000;
     font-size: 12px;
-} 
+}
 
-.judul-reklame .logo{
-    width:50px;
+.judul-reklame .logo {
+    width: 50px;
     margin-bottom: 20px;
 }
 
+#DataTables {
+    min-width: 3000px !important;
+}
 
+#DataTables_wrapper .buttons-excel {
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+}
+
+.icon-logout {
+    color: #F2CB05;
+}
 
 @media (min-width: 760px) {
-    .judul-reklame h1 { 
-        text-shadow: 0 0 15px #600574, 0 0 5px #000000; 
+    .judul-reklame h1 {
+        text-shadow: 0 0 15px #600574, 0 0 5px #000000;
         font-size: 32px;
-    } 
-    .judul-reklame h4 { 
-        text-shadow: 0 0 15px #600574, 0 0 5px #000000; 
+    }
+
+    .judul-reklame h4 {
+        text-shadow: 0 0 15px #600574, 0 0 5px #000000;
         font-size: 18px;
-    } 
-    .judul-reklame .logo{
-        width:80px;
+    }
+
+    .judul-reklame .logo {
+        width: 80px;
         margin-bottom: 20px;
     }
 }
