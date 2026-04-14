@@ -24,9 +24,13 @@ class Dashboard extends CI_controller
     public function get_nagari_ajax()
     {
         $id_kecamatan = $this->input->post('id_kecamatan');
+        if (!$id_kecamatan) {
+            $id_kecamatan = $this->input->get('id_kecamatan');
+        }
 
         $nagari = $this->Model_reklame->get_nagari_by_kecamatan($id_kecamatan);
 
+        $this->output->set_content_type('application/json');
         echo json_encode($nagari);
     }
 
@@ -111,6 +115,8 @@ class Dashboard extends CI_controller
     // Oke
     public function data()
     {
+        $data['title'] = 'Data Reklame';
+
         date_default_timezone_set('Asia/Jakarta');
 
         $this->load->library('email');
@@ -415,6 +421,8 @@ class Dashboard extends CI_controller
     // Oke
     public function peta()
     {
+        $data['title'] = 'Peta Reklame';
+
         $data_reklame = $this->Model_reklame->tampil_data();
 
         $reklame_grouped = [];
@@ -468,6 +476,8 @@ class Dashboard extends CI_controller
     // Oke
     public function laporan()
     {
+        $data['title'] = 'Laporan Reklame';
+
         $data_reklame = $this->Model_reklame->tampil_data();
 
         $reklame_grouped = [];

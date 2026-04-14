@@ -132,7 +132,7 @@
         <h6>Unit ke-${unitCount}</h6>
             <div class="form-group">
                 <label>Kecamatan</label>
-                    <select name="unit[${unitCount}][kec_pasang]" class="form-control" required>
+                    <select name="unit[${unitCount}][kec_pasang]" class="form-control kecamatan-dropdown" required>
                         <option value="">Pilih Kecamatan</option>
                             <?php foreach ($kecamatan as $kec): ?>
                                 <option value="<?= $kec->id ?>"><?= $kec->nama_kecamatan ?></option>
@@ -166,17 +166,22 @@
 </script>
 
 <script>
-    $(document).on('change', 'select[name$="[kec_pasang]"]', function() {
+    $(document).on('change', '.kecamatan-dropdown', function() {
         const kecSelect = $(this);
         const selectedKecamatanId = kecSelect.val();
         const unitCard = kecSelect.closest('.card');
         const nagariDropdown = unitCard.find('.nagari-dropdown');
 
+        if (!selectedKecamatanId) {
+            nagariDropdown.html('<option value="">Pilih Nagari</option>');
+            return;
+        }
+
         nagariDropdown.html('<option value="">Memuat...</option>');
 
         $.ajax({
             url: "<?= base_url('dashboard/get_nagari_ajax') ?>",
-            type: "POST",
+            type: "GET",
             data: {
                 id_kecamatan: selectedKecamatanId
             },
@@ -187,6 +192,10 @@
                     options += `<option value="${nagari.id}">${nagari.nama_nagari}</option>`;
                 });
                 nagariDropdown.html(options);
+            },
+            error: function(xhr, status, error) {
+                nagariDropdown.html('<option value="">Pilih Nagari</option>');
+                console.error('AJAX get_nagari_ajax error:', status, error);
             }
         });
     });
