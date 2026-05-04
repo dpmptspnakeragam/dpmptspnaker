@@ -26,7 +26,7 @@
                                     <td><?= $row->judul; ?></td>
                                     <td class="text-center">
                                         <a href="<?= base_url('assets/fileupload/' . $row->file); ?>" class="tombol-aksi" target="_blank">
-                                            <i class="fas fa-file-download"></i> Unduh
+                                            <i class="fas fa-file-download"></i> Lihat Informasi
                                         </a>
                                     </td>
                                 </tr>
