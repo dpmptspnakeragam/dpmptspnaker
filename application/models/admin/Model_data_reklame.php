@@ -1,6 +1,6 @@
 <?php
 
-class Model_reklame extends CI_model
+class Model_data_reklame extends CI_model
 {
     public function tampil_data()
     {

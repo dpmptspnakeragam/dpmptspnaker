@@ -20,7 +20,32 @@
    $(document).ready(function() {
      $('#dataTable').dataTable({});
    });
+
+   $(document).ready(function() {
+     // Inisialisasi semua tabel
+     $('#dataTable1, #dataTable2, #dataTable3, #dataTable4').DataTable({
+       "responsive": true,
+       "autoWidth": false,
+       "language": {
+         "search": "Cari Informasi:",
+         "lengthMenu": "Tampilkan _MENU_ data",
+         "zeroRecords": "Data tidak ditemukan",
+         "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+         "infoEmpty": "Data tidak tersedia",
+         "paginate": {
+           "next": "Berikutnya",
+           "previous": "Sebelumnya"
+         }
+       }
+     });
+
+     // Perbaikan agar kolom tidak berantakan saat modal terbuka
+     $('.modal').on('shown.bs.modal', function() {
+       $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+     });
+   });
  </script>
+
  <script>
    function init() {
      var imgDefer = document.getElementsByTagName('img');

@@ -35,6 +35,7 @@ class Home extends CI_Controller
 		$this->load->model('admin/Model_skm_gambar');
 
 		$this->load->model('Model_pesan');
+		$this->load->model('Model_ppid');
 	}
 
 	public function index()
@@ -116,7 +117,12 @@ class Home extends CI_Controller
 			'pdf_sop' 				=> $this->Model_sop->tampil_data(),
 			'skm_gambar'			=> $this->Model_skm_gambar->tampil_data(),
 
-			'adminonline'			=> $this->Model_pesan->get_online_admins()
+			'adminonline'			=> $this->Model_pesan->get_online_admins(),
+
+			'itss'					=> $this->Model_ppid->get_ppid_by_kategori('ITSS'),
+			'ib' 					=> $this->Model_ppid->get_ppid_by_kategori('IB'),
+			'ism'					=> $this->Model_ppid->get_ppid_by_kategori('ISM'),
+			'id'					=> $this->Model_ppid->get_ppid_by_kategori('ID')
 		];
 
 		// $data['grafik_tahun'] = $this->Model_grafik_izin_tahun->tampil_data();
@@ -143,6 +149,13 @@ class Home extends CI_Controller
 		$this->load->view('modal/modal_informasi', $data);
 		$this->load->view('modal/modal_tanahulayat', $data);
 		$this->load->view('modal/modal_kadis', $data);
+
+		$this->load->view('modal/modal_detail_ppid', $data);
+		$this->load->view('modal/modal_detail_ppid_tabel_itss', $data);
+		$this->load->view('modal/modal_detail_ppid_tabel_ib', $data);
+		$this->load->view('modal/modal_detail_ppid_tabel_ism', $data);
+		$this->load->view('modal/modal_detail_ppid_tabel_id', $data);
+
 		$this->load->view('templates/footer');
 	}
 

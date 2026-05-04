@@ -72,7 +72,7 @@ class Dashboard extends CI_controller
 
             $reklame_grouped[$row['id_reklame']]['lokasi'][] = [
                 'alamat_pasang' => $row['alamat_pasang'],
-                'nama_kecamatan' => $row['nama_kecamatan'],
+                'kecamatan' => $row['kecamatan'],
                 'nama_nagari' => $row['nama_nagari'],
                 'lat' => $row['lat'],
                 'long' => $row['long']
@@ -235,7 +235,7 @@ class Dashboard extends CI_controller
 
             $reklame_grouped[$row['id_reklame']]['lokasi'][] = [
                 'alamat_pasang' => $row['alamat_pasang'],
-                'nama_kecamatan' => $row['nama_kecamatan'],
+                'kecamatan' => $row['kecamatan'],
                 'nama_nagari' => $row['nama_nagari'],
                 'lat' => $row['lat'],
                 'long' => $row['long']
@@ -257,7 +257,7 @@ class Dashboard extends CI_controller
         $data['nagari_per_unit'] = [];
         foreach ($reklame_grouped as $reklame) {
             foreach ($reklame['lokasi'] as $lokasi) {
-                $id_kec = $this->Model_reklame->get_id_kecamatan_by_nama($lokasi['nama_kecamatan']);
+                $id_kec = $this->Model_reklame->get_id_kecamatan_by_nama($lokasi['kecamatan']);
                 if ($id_kec && !isset($data['nagari_per_unit'][$id_kec])) {
                     $data['nagari_per_unit'][$id_kec] = $this->Model_reklame->get_nagari_by_kecamatan($id_kec);
                 }
@@ -449,7 +449,7 @@ class Dashboard extends CI_controller
 
             $reklame_grouped[$row['id_reklame']]['lokasi'][] = [
                 'alamat_pasang' => $row['alamat_pasang'],
-                'nama_kecamatan' => $row['nama_kecamatan'],
+                'kecamatan' => $row['kecamatan'],
                 'nama_nagari' => $row['nama_nagari'],
                 'lat' => $row['lat'],
                 'long' => $row['long']
@@ -504,7 +504,7 @@ class Dashboard extends CI_controller
 
             $reklame_grouped[$row['id_reklame']]['lokasi'][] = [
                 'alamat_pasang' => $row['alamat_pasang'],
-                'nama_kecamatan' => $row['nama_kecamatan'],
+                'kecamatan' => $row['kecamatan'],
                 'nama_nagari' => $row['nama_nagari'],
                 'lat' => $row['lat'],
                 'long' => $row['long']

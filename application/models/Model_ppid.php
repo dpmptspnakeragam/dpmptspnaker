@@ -10,6 +10,12 @@ class Model_ppid extends CI_model
         return $query;
     }
 
+    public function get_ppid_by_kategori($kategori)
+    {
+        $this->db->where('kategori', $kategori);
+        return $this->db->get('ppid');
+    }
+
     public function idmax()
     {
         $this->db->select_max('id_ppid', 'idmax');
@@ -29,9 +35,9 @@ class Model_ppid extends CI_model
         return $this->db->update('ppid', $data);
     }
 
-    public function delete($id_ppid)
+    public function delete($id)
     {
-        $this->db->where('id_ppid', $id_ppid);
+        $this->db->where('id_ppid', $id);
         return $this->db->delete('ppid');
     }
 }

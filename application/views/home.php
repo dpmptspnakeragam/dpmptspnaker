@@ -173,7 +173,7 @@
 					<a href="<?= base_url(); ?>regulasi" class="pilih-profil"><i class="ikon fa fa-balance-scale" aria-hidden="true"></i><br>Regulasi</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="<?= base_url(); ?>ppid" class="pilih-profil"><i class="ikon fa fa-server" aria-hidden="true"></i><br>PPID</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalDetailPPID"><i class="ikon fa fa-server" aria-hidden="true"></i><br>PPID</a>
 				</div>
 				<!-- <div class="col-lg-4 col-6 display-4 mb-3"> -->
 				<!-- <a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalMaklumat"><i class="ikon fa fa-certificate" aria-hidden="true"></i><br>Maklumat Pelayanan</a> -->
