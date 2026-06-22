@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Daftar Informasi Berkala</h5>
+                <h5 class="modal-title">Detail Informasi Berkala</h5>
                 <button type="button" class="close text-light" data-toggle="modal" data-target="#ModalDetailPPID"
                     data-dismiss="modal">
                     <span aria-hidden="true">&times;</span>
