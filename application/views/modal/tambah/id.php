@@ -1,4 +1,5 @@
-<div class="modal fade" id="ModalTambahID" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="ModalTambahID" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,16 +9,21 @@
                 </button>
             </div>
 
-            <form role="form" action="<?= base_url('admin/ppid/tambah_id'); ?>" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+            <form role="form" action="<?= base_url('admin/ppid/tambah_id'); ?>" method="post"
+                enctype="multipart/form-data">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+                    value="<?= $this->security->get_csrf_hash(); ?>">
                 <div class="modal-body">
-                    <?php foreach ($idmax->result() as $row) {
-                    ?>
-                        <div hidden class="form-group">
-                            <label>Id</label>
-                            <input type="text" class="form-control" name="id" placeholder="ID ID" value="<?= $row->idmax + 1; ?>">
-                        </div>
-                    <?php } ?>
+                    <?php if (isset($idmax)) {
+                        foreach ($idmax->result() as $row) {
+                            ?>
+                            <div hidden class="form-group">
+                                <label>Id</label>
+                                <input type="text" class="form-control" name="id" placeholder="ID ID"
+                                    value="<?= $row->idmax + 1; ?>">
+                            </div>
+                        <?php }
+                    } ?>
                     <div class="form-group">
                         <label>Judul Informasi</label>
                         <input type="text" class="form-control" name="judul" placeholder="Judul Informasi" required>
