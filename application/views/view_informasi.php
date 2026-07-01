@@ -8,12 +8,8 @@
 
             <!-- 🔍 Search di Navbar -->
             <form class="form-inline my-2 my-lg-0 ml-3">
-                <input class="form-control form-control-sm mr-sm-2"
-                    id="searchInput"
-                    type="search"
-                    placeholder="Cari Nama / Tanggal Berita"
-                    aria-label="Search"
-                    style="width: 250px;">
+                <input class="form-control form-control-sm mr-sm-2" id="searchInput" type="search"
+                    placeholder="Cari Nama / Tanggal Berita" aria-label="Search" style="width: 250px;">
             </form>
 
             <!-- Tombol toggle -->
@@ -40,22 +36,31 @@
         <div class="container-fluid mb-0">
             <div class="row" id="beritaContainer">
                 <?php foreach ($berita->result() as $row) {
-                    $gambar     = $row->gambar ?? '';
-                    $imagePath  = FCPATH . 'assets/imgupload/' . $gambar;
-                    $imageSrc   = (!empty($gambar) && file_exists($imagePath))
+                    $gambar = $row->gambar ?? '';
+                    $imagePath = FCPATH . 'assets/imgupload/' . $gambar;
+                    $imageSrc = (!empty($gambar) && file_exists($imagePath))
                         ? base_url('assets/imgupload/' . $gambar)
                         : base_url('assets/img/agam.jpg');
-                ?>
-                    <div class="col-lg-4 col-6 mt-4 berita-item"
-                        data-judul="<?= strtolower($row->judul_berita); ?>"
+                    ?>
+                    <div class="col-lg-4 col-6 mt-4 berita-item" data-judul="<?= strtolower($row->judul_berita); ?>"
                         data-tanggal="<?= strtolower(($row->tgl_berita)); ?>">
 
                         <div class="card kartu-info shadow h-100">
                             <div class="card-header">
-                                <h5 class="mb-0"><?= $row->judul_berita ?></h5>
+                                <h5 class="mb-0">
+                                    <?= $row->judul_berita ?>
+                                </h5>
                             </div>
 
                             <div class="card-body">
+                                <small>
+                                    <p class="mb-0">
+                                        <i class="fa fa-eye"></i>
+                                        <span id="total-views-<?= $row->id_berita; ?>">
+                                            <?= $row->views; ?>
+                                        </span>
+                                    </p>
+                                </small>
                                 <small class="d-block mb-3 tgl_berita2">
                                     <?= date_indo($row->tgl_berita) ?>, Kategori: <?= $row->kategori; ?>
                                 </small>
@@ -63,10 +68,9 @@
                                     <img class="gambar-info" src="<?= $imageSrc; ?>" alt="<?= $row->judul_berita; ?>">
                                 </div>
                             </div>
-
                             <div class="card-footer">
-                                <a href="#" class="tgl_berita2 text-light"
-                                    data-toggle="modal"
+                                <a href="#" onclick="eksekusiKlik(<?= $row->id_berita; ?>); return true;"
+                                    class="tgl_berita2 text-light" data-toggle="modal"
                                     data-target="#DetailInformasi<?= $row->id_berita; ?>">Selengkapnya >></a>
                             </div>
                         </div>
@@ -107,17 +111,17 @@
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const bulanIndo = [
                 "januari", "februari", "maret", "april", "mei", "juni",
                 "juli", "agustus", "september", "oktober", "november", "desember"
             ];
 
-            $('#searchInput').on('keyup', function() {
+            $('#searchInput').on('keyup', function () {
                 const value = $(this).val().toLowerCase().trim();
                 let visibleCount = 0;
 
-                $('.berita-item').each(function() {
+                $('.berita-item').each(function () {
                     const judul = $(this).data('judul');
                     const tanggalDB = $(this).data('tanggal'); // format YYYY-MM-DD
                     let isMatch = false;

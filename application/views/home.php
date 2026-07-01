@@ -60,85 +60,91 @@
 				</li>
 			</ul>
 			<span class="navbar-text tanggal text-light">
-				<?php echo longdate_indo(date('Y-m-d')); ?><br>
-				<?php echo konvhijriah(date('Y-m-d H:i:s')); ?>
+				<?= longdate_indo(date('Y-m-d')); ?><br>
+				<?= konvhijriah(date('Y-m-d H:i:s')); ?>
 			</span>
 		</div>
 	</div>
 </nav>
 <!-- close navbar -->
 
-<!-- Informasi -->
 <section class="informasi" id="informasi">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col">
 				<div id="carouselExampleIndicators" class="carousel slide berita-carousel multi-item-carousel"
 					data-ride="carousel">
+
 					<ol class="carousel-indicators">
 						<?php
 						for ($i = 0; $i < $berita->num_rows(); $i++) {
-							echo '
-        <li data-target="#carouselExampleIndicators" data-slide-to="' . $i . '"';
-							if ($i == 0) {
-								echo 'class="active"';
-							}
-							echo '></li>';
-						} ?>
+							$activeClass = ($i == 0) ? 'class="active"' : '';
+							echo '<li data-target="#carouselExampleIndicators" data-slide-to="' . $i . '" ' . $activeClass . '></li>';
+						}
+						?>
 					</ol>
+
 					<div class="carousel-inner">
 						<?php if ($berita->num_rows() > 0) {
-							foreach ($berita->result() as $row) {
-								foreach ($idmax->result() as $row2) {
-									if ($row->id_berita == $row2->idmax) { ?>
-										<div class="carousel-item active">
-											<?php
-									} else {
-										?>
-											<div class="carousel-item">
-												<?php
-									}
-								}
+							foreach ($berita->result() as $key => $row) {
+
 								$imagePath = FCPATH . 'assets/imgupload/' . $row->gambar;
 								$imageSrc = (!empty($row->gambar) && file_exists($imagePath))
 									? base_url('assets/imgupload/' . $row->gambar)
 									: base_url('assets/img/agam.jpg');
+
+								$itemActive = ($key == 0) ? 'active' : '';
 								?>
-										<div class="item__third">
-											<a href="#" data-toggle="modal"
-												data-target="#DetailInformasi<?php echo $row->id_berita; ?>">
-												<div class="container">
-													<div class="row">
-														<img class="gambar-carousel mt-5" src="<?= $imageSrc; ?>"
-															alt="<?= $row->judul_berita; ?>">
-													</div>
+
+								<div class="carousel-item <?= $itemActive; ?>">
+									<div class="item__third">
+										<a href="#" onclick="eksekusiKlik(<?= $row->id_berita; ?>); return true;"
+											data-toggle="modal" data-target="#DetailInformasi<?= $row->id_berita; ?>">
+
+											<div class="container">
+												<div class="row">
+													<img class="gambar-carousel mt-5" src="<?= $imageSrc; ?>"
+														alt="<?= $row->judul_berita; ?>">
 												</div>
-												<div class="carousel-caption text-left">
-													<div class="row">
-														<p class="judul-informasi mb-2 pl-2 pr-2"><?= $row->judul_berita; ?></p>
-													</div>
-													<div class="row">
-														<small
-															class="tgl_berita bg-dark p-1"><?= date_indo($row->tgl_berita); ?></small>
-													</div>
-											</a>
-											<div class="text-center tombol-informasi">
-												<small><a href="<?= base_url(); ?>informasi" class="informasi-lainnya">> Berita
-														Lainnnya < </a></small>
 											</div>
+											<div class="carousel-caption text-left">
+												<div class="row">
+													<p class="judul-informasi mb-2 pl-2 pr-2"><?= $row->judul_berita; ?></p>
+												</div>
+												<div class="row">
+													<small
+														class="tgl_berita bg-dark p-1"><?= date_indo($row->tgl_berita); ?></small>
+												</div>
+												<div class="row mt-1">
+													<small>
+														<p class="mb-0">
+															<i class="fa fa-eye"></i>
+															<span id="total-views-<?= $row->id_berita; ?>"><?= $row->views; ?>
+															</span>
+														</p>
+													</small>
+												</div>
+											</div>
+										</a>
+										<div class="text-center tombol-informasi">
+											<small>
+												<a href="<?= base_url(); ?>informasi" class="informasi-lainnya">> Berita
+													Lainnnya < </a>
+											</small>
 										</div>
 									</div>
 								</div>
-							<?php }
+								<?php
+							}
 						} ?>
-
 					</div>
+
 					<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
 					</a>
 					<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
 				</div>
@@ -146,7 +152,6 @@
 		</div>
 	</div>
 </section>
-<!-- close informasi -->
 
 <!-- Profil -->
 <section class="profil" id="profil">
@@ -608,15 +613,15 @@
 					<script>
 						var ctx = document.getElementById('myChart3').getContext('2d');
 						var data = {
-							labels: <?php echo json_encode($labels); ?>,
+							labels: <?= json_encode($labels); ?>,
 							datasets: [{
 								label: "Semester I",
-								backgroundColor: "<?php echo $colors_semester1; ?>",
-								data: <?php echo json_encode($data_semester1); ?>
+								backgroundColor: "<?= $colors_semester1; ?>",
+								data: <?= json_encode($data_semester1); ?>
 							}, {
 								label: "Semester II",
-								backgroundColor: "<?php echo $colors_semester2; ?>",
-								data: <?php echo json_encode($data_semester2); ?>
+								backgroundColor: "<?= $colors_semester2; ?>",
+								data: <?= json_encode($data_semester2); ?>
 							}]
 						};
 						var chart = new Chart(ctx, {
@@ -1212,8 +1217,8 @@
 						<script>
 							var ctx = document.getElementById('myChart4').getContext('2d');
 							var data = {
-								labels: <?php echo json_encode($labels); ?>,
-								datasets: <?php echo json_encode($datasets); ?>
+								labels: <?= json_encode($labels); ?>,
+								datasets: <?= json_encode($datasets); ?>
 							};
 							var chart = new Chart(ctx, {
 								type: 'bar',
@@ -1318,10 +1323,10 @@
 							Chart.defaults.global.defaultFontSize = 12;
 
 							var nilai = {
-								labels: [<?php echo $nama_nib; ?>],
+								labels: [<?= $nama_nib; ?>],
 								datasets: [{
 									label: "Jumlah",
-									data: [<?php echo $total; ?>],
+									data: [<?= $total; ?>],
 									backgroundColor: ['#8bfd43', '#fdfd43', '#8bfd43', '#fdfd43']
 								}]
 							};
@@ -1403,10 +1408,10 @@
 							var kanvasrisiko = $("#grafikrisiko");
 
 							var nilai = {
-								labels: [<?php echo $nama_risiko; ?>],
+								labels: [<?= $nama_risiko; ?>],
 								datasets: [{
 									label: "Jumlah",
-									data: [<?php echo $total; ?>],
+									data: [<?= $total; ?>],
 									backgroundColor: ['#8bfd43', '#fdfd43', '#fe9643', '#ff4442']
 								}]
 							};
@@ -1456,10 +1461,10 @@
 							Chart.defaults.global.defaultFontSize = 12;
 
 							var nilai = {
-								labels: [<?php echo $nama_kecamatan; ?>],
+								labels: [<?= $nama_kecamatan; ?>],
 								datasets: [{
 									label: "Jumlah",
-									data: [<?php echo $total; ?>],
+									data: [<?= $total; ?>],
 									backgroundColor: ['#8bfd43', '#8bfd43', '#8bfd43', '#8bfd43', '#fdfd43', '#fdfd43', '#fdfd43', '#fdfd43', '#fe9643', '#fe9643', '#fe9643', '#fe9643', '#ff4442', '#ff4442', '#ff4442', '#ff4442']
 								}]
 							};
@@ -1542,10 +1547,10 @@
 							Chart.defaults.global.defaultFontSize = 12;
 
 							var nilai = {
-								labels: [<?php echo $nama_kbli; ?>],
+								labels: [<?= $nama_kbli; ?>],
 								datasets: [{
 									label: "Jumlah",
-									data: [<?php echo $total; ?>],
+									data: [<?= $total; ?>],
 									backgroundColor: ['#42ccff', '#8bfd43', '#fdfd43', '#fe9643', '#ff4442']
 								}]
 							};
@@ -1730,7 +1735,7 @@
 								<p>&nbsp;&nbsp;:&nbsp;&nbsp;</p>
 							</td>
 							<td>
-								<p><?php echo $pengunjungonline ?></p>
+								<p><?= $pengunjungonline ?></p>
 							</td>
 						</tr>
 						<tr>
@@ -1741,7 +1746,7 @@
 								<p>&nbsp;&nbsp;:&nbsp;&nbsp;</p>
 							</td>
 							<td>
-								<p><?php echo $pengunjunghariini ?> Pengunjung</p>
+								<p><?= $pengunjunghariini ?> Pengunjung</p>
 							</td>
 						</tr>
 						<tr>
@@ -1752,7 +1757,7 @@
 								<p>&nbsp;&nbsp;:&nbsp;&nbsp;</p>
 							</td>
 							<td>
-								<p><?php echo $pengunjung2020 ?> Pengunjung</p>
+								<p><?= $pengunjung2020 ?> Pengunjung</p>
 							</td>
 						</tr>
 						<tr>
@@ -1763,7 +1768,7 @@
 								<p>&nbsp;&nbsp;:&nbsp;&nbsp;</p>
 							</td>
 							<td>
-								<p><?php echo $pengunjung2021 ?> Pengunjung</p>
+								<p><?= $pengunjung2021 ?> Pengunjung</p>
 							</td>
 						</tr>
 						<tr>
@@ -1774,7 +1779,7 @@
 								<p>&nbsp;&nbsp;:&nbsp;&nbsp;</p>
 							</td>
 							<td>
-								<p><?php echo $pengunjungbulanlalu ?> Pengunjung</p>
+								<p><?= $pengunjungbulanlalu ?> Pengunjung</p>
 							</td>
 						</tr>
 						<tr>
@@ -1785,7 +1790,7 @@
 								<p>&nbsp;&nbsp;:&nbsp;&nbsp;</p>
 							</td>
 							<td>
-								<p><?php echo $pengunjungbulanini ?> Pengunjung</p>
+								<p><?= $pengunjungbulanini ?> Pengunjung</p>
 							</td>
 						</tr>
 						<tr>
@@ -1796,7 +1801,7 @@
 								<p>&nbsp;&nbsp;:&nbsp;&nbsp;</p>
 							</td>
 							<td>
-								<p><?php echo $totalpengunjung ?> Pengunjung</p>
+								<p><?= $totalpengunjung ?> Pengunjung</p>
 							</td>
 						</tr>
 					</table>
@@ -2150,7 +2155,7 @@
 		<?php for ($i = 0; $i < 10; $i++): ?>
 			<?php foreach ($teks->result() as $running): ?>
 				<img class="ml-3 mr-3" src="<?= base_url(); ?>assets/img/agam.png" alt="logoagam" width="15px">
-				<?php echo $running->teks; ?>
+				<?= $running->teks; ?>
 			<?php endforeach; ?>
 		<?php endfor; ?>
 	</span>

@@ -40,8 +40,8 @@ class Home extends CI_Controller
 
 	public function index()
 	{
-		$ip    = $this->input->ip_address(); // Mendapatkan IP user
-		$date  = date("Y-m-d"); // Mendapatkan tanggal sekarang
+		$ip = $this->input->ip_address(); // Mendapatkan IP user
+		$date = date("Y-m-d"); // Mendapatkan tanggal sekarang
 		$tahunlalu = date("Y") - 1;
 		$tahunini = date("Y");
 		$waktu = time(); //
@@ -58,11 +58,11 @@ class Home extends CI_Controller
 			$this->db->query("UPDATE visitor SET hits=hits+1, online='" . $waktu . "' WHERE ip='" . $ip . "' AND date='" . $date . "'");
 		}
 
-		$pengunjunghariini  = $this->db->query("SELECT * FROM visitor WHERE date='" . $date . "' GROUP BY ip")->num_rows(); // Hitung jumlah pengunjung
+		$pengunjunghariini = $this->db->query("SELECT * FROM visitor WHERE date='" . $date . "' GROUP BY ip")->num_rows(); // Hitung jumlah pengunjung
 		$dbpengunjung = $this->db->query("SELECT COUNT(hits) as hits FROM visitor")->row();
 		$totalpengunjung = isset($dbpengunjung->hits) ? ($dbpengunjung->hits) : 0; // hitung total pengunjung
 		$bataswaktu = time() - 300;
-		$pengunjungonline  = $this->db->query("SELECT * FROM visitor WHERE online > '" . $bataswaktu . "'")->num_rows(); // hitung pengunjung online
+		$pengunjungonline = $this->db->query("SELECT * FROM visitor WHERE online > '" . $bataswaktu . "'")->num_rows(); // hitung pengunjung online
 		$dbpengunjung2020 = $this->db->query("SELECT COUNT(hits) as hits FROM visitor WHERE YEAR(date) = YEAR(DATE_SUB(CURDATE(), INTERVAL 1 YEAR)) ")->row();
 		$pengunjung2020 = isset($dbpengunjung2020->hits) ? ($dbpengunjung2020->hits) : 0;
 		$dbpengunjung2021 = $this->db->query("SELECT COUNT(hits) as hits FROM visitor WHERE YEAR(date) = YEAR(CURRENT_DATE())")->row();
@@ -73,56 +73,56 @@ class Home extends CI_Controller
 		$bulanini = isset($dbbulanini->hits) ? ($dbbulanini->hits) : 0;
 
 		$data = [
-			'pengunjunghariini' 	=> $pengunjunghariini,
-			'totalpengunjung' 		=> $totalpengunjung,
-			'pengunjungonline' 		=> $pengunjungonline,
-			'pengunjung2020' 		=> $pengunjung2020,
-			'pengunjung2021' 		=> $pengunjung2021,
-			'pengunjungbulanlalu' 	=> $bulanlalu,
-			'pengunjungbulanini' 	=> $bulanini,
+			'pengunjunghariini' => $pengunjunghariini,
+			'totalpengunjung' => $totalpengunjung,
+			'pengunjungonline' => $pengunjungonline,
+			'pengunjung2020' => $pengunjung2020,
+			'pengunjung2021' => $pengunjung2021,
+			'pengunjungbulanlalu' => $bulanlalu,
+			'pengunjungbulanini' => $bulanini,
 
-			'periode_grafik' 			=> $this->Model_grafik->tampil_data_periode(),
-			'chart_bidang' 				=> $this->Model_grafik->get_chart_bidang(),
-			'chart_jenis'  				=> $this->Model_grafik->get_chart_jenis(),
+			'periode_grafik' => $this->Model_grafik->tampil_data_periode(),
+			'chart_bidang' => $this->Model_grafik->get_chart_bidang(),
+			'chart_jenis' => $this->Model_grafik->get_chart_jenis(),
 
-			'periode_grafik' 			=> $this->Model_grafik->tampil_data_periode(),
-			'periode_grafik_investasi' 	=> $this->Model_grafik_investasi->tampil_data_periode(),
-			'periode_grafik_skm' 		=> $this->Model_grafik_skm->tampil_data_periode(),
+			'periode_grafik' => $this->Model_grafik->tampil_data_periode(),
+			'periode_grafik_investasi' => $this->Model_grafik_investasi->tampil_data_periode(),
+			'periode_grafik_skm' => $this->Model_grafik_skm->tampil_data_periode(),
 
-			'grafik_tahun'		 		=> $this->Model_grafik_izin_tahun->tampil_data(),
-			'tahun_fields'		 		=> $this->Model_grafik_izin_tahun->tampil_data_tahun(),
+			'grafik_tahun' => $this->Model_grafik_izin_tahun->tampil_data(),
+			'tahun_fields' => $this->Model_grafik_izin_tahun->tampil_data_tahun(),
 
-			'periode_grafik_oss'	=> $this->Model_grafik_nib->tampil_data_periode(),
-			'banner'				=> $this->Model_banner->tampil_data(),
-			'teks' 					=> $this->Model_running_teks->tampil_data(),
-			'grafik' 				=> $this->Model_grafik->tampil_data(),
-			'grafik_investasi' 		=> $this->Model_grafik_investasi->tampil_data(),
-			'grafik_skm'			=> $this->Model_grafik_skm->tampil_data(),
-			'berita' 				=> $this->Model_informasi->informasi(),
-			'investasi' 			=> $this->Model_peluang_investasi->tampil_data(),
-			'potensi_investasi' 	=> $this->Model_potensi_investasi->tampil_data(),
-			'kabid' 				=> $this->Model_pegawai->tampil_kabid(),
-			'pegawai' 				=> $this->Model_pegawai->tampil_pegawai(),
-			'sarpras' 				=> $this->Model_sarpras->tampil_data(),
-			'idmax' 				=> $this->Model_informasi->idmax(),
-			'ulayat' 				=> $this->Model_tanah_ulayat->tampil_kecamatan(),
-			'grafik_nib' 			=> $this->Model_grafik_nib->tampil_data_nib(),
-			'grafik_risiko' 		=> $this->Model_grafik_nib->tampil_data_risiko(),
-			'grafik_kecamatan' 		=> $this->Model_grafik_nib->tampil_data_kecamatan(),
-			'grafik_kbli' 			=> $this->Model_grafik_nib->tampil_data_kbli(),
-			'pengaturan' 			=> $this->Model_pengaturan->tampil_data(),
-			'kadis' 				=> $this->Model_kadis->tampil_kadis(),
+			'periode_grafik_oss' => $this->Model_grafik_nib->tampil_data_periode(),
+			'banner' => $this->Model_banner->tampil_data(),
+			'teks' => $this->Model_running_teks->tampil_data(),
+			'grafik' => $this->Model_grafik->tampil_data(),
+			'grafik_investasi' => $this->Model_grafik_investasi->tampil_data(),
+			'grafik_skm' => $this->Model_grafik_skm->tampil_data(),
+			'berita' => $this->Model_informasi->informasi(),
+			'investasi' => $this->Model_peluang_investasi->tampil_data(),
+			'potensi_investasi' => $this->Model_potensi_investasi->tampil_data(),
+			'kabid' => $this->Model_pegawai->tampil_kabid(),
+			'pegawai' => $this->Model_pegawai->tampil_pegawai(),
+			'sarpras' => $this->Model_sarpras->tampil_data(),
+			'idmax' => $this->Model_informasi->idmax(),
+			'ulayat' => $this->Model_tanah_ulayat->tampil_kecamatan(),
+			'grafik_nib' => $this->Model_grafik_nib->tampil_data_nib(),
+			'grafik_risiko' => $this->Model_grafik_nib->tampil_data_risiko(),
+			'grafik_kecamatan' => $this->Model_grafik_nib->tampil_data_kecamatan(),
+			'grafik_kbli' => $this->Model_grafik_nib->tampil_data_kbli(),
+			'pengaturan' => $this->Model_pengaturan->tampil_data(),
+			'kadis' => $this->Model_kadis->tampil_kadis(),
 
-			'pdf' 					=> $this->Model_standar_pelayanan->tampil_data(),
-			'pdf_sop' 				=> $this->Model_sop->tampil_data(),
-			'skm_gambar'			=> $this->Model_skm_gambar->tampil_data(),
+			'pdf' => $this->Model_standar_pelayanan->tampil_data(),
+			'pdf_sop' => $this->Model_sop->tampil_data(),
+			'skm_gambar' => $this->Model_skm_gambar->tampil_data(),
 
-			'adminonline'			=> $this->Model_pesan->get_online_admins(),
+			'adminonline' => $this->Model_pesan->get_online_admins(),
 
-			'itss'					=> $this->Model_ppid->get_ppid_by_kategori('ITSS'),
-			'ib' 					=> $this->Model_ppid->get_ppid_by_kategori('IB'),
-			'ism'					=> $this->Model_ppid->get_ppid_by_kategori('ISM'),
-			'id'					=> $this->Model_ppid->get_ppid_by_kategori('ID')
+			'itss' => $this->Model_ppid->get_ppid_by_kategori('ITSS'),
+			'ib' => $this->Model_ppid->get_ppid_by_kategori('IB'),
+			'ism' => $this->Model_ppid->get_ppid_by_kategori('ISM'),
+			'id' => $this->Model_ppid->get_ppid_by_kategori('ID')
 		];
 
 		// $data['grafik_tahun'] = $this->Model_grafik_izin_tahun->tampil_data();
@@ -159,6 +159,21 @@ class Home extends CI_Controller
 		$this->load->view('templates/footer');
 	}
 
+	public function klik_berita()
+	{
+		$id_berita = $this->input->post('id');
+
+		if (!empty($id_berita)) {
+			$this->db->set('views', 'views+1', FALSE);
+			$this->db->where('id_berita', $id_berita);
+			$this->db->update('berita');
+
+			echo json_encode(['status' => 'success']);
+		} else {
+			echo json_encode(['status' => 'failed']);
+		}
+	}
+
 	public function view_pegawai()
 	{
 		$id_kabid = $_GET['id_kabid'];
@@ -192,17 +207,17 @@ class Home extends CI_Controller
 		$this->form_validation->set_rules('materi_pengaduan', 'Uraian Pengaduan', 'required');
 
 		if ($this->form_validation->run() === TRUE) {
-			$unique_id      = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
+			$unique_id = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
 			$formatted_date = date('Y-m-d H:i:s');
 
 			$file_name = null;
 
 			// === Upload File (opsional) ===
 			if (!empty($_FILES['file_pengaduan']['name'])) {
-				$cfgUp['upload_path']   = './assets/imgupload/';
+				$cfgUp['upload_path'] = './assets/imgupload/';
 				$cfgUp['allowed_types'] = 'jpg|jpeg|png|pdf|docx';
-				$cfgUp['max_size']      = 22000;
-				$cfgUp['file_name']     = 'PENGADUAN_' . $unique_id . '_' . time();
+				$cfgUp['max_size'] = 22000;
+				$cfgUp['file_name'] = 'PENGADUAN_' . $unique_id . '_' . time();
 
 				$this->load->library('upload', $cfgUp);
 
@@ -232,17 +247,17 @@ class Home extends CI_Controller
 
 			// === Simpan ke Database ===
 			$input = [
-				'no_pengaduan'     => $unique_id,
-				'nama'             => $this->input->post('nama', TRUE),
-				'alamat'           => $this->input->post('alamat', TRUE),
-				'hp'               => $this->input->post('hp', TRUE),
-				'email'            => $this->input->post('email', TRUE),
-				'jenis_pengaduan'  => 'Online',
-				'lokasi_kejadian'  => $this->input->post('lokasi_kejadian', TRUE),
-				'waktu_kejadian'   => $formatted_date,
+				'no_pengaduan' => $unique_id,
+				'nama' => $this->input->post('nama', TRUE),
+				'alamat' => $this->input->post('alamat', TRUE),
+				'hp' => $this->input->post('hp', TRUE),
+				'email' => $this->input->post('email', TRUE),
+				'jenis_pengaduan' => 'Online',
+				'lokasi_kejadian' => $this->input->post('lokasi_kejadian', TRUE),
+				'waktu_kejadian' => $formatted_date,
 				'materi_pengaduan' => $this->input->post('materi_pengaduan', TRUE),
-				'file_pengaduan'   => $file_name,
-				'status'           => 'Proses'
+				'file_pengaduan' => $file_name,
+				'status' => 'Proses'
 			];
 			$this->Model_pengaduan->insert_pengaduan($input);
 
@@ -312,17 +327,17 @@ class Home extends CI_Controller
 
 				// === Fallback SSL (port 465) ===
 				$config_ssl = [
-					'protocol'    => 'smtp',
-					'smtp_host'   => 'smtp.gmail.com',   // gunakan host tanpa prefix
-					'smtp_port'   => 465,
-					'smtp_user'   => $smtp_user,
-					'smtp_pass'   => $smtp_pass,
+					'protocol' => 'smtp',
+					'smtp_host' => 'smtp.gmail.com',   // gunakan host tanpa prefix
+					'smtp_port' => 465,
+					'smtp_user' => $smtp_user,
+					'smtp_pass' => $smtp_pass,
 					'smtp_crypto' => 'ssl',
-					'mailtype'    => 'html',
-					'charset'     => 'utf-8',
-					'newline'     => "\r\n",
-					'crlf'        => "\r\n",
-					'wordwrap'    => TRUE
+					'mailtype' => 'html',
+					'charset' => 'utf-8',
+					'newline' => "\r\n",
+					'crlf' => "\r\n",
+					'wordwrap' => TRUE
 				];
 
 				$this->email->initialize($config_ssl);
