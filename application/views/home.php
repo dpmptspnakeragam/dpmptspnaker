@@ -9,7 +9,8 @@
 					<!-- <img class="mb-4 ml-2 jumbotronimg hut" src="<?= base_url(); ?>assets/img/hut_ri_77.png" alt="logoagam"> -->
 				</div>
 				<h1 class="jumbotronteks welcome">SALAMAIK DATANG</h1>
-				<h1 class="jumbotronteks nama"><strong>DINAS PENANAMAN MODAL <br> PELAYANAN TERPADU SATU PINTU <br> KABUPATEN AGAM</strong></h1>
+				<h1 class="jumbotronteks nama"><strong>DINAS PENANAMAN MODAL <br> PELAYANAN TERPADU SATU PINTU <br>
+						KABUPATEN AGAM</strong></h1>
 			</div>
 			<!-- <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center text-center">
 				<div class="inline">
@@ -30,7 +31,8 @@
 				<img class="" src="<?= base_url(); ?>assets/img/logo_dpmptsp.png" alt="logodpmptsp" height="50px">
 			</a>
 		</div>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+			aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse align-right" id="navbarCollapse">
@@ -47,11 +49,11 @@
 				<li class="nav-item">
 					<a class="nav-link page-scroll" href="#investasi">Investasi</a>
 				</li>
-				<!---<li class="nav-item">
-          <a class="nav-link page-scroll" href="#naker">e-Naker</a>
-        </li>--->
 				<li class="nav-item">
 					<a class="nav-link page-scroll" href="#pengaduan">Pengaduan</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link page-scroll" href="#grafik">Grafik</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link page-scroll" href="#kontak">Kontak</a>
@@ -71,7 +73,8 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col">
-				<div id="carouselExampleIndicators" class="carousel slide berita-carousel multi-item-carousel" data-ride="carousel">
+				<div id="carouselExampleIndicators" class="carousel slide berita-carousel multi-item-carousel"
+					data-ride="carousel">
 					<ol class="carousel-indicators">
 						<?php
 						for ($i = 0; $i < $berita->num_rows(); $i++) {
@@ -89,22 +92,25 @@
 								foreach ($idmax->result() as $row2) {
 									if ($row->id_berita == $row2->idmax) { ?>
 										<div class="carousel-item active">
-										<?php
+											<?php
 									} else {
-										?> <div class="carousel-item">
-										<?php
+										?>
+											<div class="carousel-item">
+												<?php
 									}
 								}
 								$imagePath = FCPATH . 'assets/imgupload/' . $row->gambar;
 								$imageSrc = (!empty($row->gambar) && file_exists($imagePath))
 									? base_url('assets/imgupload/' . $row->gambar)
 									: base_url('assets/img/agam.jpg');
-										?>
+								?>
 										<div class="item__third">
-											<a href="#" data-toggle="modal" data-target="#DetailInformasi<?php echo $row->id_berita; ?>">
+											<a href="#" data-toggle="modal"
+												data-target="#DetailInformasi<?php echo $row->id_berita; ?>">
 												<div class="container">
 													<div class="row">
-														<img class="gambar-carousel mt-5" src="<?= $imageSrc; ?>" alt="<?= $row->judul_berita; ?>">
+														<img class="gambar-carousel mt-5" src="<?= $imageSrc; ?>"
+															alt="<?= $row->judul_berita; ?>">
 													</div>
 												</div>
 												<div class="carousel-caption text-left">
@@ -112,16 +118,18 @@
 														<p class="judul-informasi mb-2 pl-2 pr-2"><?= $row->judul_berita; ?></p>
 													</div>
 													<div class="row">
-														<small class="tgl_berita bg-dark p-1"><?= date_indo($row->tgl_berita); ?></small>
+														<small
+															class="tgl_berita bg-dark p-1"><?= date_indo($row->tgl_berita); ?></small>
 													</div>
 											</a>
 											<div class="text-center tombol-informasi">
-												<small><a href="<?= base_url(); ?>informasi" class="informasi-lainnya">> Berita Lainnnya < </a></small>
+												<small><a href="<?= base_url(); ?>informasi" class="informasi-lainnya">> Berita
+														Lainnnya < </a></small>
 											</div>
 										</div>
-											</div>
-										</div>
-								<?php }
+									</div>
+								</div>
+							<?php }
 						} ?>
 
 					</div>
@@ -152,34 +160,43 @@
 		<div class="container pt-3">
 			<div class="row">
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalMisi"><i class="ikon fa fa-info" aria-hidden="true"></i><br>Sejarah</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalMisi"><i
+							class="ikon fa fa-info" aria-hidden="true"></i><br>Sejarah</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalVisi"><i class="ikon fa fa-paper-plane" aria-hidden="true"></i><br>Visi & Misi</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalVisi"><i
+							class="ikon fa fa-paper-plane" aria-hidden="true"></i><br>Visi & Misi</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalTugas"><i class="ikon fa fa-pen-square" aria-hidden="true"></i><br>Tugas & Fungsi</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalTugas"><i
+							class="ikon fa fa-pen-square" aria-hidden="true"></i><br>Tugas & Fungsi</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalStruktur"><i class="ikon fa fa-sitemap" aria-hidden="true"></i><br>Struktur Organisasi</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalStruktur"><i
+							class="ikon fa fa-sitemap" aria-hidden="true"></i><br>Struktur Organisasi</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalKadis"><i class="ikon fa fa-user" aria-hidden="true"></i><br>Kepala Dinas</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalKadis"><i
+							class="ikon fa fa-user" aria-hidden="true"></i><br>Kepala Dinas</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalKabid"><i class="ikon fa fa-users" aria-hidden="true"></i><br>Pegawai</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalKabid"><i
+							class="ikon fa fa-users" aria-hidden="true"></i><br>Pegawai</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="<?= base_url(); ?>regulasi" class="pilih-profil"><i class="ikon fa fa-balance-scale" aria-hidden="true"></i><br>Regulasi</a>
+					<a href="<?= base_url(); ?>regulasi" class="pilih-profil"><i class="ikon fa fa-balance-scale"
+							aria-hidden="true"></i><br>Regulasi</a>
 				</div>
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalDetailPPID"><i class="ikon fa fa-server" aria-hidden="true"></i><br>PPID</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalDetailPPID"><i
+							class="ikon fa fa-server" aria-hidden="true"></i><br>PPID</a>
 				</div>
 				<!-- <div class="col-lg-4 col-6 display-4 mb-3"> -->
 				<!-- <a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalMaklumat"><i class="ikon fa fa-certificate" aria-hidden="true"></i><br>Maklumat Pelayanan</a> -->
 				<!-- </div> -->
 				<div class="col-lg-4 col-6 display-4 mb-3">
-					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalSarpras"><i class="ikon fa fa-building" aria-hidden="true"></i><br>Sarana & Prasarana</a>
+					<a href="#" class="pilih-profil" data-toggle="modal" data-target="#ModalSarpras"><i
+							class="ikon fa fa-building" aria-hidden="true"></i><br>Sarana & Prasarana</a>
 				</div>
 			</div>
 			<div class="container">
@@ -213,7 +230,7 @@
 			<div class="col-12 text-justify">
 				<?php
 				foreach ($pengaturan->result() as $row) {
-				?>
+					?>
 					<p>
 						<?= $row->layanan; ?>
 					</p>
@@ -222,57 +239,71 @@
 			<div class="col-lg-5 col-md-5 col-12">
 				<?php
 				foreach ($pengaturan->result() as $row) {
-				?>
-					<img style="width:100%;" class="shadow mb-3 isi-pelayanan intro-pelayanan" src="<?= base_url(); ?>assets/imgupload/<?= $row->maklumat; ?>" alt="Maklumat Pelayanan">
+					?>
+					<img style="width:100%;" class="shadow mb-3 isi-pelayanan intro-pelayanan"
+						src="<?= base_url(); ?>assets/imgupload/<?= $row->maklumat; ?>" alt="Maklumat Pelayanan">
 				<?php } ?>
 			</div>
 			<div class="col-lg-7 col-md-7 col-12 text-justify">
 				<div class="row isi-pelayanan text-center mt-3">
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
-						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#StandarPelayanan" data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>" data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sp.jpg'); ?>" width="100%">
+						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#StandarPelayanan"
+							data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>"
+							data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
+							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sp.jpg'); ?>"
+								width="100%">
 							Standar Pelayanan
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
-						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalViewSOP" data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>" data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sop.jpg'); ?>" width="100%">
+						<a href="#" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalViewSOP"
+							data-pdf-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>"
+							data-download-url="<?= base_url('assets/fileupload/Standar_Pelayanan.pdf'); ?>">
+							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sop.jpg'); ?>"
+								width="100%">
 							Standar Operasional Prosedur
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalPelayanan">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/fpp.png'); ?>" width="100%">Formulir & Persyaratan Perizinan
+							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/fpp.png'); ?>"
+								width="100%">Formulir & Persyaratan Perizinan
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://sicantik.go.id/sign-in" class="pilih-pelayanan" target="_blank">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sicantik.jpg'); ?>" width="100%">SiCantik
+							<img id="img-layanan" class="mb-2 img-layanan"
+								src="<?= base_url('assets/img/sicantik.jpg'); ?>" width="100%">SiCantik
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="" class="pilih-pelayanan" data-toggle="modal" data-target="#ModalTracking">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/sicantiktracking.jpg'); ?>" width="100%">Tracking SiCantik
+							<img id="img-layanan" class="mb-2 img-layanan"
+								src="<?= base_url('assets/img/sicantiktracking.jpg'); ?>" width="100%">Tracking SiCantik
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://ui-login.oss.go.id/login" class="pilih-pelayanan" target="_blank">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/oss.jpg'); ?>" width="100%">OSS RBA
+							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/oss.jpg'); ?>"
+								width="100%">OSS RBA
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://www.lapor.go.id/" class="pilih-pelayanan" target="_blank">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>" width="100%">Lapor.go.id
+							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>"
+								width="100%">Lapor.go.id
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://simbg.pu.go.id/" class="pilih-pelayanan" target="_blank">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/simbg.png'); ?>" width="100%">SIMBG
+							<img id="img-layanan" class="mb-2 img-layanan"
+								src="<?= base_url('assets/img/simbg.png'); ?>" width="100%">SIMBG
 						</a>
 					</div>
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://simtaru.agamkab.go.id/" class="pilih-pelayanan" target="_blank">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/simtaru.png'); ?>" width="100%">SIMTARU
+							<img id="img-layanan" class="mb-2 img-layanan"
+								src="<?= base_url('assets/img/simtaru.png'); ?>" width="100%">SIMTARU
 						</a>
 					</div>
 					<!----<div class="col col-sm-12 col-md-3 col-lg-3 col-6 display-4 mb-3">
@@ -300,28 +331,37 @@
 		</div>
 		<div class="row pb-5">
 			<div class="col-12">
-				<p class="penjelasan-investasi">Peta dibawah merupakan Peta Penyebaran Potensi Investasi yang berada di Kabupaten Agam. </p>
-				<iframe class="peta-investasi shadow" width="100%" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="PETA POTENSI INVESTASI KABUPATEN AGAM" src="//www.arcgis.com/apps/Embed/index.html?webmap=ae83c5f68ead4e8a894d82b536186438&extent=99.4542,-0.6519,100.8906,0.1131&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&details=true&legendlayers=true&active_panel=legend&disable_scroll=true&theme=light"></iframe>
+				<p class="penjelasan-investasi">Peta dibawah merupakan Peta Penyebaran Potensi Investasi yang berada di
+					Kabupaten Agam. </p>
+				<iframe class="peta-investasi shadow" width="100%" height="500" frameborder="0" scrolling="no"
+					marginheight="0" marginwidth="0" title="PETA POTENSI INVESTASI KABUPATEN AGAM"
+					src="//www.arcgis.com/apps/Embed/index.html?webmap=ae83c5f68ead4e8a894d82b536186438&extent=99.4542,-0.6519,100.8906,0.1131&home=true&zoom=true&previewImage=false&scale=true&search=true&searchextent=true&details=true&legendlayers=true&active_panel=legend&disable_scroll=true&theme=light"></iframe>
 			</div>
 			<div class="col-lg-4">
-				<p class="penjelasan-investasi">Untuk lebih detail mengenai Potensi Investasi di Kabupaten Agam, silahkan klik tombol dibawah ini :
+				<p class="penjelasan-investasi">Untuk lebih detail mengenai Potensi Investasi di Kabupaten Agam,
+					silahkan klik tombol dibawah ini :
 				</p>
 				<div class="display-4">
-					<a href="#" class="pilih-investasi" data-toggle="modal" data-target="#ModalPotensiInvestasi">Potensi Investasi</a>
+					<a href="#" class="pilih-investasi" data-toggle="modal" data-target="#ModalPotensiInvestasi">Potensi
+						Investasi</a>
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<p class="penjelasan-investasi">Untuk lebih detail mengenai Peluang Investasi di Kabupaten Agam, silahkan klik tombol dibawah ini :
+				<p class="penjelasan-investasi">Untuk lebih detail mengenai Peluang Investasi di Kabupaten Agam,
+					silahkan klik tombol dibawah ini :
 				</p>
 				<div class="display-4">
-					<a href="#" class="pilih-investasi" data-toggle="modal" data-target="#ModalInvestasi">Peluang Investasi</a>
+					<a href="#" class="pilih-investasi" data-toggle="modal" data-target="#ModalInvestasi">Peluang
+						Investasi</a>
 				</div>
 			</div>
 			<div class="col-lg-4">
-				<p class="penjelasan-investasi">Untuk mengetahui Tanah Ulayat untuk Investasi di Kabupaten Agam, silahkan klik tombol dibawah ini :
+				<p class="penjelasan-investasi">Untuk mengetahui Tanah Ulayat untuk Investasi di Kabupaten Agam,
+					silahkan klik tombol dibawah ini :
 				</p>
 				<div class="display-4">
-					<a href="#" class="pilih-investasi" data-toggle="modal" data-target="#ModalTanahUlayat">Tanah Ulayat Untuk Investasi</a>
+					<a href="#" class="pilih-investasi" data-toggle="modal" data-target="#ModalTanahUlayat">Tanah Ulayat
+						Untuk Investasi</a>
 				</div>
 			</div>
 		</div>
@@ -340,7 +380,8 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-6 col-md-6 col-sm-12">
-				<img class="shadow mekanisme-pengaduan mb-4" src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%">
+				<img class="shadow mekanisme-pengaduan mb-4"
+					src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%">
 				<h4><strong>Info Kontak Pengaduan</strong></h4>
 				<p class="mt-0 mb-0"><i class="fab fa-whatsapp"></i> WhatsApp : <b>0853 7163 8593</b>
 					Atau <i class="far fa-arrow-alt-circle-right"></i>
@@ -361,10 +402,12 @@
 					<form method="post" enctype="multipart/form-data" action="<?= base_url('home/kirim_pengaduan'); ?>">
 						<div class="card-body" style="width: 100%; height: 380px; overflow-y: auto; ">
 
-							<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+							<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+								value="<?= $this->security->get_csrf_hash(); ?>">
 
-							<?php if ($this->session->flashdata('error_pengaduan')) : ?>
-								<div class="alert alert-danger alert-dismissible fade show persistent-alert" role="alert" data-alert-key="error_pengaduan">
+							<?php if ($this->session->flashdata('error_pengaduan')): ?>
+								<div class="alert alert-danger alert-dismissible fade show persistent-alert" role="alert"
+									data-alert-key="error_pengaduan">
 									<?= $this->session->flashdata('error_pengaduan'); ?>
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
@@ -372,8 +415,9 @@
 								</div>
 							<?php endif; ?>
 
-							<?php if ($this->session->flashdata('berhasil_pengaduan')) : ?>
-								<div class="alert alert-success alert-dismissible fade show persistent-alert" role="alert" data-alert-key="berhasil_pengaduan">
+							<?php if ($this->session->flashdata('berhasil_pengaduan')): ?>
+								<div class="alert alert-success alert-dismissible fade show persistent-alert" role="alert"
+									data-alert-key="berhasil_pengaduan">
 									<?= $this->session->flashdata('berhasil_pengaduan'); ?>
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
@@ -383,11 +427,11 @@
 
 							<!-- Hapus Alert dengan klik tombol x (Close) -->
 							<script>
-								document.addEventListener('DOMContentLoaded', function() {
+								document.addEventListener('DOMContentLoaded', function () {
 									var alerts = document.querySelectorAll('.alert.persistent-alert');
 
-									alerts.forEach(function(alert) {
-										alert.querySelector('.close').addEventListener('click', function() {
+									alerts.forEach(function (alert) {
+										alert.querySelector('.close').addEventListener('click', function () {
 											var alertKey = alert.getAttribute('data-alert-key');
 
 											// Use AJAX to clear the flashdata
@@ -403,7 +447,8 @@
 							<div class="form-group">
 								<label for="nama">Nama</label>
 								<div class="input-group">
-									<input name="nama" type="text" class="form-control" placeholder="Masukan Nama" value="<?= set_value('nama'); ?>" required>
+									<input name="nama" type="text" class="form-control" placeholder="Masukan Nama"
+										value="<?= set_value('nama'); ?>" required>
 									<div class="input-group-append">
 										<div class="input-group-text">
 											<span class="fas fa-user-tag"></span>
@@ -415,14 +460,16 @@
 							<div class="form-group">
 								<label for="alamat">Alamat</label>
 								<div class="input-group">
-									<textarea name="alamat" id="alamat" class="form-control" rows="3" placeholder="Masukan Alamat" required><?= set_value('alamat'); ?></textarea>
+									<textarea name="alamat" id="alamat" class="form-control" rows="3"
+										placeholder="Masukan Alamat" required><?= set_value('alamat'); ?></textarea>
 								</div>
 								<small class="text-danger"><?= form_error('alamat'); ?></small>
 							</div>
 							<div class="form-group">
 								<label for="hp">WhatsApp</label>
 								<div class="input-group">
-									<input name="hp" type="number" class="form-control" placeholder="Masukan Whatsapp" value="<?= set_value('hp'); ?>" required>
+									<input name="hp" type="number" class="form-control" placeholder="Masukan Whatsapp"
+										value="<?= set_value('hp'); ?>" required>
 									<div class="input-group-append">
 										<div class="input-group-text">
 											<span class="fab fa-whatsapp"></span>
@@ -448,7 +495,8 @@
 							<div class="form-group">
 								<label for="email">Email</label>
 								<div class="input-group">
-									<input name="email" type="email" class="form-control" placeholder="Masukan Email" value="<?= set_value('email'); ?>" required>
+									<input name="email" type="email" class="form-control" placeholder="Masukan Email"
+										value="<?= set_value('email'); ?>" required>
 									<div class="input-group-append">
 										<div class="input-group-text">
 											<span class="fas fa-envelope"></span>
@@ -460,7 +508,9 @@
 							<div class="form-group">
 								<label for="lokasi_kejadian">Lokasi Kejadian</label>
 								<div class="input-group">
-									<input name="lokasi_kejadian" type="text" class="form-control" placeholder="Masukan Lokasi Kejadian" required value="<?= set_value('lokasi_kejadian'); ?>">
+									<input name="lokasi_kejadian" type="text" class="form-control"
+										placeholder="Masukan Lokasi Kejadian" required
+										value="<?= set_value('lokasi_kejadian'); ?>">
 									<div class="input-group-append">
 										<div class="input-group-text">
 											<span class="fas fa-map-marked-alt"></span>
@@ -472,7 +522,9 @@
 							<div class="form-group">
 								<label for="materi_pengaduan">Uraian Pengaduan</label>
 								<div class="input-group">
-									<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control" cols="20" rows="3" placeholder="Masukan Uraian Pengaduan" required><?= set_value('materi_pengaduan'); ?></textarea>
+									<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control"
+										cols="20" rows="3" placeholder="Masukan Uraian Pengaduan"
+										required><?= set_value('materi_pengaduan'); ?></textarea>
 								</div>
 								<small class="text-danger"><?= form_error('materi_pengaduan'); ?></small>
 							</div>
@@ -487,7 +539,9 @@
 				</div>
 			</div>
 			<div class="col-lg-12 col-sm-12 mb-4 mt-4">
-				<button type="button" class="pilih-profil border-none" data-toggle="modal" data-target="#ModalTrackingPengaduan"><i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan</button>
+				<button type="button" class="pilih-profil border-none" data-toggle="modal"
+					data-target="#ModalTrackingPengaduan"><i class="ikon fa fa-search" aria-hidden="true"></i> Tracking
+					Pengaduan</button>
 			</div>
 		</div>
 	</div>
@@ -496,7 +550,7 @@
 <!-- close pengaduan -->
 
 <!-- SKM -->
-<section class="skm" id="skm">
+<!-- <section class="skm" id="skm">
 	<div class="container-fluid text-center">
 		<div class="row">
 			<div class="col-lg-12 mt-4">
@@ -515,7 +569,8 @@
 		<div class="row ">
 			<div class="col-12 mb-3">
 				<div class="text-center">
-					<p style="font-size:20px;">Untuk mengisi kuesioner Survey Kepuasan Masyarakat (SKM) dan Survey Persepsi Kualitas Pelayanan (SPKP) secara online, silahkan klik tombol dibawah ini:</p>
+					<p style="font-size:20px;">Untuk mengisi kuesioner Survey Kepuasan Masyarakat (SKM) dan Survey
+						Persepsi Kualitas Pelayanan (SPKP) secara online, silahkan klik tombol dibawah ini:</p>
 					<a href="<?= base_url(); ?>skm" class="pilih-profil border-white text-white">
 						<i class="fa fa-list-ol" aria-hidden="true"></i>
 						Isi Survey
@@ -531,7 +586,8 @@
 							<h5>Grafik Survey Kepuasan Masyarakat</h5>
 							<hr style="border: 1px solid; background-color: white;">
 							<canvas id="myChart3"></canvas>
-							<span class="small">Keterangan : A (Sangat Baik) : 88,31 - 100,00 | B (Baik) : 76,61 - 88,30 | C (Kurang) : 65,00 - 76,60 | D (Sangat Kurang) : 25,00 - 64,99</span>
+							<span class="small">Keterangan : A (Sangat Baik) : 88,31 - 100,00 | B (Baik) : 76,61 - 88,30
+								| C (Kurang) : 65,00 - 76,60 | D (Sangat Kurang) : 25,00 - 64,99</span>
 						</div>
 					</div>
 					<?php
@@ -577,7 +633,7 @@
 								},
 								animation: {
 									duration: 1,
-									onComplete: function() {
+									onComplete: function () {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -585,9 +641,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function(dataset, i) {
+										this.data.datasets.forEach(function (dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function(bar, index) {
+											meta.data.forEach(function (bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -631,10 +687,12 @@
 						<hr style="border: 1px solid; background-color: white;">
 						<div id="carouselIKM" class="carousel slide" data-ride="carousel">
 							<div class="carousel-inner shadow-lg" style="height: 100%;">
-								<?php foreach ($skm_gambar as $index => $data) : ?>
+								<?php foreach ($skm_gambar as $index => $data): ?>
 									<div class="carousel-item <?= $index == 0 ? 'active' : ''; ?>">
-										<a href="<?= base_url('assets/imgupload/' . $data['file_name']); ?>" target="_blank">
-											<img src="<?= base_url('assets/imgupload/' . $data['file_name']); ?>" class="d-block w-100" alt="Gambar IKM">
+										<a href="<?= base_url('assets/imgupload/' . $data['file_name']); ?>"
+											target="_blank">
+											<img src="<?= base_url('assets/imgupload/' . $data['file_name']); ?>"
+												class="d-block w-100" alt="Gambar IKM">
 										</a>
 									</div>
 								<?php endforeach; ?>
@@ -652,16 +710,18 @@
 				</div>
 			</div>
 
-			<!-- <div class="col-lg-5 col form-pengaduan">
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScGlxCpQhHCl0rdvbMeAIqebo-vU34xk7-7VR6M4saB_Ly7iQ/viewform?embedded=true" width="100%" height="500px" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
-      </div> -->
+			<div class="col-lg-5 col form-pengaduan">
+				<iframe
+					src="https://docs.google.com/forms/d/e/1FAIpQLScGlxCpQhHCl0rdvbMeAIqebo-vU34xk7-7VR6M4saB_Ly7iQ/viewform?embedded=true"
+					width="100%" height="500px" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
+			</div>
 		</div>
 	</div>
-</section>
+</section> -->
 <!-- close skm -->
 
 <!-- Grafik -->
-<section class="pengaduan" id="">
+<section class="pengaduan" id="grafik">
 	<div class="container-fluid">
 		<div class="row text-center">
 			<div class="col-lg-12 mt-4 ">
@@ -681,8 +741,9 @@
 						<hr style="border: 1px solid; background-color: white;">
 
 						<h6 class="text-center">Periode
-							<?php foreach ($periode_grafik->result() as $graph) : ?>
-								<?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?>
+							<?php foreach ($periode_grafik->result() as $graph): ?>
+								<?= longdate_indo_nohari($graph->tgl_awal); ?> s/d
+								<?= longdate_indo_nohari($graph->tgl_akhir); ?>
 							<?php endforeach; ?>
 						</h6>
 
@@ -691,16 +752,16 @@
 						</div>
 
 						<?php
-						$nama_bidang   = [];
-						$total_bidang  = [];
-						$detail_jenis  = [];
-						$grand_total   = 0;
+						$nama_bidang = [];
+						$total_bidang = [];
+						$detail_jenis = [];
+						$grand_total = 0;
 
 						foreach ($chart_bidang->result() as $item) {
 							$nama = trim($item->izin);
-							$jum  = (int) $item->jumlah;
+							$jum = (int) $item->jumlah;
 
-							$nama_bidang[]  = $nama;
+							$nama_bidang[] = $nama;
 							$total_bidang[] = $jum;
 							$detail_jenis[$nama] = [];
 							$grand_total += $jum;
@@ -715,7 +776,7 @@
 
 							$detail_jenis[$nama_bidang_parent][] = array(
 								'jenis_izin' => trim($item->jenis_izin),
-								'jumlah'     => (int) $item->jumlah
+								'jumlah' => (int) $item->jumlah
 							);
 						}
 
@@ -729,7 +790,7 @@
 							</h6>
 						</div>
 
-						<?php if (!empty($nama_bidang)) : ?>
+						<?php if (!empty($nama_bidang)): ?>
 							<style>
 								#chartjs-tooltip {
 									pointer-events: auto;
@@ -761,7 +822,7 @@
 								}
 							</style>
 							<script>
-								document.addEventListener("DOMContentLoaded", function() {
+								document.addEventListener("DOMContentLoaded", function () {
 									var ctx = document.getElementById('myChartHome').getContext('2d');
 
 									var originalLabels = <?= json_encode($nama_bidang, JSON_UNESCAPED_UNICODE); ?>;
@@ -793,7 +854,7 @@
 											},
 											animation: {
 												duration: 1,
-												onComplete: function() {
+												onComplete: function () {
 													var chartInstance = this.chart;
 													var ctx = chartInstance.ctx;
 
@@ -806,9 +867,9 @@
 													ctx.textAlign = 'center';
 													ctx.textBaseline = 'bottom';
 
-													this.data.datasets.forEach(function(dataset, i) {
+													this.data.datasets.forEach(function (dataset, i) {
 														var meta = chartInstance.controller.getDatasetMeta(i);
-														meta.data.forEach(function(bar, index) {
+														meta.data.forEach(function (bar, index) {
 															var data = dataset.data[index];
 															ctx.fillText(data, bar._model.x, bar._model.y - 5);
 														});
@@ -819,7 +880,7 @@
 												enabled: false,
 												mode: 'index',
 												intersect: true,
-												custom: function(tooltipModel) {
+												custom: function (tooltipModel) {
 													var tooltipEl = document.getElementById('chartjs-tooltip');
 													if (!tooltipEl) {
 														tooltipEl = document.createElement('div');
@@ -831,17 +892,17 @@
 													if (!tooltipEl._listenersInitialized) {
 														tooltipEl._keepAlive = false;
 														tooltipEl._hideTimeout = null;
-														tooltipEl.addEventListener('mouseenter', function() {
+														tooltipEl.addEventListener('mouseenter', function () {
 															tooltipEl._keepAlive = true;
 															if (tooltipEl._hideTimeout) {
 																clearTimeout(tooltipEl._hideTimeout);
 																tooltipEl._hideTimeout = null;
 															}
 														});
-														tooltipEl.addEventListener('mouseleave', function() {
+														tooltipEl.addEventListener('mouseleave', function () {
 															tooltipEl._keepAlive = false;
 															if (tooltipEl._hideTimeout) clearTimeout(tooltipEl._hideTimeout);
-															tooltipEl._hideTimeout = setTimeout(function() {
+															tooltipEl._hideTimeout = setTimeout(function () {
 																if (!tooltipEl._keepAlive) tooltipEl.style.display = 'none';
 																tooltipEl._hideTimeout = null;
 															}, 300);
@@ -860,7 +921,7 @@
 
 														// schedule a short delay before hiding to allow pointer to reach tooltip
 														if (!tooltipEl._hideTimeout) {
-															tooltipEl._hideTimeout = setTimeout(function() {
+															tooltipEl._hideTimeout = setTimeout(function () {
 																tooltipEl.style.display = 'none';
 																tooltipEl._hideTimeout = null;
 															}, 300);
@@ -884,7 +945,7 @@
 													var detail = detailJenis[bidang] || [];
 													var html = '<ul>';
 													if (!detail.length) html += '<li>- Tidak ada jenis izin</li>';
-													else detail.forEach(function(it) {
+													else detail.forEach(function (it) {
 														html += '<li>' + it.jenis_izin + ': ' + it.jumlah + '</li>';
 													});
 													html += '</ul>';
@@ -919,7 +980,7 @@
 														max: maxChart,
 														beginAtZero: true,
 														fontColor: 'white',
-														callback: function(value) {
+														callback: function (value) {
 															if (Number.isInteger(value)) {
 																return value;
 															}
@@ -931,7 +992,7 @@
 									});
 								});
 							</script>
-						<?php else : ?>
+						<?php else: ?>
 							<div class="mt-3">
 								<h6 style="color:white;">Data grafik belum tersedia.</h6>
 							</div>
@@ -948,8 +1009,9 @@
 							<?php
 							$no = 1;
 							foreach ($periode_grafik_investasi->result() as $graph) {
-							?>
-								<?= date("Y", strtotime($graph->tgl_awal)); ?> s/d <?= date("Y", strtotime($graph->tgl_akhir)); ?>
+								?>
+								<?= date("Y", strtotime($graph->tgl_awal)); ?> s/d
+								<?= date("Y", strtotime($graph->tgl_akhir)); ?>
 							<?php } ?>
 						</h6>
 						<canvas id="myChart2"></canvas>
@@ -959,7 +1021,7 @@
 						$total = [];
 						$total2 = [];
 						$rincian = []; // 🔥 Array baru untuk menampung rincian per jenis
-
+						
 						foreach ($grafik_investasi->result() as $item) {
 							if ($item->tipe == 'tahun') {
 								$tahun_investasi[] = $item->tahun;
@@ -977,7 +1039,7 @@
 						?>
 
 						<script>
-							document.addEventListener("DOMContentLoaded", function() {
+							document.addEventListener("DOMContentLoaded", function () {
 								var ctx = document.getElementById('myChart2').getContext('2d');
 
 								// Ambil data JSON dari PHP
@@ -1030,7 +1092,7 @@
 										},
 										"animation": {
 											"duration": 1,
-											"onComplete": function() {
+											"onComplete": function () {
 												var chartInstance = this.chart,
 													ctx = chartInstance.ctx;
 
@@ -1039,9 +1101,9 @@
 												ctx.textBaseline = 'bottom';
 												ctx.fillStyle = 'white';
 
-												this.data.datasets.forEach(function(dataset, i) {
+												this.data.datasets.forEach(function (dataset, i) {
 													var meta = chartInstance.controller.getDatasetMeta(i);
-													meta.data.forEach(function(bar, index) {
+													meta.data.forEach(function (bar, index) {
 														var dataValue = dataset.data[index];
 														ctx.fillText(dataValue, bar._model.x, bar._model.y - 5);
 													});
@@ -1053,10 +1115,10 @@
 											intersect: true,
 
 											callbacks: {
-												title: function(tooltipItems, data) {
+												title: function (tooltipItems, data) {
 													return '';
 												},
-												label: function(tooltipItem, data) {
+												label: function (tooltipItem, data) {
 													var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 													var value = tooltipItem.yLabel;
 
@@ -1107,7 +1169,7 @@
 						$labels = [];
 						$datasets = [];
 						$total_per_tahun = []; // untuk simpan total tiap tahun
-
+						
 						// Ambil label izin
 						foreach ($grafik_tahun as $item) {
 							$labels[] = $item->izin;
@@ -1167,7 +1229,7 @@
 									},
 									animation: {
 										duration: 1,
-										onComplete: function() {
+										onComplete: function () {
 											var chartInstance = this.chart,
 												ctx = chartInstance.ctx;
 
@@ -1175,9 +1237,9 @@
 											ctx.textAlign = 'center';
 											ctx.textBaseline = 'bottom';
 
-											this.data.datasets.forEach(function(dataset, i) {
+											this.data.datasets.forEach(function (dataset, i) {
 												var meta = chartInstance.controller.getDatasetMeta(i);
-												meta.data.forEach(function(bar, index) {
+												meta.data.forEach(function (bar, index) {
 													var data = dataset.data[index];
 													ctx.fillText(data, bar._model.x, bar._model.y - 5);
 												});
@@ -1224,7 +1286,7 @@
 			</div>
 			<div class="text-center mt-3">
 				<span>Periode <br>
-					<?php foreach ($periode_grafik_oss->result() as $graph) : ?>
+					<?php foreach ($periode_grafik_oss->result() as $graph): ?>
 						<?= longdate_indo_nohari($graph->tgl_awal); ?> s/d <?= longdate_indo_nohari($graph->tgl_akhir); ?>
 					<?php endforeach; ?>
 				</span>
@@ -1278,7 +1340,7 @@
 								},
 								"animation": {
 									"duration": 1,
-									"onComplete": function() {
+									"onComplete": function () {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -1286,9 +1348,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function(dataset, i) {
+										this.data.datasets.forEach(function (dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function(bar, index) {
+											meta.data.forEach(function (bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -1417,7 +1479,7 @@
 								},
 								"animation": {
 									"duration": 1,
-									"onComplete": function() {
+									"onComplete": function () {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -1425,9 +1487,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function(dataset, i) {
+										this.data.datasets.forEach(function (dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function(bar, index) {
+											meta.data.forEach(function (bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -1516,7 +1578,7 @@
 								tooltips: {
 									enabled: true,
 									callbacks: {
-										label: function(tooltipItem, data) {
+										label: function (tooltipItem, data) {
 											var label = data.datasets[tooltipItem.datasetIndex].label || '';
 											if (label) {
 												label += ': ';
@@ -1531,7 +1593,7 @@
 								},
 								"animation": {
 									"duration": 1,
-									"onComplete": function() {
+									"onComplete": function () {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -1539,9 +1601,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function(dataset, i) {
+										this.data.datasets.forEach(function (dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function(bar, index) {
+											meta.data.forEach(function (bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -1578,7 +1640,9 @@
 			</div>
 			<div class="col-lg-12 container-fluid mb-2">
 				<div class="map-container">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7583387626346!2d100.03203871432113!3d-0.3141742354257383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd50d7a167ac1a7%3A0xb9ec2c79c573f227!2sDPMPTSP-Naker+Kab.+Agam!5e0!3m2!1sid!2sid!4v1552378695102" width="100%" height="250" frameborder="0" style="border:0" allowfullscreen>
+					<iframe
+						src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.7583387626346!2d100.03203871432113!3d-0.3141742354257383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd50d7a167ac1a7%3A0xb9ec2c79c573f227!2sDPMPTSP-Naker+Kab.+Agam!5e0!3m2!1sid!2sid!4v1552378695102"
+						width="100%" height="250" frameborder="0" style="border:0" allowfullscreen>
 					</iframe>
 				</div>
 			</div>
@@ -1621,32 +1685,37 @@
 				<p class="mt-0"><i class="far fa-envelope"></i> Email : dpmptspagam@gmail.com</p>
 				<ul class="list-inline social-buttons mt-10">
 					<li class="list-inline-item">
-						<a href="https://twitter.com/DpmptspA" data-toggle="tooltip" data-placement="top" title="Twitter DPMPTSP AGAM" style="color:white;">
+						<a href="https://twitter.com/DpmptspA" data-toggle="tooltip" data-placement="top"
+							title="Twitter DPMPTSP AGAM" style="color:white;">
 							<i class="ikon fab fa-twitter icon-square">
 							</i>
 						</a>
 					</li>
 					<li class="list-inline-item">
-						<a href="https://www.facebook.com/dpmptspkab.agam" data-toggle="tooltip" data-placement="top" title="Facebook DPMPTSP AGAM" style="color:white;">
+						<a href="https://www.facebook.com/dpmptspkab.agam" data-toggle="tooltip" data-placement="top"
+							title="Facebook DPMPTSP AGAM" style="color:white;">
 							<i class="ikon fab fa-facebook icon-square icon-32 ">
 							</i>
 						</a>
 					</li>
 					<li class="list-inline-item">
-						<a href="https://www.instagram.com/dpmptsp_kab.agam/" data-toggle="tooltip" data-placement="top" title="Instagram DPMPTSP AGAM" style="color:white;">
+						<a href="https://www.instagram.com/dpmptsp_kab.agam/" data-toggle="tooltip" data-placement="top"
+							title="Instagram DPMPTSP AGAM" style="color:white;">
 							<i class="ikon fab fa-instagram icon-square icon-32">
 							</i>
 						</a>
 					</li>
 					<li class="list-inline-item">
-						<a href="https://www.youtube.com/channel/UCIRaBvE_7XyLf1lKFyGa08Q" data-toggle="tooltip" data-placement="top" title="Youtube DPMPTSP AGAM" style="color:white;">
+						<a href="https://www.youtube.com/channel/UCIRaBvE_7XyLf1lKFyGa08Q" data-toggle="tooltip"
+							data-placement="top" title="Youtube DPMPTSP AGAM" style="color:white;">
 							<i class="ikon fab fa-youtube icon-square icon-32">
 							</i>
 						</a>
 					</li>
 				</ul>
 				<p>
-					<img class="" src="<?= base_url('assets/img/logo_dpmptspwarna.png'); ?>" alt="logodpmptsp" width="50%"></a>
+					<img class="" src="<?= base_url('assets/img/logo_dpmptspwarna.png'); ?>" alt="logodpmptsp"
+						width="50%"></a>
 				</p>
 			</div>
 			<div class="col-lg-6 mb-3 text-left">
@@ -1742,17 +1811,20 @@
 <?php if ($banner->num_rows() == 0) { ?>
 	<div class="popUpBannerBox modal" hidden>
 	</div>
-<?php } else {  ?>
+<?php } else { ?>
 	<div class="popUpBannerBox modal">
 		<div class="popUpBannerInner">
 			<div class="popUpBannerContent">
 				<div class="container">
-					<p class="text-left text-light mt-4"><a href="#" class="closeButton"><i class="ikon fa fa-times-circle"></i></a></p>
-					<?php foreach ($banner->result() as $row) : ?>
+					<p class="text-left text-light mt-4"><a href="#" class="closeButton"><i
+								class="ikon fa fa-times-circle"></i></a></p>
+					<?php foreach ($banner->result() as $row): ?>
 						<div class="form-group mt-4">
-							<strong class="text-light d-flex justify-content-center align-items-center"><?= $row->teks; ?></strong>
+							<strong
+								class="text-light d-flex justify-content-center align-items-center"><?= $row->teks; ?></strong>
 							<div class="d-flex justify-content-center align-items-center">
-								<img width="80%" class="banner img-responsive" src="<?= base_url('assets/imgupload/' . $row->gambar); ?>" alt="Gambar Banner" />
+								<img width="80%" class="banner img-responsive"
+									src="<?= base_url('assets/imgupload/' . $row->gambar); ?>" alt="Gambar Banner" />
 							</div>
 						</div>
 					<?php endforeach ?>
@@ -1766,36 +1838,36 @@
 <!--<input class='chatMenu hidden' id='offchatMenu' type='checkbox' />
 <label class='chatButton' for='offchatMenu'>
   <svg class='svg-1' viewBox='0 0 32 32'>
-    <g>
-      <path d='M16,2A13,13,0,0,0,8,25.23V29a1,1,0,0,0,.51.87A1,1,0,0,0,9,30a1,1,0,0,0,.51-.14l3.65-2.19A12.64,12.64,0,0,0,16,28,13,13,0,0,0,16,2Zm0,24a11.13,11.13,0,0,1-2.76-.36,1,1,0,0,0-.76.11L10,27.23v-2.5a1,1,0,0,0-.42-.81A11,11,0,1,1,16,26Z'></path>
-      <path d='M19.86,15.18a1.9,1.9,0,0,0-2.64,0l-.09.09-1.4-1.4.09-.09a1.86,1.86,0,0,0,0-2.64L14.23,9.55a1.9,1.9,0,0,0-2.64,0l-.8.79a3.56,3.56,0,0,0-.5,3.76,10.64,10.64,0,0,0,2.62,4A8.7,8.7,0,0,0,18.56,21a2.92,2.92,0,0,0,2.1-.79l.79-.8a1.86,1.86,0,0,0,0-2.64Zm-.62,3.61c-.57.58-2.78,0-4.92-2.11a8.88,8.88,0,0,1-2.13-3.21c-.26-.79-.25-1.44,0-1.71l.7-.7,1.4,1.4-.7.7a1,1,0,0,0,0,1.41l2.82,2.82a1,1,0,0,0,1.41,0l.7-.7,1.4,1.4Z'></path>
-    </g>
+	<g>
+	  <path d='M16,2A13,13,0,0,0,8,25.23V29a1,1,0,0,0,.51.87A1,1,0,0,0,9,30a1,1,0,0,0,.51-.14l3.65-2.19A12.64,12.64,0,0,0,16,28,13,13,0,0,0,16,2Zm0,24a11.13,11.13,0,0,1-2.76-.36,1,1,0,0,0-.76.11L10,27.23v-2.5a1,1,0,0,0-.42-.81A11,11,0,1,1,16,26Z'></path>
+	  <path d='M19.86,15.18a1.9,1.9,0,0,0-2.64,0l-.09.09-1.4-1.4.09-.09a1.86,1.86,0,0,0,0-2.64L14.23,9.55a1.9,1.9,0,0,0-2.64,0l-.8.79a3.56,3.56,0,0,0-.5,3.76,10.64,10.64,0,0,0,2.62,4A8.7,8.7,0,0,0,18.56,21a2.92,2.92,0,0,0,2.1-.79l.79-.8a1.86,1.86,0,0,0,0-2.64Zm-.62,3.61c-.57.58-2.78,0-4.92-2.11a8.88,8.88,0,0,1-2.13-3.21c-.26-.79-.25-1.44,0-1.71l.7-.7,1.4,1.4-.7.7a1,1,0,0,0,0,1.41l2.82,2.82a1,1,0,0,0,1.41,0l.7-.7,1.4,1.4Z'></path>
+	</g>
   </svg>
   <svg class='svg-2' viewBox='0 0 512 512'>
-    <path d='M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3l68.2 68.2-68.2 68.2c-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3 6.2 6.2 16.4 6.2 22.6 0l68.2-68.2 68.2 68.2c6.2 6.2 16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z'></path>
+	<path d='M278.6 256l68.2-68.2c6.2-6.2 6.2-16.4 0-22.6-6.2-6.2-16.4-6.2-22.6 0L256 233.4l-68.2-68.2c-6.2-6.2-16.4-6.2-22.6 0-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3l68.2 68.2-68.2 68.2c-3.1 3.1-4.7 7.2-4.7 11.3 0 4.1 1.6 8.2 4.7 11.3 6.2 6.2 16.4 6.2 22.6 0l68.2-68.2 68.2 68.2c6.2 6.2 16.4 6.2 22.6 0 6.2-6.2 6.2-16.4 0-22.6L278.6 256z'></path>
   </svg>
 </label>
 
 <div class='chatBox'>
   <div class='chatContent'>
-    <div class='chatHeader'>
-      <svg viewbox='0 0 32 32'>
-        <path d='M24,22a1,1,0,0,1-.64-.23L18.84,18H17A8,8,0,0,1,17,2h6a8,8,0,0,1,2,15.74V21a1,1,0,0,1-.58.91A1,1,0,0,1,24,22ZM17,4a6,6,0,0,0,0,12h2.2a1,1,0,0,1,.64.23L23,18.86V16.92a1,1,0,0,1,.86-1A6,6,0,0,0,23,4Z'></path>
-        <rect height='2' width='2' x='19' y='9'></rect>
-        <rect height='2' width='2' x='14' y='9'></rect>
-        <rect height='2' width='2' x='24' y='9'></rect>
-        <path d='M8,30a1,1,0,0,1-.42-.09A1,1,0,0,1,7,29V25.74a8,8,0,0,1-1.28-15,1,1,0,1,1,.82,1.82,6,6,0,0,0,1.6,11.4,1,1,0,0,1,.86,1v1.94l3.16-2.63A1,1,0,0,1,12.8,24H15a5.94,5.94,0,0,0,4.29-1.82,1,1,0,0,1,1.44,1.4A8,8,0,0,1,15,26H13.16L8.64,29.77A1,1,0,0,1,8,30Z'></path>
-      </svg>
-      <div class='chatTitle'>Silahkan chat dengan tim kami <span>Admin akan membalas dalam beberapa menit</span></div>
-    </div>
-    <div class='chatText'>
-      <span>Halo, Ada yang bisa kami bantu?</span>
-      <span class='typing'>...</span>
-    </div>
+	<div class='chatHeader'>
+	  <svg viewbox='0 0 32 32'>
+		<path d='M24,22a1,1,0,0,1-.64-.23L18.84,18H17A8,8,0,0,1,17,2h6a8,8,0,0,1,2,15.74V21a1,1,0,0,1-.58.91A1,1,0,0,1,24,22ZM17,4a6,6,0,0,0,0,12h2.2a1,1,0,0,1,.64.23L23,18.86V16.92a1,1,0,0,1,.86-1A6,6,0,0,0,23,4Z'></path>
+		<rect height='2' width='2' x='19' y='9'></rect>
+		<rect height='2' width='2' x='14' y='9'></rect>
+		<rect height='2' width='2' x='24' y='9'></rect>
+		<path d='M8,30a1,1,0,0,1-.42-.09A1,1,0,0,1,7,29V25.74a8,8,0,0,1-1.28-15,1,1,0,1,1,.82,1.82,6,6,0,0,0,1.6,11.4,1,1,0,0,1,.86,1v1.94l3.16-2.63A1,1,0,0,1,12.8,24H15a5.94,5.94,0,0,0,4.29-1.82,1,1,0,0,1,1.44,1.4A8,8,0,0,1,15,26H13.16L8.64,29.77A1,1,0,0,1,8,30Z'></path>
+	  </svg>
+	  <div class='chatTitle'>Silahkan chat dengan tim kami <span>Admin akan membalas dalam beberapa menit</span></div>
+	</div>
+	<div class='chatText'>
+	  <span>Halo, Ada yang bisa kami bantu?</span>
+	  <span class='typing'>...</span>
+	</div>
   </div>
 
   <a class='chatStart' href='https://api.whatsapp.com/send?phone=6285263882201&text=Assalamualaikum,%20Saya%20ingin%20bertanya' rel='nofollow noreferrer' target='_blank'>
-    <span>Mulai chat...</span>
+	<span>Mulai chat...</span>
   </a>
 </div>---->
 
@@ -1878,19 +1950,19 @@
 						});
 
 						messageDiv.innerHTML = `
-                        <div class="chat-avatar-wrapper">
-                            <img src="${avatarSrc}" alt="${message.user_type === 'admin' ? 'Admin' : 'User'} Avatar" class="chat-avatar">
-                            ${message.user_type === 'admin' && admins.length > 0 ?
-                                `<span class="online-status ${admins[0].online ? 'online' : 'offline'}"></span>` : ''}
-                        </div>
-                        <div>
-                            <div>${message.message}</div>
-                            ${message.image_url ? `<img src="${message.image_url}" alt="Image" class="chat-image">` : ''}
-                            <small class="message-date ${message.user_type === 'admin' ? 'admin-date' : 'user-date'}">
-                                ${formattedDate}
-                            </small>
-                        </div>
-                    `;
+						<div class="chat-avatar-wrapper">
+							<img src="${avatarSrc}" alt="${message.user_type === 'admin' ? 'Admin' : 'User'} Avatar" class="chat-avatar">
+							${message.user_type === 'admin' && admins.length > 0 ?
+								`<span class="online-status ${admins[0].online ? 'online' : 'offline'}"></span>` : ''}
+						</div>
+						<div>
+							<div>${message.message}</div>
+							${message.image_url ? `<img src="${message.image_url}" alt="Image" class="chat-image">` : ''}
+							<small class="message-date ${message.user_type === 'admin' ? 'admin-date' : 'user-date'}">
+								${formattedDate}
+							</small>
+						</div>
+					`;
 
 						chatBody.appendChild(messageDiv);
 						lastMessageId = Math.max(lastMessageId, message.id);
@@ -1974,44 +2046,44 @@
 		const welcomeMessage1 = document.createElement('div');
 		welcomeMessage1.className = 'chat-message admin-message';
 		welcomeMessage1.innerHTML = `
-        <img src="<?= base_url('assets/img/admin-avatar.png'); ?>" alt="Admin Avatar" class="chat-avatar">
-        <div>
-            <div>
-                Assalamualaikum, silahkan ketik pertanyaan dan nomor WA untuk kami hubungi (jika sedang offline).
-            </div>
-            <small class="message-date admin-date">
-                ${new Date(currentTime).toLocaleString('id-ID', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                })}
-            </small>
-        </div>
-    `;
+		<img src="<?= base_url('assets/img/admin-avatar.png'); ?>" alt="Admin Avatar" class="chat-avatar">
+		<div>
+			<div>
+				Assalamualaikum, silahkan ketik pertanyaan dan nomor WA untuk kami hubungi (jika sedang offline).
+			</div>
+			<small class="message-date admin-date">
+				${new Date(currentTime).toLocaleString('id-ID', {
+					day: '2-digit',
+					month: 'short',
+					year: 'numeric',
+					hour: '2-digit',
+					minute: '2-digit',
+					hour12: false,
+				})}
+			</small>
+		</div>
+	`;
 
 		const welcomeMessage2 = document.createElement('div');
 		welcomeMessage2.className = 'chat-message admin-message';
 		welcomeMessage2.innerHTML = `
-        <img src="<?= base_url('assets/img/admin-avatar.png'); ?>" alt="Admin Avatar" class="chat-avatar">
-        <div>
-            <div>
-               Mohon tunggu beberapa menit, Admin segera membalas. Terima kasih.
-            </div>
-            <small class="message-date admin-date">
-                ${new Date(currentTime).toLocaleString('id-ID', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false,
-                })}
-            </small>
-        </div>
-    `;
+		<img src="<?= base_url('assets/img/admin-avatar.png'); ?>" alt="Admin Avatar" class="chat-avatar">
+		<div>
+			<div>
+			   Mohon tunggu beberapa menit, Admin segera membalas. Terima kasih.
+			</div>
+			<small class="message-date admin-date">
+				${new Date(currentTime).toLocaleString('id-ID', {
+					day: '2-digit',
+					month: 'short',
+					year: 'numeric',
+					hour: '2-digit',
+					minute: '2-digit',
+					hour12: false,
+				})}
+			</small>
+		</div>
+	`;
 
 		chatBody.appendChild(welcomeMessage1);
 		// chatBody.appendChild(welcomeMessage2);
@@ -2042,7 +2114,7 @@
 <script type="text/javascript">
 	var Tawk_API = Tawk_API || {},
 		Tawk_LoadStart = new Date();
-	(function() {
+	(function () {
 		var s1 = document.createElement("script"),
 			s0 = document.getElementsByTagName("script")[0];
 		s1.async = true;
@@ -2059,14 +2131,14 @@
 	}
 	setTimeout(showPopUpBanner, 3000);
 
-	$('.popUpBannerBox').click(function(e) {
+	$('.popUpBannerBox').click(function (e) {
 		if (!$(e.target).is('.popUpBannerContent, .popUpBannerContent *')) {
 			$('.popUpBannerBox').fadeOut("2000");
 			return false;
 		}
 	});
 
-	$('.popUpBannerBox').click(function() {
+	$('.popUpBannerBox').click(function () {
 		$('.popUpBannerBox').fadeOut("2000");
 		return false;
 	});
@@ -2075,9 +2147,10 @@
 
 <marquee class="layer-1 fixed-bottom bg-dark text-light text-center">
 	<span width="100%">
-		<?php for ($i = 0; $i < 10; $i++) : ?>
-			<?php foreach ($teks->result() as $running) : ?>
-				<img class="ml-3 mr-3" src="<?= base_url(); ?>assets/img/agam.png" alt="logoagam" width="15px"> <?php echo $running->teks; ?>
+		<?php for ($i = 0; $i < 10; $i++): ?>
+			<?php foreach ($teks->result() as $running): ?>
+				<img class="ml-3 mr-3" src="<?= base_url(); ?>assets/img/agam.png" alt="logoagam" width="15px">
+				<?php echo $running->teks; ?>
 			<?php endforeach; ?>
 		<?php endfor; ?>
 	</span>
@@ -2085,13 +2158,13 @@
 
 <!--End of Tawk.to Script-->
 <script>
-	$('.carousel-item', '.multi-item-carousel').each(function() {
+	$('.carousel-item', '.multi-item-carousel').each(function () {
 		var next = $(this).next();
 		if (!next.length) {
 			next = $(this).siblings(':first');
 		}
 		next.children(':first-child').clone().appendTo($(this));
-	}).each(function() {
+	}).each(function () {
 		var prev = $(this).prev();
 		if (!prev.length) {
 			prev = $(this).siblings(':last');
