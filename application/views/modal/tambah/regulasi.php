@@ -1,4 +1,5 @@
-<div class="modal fade" id="ModalTambahRegulasi" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="ModalTambahRegulasi" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,12 +9,13 @@
                 </button>
             </div>
 
-            <form role="form" action="<?= base_url('admin/regulasi/tambah'); ?>" method="post" enctype="multipart/form-data">
+            <form role="form" action="<?= base_url('admin/regulasi/tambah'); ?>" method="post"
+                enctype="multipart/form-data">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
                     value="<?= $this->security->get_csrf_hash(); ?>">
                 <div class="modal-body">
                     <?php foreach ($idmax->result() as $row) {
-                    ?>
+                        ?>
                         <div hidden class="form-group">
                             <label>Id</label>
                             <input type="text" class="form-control" id="id" name="id" value="<?= $row->idmax + 1; ?>">

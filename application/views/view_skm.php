@@ -1,15 +1,18 @@
 <body class="layout-top-nav layout-navbar-fixed bg-dark" id="page-top">
     <!-- Navigation-->
-    <nav class="main-header navbar navbar-expand-md navbar-dark fixed-top navbar-white" style="background-color: maroon;">
+    <nav class="main-header navbar navbar-expand-md navbar-dark fixed-top navbar-white"
+        style="background-color: maroon;">
         <div class="container-fluid">
             <a href="<?= base_url('skm/form'); ?>" class="navbar-brand">
-                <span class="brand-text font-weight-light font-weight-bold"><i class="fas fa-file"></i> Survey Kepuasan Masyarakat (SKM)</span>
+                <span class="brand-text font-weight-light font-weight-bold"><i class="fas fa-file"></i> Survey Kepuasan
+                    Masyarakat (SKM)</span>
             </a>
 
             <!-- Right navbar links -->
             <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link mt-2" data-widget="control-sidebar" data-slide="true" href="<?= base_url('home'); ?>" role="button">
+                    <a class="nav-link mt-2" data-widget="control-sidebar" data-slide="true"
+                        href="<?= base_url('home'); ?>" role="button">
                         <i class="fas fa-arrow-left"></i> Kembali
                     </a>
                 </li>
@@ -58,7 +61,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="panel-heading">
-                                    <?php if ($this->session->flashdata('gagal')) : ?>
+                                    <?php if ($this->session->flashdata('gagal')): ?>
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                             <?= $this->session->flashdata('gagal'); ?>
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -66,7 +69,7 @@
                                             </button>
                                         </div>
                                     <?php endif; ?>
-                                    <?php if ($this->session->flashdata('berhasil')) : ?>
+                                    <?php if ($this->session->flashdata('berhasil')): ?>
                                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                                             <?= $this->session->flashdata('berhasil'); ?>
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -77,20 +80,48 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 text-center mb-2">
-                                        <a href="<?= base_url('skm/form'); ?>">
+                                        <!-- <a href="<?= base_url('skm/form'); ?>">
                                             <button type="submit" class="tombol-pengaduan">
                                                 <i class="fa fa-list-ol mt-1" aria-hidden="true" style="font-size: 23px;"></i>
                                                 <br>
                                                 Isi Survey Disini
                                             </button>
-                                        </a>
+                                        </a> -->
+
+                                        <?php if (!empty($survey_skm_aktif)): ?>
+
+                                            <a href="<?= $survey_skm_aktif->link_survey; ?>" target="_blank"
+                                                class="tombol-pengaduan text-center d-inline-block"
+                                                style="text-decoration: none;">
+                                                <i class="fa fa-list-ol mt-1" aria-hidden="true"
+                                                    style="font-size: 23px;"></i>
+                                                <br>
+                                                Isi Survey Disini
+                                            </a>
+
+                                            <p class="mt-3">
+                                                atau Scan QR Code dibawah ini
+                                            </p>
+
+                                            <div class="text-center">
+                                                <img src="<?= base_url('assets/imgupload/' . $survey_skm_aktif->qr_code); ?>"
+                                                    alt="QR Code Survey SKM"
+                                                    style="max-width: 200px; height: auto; border: 1px solid #ddd; padding: 5px; border-radius: 5px;">
+                                            </div>
+
+                                        <?php else: ?>
+                                            <p class="text-muted text-center">Layanan survey sedang tidak tersedia.</p>
+                                        <?php endif; ?>
+
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <h3 class="font-weight-bold">
-                                            Semester <?= ($semester == 1) ? '1 <br> Januari s.d Juni' : '2 <br> Juli s.d Desember'; ?> <br> Tahun <?= date('Y'); ?>
+                                            Semester
+                                            <?= ($semester == 1) ? '1 <br> Januari s.d Juni' : '2 <br> Juli s.d Desember'; ?>
+                                            <br> Tahun <?= date('Y'); ?>
                                         </h3>
                                     </div>
                                 </div>
@@ -117,14 +148,17 @@
                                         ?>
 
                                         <h1>NILAI IKM</h1>
-                                        <h1 class="text-info"><strong><?= $kategori_mutu ?> <br> <?= round($ikm, 2); ?></strong></h1>
+                                        <h1 class="text-info"><strong><?= $kategori_mutu ?> <br>
+                                                <?= round($ikm, 2); ?></strong></h1>
                                     </div>
                                     <div class="col-lg-6 col-12 text-center">
                                         <h6>NAMA LAYANAN : PERIZINAN & NON PERIZINAN</h6>
                                         <hr>
                                         <p><strong>RESPONDEN</strong></p>
                                         <P><strong>JUMLAH</strong> : <?= number_format($jumlah); ?> ORANG</P>
-                                        <p><strong>LAKI-LAKI</strong> : <?= number_format($jmlh_lk); ?> ORANG / <strong>PEREMPUAN</strong> : <?= number_format($jmlh_pr); ?> ORANG</p>
+                                        <p><strong>LAKI-LAKI</strong> : <?= number_format($jmlh_lk); ?> ORANG /
+                                            <strong>PEREMPUAN</strong> : <?= number_format($jmlh_pr); ?> ORANG
+                                        </p>
                                         <div class="row">
                                             <div class="col-6 text-left">
                                                 <p><strong>PENDIDIKAN</strong></p>
@@ -155,7 +189,8 @@
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <p><strong>TERIMA KASIH ATAS PENILAIAN YANG TELAH ANDA BERIKAN
-                                                MASUKKAN ANDA SANGAT BERMANFAAT BAGI KEMAJUAN DINAS KAMI AGAR TERUS MEMPERBAIKI
+                                                MASUKKAN ANDA SANGAT BERMANFAAT BAGI KEMAJUAN DINAS KAMI AGAR TERUS
+                                                MEMPERBAIKI
                                                 DAN MENNGKATKAN KUALITAS PELAYANAN BAGI MASYARAKAT</strong></p>
                                     </div>
                                 </div>
@@ -178,7 +213,8 @@
                                     <div class="col-md-12 text-center">
                                         <div class="card shadow-lg">
                                             <div class="card-body">
-                                                <h5><strong>Grafik Nilai Per Unsur <br> Survey Kepuasan Masyarakat</strong></h5>
+                                                <h5><strong>Grafik Nilai Per Unsur <br> Survey Kepuasan
+                                                        Masyarakat</strong></h5>
                                                 <div class="position-relative">
                                                     <canvas id="barChartPerUnsur" height="350"></canvas>
                                                     <script>
@@ -296,7 +332,8 @@
                                             $kategori_mutu = "Tidak Diketahui";
                                         }
                                         ?>
-                                        <h1 class="text-info"><strong><?= $kategori_mutu ?> <br> <?= round($spkp_spak, 2); ?></strong></h1>
+                                        <h1 class="text-info"><strong><?= $kategori_mutu ?> <br>
+                                                <?= round($spkp_spak, 2); ?></strong></h1>
                                     </div>
                                     <div class=" col-lg-6 col-12 text-center">
                                         <hr>
@@ -324,12 +361,14 @@
                                     <div class="col-sm-12">
                                         <div class="card shadow-lg">
                                             <div class="card-body">
-                                                <h5 class="text-center"><strong>Grafik Per-Unsur <br> Survey Persepsi Kualitas Pelayanan (SPKP) & Survey Persepsi Anti Korupsi (SPAK)</strong></h5>
+                                                <h5 class="text-center"><strong>Grafik Per-Unsur <br> Survey Persepsi
+                                                        Kualitas Pelayanan (SPKP) & Survey Persepsi Anti Korupsi
+                                                        (SPAK)</strong></h5>
                                                 <div class="position-relative">
                                                     <canvas id="barChartUnsurCombined" height="275"></canvas>
                                                     <!-- Bar grafik Per-Unsur SPKP dan SPAK -->
                                                     <script>
-                                                        $(function() {
+                                                        $(function () {
                                                             'use strict';
 
                                                             var ticksStyle = {
@@ -429,7 +468,7 @@
                                                                             },
                                                                             ticks: {
                                                                                 ...ticksStyle,
-                                                                                callback: function(value, index, values) {
+                                                                                callback: function (value, index, values) {
                                                                                     return value.toLocaleString('id-ID', {
                                                                                         minimumFractionDigits: 2
                                                                                     });
@@ -459,7 +498,8 @@
                                     <div class="col-sm-6 mt-3">
                                         <div class="card shadow-lg">
                                             <div class="card-body">
-                                                <h5 class="text-center"><strong>Grafik Per-Bintang <br> Survey Persepsi Kualitas Pelayanan (SPKP)</strong></h5>
+                                                <h5 class="text-center"><strong>Grafik Per-Bintang <br> Survey Persepsi
+                                                        Kualitas Pelayanan (SPKP)</strong></h5>
                                                 <div class="position-relative">
                                                     <canvas id="barChartSPKP" height="275"></canvas>
                                                     <!-- Bar grafik SPKP (Survey Persepsi Kualitas Pelayanan) -->
@@ -499,7 +539,7 @@
                                                                     mode: 'index',
                                                                     intersect: false,
                                                                     callbacks: {
-                                                                        label: function(tooltipItem, data) {
+                                                                        label: function (tooltipItem, data) {
                                                                             var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
                                                                             var value = tooltipItem.yLabel;
                                                                             if (datasetLabel === 'Persentase') {
@@ -551,7 +591,8 @@
                                     <div class="col-sm-6 mt-3">
                                         <div class="card shadow-lg">
                                             <div class="card-body">
-                                                <h5 class="text-center"><strong>Grafik Per-Bintang <br> Survey Persepsi Anti Korupsi (SPAK)</strong></h5>
+                                                <h5 class="text-center"><strong>Grafik Per-Bintang <br> Survey Persepsi
+                                                        Anti Korupsi (SPAK)</strong></h5>
                                                 <div class="position-relative">
                                                     <canvas id="barChartSPAK" height="275"></canvas>
                                                     <!-- Bar grafik SPAK (Survey Persepsi Anti Korupsi) -->
@@ -591,7 +632,7 @@
                                                                     mode: 'index',
                                                                     intersect: false,
                                                                     callbacks: {
-                                                                        label: function(tooltipItem, data) {
+                                                                        label: function (tooltipItem, data) {
                                                                             var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
                                                                             var value = tooltipItem.yLabel;
                                                                             if (datasetLabel === 'Persentase') {

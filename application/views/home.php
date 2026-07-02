@@ -555,7 +555,7 @@
 <!-- close pengaduan -->
 
 <!-- SKM -->
-<!-- <section class="skm" id="skm">
+<section class="skm" id="skm">
 	<div class="container-fluid text-center">
 		<div class="row">
 			<div class="col-lg-12 mt-4">
@@ -690,39 +690,59 @@
 						<hr style="border: 1px solid; background-color: white;">
 						<h5>Indeks Kepuasan Masyarakat (IKM)</h5>
 						<hr style="border: 1px solid; background-color: white;">
-						<div id="carouselIKM" class="carousel slide" data-ride="carousel">
-							<div class="carousel-inner shadow-lg" style="height: 100%;">
-								<?php foreach ($skm_gambar as $index => $data): ?>
-									<div class="carousel-item <?= $index == 0 ? 'active' : ''; ?>">
-										<a href="<?= base_url('assets/imgupload/' . $data['file_name']); ?>"
-											target="_blank">
-											<img src="<?= base_url('assets/imgupload/' . $data['file_name']); ?>"
-												class="d-block w-100" alt="Gambar IKM">
-										</a>
-									</div>
-								<?php endforeach; ?>
-								<a class="carousel-control-prev" href="#carouselIKM" role="button" data-slide="prev">
-									<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-									<span class="sr-only">Previous</span>
-								</a>
-								<a class="carousel-control-next" href="#carouselIKM" role="button" data-slide="next">
-									<span class="carousel-control-next-icon" aria-hidden="true"></span>
-									<span class="sr-only">Next</span>
-								</a>
+
+						<?php if (!empty($skm_gambar)): ?>
+							<div id="carouselIKM" class="carousel slide" data-ride="carousel">
+								<div class="carousel-inner shadow-lg" style="height: 100%;">
+									<?php foreach ($skm_gambar as $index => $data): ?>
+										<div class="carousel-item <?= $index == 0 ? 'active' : ''; ?>">
+											<?php if (file_exists('./assets/imgupload/' . $data['file_name']) && !empty($data['file_name'])): ?>
+												<a href="<?= base_url('assets/imgupload/' . $data['file_name']); ?>"
+													target="_blank">
+													<img src="<?= base_url('assets/imgupload/' . $data['file_name']); ?>"
+														class="d-block w-100" alt="Gambar IKM">
+												</a>
+											<?php else: ?>
+												<div class="bg-dark text-white d-flex flex-column justify-content-center align-items-center"
+													style="height: 300px;">
+													<i class="fas fa-image fa-3x mb-2 text-muted"></i>
+													<p class="text-muted">File gambar tidak ditemukan di server</p>
+												</div>
+											<?php endif; ?>
+										</div>
+									<?php endforeach; ?>
+
+									<a class="carousel-control-prev" href="#carouselIKM" role="button" data-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="carousel-control-next" href="#carouselIKM" role="button" data-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								</div>
 							</div>
-						</div>
+						<?php else: ?>
+							<div class="alert alert-light text-center border p-4 shadow-sm" role="alert">
+								<i class="fas fa-exclamation-circle fa-2x text-warning mb-2"></i>
+								<h6 class="font-weight-bold">Data IKM Belum Tersedia</h6>
+								<p class="text-muted small mb-0">Layanan informasi grafik Indeks Kepuasan Masyarakat sedang
+									diperbarui.
+								</p>
+							</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
 
-			<div class="col-lg-5 col form-pengaduan">
+			<!-- <div class="col-lg-5 col form-pengaduan">
 				<iframe
 					src="https://docs.google.com/forms/d/e/1FAIpQLScGlxCpQhHCl0rdvbMeAIqebo-vU34xk7-7VR6M4saB_Ly7iQ/viewform?embedded=true"
 					width="100%" height="500px" frameborder="0" marginheight="0" marginwidth="0">Memuat…</iframe>
-			</div>
+			</div> -->
 		</div>
 	</div>
-</section> -->
+</section>
 <!-- close skm -->
 
 <!-- Grafik -->

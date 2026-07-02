@@ -81,7 +81,6 @@ class Home extends CI_Controller
 			'pengunjungbulanlalu' => $bulanlalu,
 			'pengunjungbulanini' => $bulanini,
 
-			'periode_grafik' => $this->Model_grafik->tampil_data_periode(),
 			'chart_bidang' => $this->Model_grafik->get_chart_bidang(),
 			'chart_jenis' => $this->Model_grafik->get_chart_jenis(),
 
@@ -158,7 +157,6 @@ class Home extends CI_Controller
 
 		$this->load->view('templates/footer');
 	}
-
 	public function klik_berita()
 	{
 		$id_berita = $this->input->post('id');

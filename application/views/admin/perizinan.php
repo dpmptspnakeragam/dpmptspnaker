@@ -15,7 +15,8 @@
                     <div class="card-body">
 
                         <div class="d-flex mb-3">
-                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahPerizinan">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                data-target="#ModalTambahPerizinan">
                                 <i class="fa fa-plus p-1" aria-hidden="true"></i>
                                 Tambah Data
                             </button>
@@ -37,7 +38,7 @@
 
                             <tbody>
                                 <?php $count = 1; ?>
-                                <?php foreach ($perizinan->result() as $row) : ?>
+                                <?php foreach ($perizinan->result() as $row): ?>
                                     <?php
                                     // Path file di folder assets/fileupload/
                                     $file_path = FCPATH . 'assets/fileupload/' . $row->form;
@@ -51,7 +52,8 @@
                                         <td class="text-center align-middle"><?= $row->lamaproses; ?></td>
                                         <td class="text-center align-middle">
                                             <?php if ($file_exists): ?>
-                                                <a href="<?= base_url('assets/fileupload/' . $row->form); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->form; ?>">
+                                                <a href="<?= base_url('assets/fileupload/' . $row->form); ?>"
+                                                    class="btn btn-outline-success mt-1 mb-1" download="<?= $row->form; ?>">
                                                     <i class="fas fa-download"></i> Download
                                                 </a>
                                             <?php else: ?>
@@ -60,14 +62,16 @@
                                         </td>
                                         <td class="align-middle"><?= html_entity_decode($row->syarat); ?></td>
                                         <td class="text-center align-middle">
-                                            <button type="button" data-toggle="modal" data-target="#EditPerizinan<?= $row->id_izin; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                            <button type="button" data-toggle="modal"
+                                                data-target="#EditPerizinan<?= $row->id_izin; ?>"
+                                                class="btn btn-outline-warning mt-1 mb-1">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <?php if ($file_exists): ?>
-                                                <button type="button" data-toggle="modal" data-target="#deletePerizinan<?= $row->id_izin; ?>" class="btn btn-outline-danger mt-1 mb-1">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            <?php endif; ?>
+                                            <button type="button" data-toggle="modal"
+                                                data-target="#deletePerizinan<?= $row->id_izin; ?>"
+                                                class="btn btn-outline-danger mt-1 mb-1">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -87,8 +91,9 @@
 </section>
 <!-- /.content -->
 
-<?php foreach ($perizinan->result() as $row) : ?>
-    <div class="modal fade" id="deletePerizinan<?= $row->id_izin; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<?php foreach ($perizinan->result() as $row): ?>
+    <div class="modal fade" id="deletePerizinan<?= $row->id_izin; ?>" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -98,11 +103,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus data <strong class="font-weight-bold text-maroon"><?= $row->nama_izin; ?></strong> ini?
+                    Apakah Anda yakin ingin menghapus data <strong
+                        class="font-weight-bold text-maroon"><?= $row->nama_izin; ?></strong> ini?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
-                    <a href="<?= base_url('admin/perizinan/hapus/' . $row->id_izin); ?>" class="btn btn-outline-danger">Hapus</a>
+                    <a href="<?= base_url('admin/perizinan/hapus/' . $row->id_izin); ?>"
+                        class="btn btn-outline-danger">Hapus</a>
                 </div>
             </div>
         </div>
