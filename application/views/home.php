@@ -53,6 +53,9 @@
 					<a class="nav-link page-scroll" href="#pengaduan">Pengaduan</a>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link page-scroll" href="#skm">Survey</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link page-scroll" href="#grafik">Grafik</a>
 				</li>
 				<li class="nav-item">
