@@ -32,7 +32,7 @@ class Home extends CI_Controller
 
 		$this->load->model('Model_standar_pelayanan');
 		$this->load->model('Model_sop');
-		$this->load->model('admin/Model_skm_gambar');
+		$this->load->model('Model_skm_gambar');
 
 		$this->load->model('Model_pesan');
 		$this->load->model('Model_ppid');

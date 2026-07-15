@@ -1,5 +1,6 @@
 <?php
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 class Grafik_skm extends CI_controller
 {
@@ -10,7 +11,7 @@ class Grafik_skm extends CI_controller
             redirect('login');
         }
         $this->load->model('Model_grafik_skm');
-        $this->load->model('admin/Model_skm_gambar');
+        $this->load->model('Model_skm_gambar');
         $this->load->library('upload');
     }
 

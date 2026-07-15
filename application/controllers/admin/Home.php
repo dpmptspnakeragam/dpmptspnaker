@@ -1,5 +1,5 @@
 <?php
-class Home extends Admin_Utama_Controller
+class Home extends CI_controller
 {
     public function __construct()
     {

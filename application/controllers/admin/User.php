@@ -11,7 +11,7 @@ class User extends CI_Controller
             redirect('home');
         }
 
-        $this->load->model('admin/M_user');
+        $this->load->model('M_user');
     }
 
     public function index()

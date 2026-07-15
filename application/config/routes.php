@@ -55,7 +55,3 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['login_now'] = 'login/cek_login';
-
-// Login Reklame
-$route['reklame'] = 'login_reklame';
-$route['login_reklame'] = 'login_reklame/cek_login_reklame';
