@@ -7,15 +7,19 @@ class User extends CI_Controller
     {
         parent::__construct();
 
-        // Proteksi halaman
+        // 1. Proteksi Halaman: Wajib Login
         if ($this->session->userdata('username') == "") {
             $this->session->set_flashdata('error', 'Silakan login terlebih dahulu.');
             redirect('home');
         }
 
-        $this->load->database();
+        // 2. Proteksi Halaman: Hanya Administrator yang berhak mengakses menu ini
+        if ($this->session->userdata('role') !== 'Administrator') {
+            $this->session->set_flashdata('error', 'Akses ditolak! Halaman manajemen user hanya untuk Administrator.');
+            redirect('dashboard');
+        }
+
         $this->load->model('Model_user');
-        $this->load->library('form_validation');
     }
 
     public function index()
@@ -32,7 +36,7 @@ class User extends CI_Controller
     }
 
     /**
-     * Menyimpan data pengguna baru
+     * Menyimpan data pengguna baru (Hanya diperbolehkan menambah role 'User')
      */
     public function tambah()
     {
@@ -41,22 +45,24 @@ class User extends CI_Controller
             'is_unique' => 'Username ini sudah terdaftar!'
         ]);
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
-        $this->form_validation->set_rules('role', 'Role / Hak Akses', 'required|trim');
+
+        // Validasi input role wajib bernilai 'User' saja
+        $this->form_validation->set_rules('role', 'Role / Hak Akses', 'required|trim|in_list[User]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', validation_errors('<li>', '</li>'));
             redirect('admin/user');
         } else {
             $insert_data = [
-                'nama' => $this->input->post('nama', TRUE), // TRUE mengaktifkan XSS Filter
+                'nama' => $this->input->post('nama', TRUE),
                 'username' => $this->input->post('username', TRUE),
                 'password' => $this->input->post('password'), // Di-hash otomatis di Model
-                'role' => $this->input->post('role', TRUE),
+                'role' => 'User', // Dipaksa keras agar role tersimpan sebagai 'User'
                 'online' => 0
             ];
 
             if ($this->Model_user->insert_user($insert_data)) {
-                $this->session->set_flashdata('success', 'Pengguna baru berhasil ditambahkan secara aman!');
+                $this->session->set_flashdata('success', 'Pengguna baru berhasil ditambahkan!');
             } else {
                 $this->session->set_flashdata('error', 'Gagal menyimpan data.');
             }
@@ -65,7 +71,7 @@ class User extends CI_Controller
     }
 
     /**
-     * Memperbarui data pengguna
+     * Memperbarui data pengguna (Mencegah perubahan role menjadi 'Administrator')
      */
     public function edit($id)
     {
@@ -76,13 +82,22 @@ class User extends CI_Controller
         }
 
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim|min_length[3]');
-        $this->form_validation->set_rules('role', 'Role / Hak Akses', 'required|trim');
+        $this->form_validation->set_rules('role', 'Role / Hak Akses', 'required|trim|in_list[Administrator,User]');
 
         $username_post = $this->input->post('username', TRUE);
         if ($username_post != $user_data->username) {
             $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.username]');
         } else {
             $this->form_validation->set_rules('username', 'Username', 'required|trim');
+        }
+
+        $role_post = $this->input->post('role', TRUE);
+
+        // Aturan: "edit tidak boleh ubah ke administrator"
+        // Jika di database saat ini perannya adalah 'User', namun mencoba diubah menjadi 'Administrator' lewat POST request
+        if ($user_data->role === 'User' && $role_post === 'Administrator') {
+            $this->session->set_flashdata('error', 'Keamanan Sistem: Anda tidak diperbolehkan menaikkan peran User menjadi Administrator.');
+            redirect('admin/user');
         }
 
         if ($this->form_validation->run() == FALSE) {
@@ -92,7 +107,7 @@ class User extends CI_Controller
             $update_data = [
                 'nama' => $this->input->post('nama', TRUE),
                 'username' => $username_post,
-                'role' => $this->input->post('role', TRUE)
+                'role' => $role_post
             ];
 
             // Jika form password diisi, sertakan ke array untuk di-hash di Model
@@ -115,20 +130,20 @@ class User extends CI_Controller
     }
 
     /**
-     * Menghapus pengguna
+     * Menghapus pengguna (Hanya diperbolehkan menghapus role 'User')
      */
     public function hapus($id)
     {
         $user_data = $this->Model_user->get_user_by_id($id);
         if (!$user_data) {
             $this->session->set_flashdata('error', 'Data tidak ditemukan.');
-            redirect('user');
+            redirect('admin/user');
         }
 
-        // Keamanan: Cegah menghapus diri sendiri yang sedang login
-        if ($user_data->username === $this->session->userdata('username')) {
-            $this->session->set_flashdata('error', 'Anda tidak diperbolehkan menghapus akun Anda sendiri.');
-            redirect('user');
+        // Aturan: "hapus hanya user" (mencegah penghapusan akun Administrator mana pun)
+        if ($user_data->role !== 'User') {
+            $this->session->set_flashdata('error', 'Gagal! Akun dengan tingkat akses Administrator tidak diizinkan untuk dihapus.');
+            redirect('admin/user');
         }
 
         if ($this->Model_user->delete_user($id)) {

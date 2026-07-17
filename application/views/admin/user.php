@@ -37,9 +37,15 @@
 											<td class="align-middle font-weight-bold text-dark"><?= $row->nama; ?></td>
 											<td class="align-middle"><?= $row->username; ?></td>
 											<td class="text-center align-middle">
-												<span class="badge bg-purple px-2 py-1.5 font-weight-normal">
-													<?= !empty($row->role) ? $row->role : 'User'; ?>
-												</span>
+												<?php if ($row->role === 'Administrator'): ?>
+													<span class="badge bg-maroon px-2 py-1.5 font-weight-normal">
+														Administrator
+													</span>
+												<?php else: ?>
+													<span class="badge bg-purple px-2 py-1.5 font-weight-normal">
+														User
+													</span>
+												<?php endif; ?>
 											</td>
 											<td class="text-center align-middle">
 												<?php if ($row->online == 1 || $row->online == 'Y'): ?>
@@ -56,19 +62,18 @@
 													<i class="fas fa-edit"></i>
 												</button>
 
-												<?php if ($row->role !== 'Administrator'): ?>
-													<!-- Tombol Hapus Aktif -->
+												<?php if ($row->role === 'User'): ?>
+													<!-- Tombol Hapus Aktif hanya untuk role User -->
 													<button type="button" data-toggle="modal"
 														data-target="#DeleteUser<?= $row->id; ?>"
 														class="btn btn-outline-danger mt-1 mb-1">
 														<i class="fas fa-trash-alt"></i>
 													</button>
 												<?php else: ?>
-													<button type="button" data-toggle="modal"
-														data-target="#DeleteUser<?= $row->id; ?>"
-														class="btn btn-outline-danger mt-1 mb-1" disabled
+													<!-- Disable tombol hapus jika akun adalah Administrator -->
+													<button type="button" class="btn btn-outline-danger mt-1 mb-1" disabled
 														style="cursor: not-allowed; opacity: 0.65;"
-														title="Akun Administrator Utama tidak dapat dihapus demi keamanan sistem.">
+														title="Akun Administrator tidak dapat dihapus demi keamanan sistem.">
 														<i class="fas fa-ban"></i>
 													</button>
 												<?php endif; ?>
@@ -87,6 +92,7 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
 </section>
 
@@ -125,9 +131,6 @@
 							class="text-danger">*</span></label>
 					<select name="role" id="role" class="form-control" required>
 						<option value="User">User</option>
-						<option value="Petugas Aset">Petugas Aset</option>
-						<option value="Admin Reklame">Admin Reklame</option>
-						<option value="Administrator">Administrator</option>
 					</select>
 				</div>
 			</div>
@@ -172,15 +175,19 @@
 						</div>
 						<div class="form-group">
 							<label class="font-weight-semibold">Hak Akses (Role)</label>
-							<select name="role" class="form-control" required>
-								<option value="User" <?= ($row->role == 'User') ? 'selected' : ''; ?>>User</option>
-								<option value="Petugas Aset" <?= ($row->role == 'Petugas Aset') ? 'selected' : ''; ?>>Petugas
-									Aset</option>
-								<option value="Admin Reklame" <?= ($row->role == 'Admin Reklame') ? 'selected' : ''; ?>>Admin
-									Reklame</option>
-								<option value="Administrator" <?= ($row->role == 'Administrator') ? 'selected' : ''; ?>>
-									Administrator</option>
-							</select>
+							<?php if ($row->role === 'User'): ?>
+								<!-- Jika saat ini role-nya User, kunci agar tidak bisa diubah ke Administrator -->
+								<input type="text" class="form-control" value="User" readonly>
+								<input type="hidden" name="role" value="User">
+								<small class="form-text text-muted">Peran 'User' tidak dapat diubah ke 'Administrator'.</small>
+							<?php else: ?>
+								<!-- Hanya Administrator lama yang bisa tetap mempertahankan atau mengubah role-nya -->
+								<select name="role" class="form-control" required>
+									<option value="Administrator" <?= ($row->role == 'Administrator') ? 'selected' : ''; ?>>
+										Administrator</option>
+									<option value="User" <?= ($row->role == 'User') ? 'selected' : ''; ?>>User</option>
+								</select>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="modal-footer bg-light">
@@ -192,31 +199,33 @@
 			</div>
 		</div>
 
-		<!-- MODAL HAPUS USER -->
-		<div class="modal fade" id="DeleteUser<?= $row->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered text-dark" role="document">
-				<div class="modal-content">
-					<div class="modal-header bg-danger text-white">
-						<h5 class="modal-title font-weight-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Konfirmasi
-							Penghapusan</h5>
-						<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body text-center py-4">
-						<i class="fas fa-user-times text-danger fa-4x mb-3"></i>
-						<h4>Apakah Anda yakin?</h4>
-						<p class="text-muted">Anda akan menghapus akun milik <strong><?= $row->nama; ?></strong>
-							(<?= $row->username; ?>) secara permanen. Tindakan ini tidak dapat dibatalkan.</p>
-					</div>
-					<div class="modal-footer bg-light justify-content-center">
-						<button type="button" class="btn btn-secondary px-4" data-dismiss="modal">Batal</button>
-						<a href="<?= base_url('admin/user/hapus/' . $row->id); ?>" class="btn btn-danger px-4">Ya, Hapus
-							Akun</a>
+		<?php if ($row->role === 'User'): ?>
+			<!-- MODAL HAPUS USER (Hanya dipasang untuk pengguna ber-role User) -->
+			<div class="modal fade" id="DeleteUser<?= $row->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered text-dark" role="document">
+					<div class="modal-content">
+						<div class="modal-header bg-danger text-white">
+							<h5 class="modal-title font-weight-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Konfirmasi
+								Penghapusan</h5>
+							<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body text-center py-4">
+							<i class="fas fa-user-times text-danger fa-4x mb-3"></i>
+							<h4>Apakah Anda yakin?</h4>
+							<p class="text-muted">Anda akan menghapus akun milik <strong><?= $row->nama; ?></strong>
+								(<?= $row->username; ?>) secara permanen. Tindakan ini tidak dapat dibatalkan.</p>
+						</div>
+						<div class="modal-footer bg-light justify-content-center">
+							<button type="button" class="btn btn-secondary px-4" data-dismiss="modal">Batal</button>
+							<a href="<?= base_url('admin/user/hapus/' . $row->id); ?>" class="btn btn-danger px-4">Ya, Hapus
+								Akun</a>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		<?php endif; ?>
 
 	<?php endforeach; ?>
 <?php endif; ?>
