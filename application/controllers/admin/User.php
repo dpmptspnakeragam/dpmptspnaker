@@ -45,7 +45,7 @@ class User extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', validation_errors('<li>', '</li>'));
-            redirect('user');
+            redirect('admin/user');
         } else {
             $insert_data = [
                 'nama' => $this->input->post('nama', TRUE), // TRUE mengaktifkan XSS Filter
@@ -60,7 +60,7 @@ class User extends CI_Controller
             } else {
                 $this->session->set_flashdata('error', 'Gagal menyimpan data.');
             }
-            redirect('user');
+            redirect('admin/user');
         }
     }
 
@@ -72,7 +72,7 @@ class User extends CI_Controller
         $user_data = $this->Model_user->get_user_by_id($id);
         if (!$user_data) {
             $this->session->set_flashdata('error', 'Data pengguna tidak ditemukan!');
-            redirect('user');
+            redirect('admin/user');
         }
 
         $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|trim|min_length[3]');
@@ -87,7 +87,7 @@ class User extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', validation_errors('<li>', '</li>'));
-            redirect('user');
+            redirect('admin/user');
         } else {
             $update_data = [
                 'nama' => $this->input->post('nama', TRUE),
@@ -100,7 +100,7 @@ class User extends CI_Controller
             if (!empty($password_baru)) {
                 if (strlen($password_baru) < 6) {
                     $this->session->set_flashdata('error', 'Password baru minimal harus 6 karakter.');
-                    redirect('user');
+                    redirect('admin/user');
                 }
                 $update_data['password'] = $password_baru;
             }
@@ -110,7 +110,7 @@ class User extends CI_Controller
             } else {
                 $this->session->set_flashdata('error', 'Gagal memperbarui data.');
             }
-            redirect('user');
+            redirect('admin/user');
         }
     }
 
@@ -136,6 +136,6 @@ class User extends CI_Controller
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus data.');
         }
-        redirect('user');
+        redirect('admin/user');
     }
 }

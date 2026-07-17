@@ -10,10 +10,10 @@
 							<i class="fas fa-users-cog mr-2 text-maroon"></i> Tabel
 							<?= isset($title) ? $title : 'Pengguna'; ?>
 						</h3>
-						<button type="button" class="btn btn-sm bg-maroon ml-auto" data-toggle="modal"
+						<!-- <button type="button" class="btn btn-sm bg-maroon ml-auto" data-toggle="modal"
 							data-target="#ModalTambahUser">
 							<i class="fas fa-user-plus mr-1"></i> Tambah User
-						</button>
+						</button> -->
 					</div>
 
 					<div class="card-body table-responsive">
@@ -211,7 +211,8 @@
 					</div>
 					<div class="modal-footer bg-light justify-content-center">
 						<button type="button" class="btn btn-secondary px-4" data-dismiss="modal">Batal</button>
-						<a href="<?= base_url('user/hapus/' . $row->id); ?>" class="btn btn-danger px-4">Ya, Hapus Akun</a>
+						<a href="<?= base_url('admin/user/hapus/' . $row->id); ?>" class="btn btn-danger px-4">Ya, Hapus
+							Akun</a>
 					</div>
 				</div>
 			</div>
