@@ -45,6 +45,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 # 1. Mengabaikan file konfigurasi database dan enkripsi
 application/config/database.php
 application/config/config.php
+application/config/email.php
 
 # 2. Mengabaikan file env jika nantinya digunakan
 .env
