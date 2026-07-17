@@ -1,5 +1,9 @@
+# --- FILES & CACHE BAWAAN SYSTEM ---
 .DS_Store
+Thumbs.db
+*.log
 
+# --- CI3 SYSTEM DYNAMIC DATA ---
 application/cache/*
 !application/cache/index.html
 
@@ -8,18 +12,24 @@ application/logs/*
 
 !application/*/.htaccess
 
+# --- DEPENDENCY ---
 composer.lock
+/vendor/
 
+# --- CI3 USER GUIDE ---
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
 
-# IDE Files
-#-------------------------
+# --- TESTS ---
+/tests/tests/
+/tests/results/
+
+# --- IDE FILES ---
 /nbproject/
 .idea/*
+.vscode/
 
 ## Sublime Text cache files
 *.tmlanguage.cache
@@ -27,5 +37,19 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
-/tests/tests/
-/tests/results/
+
+# ==========================================
+#  TAMBAHAN PERBAIKAN: KEAMANAN SENSITIF
+# ==========================================
+
+# 1. Mengabaikan file konfigurasi database dan enkripsi
+application/config/database.php
+application/config/config.php
+
+# 2. Mengabaikan file env jika nantinya digunakan
+.env
+.env.local
+
+# 3. Mengabaikan file upload user (sesuaikan jika folder upload-mu berbeda)
+uploads/*
+!uploads/index.html
