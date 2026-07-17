@@ -31,7 +31,7 @@
 					</li>
 
 					<!-- Reklame -->
-					<!-- <li class="nav-item <?= in_array(
+					<li class="nav-item <?= in_array(
 						$this->uri->segment(2),
 						[
 							'dashboard_reklame',
@@ -39,41 +39,47 @@
 							'peta_reklame',
 						]
 					) ? 'menu-open' : ''; ?>">
-								<a href="" class="nav-link <?= in_array(
-									$this->uri->segment(2),
-									[
-										'dashboard_reklame',
-										'data_reklame',
-										'peta_reklame'
-									]
-								) ? 'active' : ''; ?>">
-									<i class="nav-icon fas fa-ad"></i>
-									<p>
-										Reklame
-										<i class="right fas fa-angle-left"></i>
-									</p>
+						<a href="" class="nav-link <?= in_array(
+							$this->uri->segment(2),
+							[
+								'dashboard_reklame',
+								'data_reklame',
+								'peta_reklame'
+							]
+						) ? 'active' : ''; ?>">
+							<i class="nav-icon fas fa-ad"></i>
+							<p>
+								Reklame
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="<?= base_url('admin/dashboard_reklame'); ?>"
+									class="nav-link <?= $this->uri->segment(2) == 'dashboard_reklame' ? 'active' : ''; ?>">
+									<i
+										class="<?= $this->uri->segment(2) == 'dashboard_reklame' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'dashboard_reklame' ? 'text-maroon' : ''; ?>"></i>
+									<p>Dashboard Reklame</p>
 								</a>
-								<ul class="nav nav-treeview">
-									<li class="nav-item">
-										<a href="<?= base_url('admin/dashboard_reklame'); ?>" class="nav-link <?= $this->uri->segment(2) == 'dashboard_reklame' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'dashboard_reklame' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'dashboard_reklame' ? 'text-maroon' : ''; ?>"></i>
-											<p>Dashboard Reklame</p>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href="<?= base_url('admin/data_reklame'); ?>" class="nav-link <?= $this->uri->segment(2) == 'data_reklame' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'data_reklame' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'data_reklame' ? 'text-maroon' : ''; ?>"></i>
-											<p>Data Reklame</p>
-										</a>
-									</li>
-									<li class="nav-item">
-										<a href="<?= base_url('admin/peta_reklame'); ?>" class="nav-link <?= $this->uri->segment(2) == 'peta_reklame' ? 'active' : ''; ?>">
-											<i class="<?= $this->uri->segment(2) == 'peta_reklame' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'peta_reklame' ? 'text-maroon' : ''; ?>"></i>
-											<p>Peta Reklame</p>
-										</a>
-									</li>
-								</ul>
-							</li> -->
+							</li>
+							<li class="nav-item">
+								<a href="<?= base_url('admin/data_reklame'); ?>"
+									class="nav-link <?= $this->uri->segment(2) == 'data_reklame' ? 'active' : ''; ?>">
+									<i
+										class="<?= $this->uri->segment(2) == 'data_reklame' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'data_reklame' ? 'text-maroon' : ''; ?>"></i>
+									<p>Data Reklame</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="<?= base_url('admin/peta_reklame'); ?>"
+									class="nav-link <?= $this->uri->segment(2) == 'peta_reklame' ? 'active' : ''; ?>">
+									<i
+										class="<?= $this->uri->segment(2) == 'peta_reklame' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'peta_reklame' ? 'text-maroon' : ''; ?>"></i>
+									<p>Peta Reklame</p>
+								</a>
+							</li>
+						</ul>
+					</li>
 
 					<!-- Pengaturan Teks -->
 					<li class="nav-item <?= in_array(
@@ -126,13 +132,13 @@
 					</li>
 
 					<!-- Manajemen User -->
-					<!-- <li class="nav-item">
-								<a href="<?= base_url('admin/user'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['user']))
-									  echo "active"; ?>">
-									<i class="nav-icon fas fa-user-cog"></i>
-									<p>Manajemen User</p>
-								</a>
-							</li> -->
+					<li class="nav-item">
+						<a href="<?= base_url('admin/user'); ?>" class="nav-link <?php if (in_array($this->uri->segment(2), ['user']))
+							  echo "active"; ?>">
+							<i class="nav-icon fas fa-user-cog"></i>
+							<p>Manajemen User</p>
+						</a>
+					</li>
 
 					<!-- Profile -->
 					<li class="nav-item <?= in_array(

@@ -3,54 +3,71 @@
 
 class Model_user extends CI_Model
 {
-    // ============================================================
-    // BAGIAN 1: FUNGSI UNTUK LOGIN WEB UTAMA (Tabel 'user')
-    // ============================================================
+    private $_table = 'user';
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+    }
+    public function login_secure($username, $password)
+    {
+        $this->db->where('username', $username);
+        $query = $this->db->get($this->_table);
+
+        if ($query->num_rows() === 1) {
+            $user = $query->row();
+            if (password_verify($password, $user->password)) {
+                return $user;
+            }
+        }
+        return FALSE;
+    }
     public function cek_user($data)
     {
         $this->db->select('*');
-        $this->db->from('user');
+        $this->db->from($this->_table);
         $this->db->where($data);
-        $query = $this->db->get();
-        return $query;
+        return $this->db->get();
     }
-
     public function update_online_status($id, $status)
     {
         $this->db->set('online', $status);
         $this->db->where('id', $id);
-        $this->db->update('user');
-
-        if ($this->db->affected_rows() > 0) {
-            log_message('info', "User ID $id status updated to $status");
-        } else {
-            log_message('error', "Failed to update status for User ID $id");
-        }
+        $this->db->update($this->_table);
     }
-
-    // ============================================================
-    // BAGIAN 2: FUNGSI UNTUK LOGIN REKLAME (Tabel 'user_reklame')
-    // ============================================================
-    public function cek_user_reklame($username, $password)
+    public function tampil_semua_data()
     {
-        $this->db->select('*');
-        $this->db->from('user_reklame');
-        $this->db->where('username', $username);
-        $this->db->where('password', $password);
-        $query = $this->db->get();
-        return $query;
+        $this->db->order_by('id', 'DESC');
+        return $this->db->get($this->_table)->result();
     }
-
-    public function update_online_status_reklame($id, $status)
+    public function get_user_by_id($id)
     {
-        $this->db->set('online', $status);
         $this->db->where('id', $id);
-        $this->db->update('user_reklame');
-
-        if ($this->db->affected_rows() > 0) {
-            log_message('info', "User Reklame ID $id status updated to $status");
-        } else {
-            log_message('error', "Failed to update status for User Reklame ID $id");
+        return $this->db->get($this->_table)->row();
+    }
+    public function insert_user($data)
+    {
+        if (isset($data['password']) && !empty($data['password'])) {
+            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
         }
+        return $this->db->insert($this->_table, $data);
+    }
+    public function update_user($id, $data)
+    {
+        // Enkripsi password baru jika diisi, jika kosong jangan ubah password lama
+        if (isset($data['password']) && !empty($data['password'])) {
+            $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        } else {
+            unset($data['password']);
+        }
+
+        $this->db->where('id', $id);
+        return $this->db->update($this->_table, $data);
+    }
+    public function delete_user($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->delete($this->_table);
     }
 }

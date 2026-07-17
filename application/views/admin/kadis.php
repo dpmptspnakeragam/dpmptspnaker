@@ -15,7 +15,8 @@
                     <div class="card-body">
 
                         <div class="d-flex mb-3">
-                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahKadis">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                                data-target="#ModalTambahKadis">
                                 <i class="fa fa-plus p-1" aria-hidden="true"></i>
                                 Tambah Data
                             </button>
@@ -34,19 +35,24 @@
 
                             <tbody>
                                 <?php $count = 1; ?>
-                                <?php foreach ($kadis->result() as $row) : ?>
+                                <?php foreach ($kadis->result() as $row): ?>
                                     <tr>
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->nama; ?></td>
                                         <td class="text-center align-middle"><?= $row->periode; ?></td>
                                         <td class="text-center align-middle">
-                                            <img src="<?= base_url('assets/imgupload/') . $row->foto; ?>" class="elevation-2 img-thumbnail" style="max-width: 300px;">
+                                            <img src="<?= base_url('assets/imgupload/') . $row->foto; ?>"
+                                                class="elevation-2 img-thumbnail" style="max-width: 300px;">
                                         </td>
                                         <td class="text-center align-middle">
-                                            <button type="button" data-toggle="modal" data-target="#EditKadis<?= $row->id_kadis; ?>" class="btn btn-outline-warning mt-1 mb-1">
+                                            <button type="button" data-toggle="modal"
+                                                data-target="#EditKadis<?= $row->id_kadis; ?>"
+                                                class="btn btn-outline-warning mt-1 mb-1">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button type="button" data-toggle="modal" data-target="#deleteKadis<?= $row->id_kadis; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                            <button type="button" data-toggle="modal"
+                                                data-target="#deleteKadis<?= $row->id_kadis; ?>"
+                                                class="btn btn-outline-danger mt-1 mb-1">
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
@@ -67,8 +73,9 @@
 </section>
 <!-- /.content -->
 
-<?php foreach ($kadis->result() as $row) : ?>
-    <div class="modal fade" id="deleteKadis<?= $row->id_kadis; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<?php foreach ($kadis->result() as $row): ?>
+    <div class="modal fade" id="deleteKadis<?= $row->id_kadis; ?>" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -78,11 +85,13 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus data <strong class="font-weight-bold text-maroon"><?= $row->nama; ?></strong> ini?
+                    Apakah Anda yakin ingin menghapus data <strong
+                        class="font-weight-bold text-maroon"><?= $row->nama; ?></strong> ini?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
-                    <a href="<?= base_url('admin/kadis/hapus/' . $row->id_kadis); ?>" class="btn btn-outline-danger">Hapus</a>
+                    <a href="<?= base_url('admin/kadis/hapus/' . $row->id_kadis); ?>"
+                        class="btn btn-outline-danger">Hapus</a>
                 </div>
             </div>
         </div>

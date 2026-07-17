@@ -1,37 +1,50 @@
 <div class="login-box">
     <div class="card card-outline card-maroon">
         <div class="card-header text-center">
-            <img src="<?= base_url('assets/'); ?>img/vectoragam.png" alt="Logo Agam">
+            <img src="<?= base_url('assets/'); ?>img/vectoragam.png" alt="Logo Agam"
+                style="max-height: 90px; width: auto; margin-bottom: 10px;">
         </div>
         <div class="card-header text-center">
-            <h4 class="text-center">DINAS PENANAMAN MODAL PELAYANAN TERPADU SATU PINTU KABUPATEN AGAM</h4>
-            <h5 class="text-center">Login</h5>
+            <h4 class="text-center font-weight-bold" style="font-size: 1.1rem; line-height: 1.4;">DINAS PENANAMAN MODAL
+                PELAYANAN TERPADU SATU PINTU KABUPATEN AGAM</h4>
+            <h5 class="text-center text-muted">Aplikasi Portal Login</h5>
         </div>
         <div class="card-body">
-            <?php if ($this->session->flashdata('pesan')): ?>
-                <div class="alert alert-danger" role="alert">
-                    <?= $this->session->flashdata('pesan'); ?>
-                </div>
-            <?php endif; ?>
-
-            <form action="<?= base_url('login_now'); ?>" method="post">
-                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
-                <div class="mb-3">
-                    <input type="text" name="usrname" class="form-control" placeholder="Username" required>
-                    <small class="form-text text-danger"><?= form_error('usrname'); ?></small>
-                </div>
-                <div class="mb-3">
-                    <input type="password" name="pssword" class="form-control" placeholder="Password" required>
-                    <small class="form-text text-danger"><?= form_error('pssword'); ?></small>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-outline-danger btn-block">
-                            <i class="fas fa-sign-in-alt"></i> Sign In
-                        </button>
+            <?= form_open('login_now'); ?>
+            <div class="mb-3">
+                <label for="usrname" class="font-weight-semibold text-sm">Username</label>
+                <div class="input-group">
+                    <input type="text" name="usrname" id="usrname" class="form-control" placeholder="Masukkan username"
+                        value="<?= set_value('usrname'); ?>" required autofocus>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
                     </div>
                 </div>
-            </form>
+                <small class="form-text text-danger"><?= form_error('usrname'); ?></small>
+            </div>
+            <div class="mb-3">
+                <label for="pssword" class="font-weight-semibold text-sm">Password</label>
+                <div class="input-group">
+                    <input type="password" name="pssword" id="pssword" class="form-control"
+                        placeholder="Masukkan password" required>
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <small class="form-text text-danger"><?= form_error('pssword'); ?></small>
+            </div>
+            <div class="row pt-2">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-outline-danger btn-block font-weight-bold shadow-sm">
+                        <i class="fas fa-sign-in-alt mr-1"></i> SIGN IN
+                    </button>
+                </div>
+            </div>
+            <?= form_close(); ?>
         </div>
     </div>
 </div>

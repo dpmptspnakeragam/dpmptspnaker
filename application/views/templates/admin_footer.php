@@ -2,7 +2,8 @@
 <!-- /.content-wrapper -->
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -11,10 +12,11 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Pilih "Logout" di bawah ini jika Anda yakin untuk mengakhiri sesi Anda saat ini.</div>
+            <div class="modal-body">Pilih "Logout" di bawah ini jika Anda yakin untuk mengakhiri sesi Anda saat ini.
+            </div>
             <div class="modal-footer">
                 <button class="btn btn-outline-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <form action="<?= base_url('admin/home/logout'); ?>">
+                <form action="<?= base_url('login/logout'); ?>">
                     <button type="submit" class="btn btn-outline-danger">Logout</button>
                 </form>
             </div>
@@ -57,9 +59,9 @@
 
 <!-- Tabel Data Custom -->
 <script>
-    $(function() {
+    $(function () {
         function initTables(selectors) {
-            selectors.forEach(function(selector) {
+            selectors.forEach(function (selector) {
                 $(selector).DataTable({
                     paging: true,
                     lengthChange: true,
@@ -86,9 +88,9 @@
         });
     });
 
-    $(function() {
+    $(function () {
         function DataTable(selectors) {
-            selectors.forEach(function(selector) {
+            selectors.forEach(function (selector) {
                 $(selector).DataTable({
                     "paging": true,
                     "lengthChange": true,
@@ -108,9 +110,9 @@
 
 <!-- Select 2 -->
 <script>
-    $(function() {
+    $(function () {
         // Inisialisasi Select2 secara global untuk semua modal
-        $('.modal').on('shown.bs.modal', function() {
+        $('.modal').on('shown.bs.modal', function () {
             $(this).find('.select2').select2({
                 dropdownParent: $(this) // Set dropdownParent ke modal yang aktif
             });
@@ -120,7 +122,7 @@
 
 <!-- Sweetalert 2 -->
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Fungsi untuk menampilkan SweetAlert Toast
         function showToast(icon, message) {
             const Toast = Swal.mixin({
@@ -156,24 +158,24 @@
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         var alerts = document.querySelectorAll('.alert');
-        alerts.forEach(function(alert) {
+        alerts.forEach(function (alert) {
             var alertKey = alert.getAttribute('data-alert-key');
-            setTimeout(function() {
+            setTimeout(function () {
                 alert.parentNode.removeChild(alert); // Menghapus elemen alert dari DOM
                 // Hapus juga flashdata sesuai dengan kunci alert
-                <?php if ($this->session->flashdata('success')) : ?>
+                <?php if ($this->session->flashdata('success')): ?>
                     if (alertKey === 'success') {
                         <?= $this->session->set_flashdata('success', ''); ?>
                     }
                 <?php endif; ?>
-                <?php if ($this->session->flashdata('error')) : ?>
+                <?php if ($this->session->flashdata('error')): ?>
                     if (alertKey === 'error') {
                         <?= $this->session->set_flashdata('error', ''); ?>
                     }
                 <?php endif; ?>
-                <?php if ($this->session->flashdata('warning')) : ?>
+                <?php if ($this->session->flashdata('warning')): ?>
                     if (alertKey === 'warning') {
                         <?= $this->session->set_flashdata('warning', ''); ?>
                     }
@@ -185,8 +187,8 @@
 
 <!-- Ekko Lightbox -->
 <script>
-    $(function() {
-        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+    $(function () {
+        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
             event.preventDefault();
             $(this).ekkoLightbox({
                 alwaysShowClose: true
@@ -194,7 +196,7 @@
         });
 
 
-        $('.btn[data-filter]').on('click', function() {
+        $('.btn[data-filter]').on('click', function () {
             $('.btn[data-filter]').removeClass('active');
             $(this).addClass('active');
         });

@@ -8,7 +8,7 @@
     </ul>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const sidebar = document.querySelector('.main-sidebar');
             const pushMenuButton = document.querySelector('[data-widget="pushmenu"]');
 
