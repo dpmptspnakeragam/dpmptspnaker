@@ -588,11 +588,14 @@
 
 			<div class="card col-12 text-center text-light bg-dark isi-investasi p-3">
 				<div class="row">
-					<div class="col-12 col-sm-12 col-md-12 col-lg-6">
+					<div class="col-12">
+						<hr style="border: 1px solid; background-color: white;">
+						<h5>Indeks Kepuasan Masyarakat (IKM)</h5>
+						<hr style="border: 1px solid; background-color: white;">
+					</div>
+
+					<div class="col-12 col-sm-12 col-md-12 col-lg-6 mb-3">
 						<div class="bg-dark">
-							<hr style="border: 1px solid; background-color: white;">
-							<h5>Grafik Survey Kepuasan Masyarakat</h5>
-							<hr style="border: 1px solid; background-color: white;">
 							<canvas id="myChart3"></canvas>
 							<span class="small">Keterangan : A (Sangat Baik) : 88,31 - 100,00 | B (Baik) : 76,61 - 88,30
 								| C (Kurang) : 65,00 - 76,60 | D (Sangat Kurang) : 25,00 - 64,99</span>
@@ -690,10 +693,6 @@
 					</script>
 
 					<div class="col-12 col-sm-12 col-md-12 col-lg-6">
-						<hr style="border: 1px solid; background-color: white;">
-						<h5>Indeks Kepuasan Masyarakat (IKM)</h5>
-						<hr style="border: 1px solid; background-color: white;">
-
 						<?php if (!empty($skm_gambar)): ?>
 							<div id="carouselIKM" class="carousel slide" data-ride="carousel">
 								<div class="carousel-inner shadow-lg" style="height: 100%;">
@@ -765,7 +764,7 @@
 					<div class="col-lg-6 col-12 text-center isi-investasi">
 
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik Izin Diterbitkan</h5>
+						<h5>Izin Diterbitkan</h5>
 						<hr style="border: 1px solid; background-color: white;">
 
 						<h6 class="text-center">Periode
@@ -808,13 +807,30 @@
 							);
 						}
 
-						$max_chart = !empty($total_bidang) ? max($total_bidang) + 10 : 10;
+						// SOLUSI: Menghitung headroom dinamis sumbu Y dan membulatkannya ke kelipatan cantik agar label tidak dempet (kasus image_48a03c.png)
+						$max_val = !empty($total_bidang) ? max($total_bidang) : 0;
+						$temp_max = $max_val > 0 ? $max_val * 1.15 : 10; // Berikan ruang kosong 15% di atas batang tertinggi
+						
+						// Bulatkan $temp_max ke angka cantik terdekat agar gridlines ChartJS terbagi rata secara proporsional
+						if ($temp_max <= 10) {
+							$max_chart = 10;
+						} elseif ($temp_max <= 50) {
+							$max_chart = ceil($temp_max / 5) * 5; // Bulatkan ke kelipatan 5 terdekat
+						} elseif ($temp_max <= 200) {
+							$max_chart = ceil($temp_max / 10) * 10; // Bulatkan ke kelipatan 10 terdekat (misalnya 84 akan dibulatkan ke 90)
+						} elseif ($temp_max <= 1000) {
+							$max_chart = ceil($temp_max / 50) * 50; // Bulatkan ke kelipatan 50 terdekat
+						} else {
+							$max_chart = ceil($temp_max / 100) * 100; // Bulatkan ke kelipatan 100 terdekat
+						}
 						?>
 
 						<div class="mt-2 text-center">
 							<h6 style="color:white;">
 								Total Izin Diterbitkan :
-								<strong><?= number_format($grand_total, 0, ',', '.'); ?></strong> Izin
+								<strong>
+									<?= number_format($grand_total, 0, ',', '.'); ?>
+								</strong> Izin
 							</h6>
 						</div>
 
@@ -1030,7 +1046,7 @@
 					<div class="col-lg-6 col-12 text-center isi-investasi">
 
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik Realisasi Investasi (Rp. M)</h5>
+						<h5>Realisasi Investasi (Rp. M)</h5>
 						<hr style="border: 1px solid; background-color: white;">
 
 						<h6 class="text-center"> Periode
@@ -1042,26 +1058,44 @@
 								<?= date("Y", strtotime($graph->tgl_akhir)); ?>
 							<?php } ?>
 						</h6>
-						<canvas id="myChart2"></canvas>
+
+						<div style="position: relative; height: 380px;">
+							<canvas id="myChart2"></canvas>
+						</div>
+
 						<?php
 						// 1. Kumpulkan data DARI PHP menggunakan Array
 						$tahun_investasi = [];
-						$total = [];
-						$total2 = [];
-						$rincian = []; // 🔥 Array baru untuk menampung rincian per jenis
+						$total2 = []; // Hanya menampung data Realisasi
+						$rincian = []; // Array untuk menampung rincian per jenis (PMDN, PMA, dll)
 						
 						foreach ($grafik_investasi->result() as $item) {
 							if ($item->tipe == 'tahun') {
 								$tahun_investasi[] = $item->tahun;
-								$total[] = (float) $item->nilai;     // Target
 								$total2[] = (float) $item->nilai2;   // Realisasi
 								$rincian[] = $item->rincian_jenis;   // Teks rincian (PMDN: 10 | PMA: 5 dll)
 							}
 						}
 
+						// SOLUSI: Menghitung headroom dinamis sumbu Y dan membulatkannya ke kelipatan cantik agar label tidak dempet (kasus image_484dc8.png)
+						$max_realisasi = !empty($total2) ? max($total2) : 0;
+						$temp_max = $max_realisasi > 0 ? $max_realisasi * 1.15 : 10; // Berikan ruang kosong 15% di atas batang tertinggi
+						
+						// Bulatkan $temp_max ke angka cantik terdekat agar gridlines ChartJS terbagi rata secara proporsional
+						if ($temp_max <= 10) {
+							$max_chart2 = 10;
+						} elseif ($temp_max <= 50) {
+							$max_chart2 = ceil($temp_max / 5) * 5; // Bulatkan ke kelipatan 5 terdekat
+						} elseif ($temp_max <= 200) {
+							$max_chart2 = ceil($temp_max / 10) * 10; // Bulatkan ke kelipatan 10 terdekat (misalnya 81 akan dibulatkan ke 90)
+						} elseif ($temp_max <= 1000) {
+							$max_chart2 = ceil($temp_max / 50) * 50; // Bulatkan ke kelipatan 50 terdekat
+						} else {
+							$max_chart2 = ceil($temp_max / 100) * 100; // Bulatkan ke kelipatan 100 terdekat
+						}
+
 						// 2. Encode ke JSON agar aman dibaca oleh Javascript
 						$labels_json = json_encode($tahun_investasi);
-						$target_json = json_encode($total, JSON_NUMERIC_CHECK);
 						$realisasi_json = json_encode($total2, JSON_NUMERIC_CHECK);
 						$rincian_json = json_encode($rincian);
 						?>
@@ -1072,63 +1106,70 @@
 
 								// Ambil data JSON dari PHP
 								var labelsData = <?= $labels_json; ?>;
-								var targetData = <?= $target_json; ?>;
 								var realisasiData = <?= $realisasi_json; ?>;
 								var rincianData = <?= $rincian_json; ?>;
+								var maxChart2 = <?= (int) $max_chart2; ?>;
 
-								// 1. Fungsi pembuat warna RGBA acak
+								// Fungsi pembuat warna RGBA acak yang kontras dengan background gelap
 								function getRandomColor(alpha) {
-									// Dibatasi sampai 200 agar warnanya tidak terlalu terang/putih (karena background gelap)
-									var r = Math.floor(Math.random() * 200);
-									var g = Math.floor(Math.random() * 200);
-									var b = Math.floor(Math.random() * 200);
+									var r = Math.floor(Math.random() * 180) + 50; // Minimal 50 agar tidak terlalu gelap
+									var g = Math.floor(Math.random() * 180) + 50;
+									var b = Math.floor(Math.random() * 180) + 50;
 									return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
 								}
 
-								// 2. Generate HANYA DUA warna acak (satu untuk Target, satu untuk Realisasi)
-								var colorTarget = getRandomColor(0.85);
+								// Generate satu warna acak yang konsisten untuk seluruh batang Realisasi
 								var colorRealisasi = getRandomColor(0.85);
 
 								var data = {
 									labels: labelsData,
-									datasets: [{
-										label: "Target",
-										backgroundColor: colorTarget, // Langsung pasang 1 warna untuk semua bar Target
-										borderColor: colorTarget.replace(/[\d\.]+\)$/g, '1)'), // Border solid
-										borderWidth: 1,
-										data: targetData
-									}, {
-										label: "Realisasi",
-										backgroundColor: colorRealisasi, // Langsung pasang 1 warna untuk semua bar Realisasi
-										borderColor: colorRealisasi.replace(/[\d\.]+\)$/g, '1)'), // Border solid
-										borderWidth: 1,
-										data: realisasiData
-									}]
+									datasets: [
+										/* 
+										   Data TARGET sementara di-hidden (dihapus dari dataset ChartJS) 
+										   sesuai dengan instruksi kebutuhan sistem saat ini.
+										*/
+										{
+											label: "Realisasi",
+											backgroundColor: colorRealisasi,
+											borderColor: colorRealisasi.replace(/[\d\.]+\)$/g, '1)'), // Mengubah opacity border menjadi solid 1.0
+											borderWidth: 1,
+											data: realisasiData
+										}
+									]
 								};
 
 								var chart = new Chart(ctx, {
 									type: 'bar',
 									data: data,
 									options: {
+										responsive: true,
+										maintainAspectRatio: false,
 										legend: {
+											display: true,
+											position: 'top',
 											labels: {
 												fontColor: 'white'
 											}
 										},
-										"hover": {
-											"animationDuration": 0
+										hover: {
+											animationDuration: 0
 										},
-										"animation": {
-											"duration": 1,
-											"onComplete": function () {
+										animation: {
+											duration: 1,
+											onComplete: function () {
 												var chartInstance = this.chart,
 													ctx = chartInstance.ctx;
 
-												ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+												ctx.font = Chart.helpers.fontString(
+													Chart.defaults.global.defaultFontSize,
+													Chart.defaults.global.defaultFontStyle,
+													Chart.defaults.global.defaultFontFamily
+												);
 												ctx.textAlign = 'center';
 												ctx.textBaseline = 'bottom';
 												ctx.fillStyle = 'white';
 
+												// Menuliskan angka nilai di atas masing-masing batang secara real-time
 												this.data.datasets.forEach(function (dataset, i) {
 													var meta = chartInstance.controller.getDatasetMeta(i);
 													meta.data.forEach(function (bar, index) {
@@ -1141,33 +1182,36 @@
 										tooltips: {
 											mode: 'nearest',
 											intersect: true,
-
 											callbacks: {
 												title: function (tooltipItems, data) {
-													return '';
+													// Menampilkan tahun sebagai judul tooltip
+													return tooltipItems[0] ? 'Tahun ' + tooltipItems[0].xLabel : '';
 												},
 												label: function (tooltipItem, data) {
 													var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 													var value = tooltipItem.yLabel;
 
-													if (datasetLabel === 'Target') {
-														return 'Target: ' + value;
-													} else if (datasetLabel === 'Realisasi') {
+													if (datasetLabel === 'Realisasi') {
 														var textRincian = rincianData[tooltipItem.index];
-
 														if (textRincian) {
-															return textRincian.split(' | ');
+															// Memisahkan teks rincian jenis investasi (PMDN, PMA, dll) menggunakan bar separator '|'
+															var output = ['Total Realisasi: ' + value + ' M'];
+															var details = textRincian.split(' | ');
+															return output.concat(details);
 														}
-														return 'Belum ada rincian jenis';
+														return 'Realisasi: ' + value + ' M (Belum ada rincian)';
 													}
+													return datasetLabel + ': ' + value;
 												}
 											}
 										},
-										responsive: true,
 										scales: {
 											xAxes: [{
 												ticks: {
 													fontColor: 'white'
+												},
+												gridLines: {
+													display: false
 												}
 											}],
 											yAxes: [{
@@ -1177,7 +1221,13 @@
 												},
 												ticks: {
 													beginAtZero: true,
-													fontColor: 'white'
+													fontColor: 'white',
+													max: maxChart2, // Menggunakan headroom dinamis hasil perhitungan PHP
+													callback: function (value) {
+														if (Number.isInteger(value)) {
+															return value;
+														}
+													}
 												}
 											}]
 										}
@@ -1190,7 +1240,7 @@
 
 					<div class="col-lg-12 text-center text-light bg-dark isi-investasi">
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik Izin Diterbitkan (Tahun)</h5>
+						<h5>Izin Diterbitkan (Tahun)</h5>
 						<hr style="border: 1px solid; background-color: white;">
 						<canvas id="myChart4"></canvas>
 						<?php
@@ -1310,7 +1360,7 @@
 
 
 			<div class="card-header text-center border-bottom border-top">
-				<h5 class="mt-2">Grafik OSS RBA</h5>
+				<h5 class="mt-2">OSS RBA</h5>
 			</div>
 			<div class="text-center mt-3">
 				<span>Periode <br>
@@ -1325,7 +1375,7 @@
 					<div class="col-lg-6 col-12 text-center isi-investasi">
 
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik NIB Diterbitkan</h5>
+						<h5>NIB Diterbitkan</h5>
 						<hr style="border: 1px solid; background-color: white;">
 
 						<canvas id="grafiknib"></canvas>
@@ -1411,7 +1461,7 @@
 					<div class="col-lg-6 col-12 text-center isi-investasi">
 
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik Sebaran Proyek Berdasarkan Risiko</h5>
+						<h5>Sebaran Proyek Berdasarkan Risiko</h5>
 						<hr style="border: 1px solid; background-color: white;">
 
 						<div class="chart-container" style="width:70%; margin:auto;">
@@ -1463,7 +1513,7 @@
 					<div class="col-lg-6 col-12 text-center isi-investasi">
 
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik Sebaran Proyek Per Kecamatan Usaha</h5>
+						<h5>Sebaran Proyek Per Kecamatan Usaha</h5>
 						<hr style="border: 1px solid; background-color: white;">
 
 						<canvas id="grafikkecamatan" width="100%"></canvas>
@@ -1550,7 +1600,7 @@
 
 					<div class="col-lg-6 col-12 text-center isi-investasi">
 						<hr style="border: 1px solid; background-color: white;">
-						<h5>Grafik Top 5 KBLI</h5>
+						<h5>Top 5 KBLI</h5>
 						<hr style="border: 1px solid; background-color: white;">
 						<canvas id="grafikkbli" width="100%"></canvas>
 						<?php
