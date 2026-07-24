@@ -112,6 +112,69 @@ body {
 	border-radius: 30px;
 }
 
+/* start dalam View SKM */
+.text-maroon {
+    color: maroon !important;
+}
+
+.bg-maroon {
+	background-color: maroon !important;
+	color: white;
+}
+
+.border-maroon {
+    border-color: maroon !important;
+}
+
+.demo-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+}
+
+.demo-list:last-child {
+	border-bottom: none;
+}
+
+/* Highlight Score Circle */
+.score-circle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 8px solid #f8f9fa;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    margin: 15px auto;
+}
+
+.btn-outline-maroon {
+	font-weight: 400;
+	border: 1px solid;
+	color: maroon;
+	display: inline-block;
+	z-index: 1;
+	padding: 5px;
+	transition-duration: 1s;
+	text-decoration: none;
+	-webkit-tap-highlight-color: transparent;
+	-webkit-touch-callout: none;
+	background-color: transparent;
+}
+
+.btn-outline-maroon:hover {
+	background-color: maroon;
+	color: white;
+	transition-duration: 0.5s;
+	border-radius: 30px;
+}
+/* end of dalam View SKM */
+
+
 /* custom pagination */
 .custom-pagination {
 	margin-bottom: 30px;

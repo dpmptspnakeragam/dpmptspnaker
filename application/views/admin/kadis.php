@@ -4,9 +4,6 @@
 
         <div class="row">
             <div class="col-12">
-                <!-- <hr>
-                <h3 class="text-center">Kepala Dinas <br> Dari Masa Ke Masa</h3>
-                <hr> -->
                 <div class="card card-outline card-maroon">
                     <div class="card-header">
                         <h3 class="card-title">Tabel <?= $title; ?></h3>

@@ -127,12 +127,12 @@ class Skm extends CI_Controller
         $this->load->view('templates/footer');
     }
 
-    // public function form()
-    // {
-    //     $this->load->view('templates/header');
-    //     $this->load->view('form_skm');
-    //     $this->load->view('templates/footer');
-    // }
+    public function form()
+    {
+        $this->load->view('templates/header');
+        $this->load->view('form_skm');
+        $this->load->view('templates/footer');
+    }
 
     public function _rules_skm()
     {
@@ -153,15 +153,15 @@ class Skm extends CI_Controller
         ]);
 
         $validation_rules = [
-            ['field' => 'u1', 'label' => 'pendapat nomor 1 diatas', 'rules' => 'required'],
-            ['field' => 'u2', 'label' => 'pendapat nomor 2 diatas', 'rules' => 'required'],
-            ['field' => 'u3', 'label' => 'pendapat nomor 3 diatas', 'rules' => 'required'],
-            ['field' => 'u4', 'label' => 'pendapat nomor 4 diatas', 'rules' => 'required'],
-            ['field' => 'u5', 'label' => 'pendapat nomor 5 diatas', 'rules' => 'required'],
-            ['field' => 'u6', 'label' => 'pendapat nomor 6 diatas', 'rules' => 'required'],
-            ['field' => 'u7', 'label' => 'pendapat nomor 7 diatas', 'rules' => 'required'],
-            ['field' => 'u8', 'label' => 'pendapat nomor 8 diatas', 'rules' => 'required'],
-            ['field' => 'u9', 'label' => 'pendapat nomor 9 diatas', 'rules' => 'required'],
+            // ['field' => 'u1', 'label' => 'pendapat nomor 1 diatas', 'rules' => 'required'],
+            // ['field' => 'u2', 'label' => 'pendapat nomor 2 diatas', 'rules' => 'required'],
+            // ['field' => 'u3', 'label' => 'pendapat nomor 3 diatas', 'rules' => 'required'],
+            // ['field' => 'u4', 'label' => 'pendapat nomor 4 diatas', 'rules' => 'required'],
+            // ['field' => 'u5', 'label' => 'pendapat nomor 5 diatas', 'rules' => 'required'],
+            // ['field' => 'u6', 'label' => 'pendapat nomor 6 diatas', 'rules' => 'required'],
+            // ['field' => 'u7', 'label' => 'pendapat nomor 7 diatas', 'rules' => 'required'],
+            // ['field' => 'u8', 'label' => 'pendapat nomor 8 diatas', 'rules' => 'required'],
+            // ['field' => 'u9', 'label' => 'pendapat nomor 9 diatas', 'rules' => 'required'],
             ['field' => 'rating_r1', 'label' => 'bintang dari pernyataan nomor 1 diatas', 'rules' => 'required|greater_than[0]|less_than[7]'],
             ['field' => 'rating_r2', 'label' => 'bintang dari pernyataan nomor 2 diatas', 'rules' => 'required|greater_than[0]|less_than[7]'],
             ['field' => 'rating_r3', 'label' => 'bintang dari pernyataan nomor 3 diatas', 'rules' => 'required|greater_than[0]|less_than[7]'],
@@ -245,7 +245,7 @@ class Skm extends CI_Controller
             $data_spak = $this->security->xss_clean($input_spak);
             $this->Model_skm->simpan_spak($data_spak);
 
-            $this->session->set_flashdata('berhasil', 'Pengisian kuesioner berhasil. Terima kasih!');
+            $this->session->set_flashdata('berhasil', 'Pengisian survey Tahap 1 berhasil. Silahkan melanjutkan pada Tahap 2, Terima kasih!');
             redirect('skm');
         } else {
             $this->load->view('templates/header');

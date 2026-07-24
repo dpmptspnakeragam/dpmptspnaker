@@ -7,16 +7,14 @@ class User extends CI_Controller
     {
         parent::__construct();
 
-        // 1. Proteksi Halaman: Wajib Login
-        if ($this->session->userdata('username') == "") {
-            $this->session->set_flashdata('error', 'Silakan login terlebih dahulu.');
-            redirect('home');
+        if ($this->session->userdata('logged_in_utama') !== TRUE) {
+            redirect('login');
         }
 
-        // 2. Proteksi Halaman: Hanya Administrator yang berhak mengakses menu ini
-        if ($this->session->userdata('role') !== 'Administrator') {
-            $this->session->set_flashdata('error', 'Akses ditolak! Halaman manajemen user hanya untuk Administrator.');
-            redirect('dashboard');
+        $role_user = $this->session->userdata('role');
+
+        if ($role_user !== 'Administrator') {
+            redirect('admin/home');
         }
 
         $this->load->model('Model_user');
@@ -26,7 +24,7 @@ class User extends CI_Controller
     {
         $data['user'] = $this->Model_user->tampil_semua_data();
         $data['home'] = 'Home';
-        $data['title'] = 'Manajemen User';
+        $data['title'] = 'User';
 
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);

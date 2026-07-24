@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $title; ?></title>
+    <title><?= isset($title) ? $title : 'Admin Panel'; ?></title>
 
     <link href="<?= base_url('assets/'); ?>img/agam.png" rel="shortcut icon" type="image/png">
 

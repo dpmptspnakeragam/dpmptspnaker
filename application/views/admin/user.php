@@ -97,15 +97,17 @@
 </section>
 
 <!-- ================= STREAMING_CHUNK: Modal Tambah User ================= -->
-<div class="modal fade" id="ModalTambahUser" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+
+<div class="modal fade" id="ModalTambahUser" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
-			<div class="modal-header bg-maroon text-white">
-				<h5 class="modal-title font-weight-bold"><i class="fas fa-user-plus mr-2"></i>Tambah Pengguna Baru</h5>
-				<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">Tambah <?= $title; ?></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
+
 			<?= form_open('admin/user/tambah'); ?>
 			<div class="modal-body">
 				<div class="form-group">
@@ -134,11 +136,12 @@
 					</select>
 				</div>
 			</div>
-			<div class="modal-footer bg-light">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-				<button type="submit" class="btn bg-maroon">Simpan Data</button>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+				<button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Simpan</button>
 			</div>
 			<?= form_close(); ?>
+
 		</div>
 	</div>
 </div>
@@ -147,16 +150,16 @@
 <?php if (!empty($user)): ?>
 	<?php foreach ($user as $row): ?>
 
-		<!-- MODAL EDIT USER -->
-		<div class="modal fade" id="EditUser<?= $row->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal fade" id="EditUser<?= $row->id; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
-					<div class="modal-header bg-warning text-white">
-						<h5 class="modal-title font-weight-bold"><i class="fas fa-edit mr-2"></i>Edit Informasi Pengguna</h5>
-						<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+					<div class="modal-header">
+						<h5 class="modal-title" id="staticBackdropLabel">Update <?= $title; ?></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
+
 					<?= form_open('admin/user/edit/' . $row->id); ?>
 					<div class="modal-body">
 						<div class="form-group">
@@ -175,52 +178,52 @@
 						</div>
 						<div class="form-group">
 							<label class="font-weight-semibold">Hak Akses (Role)</label>
-							<?php if ($row->role === 'User'): ?>
-								<!-- Jika saat ini role-nya User, kunci agar tidak bisa diubah ke Administrator -->
-								<input type="text" class="form-control" value="User" readonly>
-								<input type="hidden" name="role" value="User">
-								<small class="form-text text-muted">Peran 'User' tidak dapat diubah ke 'Administrator'.</small>
+							<?php if ($row->role === 'Administrator'): ?>
+								<!-- Jika saat ini role-nya Administrator, kunci penuh (tidak bisa diubah) -->
+								<input type="text" class="form-control" value="Administrator" readonly>
+								<input type="hidden" name="role" value="Administrator">
+								<small class="form-text text-muted">Hak akses 'Administrator' dikunci dan tidak dapat diubah.</small>
 							<?php else: ?>
-								<!-- Hanya Administrator lama yang bisa tetap mempertahankan atau mengubah role-nya -->
+								<!-- Jika saat ini role-nya User, opsi Administrator dimatikan (disabled) -->
 								<select name="role" class="form-control" required>
-									<option value="Administrator" <?= ($row->role == 'Administrator') ? 'selected' : ''; ?>>
-										Administrator</option>
 									<option value="User" <?= ($row->role == 'User') ? 'selected' : ''; ?>>User</option>
+									<!-- Tambahkan atribut disabled pada Administrator -->
+									<option value="Administrator" disabled>Administrator (Tidak Diizinkan)</option>
 								</select>
+								<small class="form-text text-muted">Akun ini tidak dapat dinaikkan levelnya menjadi Administrator.</small>
 							<?php endif; ?>
 						</div>
 					</div>
-					<div class="modal-footer bg-light">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-						<button type="submit" class="btn btn-warning text-white">Simpan Perubahan</button>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+						<button type="submit" class="btn btn-outline-danger"><i class="fa fa-save"></i> Update</button>
 					</div>
 					<?= form_close(); ?>
+
 				</div>
 			</div>
 		</div>
 
 		<?php if ($row->role === 'User'): ?>
 			<!-- MODAL HAPUS USER (Hanya dipasang untuk pengguna ber-role User) -->
-			<div class="modal fade" id="DeleteUser<?= $row->id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered text-dark" role="document">
+			<div class="modal fade" id="DeleteUser<?= $row->id; ?>" data-backdrop="static" data-keyboard="false"
+				tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
-						<div class="modal-header bg-danger text-white">
-							<h5 class="modal-title font-weight-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Konfirmasi
-								Penghapusan</h5>
-							<button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticBackdropLabel">Hapus <?= $title; ?></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body text-center py-4">
-							<i class="fas fa-user-times text-danger fa-4x mb-3"></i>
-							<h4>Apakah Anda yakin?</h4>
-							<p class="text-muted">Anda akan menghapus akun milik <strong><?= $row->nama; ?></strong>
-								(<?= $row->username; ?>) secara permanen. Tindakan ini tidak dapat dibatalkan.</p>
+						<div class="modal-body">
+							Anda akan menghapus akun milik <strong class="font-weight-bold text-maroon"><?= $row->nama; ?></strong>
+							<p class="text-muted">(<?= $row->username; ?>) secara permanen. Tindakan ini tidak dapat dibatalkan.</p>
 						</div>
-						<div class="modal-footer bg-light justify-content-center">
-							<button type="button" class="btn btn-secondary px-4" data-dismiss="modal">Batal</button>
-							<a href="<?= base_url('admin/user/hapus/' . $row->id); ?>" class="btn btn-danger px-4">Ya, Hapus
-								Akun</a>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+							<a href="<?= base_url('admin/user/hapus/' . $row->id); ?>"
+								class="btn btn-outline-danger">Hapus</a>
 						</div>
 					</div>
 				</div>

@@ -97,7 +97,7 @@
 									: base_url('assets/img/agam.jpg');
 
 								$itemActive = ($key == 0) ? 'active' : '';
-								?>
+						?>
 
 								<div class="carousel-item <?= $itemActive; ?>">
 									<div class="item__third">
@@ -137,7 +137,7 @@
 										</div>
 									</div>
 								</div>
-								<?php
+						<?php
 							}
 						} ?>
 					</div>
@@ -238,7 +238,7 @@
 			<div class="col-12 text-justify">
 				<?php
 				foreach ($pengaturan->result() as $row) {
-					?>
+				?>
 					<p>
 						<?= $row->layanan; ?>
 					</p>
@@ -247,7 +247,7 @@
 			<div class="col-lg-5 col-md-5 col-12">
 				<?php
 				foreach ($pengaturan->result() as $row) {
-					?>
+				?>
 					<img style="width:100%;" class="shadow mb-3 isi-pelayanan intro-pelayanan"
 						src="<?= base_url(); ?>assets/imgupload/<?= $row->maklumat; ?>" alt="Maklumat Pelayanan">
 				<?php } ?>
@@ -435,11 +435,11 @@
 
 							<!-- Hapus Alert dengan klik tombol x (Close) -->
 							<script>
-								document.addEventListener('DOMContentLoaded', function () {
+								document.addEventListener('DOMContentLoaded', function() {
 									var alerts = document.querySelectorAll('.alert.persistent-alert');
 
-									alerts.forEach(function (alert) {
-										alert.querySelector('.close').addEventListener('click', function () {
+									alerts.forEach(function(alert) {
+										alert.querySelector('.close').addEventListener('click', function() {
 											var alertKey = alert.getAttribute('data-alert-key');
 
 											// Use AJAX to clear the flashdata
@@ -644,7 +644,7 @@
 								},
 								animation: {
 									duration: 1,
-									onComplete: function () {
+									onComplete: function() {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -652,9 +652,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function (dataset, i) {
+										this.data.datasets.forEach(function(dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function (bar, index) {
+											meta.data.forEach(function(bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -810,7 +810,7 @@
 						// SOLUSI: Menghitung headroom dinamis sumbu Y dan membulatkannya ke kelipatan cantik agar label tidak dempet (kasus image_48a03c.png)
 						$max_val = !empty($total_bidang) ? max($total_bidang) : 0;
 						$temp_max = $max_val > 0 ? $max_val * 1.15 : 10; // Berikan ruang kosong 15% di atas batang tertinggi
-						
+
 						// Bulatkan $temp_max ke angka cantik terdekat agar gridlines ChartJS terbagi rata secara proporsional
 						if ($temp_max <= 10) {
 							$max_chart = 10;
@@ -866,7 +866,7 @@
 								}
 							</style>
 							<script>
-								document.addEventListener("DOMContentLoaded", function () {
+								document.addEventListener("DOMContentLoaded", function() {
 									var ctx = document.getElementById('myChartHome').getContext('2d');
 
 									var originalLabels = <?= json_encode($nama_bidang, JSON_UNESCAPED_UNICODE); ?>;
@@ -898,7 +898,7 @@
 											},
 											animation: {
 												duration: 1,
-												onComplete: function () {
+												onComplete: function() {
 													var chartInstance = this.chart;
 													var ctx = chartInstance.ctx;
 
@@ -911,9 +911,9 @@
 													ctx.textAlign = 'center';
 													ctx.textBaseline = 'bottom';
 
-													this.data.datasets.forEach(function (dataset, i) {
+													this.data.datasets.forEach(function(dataset, i) {
 														var meta = chartInstance.controller.getDatasetMeta(i);
-														meta.data.forEach(function (bar, index) {
+														meta.data.forEach(function(bar, index) {
 															var data = dataset.data[index];
 															ctx.fillText(data, bar._model.x, bar._model.y - 5);
 														});
@@ -924,7 +924,7 @@
 												enabled: false,
 												mode: 'index',
 												intersect: true,
-												custom: function (tooltipModel) {
+												custom: function(tooltipModel) {
 													var tooltipEl = document.getElementById('chartjs-tooltip');
 													if (!tooltipEl) {
 														tooltipEl = document.createElement('div');
@@ -936,17 +936,17 @@
 													if (!tooltipEl._listenersInitialized) {
 														tooltipEl._keepAlive = false;
 														tooltipEl._hideTimeout = null;
-														tooltipEl.addEventListener('mouseenter', function () {
+														tooltipEl.addEventListener('mouseenter', function() {
 															tooltipEl._keepAlive = true;
 															if (tooltipEl._hideTimeout) {
 																clearTimeout(tooltipEl._hideTimeout);
 																tooltipEl._hideTimeout = null;
 															}
 														});
-														tooltipEl.addEventListener('mouseleave', function () {
+														tooltipEl.addEventListener('mouseleave', function() {
 															tooltipEl._keepAlive = false;
 															if (tooltipEl._hideTimeout) clearTimeout(tooltipEl._hideTimeout);
-															tooltipEl._hideTimeout = setTimeout(function () {
+															tooltipEl._hideTimeout = setTimeout(function() {
 																if (!tooltipEl._keepAlive) tooltipEl.style.display = 'none';
 																tooltipEl._hideTimeout = null;
 															}, 300);
@@ -965,7 +965,7 @@
 
 														// schedule a short delay before hiding to allow pointer to reach tooltip
 														if (!tooltipEl._hideTimeout) {
-															tooltipEl._hideTimeout = setTimeout(function () {
+															tooltipEl._hideTimeout = setTimeout(function() {
 																tooltipEl.style.display = 'none';
 																tooltipEl._hideTimeout = null;
 															}, 300);
@@ -989,7 +989,7 @@
 													var detail = detailJenis[bidang] || [];
 													var html = '<ul>';
 													if (!detail.length) html += '<li>- Tidak ada jenis izin</li>';
-													else detail.forEach(function (it) {
+													else detail.forEach(function(it) {
 														html += '<li>' + it.jenis_izin + ': ' + it.jumlah + '</li>';
 													});
 													html += '</ul>';
@@ -1024,7 +1024,7 @@
 														max: maxChart,
 														beginAtZero: true,
 														fontColor: 'white',
-														callback: function (value) {
+														callback: function(value) {
 															if (Number.isInteger(value)) {
 																return value;
 															}
@@ -1053,7 +1053,7 @@
 							<?php
 							$no = 1;
 							foreach ($periode_grafik_investasi->result() as $graph) {
-								?>
+							?>
 								<?= date("Y", strtotime($graph->tgl_awal)); ?> s/d
 								<?= date("Y", strtotime($graph->tgl_akhir)); ?>
 							<?php } ?>
@@ -1068,7 +1068,7 @@
 						$tahun_investasi = [];
 						$total2 = []; // Hanya menampung data Realisasi
 						$rincian = []; // Array untuk menampung rincian per jenis (PMDN, PMA, dll)
-						
+
 						foreach ($grafik_investasi->result() as $item) {
 							if ($item->tipe == 'tahun') {
 								$tahun_investasi[] = $item->tahun;
@@ -1080,7 +1080,7 @@
 						// SOLUSI: Menghitung headroom dinamis sumbu Y dan membulatkannya ke kelipatan cantik agar label tidak dempet (kasus image_484dc8.png)
 						$max_realisasi = !empty($total2) ? max($total2) : 0;
 						$temp_max = $max_realisasi > 0 ? $max_realisasi * 1.15 : 10; // Berikan ruang kosong 15% di atas batang tertinggi
-						
+
 						// Bulatkan $temp_max ke angka cantik terdekat agar gridlines ChartJS terbagi rata secara proporsional
 						if ($temp_max <= 10) {
 							$max_chart2 = 10;
@@ -1101,7 +1101,7 @@
 						?>
 
 						<script>
-							document.addEventListener("DOMContentLoaded", function () {
+							document.addEventListener("DOMContentLoaded", function() {
 								var ctx = document.getElementById('myChart2').getContext('2d');
 
 								// Ambil data JSON dari PHP
@@ -1156,7 +1156,7 @@
 										},
 										animation: {
 											duration: 1,
-											onComplete: function () {
+											onComplete: function() {
 												var chartInstance = this.chart,
 													ctx = chartInstance.ctx;
 
@@ -1170,9 +1170,9 @@
 												ctx.fillStyle = 'white';
 
 												// Menuliskan angka nilai di atas masing-masing batang secara real-time
-												this.data.datasets.forEach(function (dataset, i) {
+												this.data.datasets.forEach(function(dataset, i) {
 													var meta = chartInstance.controller.getDatasetMeta(i);
-													meta.data.forEach(function (bar, index) {
+													meta.data.forEach(function(bar, index) {
 														var dataValue = dataset.data[index];
 														ctx.fillText(dataValue, bar._model.x, bar._model.y - 5);
 													});
@@ -1183,11 +1183,11 @@
 											mode: 'nearest',
 											intersect: true,
 											callbacks: {
-												title: function (tooltipItems, data) {
+												title: function(tooltipItems, data) {
 													// Menampilkan tahun sebagai judul tooltip
 													return tooltipItems[0] ? 'Tahun ' + tooltipItems[0].xLabel : '';
 												},
-												label: function (tooltipItem, data) {
+												label: function(tooltipItem, data) {
 													var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 													var value = tooltipItem.yLabel;
 
@@ -1223,7 +1223,7 @@
 													beginAtZero: true,
 													fontColor: 'white',
 													max: maxChart2, // Menggunakan headroom dinamis hasil perhitungan PHP
-													callback: function (value) {
+													callback: function(value) {
 														if (Number.isInteger(value)) {
 															return value;
 														}
@@ -1247,7 +1247,7 @@
 						$labels = [];
 						$datasets = [];
 						$total_per_tahun = []; // untuk simpan total tiap tahun
-						
+
 						// Ambil label izin
 						foreach ($grafik_tahun as $item) {
 							$labels[] = $item->izin;
@@ -1307,7 +1307,7 @@
 									},
 									animation: {
 										duration: 1,
-										onComplete: function () {
+										onComplete: function() {
 											var chartInstance = this.chart,
 												ctx = chartInstance.ctx;
 
@@ -1315,9 +1315,9 @@
 											ctx.textAlign = 'center';
 											ctx.textBaseline = 'bottom';
 
-											this.data.datasets.forEach(function (dataset, i) {
+											this.data.datasets.forEach(function(dataset, i) {
 												var meta = chartInstance.controller.getDatasetMeta(i);
-												meta.data.forEach(function (bar, index) {
+												meta.data.forEach(function(bar, index) {
 													var data = dataset.data[index];
 													ctx.fillText(data, bar._model.x, bar._model.y - 5);
 												});
@@ -1418,7 +1418,7 @@
 								},
 								"animation": {
 									"duration": 1,
-									"onComplete": function () {
+									"onComplete": function() {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -1426,9 +1426,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function (dataset, i) {
+										this.data.datasets.forEach(function(dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function (bar, index) {
+											meta.data.forEach(function(bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -1557,7 +1557,7 @@
 								},
 								"animation": {
 									"duration": 1,
-									"onComplete": function () {
+									"onComplete": function() {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -1565,9 +1565,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function (dataset, i) {
+										this.data.datasets.forEach(function(dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function (bar, index) {
+											meta.data.forEach(function(bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -1656,7 +1656,7 @@
 								tooltips: {
 									enabled: true,
 									callbacks: {
-										label: function (tooltipItem, data) {
+										label: function(tooltipItem, data) {
 											var label = data.datasets[tooltipItem.datasetIndex].label || '';
 											if (label) {
 												label += ': ';
@@ -1671,7 +1671,7 @@
 								},
 								"animation": {
 									"duration": 1,
-									"onComplete": function () {
+									"onComplete": function() {
 										var chartInstance = this.chart,
 											ctx = chartInstance.ctx;
 
@@ -1679,9 +1679,9 @@
 										ctx.textAlign = 'center';
 										ctx.textBaseline = 'bottom';
 
-										this.data.datasets.forEach(function (dataset, i) {
+										this.data.datasets.forEach(function(dataset, i) {
 											var meta = chartInstance.controller.getDatasetMeta(i);
-											meta.data.forEach(function (bar, index) {
+											meta.data.forEach(function(bar, index) {
 												var data = dataset.data[index];
 												ctx.fillText(data, bar._model.x, bar._model.y - 5);
 											});
@@ -2192,7 +2192,7 @@
 <script type="text/javascript">
 	var Tawk_API = Tawk_API || {},
 		Tawk_LoadStart = new Date();
-	(function () {
+	(function() {
 		var s1 = document.createElement("script"),
 			s0 = document.getElementsByTagName("script")[0];
 		s1.async = true;
@@ -2209,14 +2209,14 @@
 	}
 	setTimeout(showPopUpBanner, 3000);
 
-	$('.popUpBannerBox').click(function (e) {
+	$('.popUpBannerBox').click(function(e) {
 		if (!$(e.target).is('.popUpBannerContent, .popUpBannerContent *')) {
 			$('.popUpBannerBox').fadeOut("2000");
 			return false;
 		}
 	});
 
-	$('.popUpBannerBox').click(function () {
+	$('.popUpBannerBox').click(function() {
 		$('.popUpBannerBox').fadeOut("2000");
 		return false;
 	});
@@ -2236,13 +2236,13 @@
 
 <!--End of Tawk.to Script-->
 <script>
-	$('.carousel-item', '.multi-item-carousel').each(function () {
+	$('.carousel-item', '.multi-item-carousel').each(function() {
 		var next = $(this).next();
 		if (!next.length) {
 			next = $(this).siblings(':first');
 		}
 		next.children(':first-child').clone().appendTo($(this));
-	}).each(function () {
+	}).each(function() {
 		var prev = $(this).prev();
 		if (!prev.length) {
 			prev = $(this).siblings(':last');

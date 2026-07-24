@@ -20,7 +20,7 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			Swal.fire({
 				icon: 'error',
-				title: '404 - Halaman Tidak Ditemukan',
+				title: 'Halaman Tidak Ditemukan',
 				text: 'Maaf, halaman yang Anda cari tidak tersedia.',
 				confirmButtonText: 'Kembali ke Beranda',
 				customClass: {

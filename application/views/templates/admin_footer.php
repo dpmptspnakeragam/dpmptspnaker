@@ -59,9 +59,9 @@
 
 <!-- Tabel Data Custom -->
 <script>
-    $(function () {
+    $(function() {
         function initTables(selectors) {
-            selectors.forEach(function (selector) {
+            selectors.forEach(function(selector) {
                 $(selector).DataTable({
                     paging: true,
                     lengthChange: true,
@@ -88,9 +88,9 @@
         });
     });
 
-    $(function () {
+    $(function() {
         function DataTable(selectors) {
-            selectors.forEach(function (selector) {
+            selectors.forEach(function(selector) {
                 $(selector).DataTable({
                     "paging": true,
                     "lengthChange": true,
@@ -110,9 +110,9 @@
 
 <!-- Select 2 -->
 <script>
-    $(function () {
+    $(function() {
         // Inisialisasi Select2 secara global untuk semua modal
-        $('.modal').on('shown.bs.modal', function () {
+        $('.modal').on('shown.bs.modal', function() {
             $(this).find('.select2').select2({
                 dropdownParent: $(this) // Set dropdownParent ke modal yang aktif
             });
@@ -120,14 +120,13 @@
     });
 </script>
 
-<!-- Sweetalert 2 -->
+<!-- Script Notifikasi SweetAlert -->
 <script>
-    $(document).ready(function () {
-        // Fungsi untuk menampilkan SweetAlert Toast
+    $(document).ready(function() {
         function showToast(icon, message) {
             const Toast = Swal.mixin({
                 toast: true,
-                position: "top-right",
+                position: "top-end",
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,
@@ -136,59 +135,37 @@
                     toast.onmouseleave = Swal.resumeTimer;
                 }
             });
+
             Toast.fire({
                 icon: icon,
-                title: message
+                title: message,
             });
         }
 
-        // Cek flashdata dan tampilkan notifikasi sesuai jenisnya
         <?php if ($this->session->flashdata('success')) { ?>
-            showToast("success", "<?= $this->session->flashdata('success'); ?>");
+            showToast("success", '<?= $this->session->flashdata('success'); ?>');
+            <?php $this->session->unset_userdata('success');
+            ?>
         <?php } ?>
 
         <?php if ($this->session->flashdata('error')) { ?>
-            showToast("error", "<?= $this->session->flashdata('error'); ?>");
+            showToast("error", '<?= $this->session->flashdata('error'); ?>');
+            <?php $this->session->unset_userdata('error');
+            ?>
         <?php } ?>
 
         <?php if ($this->session->flashdata('warning')) { ?>
-            showToast("warning", "<?= $this->session->flashdata('warning'); ?>");
+            showToast("warning", '<?= $this->session->flashdata('warning'); ?>');
+            <?php $this->session->unset_userdata('warning');
+            ?>
         <?php } ?>
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var alerts = document.querySelectorAll('.alert');
-        alerts.forEach(function (alert) {
-            var alertKey = alert.getAttribute('data-alert-key');
-            setTimeout(function () {
-                alert.parentNode.removeChild(alert); // Menghapus elemen alert dari DOM
-                // Hapus juga flashdata sesuai dengan kunci alert
-                <?php if ($this->session->flashdata('success')): ?>
-                    if (alertKey === 'success') {
-                        <?= $this->session->set_flashdata('success', ''); ?>
-                    }
-                <?php endif; ?>
-                <?php if ($this->session->flashdata('error')): ?>
-                    if (alertKey === 'error') {
-                        <?= $this->session->set_flashdata('error', ''); ?>
-                    }
-                <?php endif; ?>
-                <?php if ($this->session->flashdata('warning')): ?>
-                    if (alertKey === 'warning') {
-                        <?= $this->session->set_flashdata('warning', ''); ?>
-                    }
-                <?php endif; ?>
-            }, 5000); // Menghapus setelah 5 detik (5000 milidetik)
-        });
     });
 </script>
 
 <!-- Ekko Lightbox -->
 <script>
-    $(function () {
-        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
+    $(function() {
+        $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
             $(this).ekkoLightbox({
                 alwaysShowClose: true
@@ -196,7 +173,7 @@
         });
 
 
-        $('.btn[data-filter]').on('click', function () {
+        $('.btn[data-filter]').on('click', function() {
             $('.btn[data-filter]').removeClass('active');
             $(this).addClass('active');
         });

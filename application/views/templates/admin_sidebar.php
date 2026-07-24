@@ -1,4 +1,9 @@
 <!-- Main Sidebar Container -->
+<?php
+$title = isset($title) ? $title : '';
+$home = isset($home) ? $home : 'Home';
+$action = isset($action) ? $action : '';
+?>
 <aside class="main-sidebar sidebar-light-maroon">
 	<a href="<?= base_url('admin/home'); ?>" class="brand-link elevation-2">
 		<img src="<?= base_url('assets/img/agam.png'); ?>" alt="DPMPTSP Logo" class="brand-image">
@@ -76,7 +81,7 @@
 
 				<!-- ================= MENU KHUSUS ADMINISTRATOR (Lanjutan 1) ================= -->
 				<?php if ($this->session->userdata('role') == 'Administrator'): ?>
-					<!-- Manajemen User -->
+					<!-- User -->
 					<li class="nav-item">
 						<a href="<?= base_url('admin/user'); ?>"
 							class="nav-link <?= ($this->uri->segment(2) == 'user') ? 'active' : ''; ?>">

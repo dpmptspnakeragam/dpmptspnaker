@@ -19,7 +19,9 @@
     var csrfName = '<?= $this->security->get_csrf_token_name(); ?>';
     var csrfHash = '<?= $this->security->get_csrf_hash(); ?>';
 
-    var sendData = { id: idBerita };
+    var sendData = {
+      id: idBerita
+    };
     sendData[csrfName] = csrfHash;
 
     $.ajax({
@@ -27,7 +29,7 @@
       type: "POST",
       data: sendData,
       dataType: "JSON",
-      success: function (response) {
+      success: function(response) {
         if (response.status === 'success') {
           var elemenView = $('#total-views-' + idBerita);
           var angkaSekarang = parseInt(elemenView.text()) || 0;
@@ -37,7 +39,7 @@
           console.log("Server merespon 'failed'. Periksa query database.");
         }
       },
-      error: function (xhr, status, error) {
+      error: function(xhr, status, error) {
         console.log("AJAX Gagal. Status: " + status + " | Error: " + error);
       }
     });
@@ -45,16 +47,16 @@
 </script>
 
 <script>
-  $(function () {
+  $(function() {
     $('[data-toggle="tooltip"]').tooltip();
   });
 </script>
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     $('#dataTable').dataTable({});
   });
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Inisialisasi semua tabel
     $('#dataTable1, #dataTable2, #dataTable3, #dataTable4').DataTable({
       "responsive": true,
@@ -73,7 +75,7 @@
     });
 
     // Perbaikan agar kolom tidak berantakan saat modal terbuka
-    $('.modal').on('shown.bs.modal', function () {
+    $('.modal').on('shown.bs.modal', function() {
       $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
     });
   });
@@ -92,30 +94,37 @@
   window.onload = init;
 </script>
 
+<!-- Script untuk menghapus alert setelah ditampilkan -->
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     var alerts = document.querySelectorAll('.alert');
-    alerts.forEach(function (alert) {
-      // Skip alerts that should not be automatically dismissed
-      if (alert.classList.contains('persistent-alert')) {
-        return;
+    alerts.forEach(function(alert) {
+
+      // SOLUSI: Jika alert memiliki class 'no-auto-hide', jangan hapus otomatis!
+      if (alert.classList.contains('no-auto-hide')) {
+        return; // Skip dan lanjut ke alert berikutnya (jika ada)
       }
 
       var alertKey = alert.getAttribute('data-alert-key');
-      setTimeout(function () {
+      setTimeout(function() {
         alert.parentNode.removeChild(alert); // Menghapus elemen alert dari DOM
-        // Hapus juga flashdata sesuai dengan kunci alert
-        <?php if ($this->session->flashdata('gagal')): ?>
-          if (alertKey === 'gagal') {
-            <?= $this->session->set_flashdata('gagal', ''); ?>
-          }
-        <?php endif; ?>
+
         <?php if ($this->session->flashdata('berhasil')): ?>
           if (alertKey === 'berhasil') {
             <?= $this->session->set_flashdata('berhasil', ''); ?>
           }
         <?php endif; ?>
-      }, 15000);
+        <?php if ($this->session->flashdata('gagal')): ?>
+          if (alertKey === 'gagal') {
+            <?= $this->session->set_flashdata('gagal', ''); ?>
+          }
+        <?php endif; ?>
+        <?php if ($this->session->flashdata('warning')): ?>
+          if (alertKey === 'warning') {
+            <?= $this->session->set_flashdata('warning', ''); ?>
+          }
+        <?php endif; ?>
+      }, 5000); // Menghapus setelah 5 detik
     });
   });
 </script>
