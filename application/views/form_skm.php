@@ -52,7 +52,7 @@
 
                         <div class="card card-outline card-danger shadow-sm border-maroon" style="border-top-width: 3px;">
                             <div class="card-header text-center bg-white pt-4 pb-3">
-                                <h4 class="font-weight-bold text-maroon mb-1 text-uppercase">Kuesioner SPKP & SPAK</h4>
+                                <h4 class="font-weight-bold text-maroon mb-1 text-uppercase">Kuesioner SPKP & SPAK Survey</h4>
                                 <h6 class="text-muted mb-0">Dinas Penanaman Modal Pelayanan Terpadu Satu Pintu Kabupaten Agam</h6>
                             </div>
 
