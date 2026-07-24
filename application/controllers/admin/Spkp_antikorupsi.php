@@ -9,9 +9,17 @@ class Spkp_antikorupsi extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('username') == "") {
+
+        if ($this->session->userdata('logged_in_utama') !== TRUE) {
             redirect('login');
         }
+
+        $role_user = $this->session->userdata('role');
+
+        if ($role_user !== 'Administrator') {
+            redirect('admin/home');
+        }
+
         $this->load->model('Model_spkp_antikorupsi');
     }
 

@@ -8,12 +8,19 @@ class DataIKM extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Model_skm');
-        $this->load->model('Model_spkp_antikorupsi');
 
-        if ($this->session->userdata('username') == "") {
+        if ($this->session->userdata('logged_in_utama') !== TRUE) {
             redirect('login');
         }
+
+        $role_user = $this->session->userdata('role');
+
+        if ($role_user !== 'Administrator') {
+            redirect('admin/home');
+        }
+
+        $this->load->model('Model_skm');
+        $this->load->model('Model_spkp_antikorupsi');
     }
 
     // public function index()

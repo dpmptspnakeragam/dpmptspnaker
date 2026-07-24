@@ -6,11 +6,17 @@ class Grafik_izin_terbit_tahun extends CI_controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('username') == "") {
+
+        if ($this->session->userdata('logged_in_utama') !== TRUE) {
             redirect('login');
         }
 
-        // load models
+        $role_user = $this->session->userdata('role');
+
+        if ($role_user !== 'Administrator') {
+            redirect('admin/home');
+        }
+
         $this->load->model('Model_grafik_izin_tahun');
     }
 

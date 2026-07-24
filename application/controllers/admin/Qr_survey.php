@@ -7,8 +7,15 @@ class Qr_survey extends CI_controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('username') == "") {
+
+        if ($this->session->userdata('logged_in_utama') !== TRUE) {
             redirect('login');
+        }
+
+        $role_user = $this->session->userdata('role');
+
+        if ($role_user !== 'Administrator') {
+            redirect('admin/home');
         }
 
         $this->load->model('Model_qr_survey');
@@ -62,7 +69,6 @@ class Qr_survey extends CI_controller
         }
 
         redirect('admin/qr_survey', 'refresh');
-
     }
 
     public function ubah($id)
@@ -104,7 +110,6 @@ class Qr_survey extends CI_controller
         }
 
         redirect('admin/qr_survey', 'refresh');
-
     }
 
     public function hapus($id)
@@ -129,5 +134,4 @@ class Qr_survey extends CI_controller
 
         redirect('admin/qr_survey', 'refresh');
     }
-
 }

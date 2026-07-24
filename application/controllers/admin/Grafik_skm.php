@@ -7,9 +7,17 @@ class Grafik_skm extends CI_controller
     public function __construct()
     {
         parent::__construct();
-        if ($this->session->userdata('username') == "") {
+
+        if ($this->session->userdata('logged_in_utama') !== TRUE) {
             redirect('login');
         }
+
+        $role_user = $this->session->userdata('role');
+
+        if ($role_user !== 'Administrator') {
+            redirect('admin/home');
+        }
+
         $this->load->model('Model_grafik_skm');
         $this->load->model('Model_skm_gambar');
         $this->load->library('upload');
