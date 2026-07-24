@@ -57,260 +57,260 @@
                             </div>
 
                             <div class="card-body bg-light">
-                                <form role="form" action="<?= base_url('skm/tambah_skm'); ?>" method="post">
-                                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
-                                    <input type="hidden" class="form-control" name="date" value="<?= date("Y-m-d H:i:s"); ?>">
+                                <?= form_open('skm/tambah_skm'); ?>
+                                <input type="hidden" class="form-control" name="date" value="<?= date("Y-m-d H:i:s"); ?>">
 
-                                    <!-- BAGIAN 1: DATA RESPONDEN -->
-                                    <div class="card shadow-sm border-0 mb-4">
-                                        <div class="card-header bg-maroon text-white">
-                                            <h5 class="mb-0 font-weight-bold"><i class="fas fa-user-edit mr-2"></i> Data Responden</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="nama"><i class="fas fa-user text-muted mr-1"></i> Nama Lengkap</label>
-                                                        <input class="form-control" type="text" name="nama" id="nama" placeholder="Masukan Nama Lengkap" value="<?= set_value('nama'); ?>">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="no_hp"><i class="fas fa-phone-alt text-muted mr-1"></i> Nomor Telepon</label>
-                                                        <input class="form-control" type="number" name="no_hp" id="no_hp" placeholder="Masukan Nomor Telepon" value="<?= set_value('no_hp'); ?>">
-                                                    </div>
+                                <!-- BAGIAN 1: DATA RESPONDEN -->
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-maroon text-white">
+                                        <h5 class="mb-0 font-weight-bold"><i class="fas fa-user-edit mr-2"></i> Data Responden</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="nama"><i class="fas fa-user text-muted mr-1"></i> Nama Lengkap</label>
+                                                    <input class="form-control" type="text" name="nama" id="nama" placeholder="Masukan Nama Lengkap" value="<?= set_value('nama'); ?>">
                                                 </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="jk"><i class="fas fa-venus-mars text-muted mr-1"></i> Jenis Kelamin <small class="text-danger">*</small></label>
-                                                        <select id="jk" name="jk" class="form-control custom-select">
-                                                            <option value="" selected disabled>Pilih Jenis Kelamin</option>
-                                                            <option value="1" <?= set_select('jk', '1'); ?>>Laki-Laki</option>
-                                                            <option value="2" <?= set_select('jk', '2'); ?>>Perempuan</option>
-                                                        </select>
-                                                        <small class="text-danger font-weight-bold"><?= form_error('jk'); ?></small>
-                                                    </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="no_hp"><i class="fas fa-phone-alt text-muted mr-1"></i> Nomor Telepon</label>
+                                                    <input class="form-control" type="number" name="no_hp" id="no_hp" placeholder="Masukan Nomor Telepon" value="<?= set_value('no_hp'); ?>">
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="umur"><i class="fas fa-calendar-alt text-muted mr-1"></i> Usia <small class="text-danger">*</small></label>
-                                                        <div class="input-group">
-                                                            <input type="number" class="form-control" name="umur" placeholder="Masukan Usia" value="<?= set_value('umur'); ?>">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text bg-white">Tahun</span>
-                                                            </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="jk"><i class="fas fa-venus-mars text-muted mr-1"></i> Jenis Kelamin <small class="text-danger">*</small></label>
+                                                    <select id="jk" name="jk" class="form-control custom-select">
+                                                        <option value="" selected disabled>Pilih Jenis Kelamin</option>
+                                                        <option value="1" <?= set_select('jk', '1'); ?>>Laki-Laki</option>
+                                                        <option value="2" <?= set_select('jk', '2'); ?>>Perempuan</option>
+                                                    </select>
+                                                    <small class="text-danger font-weight-bold"><?= form_error('jk'); ?></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="umur"><i class="fas fa-calendar-alt text-muted mr-1"></i> Usia <small class="text-danger">*</small></label>
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control" name="umur" placeholder="Masukan Usia" value="<?= set_value('umur'); ?>">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text bg-white">Tahun</span>
                                                         </div>
-                                                        <small class="text-danger font-weight-bold"><?= form_error('umur'); ?></small>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="pendidikan"><i class="fas fa-graduation-cap text-muted mr-1"></i> Pendidikan <small class="text-danger">*</small></label>
-                                                        <select id="pendidikan" name="pendidikan" class="form-control custom-select">
-                                                            <option value="" selected disabled>Pilih Pendidikan</option>
-                                                            <option value="1" <?= set_select('pendidikan', '1'); ?>>SD</option>
-                                                            <option value="2" <?= set_select('pendidikan', '2'); ?>>SMP</option>
-                                                            <option value="3" <?= set_select('pendidikan', '3'); ?>>SMA</option>
-                                                            <option value="4" <?= set_select('pendidikan', '4'); ?>>DI/DII/DIII</option>
-                                                            <option value="5" <?= set_select('pendidikan', '5'); ?>>DIV/S1</option>
-                                                            <option value="6" <?= set_select('pendidikan', '6'); ?>>S2</option>
-                                                        </select>
-                                                        <small class="text-danger font-weight-bold"><?= form_error('pendidikan'); ?></small>
-                                                    </div>
+                                                    <small class="text-danger font-weight-bold"><?= form_error('umur'); ?></small>
                                                 </div>
                                             </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="pekerjaan"><i class="fas fa-briefcase text-muted mr-1"></i> Pekerjaan <small class="text-danger">*</small></label>
-                                                        <select id="pekerjaan" name="pekerjaan" class="form-control custom-select">
-                                                            <option value="" selected disabled>Pilih Pekerjaan</option>
-                                                            <option value="1" <?= set_select('pekerjaan', '1'); ?>>PNS</option>
-                                                            <option value="2" <?= set_select('pekerjaan', '2'); ?>>TNI</option>
-                                                            <option value="3" <?= set_select('pekerjaan', '3'); ?>>POLRI</option>
-                                                            <option value="4" <?= set_select('pekerjaan', '4'); ?>>Swasta</option>
-                                                            <option value="5" <?= set_select('pekerjaan', '5'); ?>>Wirausaha</option>
-                                                            <option value="6" <?= set_select('pekerjaan', '6'); ?>>Lainnya</option>
-                                                        </select>
-                                                        <small class="text-danger font-weight-bold"><?= form_error('pekerjaan'); ?></small>
-                                                    </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="pendidikan"><i class="fas fa-graduation-cap text-muted mr-1"></i> Pendidikan <small class="text-danger">*</small></label>
+                                                    <select id="pendidikan" name="pendidikan" class="form-control custom-select">
+                                                        <option value="" selected disabled>Pilih Pendidikan</option>
+                                                        <option value="1" <?= set_select('pendidikan', '1'); ?>>SD</option>
+                                                        <option value="2" <?= set_select('pendidikan', '2'); ?>>SMP</option>
+                                                        <option value="3" <?= set_select('pendidikan', '3'); ?>>SMA</option>
+                                                        <option value="4" <?= set_select('pendidikan', '4'); ?>>DI/DII/DIII</option>
+                                                        <option value="5" <?= set_select('pendidikan', '5'); ?>>DIV/S1</option>
+                                                        <option value="6" <?= set_select('pendidikan', '6'); ?>>S2</option>
+                                                    </select>
+                                                    <small class="text-danger font-weight-bold"><?= form_error('pendidikan'); ?></small>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="layanan"><i class="fas fa-concierge-bell text-muted mr-1"></i> Jenis Layanan Diterima <small class="text-danger">*</small></label>
-                                                        <input type="text" class="form-control" name="layanan" placeholder="Masukan Jenis Layanan" value="<?= set_value('layanan'); ?>">
-                                                        <small class="text-danger font-weight-bold d-block mb-1"><?= form_error('layanan'); ?></small>
-                                                        <small class="text-muted">Contoh: <span class="font-italic">PBG, SIP Bidan, Izin Penelitian, dll.</span></small>
-                                                    </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="pekerjaan"><i class="fas fa-briefcase text-muted mr-1"></i> Pekerjaan <small class="text-danger">*</small></label>
+                                                    <select id="pekerjaan" name="pekerjaan" class="form-control custom-select">
+                                                        <option value="" selected disabled>Pilih Pekerjaan</option>
+                                                        <option value="1" <?= set_select('pekerjaan', '1'); ?>>PNS</option>
+                                                        <option value="2" <?= set_select('pekerjaan', '2'); ?>>TNI</option>
+                                                        <option value="3" <?= set_select('pekerjaan', '3'); ?>>POLRI</option>
+                                                        <option value="4" <?= set_select('pekerjaan', '4'); ?>>Swasta</option>
+                                                        <option value="5" <?= set_select('pekerjaan', '5'); ?>>Wirausaha</option>
+                                                        <option value="6" <?= set_select('pekerjaan', '6'); ?>>Lainnya</option>
+                                                    </select>
+                                                    <small class="text-danger font-weight-bold"><?= form_error('pekerjaan'); ?></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="layanan"><i class="fas fa-concierge-bell text-muted mr-1"></i> Jenis Layanan Diterima <small class="text-danger">*</small></label>
+                                                    <input type="text" class="form-control" name="layanan" placeholder="Masukan Jenis Layanan" value="<?= set_value('layanan'); ?>">
+                                                    <small class="text-danger font-weight-bold d-block mb-1"><?= form_error('layanan'); ?></small>
+                                                    <small class="text-muted">Contoh: <span class="font-italic">PBG, SIP Bidan, Izin Penelitian, dll.</span></small>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <!-- HIDDEN PELAYANAN PUBLIK (U1 - U9) -->
-                                    <div id="section-pelayanan-publik" style="display:none;">
-                                        <input type="hidden" name="u1" value="0">
-                                        <input type="hidden" name="u2" value="0">
-                                        <input type="hidden" name="u3" value="0">
-                                        <input type="hidden" name="u4" value="0">
-                                        <input type="hidden" name="u5" value="0">
-                                        <input type="hidden" name="u6" value="0">
-                                        <input type="hidden" name="u7" value="0">
-                                        <input type="hidden" name="u8" value="0">
-                                        <input type="hidden" name="u9" value="0">
+                                <!-- HIDDEN PELAYANAN PUBLIK (U1 - U9) -->
+                                <div id="section-pelayanan-publik" style="display:none;">
+                                    <input type="hidden" name="u1" value="0">
+                                    <input type="hidden" name="u2" value="0">
+                                    <input type="hidden" name="u3" value="0">
+                                    <input type="hidden" name="u4" value="0">
+                                    <input type="hidden" name="u5" value="0">
+                                    <input type="hidden" name="u6" value="0">
+                                    <input type="hidden" name="u7" value="0">
+                                    <input type="hidden" name="u8" value="0">
+                                    <input type="hidden" name="u9" value="0">
+                                </div>
+
+                                <!-- BAGIAN 2: SPKP -->
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-maroon text-white">
+                                        <h5 class="mb-0 font-weight-bold"><i class="fas fa-star mr-2 text-white"></i> Survey Persepsi Kualitas Pelayanan (SPKP)</h5>
                                     </div>
-
-                                    <!-- BAGIAN 2: SPKP -->
-                                    <div class="card shadow-sm border-0 mb-4">
-                                        <div class="card-header bg-maroon text-white">
-                                            <h5 class="mb-0 font-weight-bold"><i class="fas fa-star mr-2 text-white"></i> Survey Persepsi Kualitas Pelayanan (SPKP)</h5>
+                                    <div class="card-body">
+                                        <div class="alert no-auto-hide alert-light border border-maroon text-maroon mb-4">
+                                            <i class="fas fa-info-circle mr-2"></i> <small class="font-weight-bold">Berikan nilai bintang (1-6). Semakin banyak bintang, menunjukan Bapak/Ibu semakin setuju pelayanan semakin baik.</small>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="alert no-auto-hide alert-light border border-maroon text-maroon mb-4">
-                                                <i class="fas fa-info-circle mr-2"></i> <small class="font-weight-bold">Berikan nilai bintang (1-6). Semakin banyak bintang, menunjukan Bapak/Ibu semakin setuju pelayanan semakin baik.</small>
-                                            </div>
 
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">1. Informasi pelayanan pada unit layanan ini tersedia melalui media sosial elektronik maupun non elektronik.</p>
-                                                <div class="stars" data-rating="rating_z1">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z1'); ?></small>
-                                                <input type="hidden" name="rating_z1" value="<?= set_value('rating_z1'); ?>">
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">1. Informasi pelayanan pada unit layanan ini tersedia melalui media sosial elektronik maupun non elektronik.</p>
+                                            <div class="stars" data-rating="rating_z1">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
                                             </div>
-
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">2. Persyaratan pelayanan yang diinformasikan sesuai dengan persyaratan yang ditetapkan unit layanan ini.</p>
-                                                <div class="stars" data-rating="rating_z2">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z2'); ?></small>
-                                                <input type="hidden" name="rating_z2" value="<?= set_value('rating_z2'); ?>">
-                                            </div>
-
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">3. Prosedur/Alur pelayanan yang ditetapkan unit layanan ini mudah diikuti/dilakukan.</p>
-                                                <div class="stars" data-rating="rating_z3">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z3'); ?></small>
-                                                <input type="hidden" name="rating_z3" value="<?= set_value('rating_z3'); ?>">
-                                            </div>
-
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">4. Jangka waktu penyelesaian pelayanan yang diterima Bapak/Ibu sesuai dengan yang ditetapkan unit layanan ini.</p>
-                                                <div class="stars" data-rating="rating_z4">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z4'); ?></small>
-                                                <input type="hidden" name="rating_z4" value="<?= set_value('rating_z4'); ?>">
-                                            </div>
-
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">5. Tarif/Biaya pelayanan yang dibayarkan pada unit layanan ini sesuai dengan tarif/biaya yang ditetapkan.</p>
-                                                <div class="stars" data-rating="rating_z5">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z5'); ?></small>
-                                                <input type="hidden" name="rating_z5" value="<?= set_value('rating_z5'); ?>">
-                                            </div>
-
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">6. Sarana prasarana pendukung pelayanan/sistem pelayanan online yang disediakan memberikan kenyamanan/mudah digunakan.</p>
-                                                <div class="stars" data-rating="rating_z6">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z6'); ?></small>
-                                                <input type="hidden" name="rating_z6" value="<?= set_value('rating_z6'); ?>">
-                                            </div>
-
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">7. Petugas pelayanan/sistem pelayanan online merespon keperluan Bapak/Ibu dengan cepat.</p>
-                                                <div class="stars" data-rating="rating_z7">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z7'); ?></small>
-                                                <input type="hidden" name="rating_z7" value="<?= set_value('rating_z7'); ?>">
-                                            </div>
-
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">8. Layanan konsultasi dan pengaduan yang disediakan unit layanan ini mudah digunakan/diakses.</p>
-                                                <div class="stars" data-rating="rating_z8">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_z8'); ?></small>
-                                                <input type="hidden" name="rating_z8" value="<?= set_value('rating_z8'); ?>">
-                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z1'); ?></small>
+                                            <input type="hidden" name="rating_z1" value="<?= set_value('rating_z1'); ?>">
                                         </div>
-                                    </div>
 
-                                    <!-- BAGIAN 3: SPAK -->
-                                    <div class="card shadow-sm border-0 mb-4">
-                                        <div class="card-header bg-maroon text-white">
-                                            <h5 class="mb-0 font-weight-bold"><i class="fas fa-shield-alt mr-2"></i> Survey Persepsi Anti Korupsi (SPAK)</h5>
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">2. Persyaratan pelayanan yang diinformasikan sesuai dengan persyaratan yang ditetapkan unit layanan ini.</p>
+                                            <div class="stars" data-rating="rating_z2">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
+                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z2'); ?></small>
+                                            <input type="hidden" name="rating_z2" value="<?= set_value('rating_z2'); ?>">
                                         </div>
-                                        <div class="card-body">
-                                            <div class="alert no-auto-hide alert-light border border-maroon text-maroon mb-4">
-                                                <i class="fas fa-info-circle mr-2"></i> <small class="font-weight-bold">Berikan nilai bintang (1-6). Semakin banyak bintang, menunjukan Bapak/Ibu semakin setuju pelayanan terbebas dari korupsi.</small>
-                                            </div>
 
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">1. Tidak ada deskriminasi pelayanan pada unit layanan ini.</p>
-                                                <div class="stars" data-rating="rating_r1">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_r1'); ?></small>
-                                                <input type="hidden" name="rating_r1" value="<?= set_value('rating_r1'); ?>">
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">3. Prosedur/Alur pelayanan yang ditetapkan unit layanan ini mudah diikuti/dilakukan.</p>
+                                            <div class="stars" data-rating="rating_z3">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
                                             </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z3'); ?></small>
+                                            <input type="hidden" name="rating_z3" value="<?= set_value('rating_z3'); ?>">
+                                        </div>
 
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">2. Tidak ada pelayanan diluar prosedur/kecurangan pelayanan pada unit layanan ini.</p>
-                                                <div class="stars" data-rating="rating_r2">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_r2'); ?></small>
-                                                <input type="hidden" name="rating_r2" value="<?= set_value('rating_r2'); ?>">
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">4. Jangka waktu penyelesaian pelayanan yang diterima Bapak/Ibu sesuai dengan yang ditetapkan unit layanan ini.</p>
+                                            <div class="stars" data-rating="rating_z4">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
                                             </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z4'); ?></small>
+                                            <input type="hidden" name="rating_z4" value="<?= set_value('rating_z4'); ?>">
+                                        </div>
 
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">3. Tidak ada penerimaan imbalan uang/barang/fasilitas diluar ketentuan yang berlaku pada unit layanan ini.</p>
-                                                <div class="stars" data-rating="rating_r3">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_r3'); ?></small>
-                                                <input type="hidden" name="rating_r3" value="<?= set_value('rating_r3'); ?>">
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">5. Tarif/Biaya pelayanan yang dibayarkan pada unit layanan ini sesuai dengan tarif/biaya yang ditetapkan.</p>
+                                            <div class="stars" data-rating="rating_z5">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
                                             </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z5'); ?></small>
+                                            <input type="hidden" name="rating_z5" value="<?= set_value('rating_z5'); ?>">
+                                        </div>
 
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">4. Tidak ada pungutan liar (pungli) pada unit layanan ini.</p>
-                                                <div class="stars" data-rating="rating_r4">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_r4'); ?></small>
-                                                <input type="hidden" name="rating_r4" value="<?= set_value('rating_r4'); ?>">
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">6. Sarana prasarana pendukung pelayanan/sistem pelayanan online yang disediakan memberikan kenyamanan/mudah digunakan.</p>
+                                            <div class="stars" data-rating="rating_z6">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
                                             </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z6'); ?></small>
+                                            <input type="hidden" name="rating_z6" value="<?= set_value('rating_z6'); ?>">
+                                        </div>
 
-                                            <div class="question-box">
-                                                <p class="font-weight-bold mb-2">5. Tidak ada percaloan/perantara tidak resmi pada unit layanan ini.</p>
-                                                <div class="stars" data-rating="rating_r5">
-                                                    <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
-                                                </div>
-                                                <small class="text-danger font-weight-bold"><?= form_error('rating_r5'); ?></small>
-                                                <input type="hidden" name="rating_r5" value="<?= set_value('rating_r5'); ?>">
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">7. Petugas pelayanan/sistem pelayanan online merespon keperluan Bapak/Ibu dengan cepat.</p>
+                                            <div class="stars" data-rating="rating_z7">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
                                             </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z7'); ?></small>
+                                            <input type="hidden" name="rating_z7" value="<?= set_value('rating_z7'); ?>">
+                                        </div>
+
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">8. Layanan konsultasi dan pengaduan yang disediakan unit layanan ini mudah digunakan/diakses.</p>
+                                            <div class="stars" data-rating="rating_z8">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
+                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_z8'); ?></small>
+                                            <input type="hidden" name="rating_z8" value="<?= set_value('rating_z8'); ?>">
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div class="text-center mt-5 mb-3">
-                                        <button type="submit" class="btn-outline-maroon btn-lg px-5 font-weight-bold shadow-sm" style="border-radius: 30px;">
-                                            <i class="fas fa-paper-plane mr-2"></i> Kirim Survey
-                                        </button>
+                                <!-- BAGIAN 3: SPAK -->
+                                <div class="card shadow-sm border-0 mb-4">
+                                    <div class="card-header bg-maroon text-white">
+                                        <h5 class="mb-0 font-weight-bold"><i class="fas fa-shield-alt mr-2"></i> Survey Persepsi Anti Korupsi (SPAK)</h5>
                                     </div>
+                                    <div class="card-body">
+                                        <div class="alert no-auto-hide alert-light border border-maroon text-maroon mb-4">
+                                            <i class="fas fa-info-circle mr-2"></i> <small class="font-weight-bold">Berikan nilai bintang (1-6). Semakin banyak bintang, menunjukan Bapak/Ibu semakin setuju pelayanan terbebas dari korupsi.</small>
+                                        </div>
+
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">1. Tidak ada deskriminasi pelayanan pada unit layanan ini.</p>
+                                            <div class="stars" data-rating="rating_r1">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
+                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_r1'); ?></small>
+                                            <input type="hidden" name="rating_r1" value="<?= set_value('rating_r1'); ?>">
+                                        </div>
+
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">2. Tidak ada pelayanan diluar prosedur/kecurangan pelayanan pada unit layanan ini.</p>
+                                            <div class="stars" data-rating="rating_r2">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
+                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_r2'); ?></small>
+                                            <input type="hidden" name="rating_r2" value="<?= set_value('rating_r2'); ?>">
+                                        </div>
+
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">3. Tidak ada penerimaan imbalan uang/barang/fasilitas diluar ketentuan yang berlaku pada unit layanan ini.</p>
+                                            <div class="stars" data-rating="rating_r3">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
+                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_r3'); ?></small>
+                                            <input type="hidden" name="rating_r3" value="<?= set_value('rating_r3'); ?>">
+                                        </div>
+
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">4. Tidak ada pungutan liar (pungli) pada unit layanan ini.</p>
+                                            <div class="stars" data-rating="rating_r4">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
+                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_r4'); ?></small>
+                                            <input type="hidden" name="rating_r4" value="<?= set_value('rating_r4'); ?>">
+                                        </div>
+
+                                        <div class="question-box">
+                                            <p class="font-weight-bold mb-2">5. Tidak ada percaloan/perantara tidak resmi pada unit layanan ini.</p>
+                                            <div class="stars" data-rating="rating_r5">
+                                                <i class="far fa-star" data-value="1"></i> <i class="far fa-star" data-value="2"></i> <i class="far fa-star" data-value="3"></i> <i class="far fa-star" data-value="4"></i> <i class="far fa-star" data-value="5"></i> <i class="far fa-star" data-value="6"></i>
+                                            </div>
+                                            <small class="text-danger font-weight-bold"><?= form_error('rating_r5'); ?></small>
+                                            <input type="hidden" name="rating_r5" value="<?= set_value('rating_r5'); ?>">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-5 mb-3">
+                                    <button type="submit" class="btn-outline-maroon btn-lg px-5 font-weight-bold shadow-sm" style="border-radius: 30px;">
+                                        <i class="fas fa-paper-plane mr-2"></i> Kirim Survey
+                                    </button>
+                                </div>
                                 </form>
+                                <?= form_close(); ?>
                             </div>
                         </div>
                     </div>
