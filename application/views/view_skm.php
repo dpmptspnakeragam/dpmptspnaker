@@ -37,6 +37,7 @@
                     </div>
                 <?php endif; ?>
 
+                <!-- CARD TAHAP 1 DAN 2 -->
                 <div class="card card-outline card-danger shadow-sm mb-4" style="border-top-width: 3px;">
                     <div class="card-header text-center bg-white">
                         <h4 class="font-weight-bold text-maroon mb-0">TAHAPAN PROSES SURVEY (SKM)</h4>
@@ -88,7 +89,7 @@
                     </div>
                 </div>
 
-                <div class="card card-outline card-primary shadow-sm mb-4" style="border-top-width: 3px;" hidden>
+                <div class="card card-outline card-primary shadow-sm mb-4" style="border-top-width: 3px;">
                     <div class="card-header text-center">
                         <h4 class="font-weight-bold text-primary mb-0">INDEKS KEPUASAN MASYARAKAT (IKM)</h4>
                         <h6 class="text-muted mt-1">Semester <?= isset($semester) ? (($semester == 1) ? '1 (Januari s.d Juni)' : '2 (Juli s.d Desember)') : '1 (Januari s.d Juni)'; ?> Tahun <?= date('Y'); ?></h6>
@@ -114,8 +115,8 @@
                                     $grade = "C";
                                     $warna_mutu = 'text-warning';
                                 } else {
-                                    $kategori_mutu = "Tidak Baik";
-                                    $grade = "D";
+                                    $kategori_mutu = "Data Belum Lengkap.";
+                                    $grade = "-";
                                     $warna_mutu = 'text-danger';
                                 }
                                 ?>
@@ -196,7 +197,7 @@
                 </div>
 
                 <!-- GRAFIK SURVEY NILAI PER UNSUR -->
-                <div class="card shadow-sm mb-4 border-0" hidden>
+                <div class="card shadow-sm mb-4 border-0">
                     <div class="card-header bg-white border-bottom-0 pt-4 text-center">
                         <h5 class="font-weight-bold text-dark"><i class="fas fa-chart-line text-primary mr-2"></i> Grafik Nilai Per Unsur IKM</h5>
                     </div>
@@ -296,8 +297,8 @@
                                     $grade_spkp = "C";
                                     $warna_spkp = 'text-warning';
                                 } else {
-                                    $kategori_spkp = "Tidak Baik";
-                                    $grade_spkp = "D";
+                                    $kategori_spkp = "Data Belum Lengkap.";
+                                    $grade_spkp = "-";
                                     $warna_spkp = 'text-danger';
                                 }
                                 ?>
