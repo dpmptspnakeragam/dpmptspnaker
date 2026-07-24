@@ -76,9 +76,55 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="no_hp"><i class="fas fa-phone-alt text-muted mr-1"></i> Nomor Telepon</label>
-                                                    <input class="form-control" type="number" name="no_hp" id="no_hp" placeholder="Masukan Nomor Telepon" value="<?= set_value('no_hp'); ?>">
+
+                                                    <input class="form-control" type="text" name="no_hp" id="no_hp"
+                                                        placeholder="Contoh: 0812..."
+                                                        value="<?= set_value('no_hp', '08'); ?>"
+                                                        maxlength="13" autocomplete="off">
+
+                                                    <small class="text-danger" id="error_no_hp" style="display:none;">Nomor wajib diawali 08</small>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    const inputHp = document.getElementById('no_hp');
+                                                    const errorText = document.getElementById('error_no_hp');
+
+                                                    inputHp.addEventListener('input', function(e) {
+                                                        this.value = this.value.replace(/[^0-9]/g, '');
+
+                                                        let val = this.value;
+
+                                                        if (val.length > 0) {
+                                                            if (val.length === 1 && val !== '0') {
+                                                                this.value = '08';
+                                                            } else if (val.length >= 2 && !val.startsWith('08')) {
+                                                                this.value = '08' + val.substring(2);
+
+                                                                errorText.style.display = 'block';
+                                                                setTimeout(() => {
+                                                                    errorText.style.display = 'none';
+                                                                }, 2000);
+                                                            } else {
+                                                                errorText.style.display = 'none';
+                                                            }
+                                                        }
+                                                    });
+
+                                                    inputHp.addEventListener('focus', function() {
+                                                        if (this.value === '') {
+                                                            this.value = '08';
+                                                        }
+                                                    });
+
+                                                    inputHp.addEventListener('blur', function() {
+                                                        if (this.value === '0' || this.value === '') {
+                                                            this.value = '08';
+                                                        }
+                                                    });
+                                                });
+                                            </script>
                                         </div>
 
                                         <div class="row">
