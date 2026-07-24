@@ -20,3 +20,15 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/system/**
+            **/user_guide/**
+            **/vendor/**
+            .cpanel.yml
+            .travis.yml
+            .editorconfig
+            readme.rst
+            contributing.md
