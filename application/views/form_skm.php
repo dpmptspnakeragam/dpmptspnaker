@@ -42,7 +42,7 @@
         }
     </style>
 
-    <div class="content-wrapper mb-5 pt-5">
+    <div class="content-wrapper pt-5">
 
         <!-- Main content -->
         <div class="content mt-4">
