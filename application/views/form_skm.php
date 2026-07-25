@@ -351,6 +351,9 @@
                                 </div>
 
                                 <div class="text-center mt-5 mb-3">
+                                    <a href="<?= base_url('skm'); ?>" class="btn-outline-secondary btn-lg px-5 font-weight-bold shadow-sm" style="border-radius: 30px;">
+                                        <i class="fas fa-arrow-left mr-2"></i> Kembali
+                                    </a>
                                     <button type="submit" class="btn-outline-maroon btn-lg px-5 font-weight-bold shadow-sm" style="border-radius: 30px;">
                                         <i class="fas fa-paper-plane mr-2"></i> Kirim Survey
                                     </button>
