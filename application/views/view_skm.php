@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
                                         <img src="https://skm.go.id/images/skm-logo.png" alt="Logo SKM Resmi" class="img-fluid mb-3" style="max-height: 55px; object-fit: contain;">
-                                        <p class="mb-3 text-muted">Silahkan isi Survei Kepuasan Masyarakat (SKM) dengan mengklik Link atau Scan QR Code berikut:</p>
+                                        <p class="mb-3 text-muted">Silahkan isi Survei Kepuasan Masyarakat (SKM) dengan mengklik Link berikut:</p>
 
                                         <?php if (!empty($survei_skm_aktif)): ?>
                                             <a href="<?= $survei_skm_aktif->link_survei; ?>" target="_blank" class="btn-outline-maroon btn-lg px-4 mb-3">
@@ -63,7 +63,7 @@
                                             <img src="<?= base_url('assets/imgupload/' . $survei_skm_aktif->qr_code); ?>" alt="QR Code Survei SKM" class="img-fluid shadow-sm" style="max-width: 140px; border-radius: 8px;">
                                         <?php else: ?>
                                             <div class="no-auto-hide alert alert-warning mt-auto mb-auto w-100" role="alert">
-                                                <i class="fa fa-exclamation-triangle"></i> Layanan survei SKM Resmi sedang tidak tersedia.
+                                                <i class="fa fa-exclamation-triangle"></i> Layanan survei SKM sedang tidak tersedia.
                                             </div>
                                         <?php endif; ?>
                                     </div>
