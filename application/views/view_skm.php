@@ -52,12 +52,12 @@
                                         Survei Kepuasan Masyarakat (SKM)
                                     </div>
                                     <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
-                                        <img src="https://skm.go.id/images/skm-logo.png" alt="Logo SKM Resmi" class="img-fluid mb-3" style="max-height: 55px; object-fit: contain;">
+                                        <img src="https://skm.go.id/images/skm-logo.png" alt="Logo SKM" class="img-fluid mb-3" style="max-height: 55px; object-fit: contain;">
                                         <p class="mb-3 text-muted">Silahkan isi Survei Kepuasan Masyarakat (SKM) dengan mengklik Link berikut:</p>
 
                                         <?php if (!empty($survei_skm_aktif)): ?>
                                             <a href="<?= $survei_skm_aktif->link_survei; ?>" target="_blank" class="btn-outline-maroon btn-lg px-4 mb-3">
-                                                <i class="fa fa-external-link-alt mr-2"></i> Link SKM Resmi
+                                                <i class="fa fa-external-link-alt mr-2"></i> Link SKM
                                             </a>
                                             <p class="mb-2 font-italic text-muted"><small>atau Scan QR Code di bawah ini:</small></p>
                                             <img src="<?= base_url('assets/imgupload/' . $survei_skm_aktif->qr_code); ?>" alt="QR Code Survei SKM" class="img-fluid shadow-sm" style="max-width: 140px; border-radius: 8px;">
