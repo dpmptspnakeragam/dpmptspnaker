@@ -111,26 +111,26 @@
                         ?>
 
                         <script>
-                            document.addEventListener("DOMContentLoaded", function () {
+                            document.addEventListener("DOMContentLoaded", function() {
                                 var ctx = document.getElementById('chartSKM').getContext('2d');
                                 var chartSKM = new Chart(ctx, {
                                     type: 'bar',
                                     data: {
                                         labels: <?= $tahun_json ?>,
                                         datasets: [{
-                                            label: 'Semester I',
-                                            backgroundColor: 'rgba(54, 163, 235, 0.83)',
-                                            borderColor: 'rgba(54, 162, 235, 1)',
-                                            borderWidth: 1,
-                                            data: <?= $semester1_json ?>
-                                        },
-                                        {
-                                            label: 'Semester II',
-                                            backgroundColor: 'rgba(219, 22, 47, 0.7)',
-                                            borderColor: 'rgba(219, 22, 47, 1)',
-                                            borderWidth: 1,
-                                            data: <?= $semester2_json ?>
-                                        }
+                                                label: 'Semester I',
+                                                backgroundColor: 'rgba(54, 163, 235, 0.83)',
+                                                borderColor: 'rgba(54, 162, 235, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $semester1_json ?>
+                                            },
+                                            {
+                                                label: 'Semester II',
+                                                backgroundColor: 'rgba(219, 22, 47, 0.7)',
+                                                borderColor: 'rgba(219, 22, 47, 1)',
+                                                borderWidth: 1,
+                                                data: <?= $semester2_json ?>
+                                            }
                                         ]
                                     },
                                     options: {
@@ -162,7 +162,7 @@
             <div class="col-sm-12 col-md-6 col-lg-12">
                 <div class="card card-outline card-maroon">
                     <div class="card-header">
-                        <h3 class="card-title">Tabel Indeks Kepuasan Masyarakat (IKM)</h3>
+                        <h3 class="card-title">Upload Gambar Indeks Kepuasan Masyarakat (IKM)</h3>
                     </div>
 
                     <div class="card-body">
@@ -171,7 +171,7 @@
                             <button type="button" class="btn btn-outline-danger" data-toggle="modal"
                                 data-target="#ModalTambahIKM">
                                 <i class="fa fa-plus p-1" aria-hidden="true"></i>
-                                Tambah Data
+                                Upload Gambar
                             </button>
                         </div>
 

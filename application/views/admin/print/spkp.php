@@ -118,7 +118,7 @@
                     <?php endif; ?>
                 </td>
 
-                <td style="border: none;">Tanggal Survey</td>
+                <td style="border: none;">Tanggal Survei</td>
                 <td style="border: none;">:
                     <?= date('d-m-Y / H:i', strtotime($row->date)); ?> WIB
                 </td>

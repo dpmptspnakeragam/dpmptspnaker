@@ -357,24 +357,24 @@ $action = isset($action) ? $action : '';
 						</a>
 					</li>
 
-					<!-- Survey -->
+					<!-- Survei -->
 					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['qr_survey', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'menu-open' : ''; ?>">
+						class="nav-item <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'menu-open' : ''; ?>">
 						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['qr_survey', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'active' : ''; ?>">
+							class="nav-link <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-poll"></i>
 							<p>
-								Survey
+								Survei
 								<i class="right fas fa-angle-left"></i>
 							</p>
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/qr_survey'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'qr_survey' ? 'active' : ''; ?>">
+								<a href="<?= base_url('admin/qr_survei'); ?>"
+									class="nav-link <?= $this->uri->segment(2) == 'qr_survei' ? 'active' : ''; ?>">
 									<i
-										class="<?= $this->uri->segment(2) == 'qr_survey' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'qr_survey' ? 'text-maroon' : ''; ?>"></i>
-									<p>QR Survey</p>
+										class="<?= $this->uri->segment(2) == 'qr_survei' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'qr_survei' ? 'text-maroon' : ''; ?>"></i>
+									<p>QR Survei</p>
 								</a>
 							</li>
 							<li class="nav-item">
@@ -382,7 +382,7 @@ $action = isset($action) ? $action : '';
 									class="nav-link <?= $this->uri->segment(2) == 'skm' ? 'active' : ''; ?>">
 									<i
 										class="<?= $this->uri->segment(2) == 'skm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'skm' ? 'text-maroon' : ''; ?>"></i>
-									<p>SKM</p>
+									<p>SKM & Nilai IKM</p>
 								</a>
 							</li>
 							<li class="nav-item">

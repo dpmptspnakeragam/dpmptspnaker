@@ -43,7 +43,7 @@
     <div class="divider"></div>
 
     <div class="text-center mt-3">
-        <h6>Survey Kepuasan Masyarakat (SKM)</h6>
+        <h6>Survei Kepuasan Masyarakat (SKM)</h6>
     </div>
 
     <?php foreach ($skm as $row) : ?>
@@ -118,7 +118,7 @@
                     <?php endif; ?>
                 </td>
 
-                <td style="border: none;">Tanggal Survey</td>
+                <td style="border: none;">Tanggal Survei</td>
                 <td style="border: none;">:
                     <?= date('d-m-Y / H:i', strtotime($row->date)); ?> WIB
                 </td>

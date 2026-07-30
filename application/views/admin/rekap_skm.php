@@ -230,7 +230,7 @@ Nilai SPKP & SPAK = (NRR_Z - NRR_R) × 50
                             </div>
 
                             <hr>
-                            <h3>Nilai Survey</h3>
+                            <h3>Nilai Survei</h3>
                             <h4 class="text-maroon">
                                 <?= kategori_mutu($skm['spkp_spak']); ?><br>
                                 <?= $skm['spkp_spak']; ?>
@@ -352,15 +352,15 @@ Nilai SPKP & SPAK = (NRR_Z - NRR_R) × 50
 
                 <script>
                     function printSKM() {
-                        window.open('<?= base_url('admin/rekap_survey/skm/'); ?>', '_blank');
+                        window.open('<?= base_url('admin/rekap_survei/skm/'); ?>', '_blank');
                     }
 
                     function printSPKP() {
-                        window.open('<?= base_url('admin/rekap_survey/spkp') ?>', '_blank');
+                        window.open('<?= base_url('admin/rekap_survei/spkp') ?>', '_blank');
                     }
 
                     function printSPAK() {
-                        window.open('<?= base_url('admin/rekap_survey/spak') ?>', '_blank');
+                        window.open('<?= base_url('admin/rekap_survei/spak') ?>', '_blank');
                     }
                 </script>
 

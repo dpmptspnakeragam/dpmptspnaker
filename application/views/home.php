@@ -53,7 +53,7 @@
 					<a class="nav-link page-scroll" href="#pengaduan">Pengaduan</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link page-scroll" href="#skm">Survey</a>
+					<a class="nav-link page-scroll" href="#skm">Survei</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link page-scroll" href="#grafik">Grafik</a>
@@ -564,11 +564,11 @@
 			<div class="col-lg-12 mt-4">
 				<h1 class="judul-investasi">
 					<b>
-						Survey Kepuasan Masyarakat (SKM) Online
+						Survei Kepuasan Masyarakat (SKM) Online
 						<br>
 						dan
 						<br>
-						Survey Persepsi Kualitas Pelayanan (SPKP) Online
+						Survei Persepsi Kualitas Pelayanan (SPKP) Online
 					</b>
 				</h1>
 				<hr class="garis-judul">
@@ -577,11 +577,11 @@
 		<div class="row ">
 			<div class="col-12 mb-3">
 				<div class="text-center">
-					<p style="font-size:20px;">Untuk mengisi kuesioner Survey Kepuasan Masyarakat (SKM) dan Survey
+					<p style="font-size:20px;">Untuk mengisi kuesioner Survei Kepuasan Masyarakat (SKM) dan Survei
 						Persepsi Kualitas Pelayanan (SPKP) secara online, silahkan klik tombol dibawah ini:</p>
 					<a href="<?= base_url(); ?>skm" class="pilih-profil border-white text-white">
 						<i class="fa fa-list-ol" aria-hidden="true"></i>
-						Isi Survey
+						Isi Survei
 					</a>
 				</div>
 			</div>

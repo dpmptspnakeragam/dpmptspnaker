@@ -5,13 +5,23 @@
             <div class="col-12">
                 <div class="card card-outline card-maroon">
                     <div class="card-header">
-                        <h3 class="card-title">Filter Data</h3>
+                        <h3 class="card-title">Tabel <?= $title; ?></h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
+                    <!-- /.card-header -->
+
                     <div class="card-body">
                         <!-- Form untuk filter data -->
                         <form method="GET" action="<?= base_url('admin/skm/filter'); ?>">
                             <div class="row">
-                                <div class="col-md-3 mb-2">
+                                <div class="col-md-3">
                                     <label for="bulan_awal">Bulan Awal</label>
                                     <select name="bulan_awal" id="bulan_awal" class="form-control">
                                         <?php
@@ -54,16 +64,8 @@
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card card-outline card-maroon">
-                    <div class="card-header">
-                        <h3 class="card-title">Tabel <?= $title; ?></h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
 
+                    <div class="card-body">
                         <table id="TabelDataPrint" class="table table-bordered table-sm table-hover">
                             <thead>
                                 <tr>
@@ -95,11 +97,11 @@
                             </thead>
 
                             <script>
-                                document.addEventListener("DOMContentLoaded", function () {
+                                document.addEventListener("DOMContentLoaded", function() {
                                     var toggleColumn = document.getElementById('toggle-column');
                                     var hiddenRows = document.getElementById('hidden-rows');
 
-                                    toggleColumn.addEventListener('click', function () {
+                                    toggleColumn.addEventListener('click', function() {
                                         if (hiddenRows.style.display === 'none') {
                                             hiddenRows.style.display = '';
                                         } else {
@@ -199,6 +201,125 @@
                 <!-- /.card -->
             </div>
             <!-- /.col -->
+
+            <div class="col-12">
+                <div class="card card-outline card-maroon">
+                    <div class="card-header">
+                        <h3 class="card-title">Nilai Indeks Kepuasan Masyarakat (IKM)</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+                        <div class="d-flex mb-3">
+                            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#ModalTambahNilaiRiwayatIKM">
+                                <i class="fa fa-plus p-1" aria-hidden="true"></i>
+                                Tambah Nilai
+                            </button>
+                        </div>
+
+                        <!-- Tabel Riwayat Data IKM -->
+                        <div class="card card-outline card-maroon shadow-sm">
+                            <div class="card-header bg-light">
+                                <h3 class="card-title font-weight-bold text-dark"><i class="fas fa-history text-maroon mr-2"></i> Riwayat Nilai IKM</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="TabelData1" class="table table-bordered table-striped table-hover table-sm">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th class="text-center align-middle" width="5%">No.</th>
+                                            <th class="text-center align-middle">Tahun</th>
+                                            <th class="text-center align-middle">Semester</th>
+                                            <th class="text-center align-middle">Periode Survei</th>
+                                            <th class="text-center align-middle">Total Responden</th>
+                                            <th class="text-center align-middle">Nilai Final IKM</th>
+                                            <th class="text-center align-middle" width="10%">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        // Menarik data langsung dari database secara urut dari yang terbaru
+                                        $riwayat_ikm = $this->db->order_by('tahun', 'DESC')
+                                            ->order_by('semester', 'DESC')
+                                            ->get('ikm_manual')->result();
+                                        $no = 1;
+
+                                        if (empty($riwayat_ikm)): ?>
+                                            <tr>
+                                                <td colspan="7" class="text-center text-muted py-4">
+                                                    <i class="fas fa-folder-open fa-3x mb-2 text-light"></i><br>
+                                                    Belum ada data nilai IKM yang diinput.
+                                                </td>
+                                            </tr>
+                                            <?php else:
+                                            foreach ($riwayat_ikm as $r): ?>
+                                                <tr>
+                                                    <td class="text-center align-middle"><?= $no++; ?></td>
+                                                    <td class="text-center align-middle font-weight-bold"><?= $r->tahun; ?></td>
+                                                    <td class="text-center align-middle">Semester <?= $r->semester; ?></td>
+                                                    <td class="align-middle"><?= $r->periode; ?></td>
+                                                    <td class="text-center align-middle"><?= number_format($r->jumlah_responden, 0, ',', '.'); ?> Orang</td>
+                                                    <td class="text-center align-middle font-weight-bold text-maroon h5 mb-0">
+                                                        <?= number_format($r->nilai_ikm, 2, ',', '.'); ?>
+                                                    </td>
+                                                    <td class="text-center align-middle">
+                                                        <!-- Tombol Hapus dengan Konfirmasi JS -->
+                                                        <button type="button" data-toggle="modal" data-target="#DeleteIKMManual<?= $r->id; ?>" class="btn btn-outline-danger mt-1 mb-1">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+
+                                                        <div class="modal fade" id="DeleteIKMManual<?= $r->id; ?>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="staticBackdropLabel">Hapus Nilai Indeks Kepuasan Masyarakat (IKM)</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        Apakah Anda yakin ingin menghapus data
+                                                                        <strong class="font-weight-bold text-maroon">
+                                                                            Semester <?= $r->semester; ?>
+                                                                            Tahun <?= $r->tahun; ?>
+                                                                        </strong> ini?
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
+                                                                        <a href="<?= base_url('admin/skm/hapus_ikm_manual/' . $r->id); ?>" class="btn btn-outline-danger">Hapus</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                        <?php endforeach;
+                                        endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End Tabel Riwayat Data IKM -->
+
+                    </div>
+
+                </div>
+            </div>
+
         </div>
         <!-- /.row -->
     </div>

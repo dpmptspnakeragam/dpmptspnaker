@@ -16,7 +16,7 @@
 						</button> -->
 					</div>
 
-					<div class="card-body table-responsive">
+					<div class="card-body">
 						<table id="TabelData1" class="table table-bordered table-striped table-hover table-sm">
 							<thead class="bg-light">
 								<tr>

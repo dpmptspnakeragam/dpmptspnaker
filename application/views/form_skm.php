@@ -5,7 +5,7 @@
     <nav class="main-header navbar navbar-expand-md navbar-dark fixed-top shadow-sm" style="background-color: maroon;">
         <div class="container-fluid">
             <a href="<?= base_url('skm/form'); ?>" class="navbar-brand">
-                <span class="brand-text font-weight-bold"><i class="fas fa-file-signature mr-2"></i> Form Survey Kepuasan Masyarakat (SKM)</span>
+                <span class="brand-text font-weight-bold"><i class="fas fa-file-signature mr-2"></i> Form Survei SPKP & SPAK</span>
             </a>
 
             <!-- Right navbar links -->
@@ -53,7 +53,7 @@
                         <div class="card card-outline card-danger shadow-sm border-maroon" style="border-top-width: 3px;">
                             <div class="card-header text-center bg-white pt-4 pb-3">
                                 <h4 class="font-weight-bold text-maroon mb-1 text-uppercase">Kuesioner SPKP & SPAK</h4>
-                                <h6 class="text-muted mb-0">Dinas Penanaman Modal Pelayanan Terpadu Satu Pintu Kabupaten Agam</h6>
+                                <!-- <h6 class="text-muted mb-0">Dinas Penanaman Modal Pelayanan Terpadu Satu Pintu Kabupaten Agam</h6> -->
                             </div>
 
                             <div class="card-body bg-light">
@@ -196,23 +196,10 @@
                                     </div>
                                 </div>
 
-                                <!-- HIDDEN PELAYANAN PUBLIK (U1 - U9) -->
-                                <div id="section-pelayanan-publik" style="display:none;">
-                                    <input type="hidden" name="u1" value="0">
-                                    <input type="hidden" name="u2" value="0">
-                                    <input type="hidden" name="u3" value="0">
-                                    <input type="hidden" name="u4" value="0">
-                                    <input type="hidden" name="u5" value="0">
-                                    <input type="hidden" name="u6" value="0">
-                                    <input type="hidden" name="u7" value="0">
-                                    <input type="hidden" name="u8" value="0">
-                                    <input type="hidden" name="u9" value="0">
-                                </div>
-
                                 <!-- BAGIAN 2: SPKP -->
                                 <div class="card shadow-sm border-0 mb-4">
                                     <div class="card-header bg-maroon text-white">
-                                        <h5 class="mb-0 font-weight-bold"><i class="fas fa-star mr-2 text-white"></i> Survey Persepsi Kualitas Pelayanan (SPKP)</h5>
+                                        <h5 class="mb-0 font-weight-bold"><i class="fas fa-star mr-2 text-white"></i> Survei Persepsi Kualitas Pelayanan (SPKP)</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="alert no-auto-hide alert-light border border-maroon text-maroon mb-4">
@@ -296,7 +283,7 @@
                                 <!-- BAGIAN 3: SPAK -->
                                 <div class="card shadow-sm border-0 mb-4">
                                     <div class="card-header bg-maroon text-white">
-                                        <h5 class="mb-0 font-weight-bold"><i class="fas fa-shield-alt mr-2"></i> Survey Persepsi Anti Korupsi (SPAK)</h5>
+                                        <h5 class="mb-0 font-weight-bold"><i class="fas fa-shield-alt mr-2"></i> Survei Persepsi Anti Korupsi (SPAK)</h5>
                                     </div>
                                     <div class="card-body">
                                         <div class="alert no-auto-hide alert-light border border-maroon text-maroon mb-4">
@@ -350,12 +337,12 @@
                                     </div>
                                 </div>
 
-                                <div class="text-center mt-5 mb-3">
-                                    <a href="<?= base_url('skm'); ?>" class="btn-outline-secondary btn-lg px-5 font-weight-bold shadow-sm" style="border-radius: 30px;">
-                                        <i class="fas fa-arrow-left mr-2"></i> Kembali
+                                <div class="text-center">
+                                    <a href="<?= base_url('skm'); ?>" class="btn-outline-secondary btn-lg px-4">
+                                        <i class="fas fa-arrow-left mr-1"></i> Kembali
                                     </a>
-                                    <button type="submit" class="btn-outline-maroon btn-lg px-5 font-weight-bold shadow-sm" style="border-radius: 30px;">
-                                        <i class="fas fa-paper-plane mr-2"></i> Kirim Survey
+                                    <button type="submit" class="btn-outline-maroon btn-lg px-4">
+                                        <i class="fas fa-paper-plane mr-1"></i> Kirim Survei
                                     </button>
                                 </div>
                                 </form>

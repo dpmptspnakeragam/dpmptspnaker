@@ -2,8 +2,8 @@
     <!-- Navigation-->
     <nav class="main-header navbar navbar-expand-md navbar-dark fixed-top shadow-sm" style="background-color: maroon;">
         <div class="container-fluid">
-            <a href="<?= base_url('skm/form'); ?>" class="navbar-brand">
-                <span class="brand-text font-weight-bold"><i class="fas fa-chart-pie mr-2"></i> Survey Kepuasan Masyarakat (SKM)</span>
+            <a href="<?= base_url('skm'); ?>" class="navbar-brand">
+                <span class="brand-text font-weight-bold"><i class="fas fa-chart-pie mr-2"></i>Survei</span>
             </a>
 
             <!-- Right navbar links -->
@@ -40,48 +40,48 @@
                 <!-- CARD TAHAP 1 DAN 2 -->
                 <div class="card card-outline card-danger shadow-sm mb-4" style="border-top-width: 3px;">
                     <div class="card-header text-center bg-white">
-                        <h4 class="font-weight-bold text-maroon mb-0">TAHAPAN PROSES SURVEY (SKM)</h4>
-                        <small class="text-muted">Dinas Penanaman Modal Pelayanan Terpadu Satu Pintu Kabupaten Agam</small>
+                        <h4 class="font-weight-bold text-maroon mb-0">SURVEI</h4>
+                        <!-- <small class="text-muted">Dinas Penanaman Modal Pelayanan Terpadu Satu Pintu Kabupaten Agam</small> -->
                     </div>
                     <div class="card-body bg-light">
                         <div class="row justify-content-center">
-                            <!-- TAHAP 1 -->
-                            <div class="col-12 col-md-6 mb-3">
-                                <div class="card h-100 shadow border-0" style="border-radius: 10px;">
-                                    <div class="card-header text-white text-center font-weight-bold bg-maroon" style="border-radius: 10px 10px 0 0;">
-                                        Tahap 1
-                                    </div>
-                                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
-                                        <i class="fas fa-file-signature fa-3x text-maroon mb-3"></i>
-                                        <p class="mb-3 text-muted">Silakan isi Survey Persepsi Kualitas Pelayanan (SPKP) dan Survey Persepsi Anti Korupsi (SPAK) terlebih dahulu.</p>
-                                        <a href="<?= base_url('skm/form'); ?>" class="btn-outline-maroon btn-lg px-4">
-                                            <i class="fa fa-list-ol mr-2"></i> Link SPKP & SPAK
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
                             <!-- TAHAP 2 -->
                             <div class="col-12 col-md-6 mb-3">
                                 <div class="card h-100 shadow border-0" style="border-radius: 10px;">
                                     <div class="card-header text-white text-center font-weight-bold bg-maroon" style="border-radius: 10px 10px 0 0;">
-                                        Tahap 2
+                                        Survei Kepuasan Masyarakat (SKM)
                                     </div>
                                     <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
                                         <img src="https://skm.go.id/images/skm-logo.png" alt="Logo SKM Resmi" class="img-fluid mb-3" style="max-height: 55px; object-fit: contain;">
-                                        <p class="mb-3 text-muted">Lanjutkan dengan mengisi Survey Kepuasan Masyarakat (SKM) Resmi dari Pusat.</p>
+                                        <p class="mb-3 text-muted">Silahkan isi Survei Kepuasan Masyarakat (SKM) dengan mengklik Link atau Scan QR Code berikut:</p>
 
-                                        <?php if (!empty($survey_skm_aktif)): ?>
-                                            <a href="<?= $survey_skm_aktif->link_survey; ?>" target="_blank" class="btn-outline-maroon btn-lg px-4 mb-3">
+                                        <?php if (!empty($survei_skm_aktif)): ?>
+                                            <a href="<?= $survei_skm_aktif->link_survei; ?>" target="_blank" class="btn-outline-maroon btn-lg px-4 mb-3">
                                                 <i class="fa fa-external-link-alt mr-2"></i> Link SKM Resmi
                                             </a>
                                             <p class="mb-2 font-italic text-muted"><small>atau Scan QR Code di bawah ini:</small></p>
-                                            <img src="<?= base_url('assets/imgupload/' . $survey_skm_aktif->qr_code); ?>" alt="QR Code Survey SKM" class="img-fluid shadow-sm" style="max-width: 140px; border-radius: 8px;">
+                                            <img src="<?= base_url('assets/imgupload/' . $survei_skm_aktif->qr_code); ?>" alt="QR Code Survei SKM" class="img-fluid shadow-sm" style="max-width: 140px; border-radius: 8px;">
                                         <?php else: ?>
-                                            <div class="alert alert-warning mt-auto mb-auto w-100" role="alert">
-                                                <i class="fa fa-exclamation-triangle"></i> Layanan survey SKM Resmi sedang tidak tersedia.
+                                            <div class="no-auto-hide alert alert-warning mt-auto mb-auto w-100" role="alert">
+                                                <i class="fa fa-exclamation-triangle"></i> Layanan survei SKM Resmi sedang tidak tersedia.
                                             </div>
                                         <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- TAHAP 1 -->
+                            <div class="col-12 col-md-6 mb-3">
+                                <div class="card h-100 shadow border-0" style="border-radius: 10px;">
+                                    <div class="card-header text-white text-center font-weight-bold bg-maroon" style="border-radius: 10px 10px 0 0;">
+                                        Survei Persepsi Kualitas Pelayanan (SPKP) <br> dan Survei Persepsi Anti Korupsi (SPAK)
+                                    </div>
+                                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+                                        <i class="fas fa-file-signature fa-3x text-maroon mb-3"></i>
+                                        <p class="mb-3 text-muted">Silakan isi Survei Persepsi Kualitas Pelayanan (SPKP) dan Survei Persepsi Anti Korupsi (SPAK) dengan klik link berikut:.</p>
+                                        <a href="<?= base_url('skm/form'); ?>" class="btn-outline-maroon btn-lg px-4">
+                                            <i class="fa fa-list-ol mr-2"></i> Link SPKP & SPAK
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -89,19 +89,22 @@
                     </div>
                 </div>
 
+                <!-- INDEKS KEPUASAN MASYARAKAT (IKM) -->
                 <div class="card card-outline card-primary shadow-sm mb-4" style="border-top-width: 3px;">
                     <div class="card-header text-center">
                         <h4 class="font-weight-bold text-primary mb-0">INDEKS KEPUASAN MASYARAKAT (IKM)</h4>
-                        <h6 class="text-muted mt-1">Semester <?= isset($semester) ? (($semester == 1) ? '1 (Januari s.d Juni)' : '2 (Juli s.d Desember)') : '1 (Januari s.d Juni)'; ?> Tahun <?= date('Y'); ?></h6>
+                        <!-- Menampilkan teks periode kustom dari Admin -->
+                        <h6 class="text-muted mt-1"><?= isset($teks_periode) && $teks_periode != '' ? $teks_periode : 'Semester ' . $semester . ' Tahun ' . date('Y'); ?></h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <!-- Sisi Kiri: Nilai IKM -->
                             <div class="col-lg-5 col-md-12 text-center border-right">
                                 <?php
-                                // Ensure $ikm is defined to avoid undefined variable notice
+                                // Memastikan nilai $ikm tersedia
                                 $nilai_mutu = isset($ikm) ? round($ikm, 2) : 0;
                                 $warna_mutu = 'text-info';
+
                                 if ($nilai_mutu >= 88.31) {
                                     $kategori_mutu = "Sangat Baik";
                                     $grade = "A";
@@ -115,15 +118,21 @@
                                     $grade = "C";
                                     $warna_mutu = 'text-warning';
                                 } else {
-                                    $kategori_mutu = "Data Belum Lengkap.";
-                                    $grade = "-";
+                                    $kategori_mutu = "Kurang Baik";
+                                    $grade = "D";
                                     $warna_mutu = 'text-danger';
+                                }
+
+                                // Jika nilai 0 (belum diinput admin)
+                                if ($nilai_mutu == 0) {
+                                    $grade = "-";
+                                    $kategori_mutu = "Belum Ada Data";
                                 }
                                 ?>
                                 <h5 class="font-weight-bold text-muted mb-2">MUTU PELAYANAN</h5>
                                 <div class="score-circle bg-white">
                                     <h1 class="display-3 font-weight-bold <?= $warna_mutu ?> mb-0"><?= $grade ?></h1>
-                                    <h4 class="font-weight-bold text-dark mt-1"><?= $nilai_mutu ?></h4>
+                                    <h4 class="font-weight-bold text-dark mt-1"><?= number_format($nilai_mutu, 2, ',', '.') ?></h4>
                                 </div>
                                 <h4 class="font-weight-bold <?= $warna_mutu ?> mt-3"><?= $kategori_mutu ?></h4>
                             </div>
@@ -186,7 +195,7 @@
                         </div>
 
                         <!-- Info Mutu -->
-                        <div class="alert alert-light border shadow-sm mt-3 text-center mb-0">
+                        <div class="no-auto-hide alert alert-light border shadow-sm mt-3 text-center mb-0">
                             <h6 class="font-weight-bold mb-2">Keterangan Interval Mutu Pelayanan:</h6>
                             <span class="badge badge-primary px-3 py-2 m-1">A (Sangat Baik): 88.31 - 100.00</span>
                             <span class="badge badge-success px-3 py-2 m-1">B (Baik): 76.61 - 88.30</span>
@@ -196,39 +205,53 @@
                     </div>
                 </div>
 
-                <!-- GRAFIK SURVEY NILAI PER UNSUR -->
-                <div class="card shadow-sm mb-4 border-0">
+                <!-- GRAFIK TREN IKM PER SEMESTER -->
+                <!-- <div class="card shadow-sm mb-4 border-0">
                     <div class="card-header bg-white border-bottom-0 pt-4 text-center">
-                        <h5 class="font-weight-bold text-dark"><i class="fas fa-chart-line text-primary mr-2"></i> Grafik Nilai Per Unsur IKM</h5>
+                        <h5 class="font-weight-bold text-dark"><i class="fas fa-chart-line text-primary mr-2"></i> Grafik Perkembangan Nilai IKM</h5>
                     </div>
                     <div class="card-body">
                         <div class="position-relative" style="height: 350px;">
                             <canvas id="barChartPerUnsur"></canvas>
                         </div>
                         <script>
-                            // ... existing code for Chart IKM ...
+                            // Pastikan Chart.js sudah di-load di template header Anda
                             var kanvasunsur = document.getElementById("barChartPerUnsur").getContext("2d");
                             Chart.defaults.global.defaultFontFamily = "Lato";
                             Chart.defaults.global.defaultFontSize = 14;
-                            var nilai = {
-                                labels: ["Persyaratan", "Prosedur", "Kecepatan", "Tarif", "Kesesuaian", "Kompeten", "Perilaku", "Penanganan", "Sarana"],
+
+                            // Ambil data asli dari PHP ke dalam variabel Javascript
+                            var labelsIKM = [
+                                <?php if (isset($tren_ikm) && !empty($tren_ikm)): ?>
+                                    <?php foreach ($tren_ikm as $t): ?> "Smstr <?= $t->semester; ?> (<?= $t->tahun; ?>)",
+                                    <?php endforeach; ?>
+                                <?php else: ?> "Semester <?= $semester ?> (<?= date('Y') ?>)"
+                                <?php endif; ?>
+                            ];
+
+                            var dataIKM = [
+                                <?php if (isset($tren_ikm) && !empty($tren_ikm)): ?>
+                                    <?php foreach ($tren_ikm as $t): ?>
+                                        <?= $t->nilai_ikm; ?>,
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <?= isset($ikm) ? $ikm : 0; ?>
+                                <?php endif; ?>
+                            ];
+
+                            var chartData = {
+                                labels: labelsIKM,
                                 datasets: [{
-                                    label: "Nilai Rata-Rata",
-                                    data: [<?= isset($u1) ? $u1 : 0; ?>, <?= isset($u2) ? $u2 : 0; ?>, <?= isset($u3) ? $u3 : 0; ?>, <?= isset($u4) ? $u4 : 0; ?>, <?= isset($u5) ? $u5 : 0; ?>, <?= isset($u6) ? $u6 : 0; ?>, <?= isset($u7) ? $u7 : 0; ?>, <?= isset($u8) ? $u8 : 0; ?>, <?= isset($u9) ? $u9 : 0; ?>],
-                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                    borderColor: 'rgba(54, 162, 235, 1)',
-                                    borderWidth: 2,
-                                    pointBackgroundColor: 'rgba(255, 159, 64, 1)',
-                                    pointBorderColor: '#fff',
-                                    pointBorderWidth: 2,
-                                    pointRadius: 5,
-                                    pointHoverRadius: 8,
-                                    pointHoverBackgroundColor: '#ff6b6b',
-                                    pointHoverBorderColor: '#fff',
-                                    pointHoverBorderWidth: 2,
-                                    pointStyle: 'circle'
+                                    label: "Nilai Total IKM",
+                                    data: dataIKM,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.7)', // Warna isi batang biru muda
+                                    borderColor: 'rgba(54, 162, 235, 1)', // Warna garis tepi batang biru tua
+                                    borderWidth: 1,
+                                    hoverBackgroundColor: 'rgba(54, 162, 235, 0.9)', // Warna saat disentuh mouse
+                                    hoverBorderColor: 'rgba(54, 162, 235, 1)'
                                 }]
                             };
+
                             var chartOptions = {
                                 responsive: true,
                                 maintainAspectRatio: false,
@@ -236,6 +259,7 @@
                                     yAxes: [{
                                         ticks: {
                                             beginAtZero: true,
+                                            max: 100, // Karena IKM maksimal 100
                                             fontColor: 'black',
                                             fontSize: 12
                                         },
@@ -244,13 +268,16 @@
                                         }
                                     }],
                                     xAxes: [{
+                                        // Mengatur lebar batang agar proporsional
+                                        barPercentage: 0.4,
+                                        categoryPercentage: 0.8,
                                         ticks: {
                                             fontColor: 'black',
                                             fontSize: 12,
                                             fontStyle: 'bold'
                                         },
                                         gridLines: {
-                                            color: 'rgba(0, 0, 0, 0.1)'
+                                            display: false, // Menghilangkan garis vertikal agar grafik bersih
                                         }
                                     }]
                                 },
@@ -258,24 +285,35 @@
                                     display: true,
                                     position: 'top',
                                     labels: {
-                                        boxWidth: 80,
+                                        boxWidth: 20, // Ikon legenda kotak, bukan garis
                                         fontColor: 'black'
+                                    }
+                                },
+                                tooltips: {
+                                    callbacks: {
+                                        // Menambahkan teks "Nilai IKM:" saat kotak di hover
+                                        label: function(tooltipItem, data) {
+                                            var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                            return 'Nilai IKM: ' + value;
+                                        }
                                     }
                                 }
                             };
+
+                            // UBAH TYPE MENJADI 'bar' UNTUK GRAFIK BATANG / PETAK TINGGI
                             new Chart(kanvasunsur, {
-                                type: 'line',
-                                data: nilai,
+                                type: 'bar',
+                                data: chartData,
                                 options: chartOptions
                             });
                         </script>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- SPKP & SPAK SECTION -->
                 <div class="card card-outline card-success shadow-sm mb-4" style="border-top-width: 3px;">
                     <div class="card-header text-center">
-                        <h4 class="font-weight-bold text-success mb-0">NILAI SURVEY PERSEPSI KUALITAS PELAYANAN (SPKP) <br>& SURVEY PERSEPSI ANTI KORUPSI (SPAK)</h4>
+                        <h4 class="font-weight-bold text-success mb-0">NILAI SURVEI PERSEPSI KUALITAS PELAYANAN (SPKP) <br>& SURVEI PERSEPSI ANTI KORUPSI (SPAK)</h4>
                     </div>
                     <div class="card-body">
                         <div class="row align-items-center">
@@ -297,14 +335,20 @@
                                     $grade_spkp = "C";
                                     $warna_spkp = 'text-warning';
                                 } else {
-                                    $kategori_spkp = "Data Belum Lengkap.";
-                                    $grade_spkp = "-";
+                                    $kategori_spkp = "Kurang Baik.";
+                                    $grade_spkp = "D";
                                     $warna_spkp = 'text-danger';
+                                }
+
+                                // Jika nilai 0 (belum diinput admin)
+                                if ($nilai_spkp == 0) {
+                                    $grade_spkp = "-";
+                                    $kategori_spkp = "Belum Ada Data";
                                 }
                                 ?>
                                 <div class="score-circle bg-light mt-2 mb-3">
                                     <h1 class="display-3 font-weight-bold <?= $warna_spkp ?> mb-0"><?= $grade_spkp ?></h1>
-                                    <h4 class="font-weight-bold text-dark mt-1"><?= $nilai_spkp ?></h4>
+                                    <h4 class="font-weight-bold text-dark mt-1"><?= number_format($nilai_spkp, 2, ',', '.') ?></h4>
                                 </div>
                                 <h4 class="font-weight-bold <?= $warna_spkp ?>"><?= $kategori_spkp ?></h4>
                             </div>
@@ -323,7 +367,7 @@
                             <h5 class="text-center font-weight-bold text-dark mb-4">Grafik Gabungan SPKP & SPAK Per-Unsur</h5>
                             <div class="position-relative" style="height: 350px;">
                                 <canvas id="barChartUnsurCombined"></canvas>
-                                <!-- ... existing code ... -->
+
                                 <script>
                                     $(function() {
                                         var $combinedChart = $('#barChartUnsurCombined');
@@ -364,7 +408,7 @@
                                         });
                                     });
                                 </script>
-                                <!-- ... existing code ... -->
+
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@ class Skm extends CI_Controller
         parent::__construct();
         $this->load->model('Model_skm');
         $this->load->model('Model_spkp_antikorupsi');
-        $this->load->model('Model_qr_survey');
+        $this->load->model('Model_qr_survei');
     }
 
     public function index()
@@ -31,55 +31,55 @@ class Skm extends CI_Controller
             $akhirTahun = $TahunIni;
         }
 
-        // SKM
-        $data['jumlah'] = $this->Model_skm->jmlh_data($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_lk'] = $this->Model_skm->jmlh_lk($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_pr'] = $this->Model_skm->jmlh_pr($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_sd'] = $this->Model_skm->jmlh_sd($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_smp'] = $this->Model_skm->jmlh_smp($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_sma'] = $this->Model_skm->jmlh_sma($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_d1'] = $this->Model_skm->jmlh_d1($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_s1'] = $this->Model_skm->jmlh_s1($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_s2'] = $this->Model_skm->jmlh_s2($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_pns'] = $this->Model_skm->jmlh_pns($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_tni'] = $this->Model_skm->jmlh_tni($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_polri'] = $this->Model_skm->jmlh_polri($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_swasta'] = $this->Model_skm->jmlh_swasta($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_wirausaha'] = $this->Model_skm->jmlh_wirausaha($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $data['jmlh_lainnya'] = $this->Model_skm->jmlh_lainnya($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
+        // --- 1. AMBIL DATA IKM DARI TABEL MANUAL (YANG DIINPUT ADMIN) ---
+        $this->db->where('tahun', $TahunIni);
+        $this->db->where('semester', $semester);
+        $ikm_manual = $this->db->get('ikm_manual')->row();
 
-        $avg_u1 = $this->Model_skm->avg_u1($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u2 = $this->Model_skm->avg_u2($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u3 = $this->Model_skm->avg_u3($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u4 = $this->Model_skm->avg_u4($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u5 = $this->Model_skm->avg_u5($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u6 = $this->Model_skm->avg_u6($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u7 = $this->Model_skm->avg_u7($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u8 = $this->Model_skm->avg_u8($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
-        $avg_u9 = $this->Model_skm->avg_u9($awalBulan, $akhirBulan, $awalTahun, $akhirTahun);
+        if ($ikm_manual) {
+            // Jika admin sudah input data untuk semester ini
+            $data['ikm'] = $ikm_manual->nilai_ikm;
+            $data['jumlah'] = $ikm_manual->jumlah_responden;
+            $data['jmlh_lk'] = $ikm_manual->jmlh_lk;
+            $data['jmlh_pr'] = $ikm_manual->jmlh_pr;
+            $data['jmlh_sd'] = $ikm_manual->jmlh_sd;
+            $data['jmlh_smp'] = $ikm_manual->jmlh_smp;
+            $data['jmlh_sma'] = $ikm_manual->jmlh_sma;
+            $data['jmlh_d1'] = $ikm_manual->jmlh_d1;
+            $data['jmlh_s1'] = $ikm_manual->jmlh_s1;
+            $data['jmlh_s2'] = $ikm_manual->jmlh_s2;
+            $data['jmlh_pns'] = $ikm_manual->jmlh_pns;
+            $data['jmlh_tni'] = $ikm_manual->jmlh_tni;
+            $data['jmlh_polri'] = $ikm_manual->jmlh_polri;
+            $data['jmlh_swasta'] = $ikm_manual->jmlh_swasta;
+            $data['jmlh_wirausaha'] = $ikm_manual->jmlh_wirausaha;
+            $data['jmlh_lainnya'] = $ikm_manual->jmlh_lainnya;
+            $data['teks_periode'] = $ikm_manual->periode;
+        } else {
+            // Jika admin belum input, set ke 0
+            $data['ikm'] = 0;
+            $data['jumlah'] = 0;
+            $data['jmlh_lk'] = 0;
+            $data['jmlh_pr'] = 0;
+            $data['jmlh_sd'] = 0;
+            $data['jmlh_smp'] = 0;
+            $data['jmlh_sma'] = 0;
+            $data['jmlh_d1'] = 0;
+            $data['jmlh_s1'] = 0;
+            $data['jmlh_s2'] = 0;
+            $data['jmlh_pns'] = 0;
+            $data['jmlh_tni'] = 0;
+            $data['jmlh_polri'] = 0;
+            $data['jmlh_swasta'] = 0;
+            $data['jmlh_wirausaha'] = 0;
+            $data['jmlh_lainnya'] = 0;
+            $data['teks_periode'] = "Semester $semester Tahun $TahunIni";
+        }
 
-        $data['u1'] = $avg_u1;
-        $data['u2'] = $avg_u2;
-        $data['u3'] = $avg_u3;
-        $data['u4'] = $avg_u4;
-        $data['u5'] = $avg_u5;
-        $data['u6'] = $avg_u6;
-        $data['u7'] = $avg_u7;
-        $data['u8'] = $avg_u8;
-        $data['u9'] = $avg_u9;
-
-        $nrr_u1 = $avg_u1 * 0.1111;
-        $nrr_u2 = $avg_u2 * 0.1111;
-        $nrr_u3 = $avg_u3 * 0.1111;
-        $nrr_u4 = $avg_u4 * 0.1111;
-        $nrr_u5 = $avg_u5 * 0.1111;
-        $nrr_u6 = $avg_u6 * 0.1111;
-        $nrr_u7 = $avg_u7 * 0.1111;
-        $nrr_u8 = $avg_u8 * 0.1111;
-        $nrr_u9 = $avg_u9 * 0.1111;
-
-        $sum_nrr = $nrr_u1 + $nrr_u2 + $nrr_u3 + $nrr_u4 + $nrr_u5 + $nrr_u6 + $nrr_u7 + $nrr_u8 + $nrr_u9;
-        $data['ikm'] = $sum_nrr * 25;
+        // --- 2. AMBIL DATA TREN (HISTORIS) UNTUK GRAFIK ---
+        $this->db->order_by('tahun', 'ASC');
+        $this->db->order_by('semester', 'ASC');
+        $data['tren_ikm'] = $this->db->get('ikm_manual')->result();
         // end of SKM
 
         // ----------------------------------------- SPKP and SPAK -----------------------------------------
@@ -119,8 +119,8 @@ class Skm extends CI_Controller
         $data['semester'] = $semester;
         // -------------------------------------- end of SPKP and SPAK --------------------------------------
 
-        $survey_aktif = $this->Model_qr_survey->get_active_survey();
-        $data['survey_skm_aktif'] = $survey_aktif;
+        $survei_aktif = $this->Model_qr_survei->get_active_survei();
+        $data['survei_skm_aktif'] = $survei_aktif;
 
         $this->load->view('templates/header');
         $this->load->view('view_skm', $data);
@@ -245,7 +245,7 @@ class Skm extends CI_Controller
             $data_spak = $this->security->xss_clean($input_spak);
             $this->Model_skm->simpan_spak($data_spak);
 
-            $this->session->set_flashdata('berhasil', 'Pengisian survey Tahap 1 berhasil. Silahkan melanjutkan pada Tahap 2, Terima kasih!');
+            $this->session->set_flashdata('berhasil', 'Pengisian survei berhasil, Terima kasih!');
             redirect('skm');
         } else {
             $this->load->view('templates/header');

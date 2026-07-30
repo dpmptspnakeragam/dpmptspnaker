@@ -1,5 +1,5 @@
 <?php foreach ($qr_survei as $row): ?>
-    <div class="modal fade" id="ModalEditQR<?= $row->id_survey; ?>" data-backdrop="static" data-keyboard="false"
+    <div class="modal fade" id="ModalEditQR<?= $row->id_survei; ?>" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -11,11 +11,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <?= form_open_multipart('admin/qr_survey/ubah/' . $row->id_survey); ?>
+                <?= form_open_multipart('admin/qr_survei/ubah/' . $row->id_survei); ?>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Link Survey</label>
-                        <input type="url" name="link_survey" class="form-control" value="<?= $row->link_survey; ?>"
+                        <label>Link Survei</label>
+                        <input type="url" name="link_survei" class="form-control" value="<?= $row->link_survei; ?>"
                             required>
                     </div>
                     <div class="form-group">

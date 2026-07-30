@@ -67,7 +67,7 @@
     <div class="header">
         <img src="<?= base_url('assets/img/agam.png') ?>" alt="Logo">
         <div class="title">Dinas Penanaman Modal <br> Pelayanan Terpadu Satu Pintu <br> Kabupaten Agam</div>
-        <div class="title2">Rekapitulasi Survey Persepsi Kualitas Pelayanan (SPKP)</div>
+        <div class="title2">Rekapitulasi Survei Persepsi Kualitas Pelayanan (SPKP)</div>
         <div class="subtitle">Semester <?= $semester ?> Tahun <?= date('Y') ?></div>
     </div>
 

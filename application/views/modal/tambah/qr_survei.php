@@ -8,11 +8,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <?= form_open_multipart('admin/qr_survey/simpan'); ?>
+            <?= form_open_multipart('admin/qr_survei/simpan'); ?>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Link Survey</label>
-                    <input type="url" name="link_survey" class="form-control" placeholder="https://skm.go.id/..."
+                    <label>Link Survei</label>
+                    <input type="url" name="link_survei" class="form-control" placeholder="https://skm.go.id/..."
                         required>
                 </div>
                 <div class="form-group">

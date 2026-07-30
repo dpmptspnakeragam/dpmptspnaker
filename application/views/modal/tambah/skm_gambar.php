@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Tambah <?= $title; ?></h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah & Upload Gambar IKM</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -19,8 +19,8 @@
                         </div>
                     <?php } ?>
                     <div class="form-group">
-                        <label for="title">Judul</label>
-                        <input id="title" class="form-control" name="title" placeholder="Masukan Judul" required>
+                        <label for="title">Judul IKM</label>
+                        <input id="title" class="form-control" name="title" placeholder="Masukan Judul IKM." required>
                     </div>
                     <div class="form-group">
                         <label for="file_upload">Upload Gambar</label>

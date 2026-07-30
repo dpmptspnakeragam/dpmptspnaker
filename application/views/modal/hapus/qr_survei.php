@@ -1,5 +1,5 @@
 <?php foreach ($qr_survei as $row): ?>
-    <div class="modal fade" id="ModalDeleteQR<?= $row->id_survey; ?>" data-backdrop="static" data-keyboard="false"
+    <div class="modal fade" id="ModalDeleteQR<?= $row->id_survei; ?>" data-backdrop="static" data-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -10,17 +10,17 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <p>Apakah Anda yakin ingin menghapus data survey beserta QR Code di bawah ini?</p>
+                    <p>Apakah Anda yakin ingin menghapus data survei beserta QR Code di bawah ini?</p>
                     <?php if (file_exists('./assets/imgupload/' . $row->qr_code) && !empty($row->qr_code)): ?>
                         <img src="<?= base_url('assets/imgupload/' . $row->qr_code); ?>" class="img-thumbnail mb-2"
                             style="max-width: 120px;">
                     <?php endif; ?>
                     <br>
-                    <small class="text-muted d-block text-truncate"><?= $row->link_survey; ?></small>
+                    <small class="text-muted d-block text-truncate"><?= $row->link_survei; ?></small>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
-                    <a href="<?= base_url('admin/qr_survey/hapus/' . $row->id_survey); ?>"
+                    <a href="<?= base_url('admin/qr_survei/hapus/' . $row->id_survei); ?>"
                         class="btn btn-outline-danger">Hapus</a>
                 </div>
             </div>

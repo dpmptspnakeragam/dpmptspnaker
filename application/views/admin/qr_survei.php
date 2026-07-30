@@ -28,7 +28,7 @@
                                         <tr class="text-center">
                                             <th style="width: 5%">No</th>
                                             <th style="width: 20%">QR Code</th>
-                                            <th>Link Survey</th>
+                                            <th>Link Survei</th>
                                             <th style="width: 15%">Status</th>
                                             <th style="width: 20%">Aksi</th>
                                         </tr>
@@ -50,8 +50,8 @@
                                                     <?php endif; ?>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <a href="<?= $row->link_survey; ?>" target="_blank" class="text-break">
-                                                        <?= $row->link_survey; ?> <i class="fas fa-external-link-alt fa-xs"></i>
+                                                    <a href="<?= $row->link_survei; ?>" target="_blank" class="text-break">
+                                                        <?= $row->link_survei; ?> <i class="fas fa-external-link-alt fa-xs"></i>
                                                     </a>
                                                 </td>
                                                 <td class="text-center align-middle">
@@ -63,12 +63,12 @@
                                                 </td>
                                                 <td class="text-center align-middle">
                                                     <button type="button" data-toggle="modal"
-                                                        data-target="#ModalEditQR<?= $row->id_survey; ?>"
+                                                        data-target="#ModalEditQR<?= $row->id_survei; ?>"
                                                         class="btn btn-sm btn-outline-warning my-1">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                     <button type="button" data-toggle="modal"
-                                                        data-target="#ModalDeleteQR<?= $row->id_survey; ?>"
+                                                        data-target="#ModalDeleteQR<?= $row->id_survei; ?>"
                                                         class="btn btn-sm btn-outline-danger my-1">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
@@ -80,7 +80,7 @@
                             </div>
                         <?php else: ?>
                             <div class="alert alert-warning text-center" role="alert">
-                                <i class="fas fa-exclamation-triangle"></i> Data QR Survey belum ditemukan atau kosong!
+                                <i class="fas fa-exclamation-triangle"></i> Data QR Survei belum ditemukan atau kosong!
                             </div>
                         <?php endif; ?>
 

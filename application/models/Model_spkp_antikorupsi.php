@@ -168,7 +168,7 @@ class Model_spkp_antikorupsi extends CI_Model
         return $query->result();
     }
 
-    // Nilai Survey
+    // Nilai Survei
     public function get_avg_z($awalBulan, $akhirBulan, $awalTahun, $akhirTahun)
     {
         $this->db->select('AVG(z1) as avg_z1, AVG(z2) as avg_z2, AVG(z3) as avg_z3, AVG(z4) as avg_z4, AVG(z5) as avg_z5, AVG(z6) as avg_z6, AVG(z7) as avg_z7, AVG(z8) as avg_z8');

@@ -370,7 +370,7 @@ class DataIKM extends CI_Controller
     //     $dompdf->loadHtml($html);
     //     $dompdf->setPaper('A4', 'landscape');
     //     $dompdf->render();
-    //     $dompdf->stream('Survey Kepuasan Masyarakat (SKM) Semester ' . $semester . ' Tahun ' . date('Y') . '.pdf', array('Attachment' => false));
+    //     $dompdf->stream('Survei Kepuasan Masyarakat (SKM) Semester ' . $semester . ' Tahun ' . date('Y') . '.pdf', array('Attachment' => false));
     // }
 
     // public function spkp()
@@ -497,7 +497,7 @@ class DataIKM extends CI_Controller
     //     $dompdf->loadHtml($html);
     //     $dompdf->setPaper('A4', 'landscape');
     //     $dompdf->render();
-    //     $dompdf->stream('Survey Persepsi Kualitas Pelayanan (SPKP) Semester ' . $semester . ' Tahun ' . date('Y') . '.pdf', array('Attachment' => false));
+    //     $dompdf->stream('Survei Persepsi Kualitas Pelayanan (SPKP) Semester ' . $semester . ' Tahun ' . date('Y') . '.pdf', array('Attachment' => false));
     // }
 
     // public function spak()
@@ -624,7 +624,7 @@ class DataIKM extends CI_Controller
     //     $dompdf->loadHtml($html);
     //     $dompdf->setPaper('A4', 'landscape');
     //     $dompdf->render();
-    //     $dompdf->stream('Survey Persepsi Anti Korupsi (SPAK) Semester ' . $semester . ' Tahun ' . date('Y') . '.pdf', array('Attachment' => false));
+    //     $dompdf->stream('Survei Persepsi Anti Korupsi (SPAK) Semester ' . $semester . ' Tahun ' . date('Y') . '.pdf', array('Attachment' => false));
     // }
 }
 
