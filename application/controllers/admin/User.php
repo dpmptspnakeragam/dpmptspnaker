@@ -34,7 +34,7 @@ class User extends CI_Controller
     }
 
     /**
-     * Menyimpan data pengguna baru (Hanya diperbolehkan menambah role 'User')
+     * Menyimpan data pengguna baru
      */
     public function tambah()
     {
@@ -44,19 +44,25 @@ class User extends CI_Controller
         ]);
         $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
 
-        // Validasi input role wajib bernilai 'User' saja
-        $this->form_validation->set_rules('role', 'Role / Hak Akses', 'required|trim|in_list[User]');
+        // Validasi input role diperbarui agar mendukung Administrator dan User
+        $this->form_validation->set_rules('role', 'Role / Hak Akses', 'required|trim|in_list[Administrator,User]');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('error', validation_errors('<li>', '</li>'));
             redirect('admin/user');
         } else {
+            $role_post = $this->input->post('role', TRUE);
+
+            // Logika Penentuan Divisi
+            $divisi_post = ($role_post === 'Administrator') ? NULL : $this->input->post('divisi', TRUE);
+
             $insert_data = [
-                'nama' => $this->input->post('nama', TRUE),
+                'nama'     => $this->input->post('nama', TRUE),
                 'username' => $this->input->post('username', TRUE),
                 'password' => $this->input->post('password'), // Di-hash otomatis di Model
-                'role' => 'User', // Dipaksa keras agar role tersimpan sebagai 'User'
-                'online' => 0
+                'role'     => $role_post,
+                'divisi'   => $divisi_post, // Kolom divisi masuk ke database
+                'online'   => 0
             ];
 
             if ($this->Model_user->insert_user($insert_data)) {
@@ -92,7 +98,6 @@ class User extends CI_Controller
         $role_post = $this->input->post('role', TRUE);
 
         // Aturan: "edit tidak boleh ubah ke administrator"
-        // Jika di database saat ini perannya adalah 'User', namun mencoba diubah menjadi 'Administrator' lewat POST request
         if ($user_data->role === 'User' && $role_post === 'Administrator') {
             $this->session->set_flashdata('error', 'Keamanan Sistem: Anda tidak diperbolehkan menaikkan peran User menjadi Administrator.');
             redirect('admin/user');
@@ -102,10 +107,14 @@ class User extends CI_Controller
             $this->session->set_flashdata('error', validation_errors('<li>', '</li>'));
             redirect('admin/user');
         } else {
+            // Logika Penentuan Divisi untuk Update
+            $divisi_post = ($role_post === 'Administrator') ? NULL : $this->input->post('divisi', TRUE);
+
             $update_data = [
-                'nama' => $this->input->post('nama', TRUE),
+                'nama'     => $this->input->post('nama', TRUE),
                 'username' => $username_post,
-                'role' => $role_post
+                'role'     => $role_post,
+                'divisi'   => $divisi_post // Pastikan divisi ikut terupdate
             ];
 
             // Jika form password diisi, sertakan ke array untuk di-hash di Model

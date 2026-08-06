@@ -27,11 +27,11 @@
             <div class="mb-3">
                 <label for="pssword" class="font-weight-semibold text-sm">Password</label>
                 <div class="input-group">
-                    <input type="password" name="pssword" id="pssword" class="form-control"
-                        placeholder="Masukkan password" required>
+                    <input type="password" name="pssword" id="pssword" class="form-control" placeholder="Masukkan password" required>
                     <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
+                        <!-- Tambahkan kursor pointer dan ID pada span -->
+                        <div class="input-group-text" style="cursor: pointer;" id="togglePassword">
+                            <span class="fas fa-eye-slash" id="iconPassword"></span>
                         </div>
                     </div>
                 </div>

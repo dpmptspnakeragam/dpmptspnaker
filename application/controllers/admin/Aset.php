@@ -12,13 +12,17 @@ class Aset extends CI_controller
         }
 
         $role_user = $this->session->userdata('role');
+        $divisi_user = $this->session->userdata('divisi');
 
-        if ($role_user !== 'Administrator' && $role_user !== 'Aset') {
+        $is_allowed = ($role_user === 'Administrator' || ($role_user === 'User' && $divisi_user === 'Aset'));
+
+        if (!$is_allowed) {
+            // Opsional: Beri pesan error agar user tahu kenapa dilempar
+            // $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses ke modul Manajemen Aset.');
             redirect('admin/home');
         }
 
         $this->load->helper('download');
-
         $this->load->model('Model_pegawai');
         $this->load->model('Model_aset');
     }

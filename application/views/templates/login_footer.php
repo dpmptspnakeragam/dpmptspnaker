@@ -9,6 +9,23 @@
 <!-- Toastr -->
 <script src="<?= base_url('assets/'); ?>plugins/toastr/toastr.min.js"></script>
 
+<!-- Tambahkan script ini di bagian bawah sebelum tag penutup body/footer -->
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#pssword');
+    const icon = document.querySelector('#iconPassword');
+
+    togglePassword.addEventListener('click', function(e) {
+        // Toggle tipe input
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        // Toggle ikon lock ke mata (eye)
+        icon.classList.toggle('fa-eye-slash');
+        icon.classList.toggle('fa-eye');
+    });
+</script>
+
 <!-- Script Notifikasi SweetAlert -->
 <script>
     $(document).ready(function() {

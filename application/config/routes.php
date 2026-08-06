@@ -49,9 +49,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'home';
+$root = $_SERVER['HTTP_HOST'];
+
+// Jika diakses menggunakan subdomain sipadu
+if ($root === 'sipadu.agamkab.go.id') {
+    // Paksa halaman utama (root) langsung membuka controller Login tanpa tulisan /login
+    $route['default_controller'] = 'login';
+} else {
+    // Jika diakses menggunakan domain utama dpmptsp.agamkab.go.id
+    $route['default_controller'] = 'home';
+}
+
 $route['404_override'] = 'error_page/page_missing';
 $route['translate_uri_dashes'] = FALSE;
 
-
+// Rute untuk proses pengecekan login (ketika tombol submit ditekan)
 $route['login_now'] = 'login/cek_login';

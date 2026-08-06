@@ -12,8 +12,13 @@ class Pengaduan extends CI_controller
         }
 
         $role_user = $this->session->userdata('role');
+        $divisi_user = $this->session->userdata('divisi');
 
-        if ($role_user !== 'Administrator' && $role_user !== 'Pengaduan') {
+        $is_allowed = ($role_user === 'Administrator' || ($role_user === 'User' && $divisi_user === 'Pengaduan'));
+
+        if (!$is_allowed) {
+            // Opsional: Beri pesan error agar user tahu kenapa dilempar
+            // $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses ke modul Pengaduan.');
             redirect('admin/home');
         }
 

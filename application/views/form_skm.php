@@ -1,5 +1,3 @@
-<!-- ... existing code ... -->
-
 <body class="layout-top-nav layout-navbar-fixed bg-light" style="height: auto;" id="page-top">
     <!-- Navigation-->
     <nav class="main-header navbar navbar-expand-md navbar-dark fixed-top shadow-sm" style="background-color: maroon;">
@@ -355,4 +353,3 @@
         </div>
     </div>
 </body>
-<!-- ... existing code ... -->

@@ -22,25 +22,24 @@ $action = isset($action) ? $action : '';
 
 		<!-- Sidebar Menu -->
 		<nav class="mt-2">
-			<ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
-				data-accordion="false">
+			<ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
 
 				<!-- ================= MENU UTAMA (Semua User Bisa Melihat) ================= -->
-				<li class="nav-item">
-					<a href="<?= base_url('admin/home'); ?>"
-						class="nav-link <?= ($this->uri->segment(2) == 'home') ? 'active' : ''; ?>">
-						<i class="nav-icon fas fa-home"></i>
-						<p>Home</p>
-					</a>
-				</li>
+				<?php if ($this->session->userdata('divisi') !== 'Konsultasi'): ?>
+					<li class="nav-item">
+						<a href="<?= base_url('admin/home'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'home') ? 'active' : ''; ?>">
+							<i class="nav-icon fas fa-home"></i>
+							<p>Home</p>
+						</a>
+					</li>
+				<?php endif; ?>
+
 
 				<!-- ================= MENU KHUSUS ADMINISTRATOR ================= -->
-				<?php if ($this->session->userdata('role') == 'Administrator'): ?>
+				<?php if ($this->session->userdata('role') === 'Administrator'): ?>
 					<!-- Pengaturan Teks -->
-					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['layanan_publik', 'profil_dinas']) ? 'menu-open' : ''; ?>">
-						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['layanan_publik', 'profil_dinas']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['layanan_publik', 'profil_dinas']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['layanan_publik', 'profil_dinas']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-wrench"></i>
 							<p>
 								Pengaturan Teks
@@ -49,18 +48,14 @@ $action = isset($action) ? $action : '';
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/layanan_publik'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'layanan_publik' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'layanan_publik' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'layanan_publik' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/layanan_publik'); ?>" class="nav-link <?= $this->uri->segment(2) == 'layanan_publik' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'layanan_publik' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'layanan_publik' ? 'text-maroon' : ''; ?>"></i>
 									<p>Layanan Publik</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/profil_dinas'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'profil_dinas' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'profil_dinas' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'profil_dinas' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/profil_dinas'); ?>" class="nav-link <?= $this->uri->segment(2) == 'profil_dinas' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'profil_dinas' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'profil_dinas' ? 'text-maroon' : ''; ?>"></i>
 									<p>Profil Dinas</p>
 								</a>
 							</li>
@@ -68,11 +63,10 @@ $action = isset($action) ? $action : '';
 					</li>
 				<?php endif; ?>
 
-				<!-- ================= MENU MANAJEMEN ASET (Hanya Administrator & User Aset) ================= -->
-				<?php if ($this->session->userdata('role') == 'Administrator' || $this->session->userdata('username') == 'asetdpmptspagam'): ?>
+				<!-- ================= MENU MANAJEMEN ASET (Hanya Administrator & Divisi Aset) ================= -->
+				<?php if ($this->session->userdata('role') === 'Administrator' || $this->session->userdata('divisi') === 'Aset'): ?>
 					<li class="nav-item">
-						<a href="<?= base_url('admin/aset'); ?>"
-							class="nav-link <?= ($this->uri->segment(2) == 'aset') ? 'active' : ''; ?>">
+						<a href="<?= base_url('admin/aset'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'aset') ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-archive"></i>
 							<p>Manajemen Aset</p>
 						</a>
@@ -80,21 +74,18 @@ $action = isset($action) ? $action : '';
 				<?php endif; ?>
 
 				<!-- ================= MENU KHUSUS ADMINISTRATOR (Lanjutan 1) ================= -->
-				<?php if ($this->session->userdata('role') == 'Administrator'): ?>
+				<?php if ($this->session->userdata('role') === 'Administrator'): ?>
 					<!-- User -->
 					<li class="nav-item">
-						<a href="<?= base_url('admin/user'); ?>"
-							class="nav-link <?= ($this->uri->segment(2) == 'user') ? 'active' : ''; ?>">
+						<a href="<?= base_url('admin/user'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'user') ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-user-cog"></i>
 							<p>Manajemen User</p>
 						</a>
 					</li>
 
 					<!-- Profile -->
-					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['kadis', 'pegawai', 'regulasi', 'ppid', 'sarpras']) ? 'menu-open' : ''; ?>">
-						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['kadis', 'pegawai', 'regulasi', 'ppid', 'sarpras']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['kadis', 'pegawai', 'regulasi', 'ppid', 'sarpras']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['kadis', 'pegawai', 'regulasi', 'ppid', 'sarpras']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-address-card"></i>
 							<p>
 								Profile
@@ -103,42 +94,32 @@ $action = isset($action) ? $action : '';
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/kadis'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'kadis' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'kadis' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'kadis' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/kadis'); ?>" class="nav-link <?= $this->uri->segment(2) == 'kadis' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'kadis' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'kadis' ? 'text-maroon' : ''; ?>"></i>
 									<p>Kepala Dinas</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/pegawai'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'pegawai' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'pegawai' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'pegawai' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/pegawai'); ?>" class="nav-link <?= $this->uri->segment(2) == 'pegawai' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'pegawai' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'pegawai' ? 'text-maroon' : ''; ?>"></i>
 									<p>Pegawai</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/regulasi'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'regulasi' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'regulasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'regulasi' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/regulasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'regulasi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'regulasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'regulasi' ? 'text-maroon' : ''; ?>"></i>
 									<p>Regulasi</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/ppid'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'ppid' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'ppid' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'ppid' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/ppid'); ?>" class="nav-link <?= $this->uri->segment(2) == 'ppid' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'ppid' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'ppid' ? 'text-maroon' : ''; ?>"></i>
 									<p>PPID</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/sarpras'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'sarpras' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'sarpras' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'sarpras' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/sarpras'); ?>" class="nav-link <?= $this->uri->segment(2) == 'sarpras' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'sarpras' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'sarpras' ? 'text-maroon' : ''; ?>"></i>
 									<p>Sarana & Prasarana</p>
 								</a>
 							</li>
@@ -146,10 +127,8 @@ $action = isset($action) ? $action : '';
 					</li>
 
 					<!-- Informasi -->
-					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['tambah_informasi', 'informasi']) ? 'menu-open' : ''; ?>">
-						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['tambah_informasi', 'informasi']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['tambah_informasi', 'informasi']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['tambah_informasi', 'informasi']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-info"></i>
 							<p>
 								Informasi
@@ -158,18 +137,14 @@ $action = isset($action) ? $action : '';
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/tambah_informasi'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'tambah_informasi' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'tambah_informasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'tambah_informasi' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/tambah_informasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'tambah_informasi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'tambah_informasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'tambah_informasi' ? 'text-maroon' : ''; ?>"></i>
 									<p>Tambah Informasi</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/informasi'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'informasi' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'informasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'informasi' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/informasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'informasi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'informasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'informasi' ? 'text-maroon' : ''; ?>"></i>
 									<p>Tabel Informasi</p>
 								</a>
 							</li>
@@ -177,10 +152,8 @@ $action = isset($action) ? $action : '';
 					</li>
 
 					<!-- Layanan -->
-					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['standar_pelayanan', 'sop', 'perizinan', 'non_perizinan', 'perizinan_risiko']) ? 'menu-open' : ''; ?>">
-						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['standar_pelayanan', 'sop', 'perizinan', 'non_perizinan', 'perizinan_risiko']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['standar_pelayanan', 'sop', 'perizinan', 'non_perizinan', 'perizinan_risiko']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['standar_pelayanan', 'sop', 'perizinan', 'non_perizinan', 'perizinan_risiko']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-book-open"></i>
 							<p>
 								Layanan
@@ -189,42 +162,32 @@ $action = isset($action) ? $action : '';
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/standar_pelayanan'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'standar_pelayanan' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'standar_pelayanan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'standar_pelayanan' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/standar_pelayanan'); ?>" class="nav-link <?= $this->uri->segment(2) == 'standar_pelayanan' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'standar_pelayanan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'standar_pelayanan' ? 'text-maroon' : ''; ?>"></i>
 									<p>Standar Pelayanan</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/sop'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'sop' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'sop' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'sop' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/sop'); ?>" class="nav-link <?= $this->uri->segment(2) == 'sop' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'sop' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'sop' ? 'text-maroon' : ''; ?>"></i>
 									<p>SOP</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/perizinan'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'perizinan' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'perizinan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'perizinan' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/perizinan'); ?>" class="nav-link <?= $this->uri->segment(2) == 'perizinan' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'perizinan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'perizinan' ? 'text-maroon' : ''; ?>"></i>
 									<p>Perizinan</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/non_perizinan'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'non_perizinan' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'non_perizinan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'non_perizinan' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/non_perizinan'); ?>" class="nav-link <?= $this->uri->segment(2) == 'non_perizinan' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'non_perizinan' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'non_perizinan' ? 'text-maroon' : ''; ?>"></i>
 									<p>Non Perizinan</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/perizinan_risiko'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'perizinan_risiko' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'perizinan_risiko' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'perizinan_risiko' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/perizinan_risiko'); ?>" class="nav-link <?= $this->uri->segment(2) == 'perizinan_risiko' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'perizinan_risiko' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'perizinan_risiko' ? 'text-maroon' : ''; ?>"></i>
 									<p>Perizinan Berbasis Resiko</p>
 								</a>
 							</li>
@@ -232,10 +195,8 @@ $action = isset($action) ? $action : '';
 					</li>
 
 					<!-- Investasi -->
-					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['potensi_investasi', 'peluang_investasi', 'tanah_ulayat']) ? 'menu-open' : ''; ?>">
-						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['potensi_investasi', 'peluang_investasi', 'tanah_ulayat']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['potensi_investasi', 'peluang_investasi', 'tanah_ulayat']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['potensi_investasi', 'peluang_investasi', 'tanah_ulayat']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-dollar-sign"></i>
 							<p>
 								Investasi
@@ -244,26 +205,20 @@ $action = isset($action) ? $action : '';
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/potensi_investasi'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'potensi_investasi' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'potensi_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'potensi_investasi' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/potensi_investasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'potensi_investasi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'potensi_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'potensi_investasi' ? 'text-maroon' : ''; ?>"></i>
 									<p>Potensi Investasi</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/peluang_investasi'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'peluang_investasi' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'peluang_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'peluang_investasi' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/peluang_investasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'peluang_investasi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'peluang_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'peluang_investasi' ? 'text-maroon' : ''; ?>"></i>
 									<p>Peluang Investasi</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/tanah_ulayat'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'tanah_ulayat' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'tanah_ulayat' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'tanah_ulayat' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/tanah_ulayat'); ?>" class="nav-link <?= $this->uri->segment(2) == 'tanah_ulayat' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'tanah_ulayat' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'tanah_ulayat' ? 'text-maroon' : ''; ?>"></i>
 									<p>Tanah Ulayat</p>
 								</a>
 							</li>
@@ -271,11 +226,10 @@ $action = isset($action) ? $action : '';
 					</li>
 				<?php endif; ?>
 
-				<!-- ================= MENU PENGADUAN (Hanya Administrator & User Pengaduan) ================= -->
-				<?php if ($this->session->userdata('role') == 'Administrator' || $this->session->userdata('username') == 'pengaduan'): ?>
+				<!-- ================= MENU PENGADUAN (Hanya Administrator & Divisi Pengaduan) ================= -->
+				<?php if ($this->session->userdata('role') === 'Administrator' || $this->session->userdata('divisi') === 'Pengaduan'): ?>
 					<li class="nav-item">
-						<a href="<?= base_url('admin/pengaduan'); ?>"
-							class="nav-link <?= ($this->uri->segment(2) == 'pengaduan') ? 'active' : ''; ?>">
+						<a href="<?= base_url('admin/pengaduan'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'pengaduan') ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-question"></i>
 							<p>Pengaduan</p>
 						</a>
@@ -283,12 +237,10 @@ $action = isset($action) ? $action : '';
 				<?php endif; ?>
 
 				<!-- ================= MENU KHUSUS ADMINISTRATOR (Lanjutan 2) ================= -->
-				<?php if ($this->session->userdata('role') == 'Administrator'): ?>
+				<?php if ($this->session->userdata('role') === 'Administrator'): ?>
 					<!-- Grafik -->
-					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['grafik_izin_terbit', 'grafik_izin_terbit_tahun', 'grafik_realisasi_investasi', 'grafik_skm', 'grafik_nib']) ? 'menu-open' : ''; ?>">
-						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['grafik_izin_terbit', 'grafik_izin_terbit_tahun', 'grafik_realisasi_investasi', 'grafik_skm', 'grafik_nib']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['grafik_izin_terbit', 'grafik_izin_terbit_tahun', 'grafik_realisasi_investasi', 'grafik_skm', 'grafik_nib']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['grafik_izin_terbit', 'grafik_izin_terbit_tahun', 'grafik_realisasi_investasi', 'grafik_skm', 'grafik_nib']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-sort-amount-up"></i>
 							<p>
 								Grafik
@@ -297,42 +249,32 @@ $action = isset($action) ? $action : '';
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/grafik_izin_terbit'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/grafik_izin_terbit'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin_terbit' ? 'text-maroon' : ''; ?>"></i>
 									<p>Grafik Izin Terbit</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/grafik_izin_terbit_tahun'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/grafik_izin_terbit_tahun'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_izin_terbit_tahun' ? 'text-maroon' : ''; ?>"></i>
 									<p>Grafik Izin Terbit (Tahun)</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/grafik_realisasi_investasi'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/grafik_realisasi_investasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_realisasi_investasi' ? 'text-maroon' : ''; ?>"></i>
 									<p>Grafik Realisasi Investasi</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/grafik_skm'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'grafik_skm' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'grafik_skm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_skm' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/grafik_skm'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_skm' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'grafik_skm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_skm' ? 'text-maroon' : ''; ?>"></i>
 									<p>Grafik SKM</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/grafik_nib'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'grafik_nib' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'grafik_nib' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_nib' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/grafik_nib'); ?>" class="nav-link <?= $this->uri->segment(2) == 'grafik_nib' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'grafik_nib' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'grafik_nib' ? 'text-maroon' : ''; ?>"></i>
 									<p>Grafik NIB</p>
 								</a>
 							</li>
@@ -341,8 +283,7 @@ $action = isset($action) ? $action : '';
 
 					<!-- Running Teks -->
 					<li class="nav-item">
-						<a href="<?= base_url('admin/running_teks'); ?>"
-							class="nav-link <?= ($this->uri->segment(2) == 'running_teks') ? 'active' : ''; ?>">
+						<a href="<?= base_url('admin/running_teks'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'running_teks') ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-tools"></i>
 							<p>Running Teks</p>
 						</a>
@@ -350,18 +291,15 @@ $action = isset($action) ? $action : '';
 
 					<!-- Banner -->
 					<li class="nav-item">
-						<a href="<?= base_url('admin/banner'); ?>"
-							class="nav-link <?= ($this->uri->segment(2) == 'banner') ? 'active' : ''; ?>">
+						<a href="<?= base_url('admin/banner'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'banner') ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-image"></i>
 							<p>Banner</p>
 						</a>
 					</li>
 
 					<!-- Survei -->
-					<li
-						class="nav-item <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'menu-open' : ''; ?>">
-						<a href=""
-							class="nav-link <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-poll"></i>
 							<p>
 								Survei
@@ -370,34 +308,26 @@ $action = isset($action) ? $action : '';
 						</a>
 						<ul class="nav nav-treeview">
 							<li class="nav-item">
-								<a href="<?= base_url('admin/qr_survei'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'qr_survei' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'qr_survei' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'qr_survei' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/qr_survei'); ?>" class="nav-link <?= $this->uri->segment(2) == 'qr_survei' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'qr_survei' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'qr_survei' ? 'text-maroon' : ''; ?>"></i>
 									<p>QR Survei</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/skm'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'skm' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'skm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'skm' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/skm'); ?>" class="nav-link <?= $this->uri->segment(2) == 'skm' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'skm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'skm' ? 'text-maroon' : ''; ?>"></i>
 									<p>SKM & Nilai IKM</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/spkp_antikorupsi'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'spkp_antikorupsi' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'spkp_antikorupsi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'spkp_antikorupsi' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/spkp_antikorupsi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'spkp_antikorupsi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'spkp_antikorupsi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'spkp_antikorupsi' ? 'text-maroon' : ''; ?>"></i>
 									<p>SPKP & SPAK</p>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="<?= base_url('admin/dataikm'); ?>"
-									class="nav-link <?= $this->uri->segment(2) == 'dataikm' ? 'active' : ''; ?>">
-									<i
-										class="<?= $this->uri->segment(2) == 'dataikm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'dataikm' ? 'text-maroon' : ''; ?>"></i>
+								<a href="<?= base_url('admin/dataikm'); ?>" class="nav-link <?= $this->uri->segment(2) == 'dataikm' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'dataikm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'dataikm' ? 'text-maroon' : ''; ?>"></i>
 									<p>Data IKM Tahunan</p>
 								</a>
 							</li>
@@ -406,11 +336,37 @@ $action = isset($action) ? $action : '';
 
 					<!-- Pesan -->
 					<li class="nav-item" hidden>
-						<a href="<?= base_url('admin/pesan'); ?>"
-							class="nav-link <?= ($this->uri->segment(2) == 'pesan') ? 'active' : ''; ?>">
+						<a href="<?= base_url('admin/pesan'); ?>" class="nav-link <?= ($this->uri->segment(2) == 'pesan') ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-envelope"></i>
 							<p>Pesan</p>
 						</a>
+					</li>
+				<?php endif; ?>
+
+				<!-- ================= MENU KONSULTASI (Hanya Administrator & Divisi Konsultasi) ================= -->
+				<?php
+				$role = $this->session->userdata('role');
+				$divisi = $this->session->userdata('divisi');
+
+				if ($role === 'Administrator' || $divisi === 'Konsultasi'):
+					$is_kons_open = in_array($this->uri->segment(2), ['konsultasi', 'standar_pelayanan', 'sop']);
+				?>
+					<li class="nav-item <?= $is_kons_open ? 'menu-open' : ''; ?>">
+						<a href="#" class="nav-link <?= $is_kons_open ? 'active' : ''; ?>">
+							<i class="nav-icon fas fa-comments"></i>
+							<p>
+								Layanan Konsultasi
+								<i class="right fas fa-angle-left"></i>
+							</p>
+						</a>
+						<ul class="nav nav-treeview">
+							<li class="nav-item">
+								<a href="<?= base_url('admin/konsultasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'konsultasi' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'konsultasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'konsultasi' ? 'text-maroon' : ''; ?>"></i>
+									<p>Data Konsultasi</p>
+								</a>
+							</li>
+						</ul>
 					</li>
 				<?php endif; ?>
 

@@ -14,7 +14,10 @@ class Login extends CI_Controller
         // KEAMANAN & UX: Cegah user yang sudah login untuk mengakses halaman login lagi
         if ($this->session->userdata('logged_in_utama') === TRUE) {
             $role_user = $this->session->userdata('role');
-            $this->_redirect_based_on_role($role_user);
+            $divisi_user = $this->session->userdata('divisi'); // Ambil juga divisinya dari session
+
+            // Pass kedua variabel ke helper redirect
+            $this->_redirect_based_on_role($role_user, $divisi_user);
             return; // Hentikan eksekusi index() agar view login tidak dimuat
         }
 
@@ -49,11 +52,12 @@ class Login extends CI_Controller
 
             if ($user_data !== FALSE) {
 
-                // 4. MENGGUNAKAN ROLE (Sesuai Permintaan)
+                // 4. MENGGUNAKAN ROLE DAN DIVISI
                 $user_role = $user_data->role;
+                $user_divisi = isset($user_data->divisi) ? $user_data->divisi : '';
 
-                // Dapatkan URL tujuan berdasarkan Role
-                $url_tujuan = $this->_get_redirect_url($user_role);
+                // Dapatkan URL tujuan berdasarkan Role dan Divisi-nya
+                $url_tujuan = $this->_get_redirect_url($user_role, $user_divisi);
 
                 // Jika role tidak dikenali (mencegah bypass jika ada user dengan role 'Aneh')
                 if (!$url_tujuan) {
@@ -62,12 +66,13 @@ class Login extends CI_Controller
                     return;
                 }
 
-                // 5. Set Data Sesi (Jangan simpan password di sesi)
+                // 5. Set Data Sesi (Pastikan divisi masuk ke session agar bisa dibaca di seluruh aplikasi)
                 $sess_data = [
                     'id'              => $user_data->id,
                     'nama'            => $user_data->nama,
                     'username'        => $user_data->username,
                     'role'            => $user_role,
+                    'divisi'          => $user_divisi,
                     'online'          => 1,
                     'logged_in_utama' => TRUE
                 ];
@@ -98,42 +103,46 @@ class Login extends CI_Controller
         // Keamanan: Hancurkan seluruh sesi
         $this->session->sess_destroy();
 
-        // Catatan: Karena sess_destroy() menghapus SEMUA sesi, termasuk flashdata yang baru diset.
-        // Jika ingin flashdata 'success' logout tetap tampil, jangan pakai sess_destroy, 
-        // melainkan unset_userdata spesifik seperti ini:
-
-        // $data_sesi = ['id', 'nama', 'username', 'role', 'online', 'logged_in_utama'];
-        // $this->session->unset_userdata($data_sesi);
-        // $this->session->set_flashdata('success', 'Anda telah <b>berhasil keluar</b> dari sistem.');
-
+        // redirect('login');
         redirect('login');
     }
 
     /**
-     * PRIVATE HELPER: Menentukan URL tujuan berdasarkan ROLE
+     * PRIVATE HELPER: Menentukan URL tujuan berdasarkan ROLE & DIVISI
      * Ini membuat kode utama lebih bersih dan mudah dikelola jika nanti ada role baru.
      */
-    private function _get_redirect_url($role)
+    private function _get_redirect_url($role, $divisi = '')
     {
-        // Pastikan case (huruf besar/kecil) sesuai dengan isi tabel database Anda
-        switch ($role) {
-            case 'Administrator':
-                return 'admin/home';
-            case 'Pengaduan':
-                return 'admin/home'; // Atau ubah ke 'admin/pengaduan' jika ingin langsung ke sana
-            case 'Aset':
-                return 'admin/home'; // Atau ubah ke 'admin/aset' jika ingin langsung ke sana
-            default:
-                return false; // Role tidak dikenali = Tolak akses
+        // 1. Jika dia Administrator Utama
+        if ($role === 'Administrator') {
+            return 'admin/home';
         }
+
+        // 2. Jika dia User, arahkan berdasarkan Divisinya
+        elseif ($role === 'User') {
+            switch ($divisi) {
+                case 'Konsultasi':
+                    return 'admin/konsultasi';
+                case 'Pengaduan':
+                    return 'admin/pengaduan';
+                case 'Aset':
+                    return 'admin/aset';
+                default:
+                    // Jika user tapi divisinya kosong (belum diset admin)
+                    return 'admin/home';
+            }
+        }
+
+        // 3. Jika role tidak valid / disabotase
+        return false;
     }
 
     /**
      * PRIVATE HELPER: Mengeksekusi redirect (digunakan oleh index jika user sudah login)
      */
-    private function _redirect_based_on_role($role)
+    private function _redirect_based_on_role($role, $divisi = '')
     {
-        $url_tujuan = $this->_get_redirect_url($role);
+        $url_tujuan = $this->_get_redirect_url($role, $divisi);
         if ($url_tujuan) {
             redirect($url_tujuan);
         } else {
