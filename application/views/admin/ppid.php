@@ -1,3 +1,18 @@
+<?php
+$itss = isset($itss) ? $itss : (object) ['result' => function () {
+    return [];
+}];
+$ib = isset($ib) ? $ib : (object) ['result' => function () {
+    return [];
+}];
+$ism = isset($ism) ? $ism : (object) ['result' => function () {
+    return [];
+}];
+$id = isset($id) ? $id : (object) ['result' => function () {
+    return [];
+}];
+?>
+
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
@@ -36,9 +51,15 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
+                                            <?php if (!empty($row->file) && file_exists(FCPATH . 'assets/fileupload/' . $row->file)): ?>
+                                                <a href="<?= base_url('assets/fileupload/' . rawurlencode($row->file)); ?>"
+                                                    class="btn btn-outline-success mt-1 mb-1"
+                                                    download="<?= $row->file; ?>">
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="badge badge-secondary mt-1 mb-1">Tidak ada file</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#ModalEditITSS<?= $row->id_ppid; ?>" class="btn btn-outline-warning mt-1 mb-1">
@@ -114,9 +135,15 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
+                                            <?php if (!empty($row->file) && file_exists(FCPATH . 'assets/fileupload/' . $row->file)): ?>
+                                                <a href="<?= base_url('assets/fileupload/' . rawurlencode($row->file)); ?>"
+                                                    class="btn btn-outline-success mt-1 mb-1"
+                                                    download="<?= $row->file; ?>">
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="badge badge-secondary mt-1 mb-1">Tidak ada file</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#ModalEditIB<?= $row->id_ppid; ?>" class="btn btn-outline-warning mt-1 mb-1">
@@ -192,9 +219,15 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
+                                            <?php if (!empty($row->file) && file_exists(FCPATH . 'assets/fileupload/' . $row->file)): ?>
+                                                <a href="<?= base_url('assets/fileupload/' . rawurlencode($row->file)); ?>"
+                                                    class="btn btn-outline-success mt-1 mb-1"
+                                                    download="<?= $row->file; ?>">
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="badge badge-secondary mt-1 mb-1">Tidak ada file</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#ModalEditISM<?= $row->id_ppid; ?>" class="btn btn-outline-warning mt-1 mb-1">
@@ -271,9 +304,15 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
+                                            <?php if (!empty($row->file) && file_exists(FCPATH . 'assets/fileupload/' . $row->file)): ?>
+                                                <a href="<?= base_url('assets/fileupload/' . rawurlencode($row->file)); ?>"
+                                                    class="btn btn-outline-success mt-1 mb-1"
+                                                    download="<?= $row->file; ?>">
+                                                    <i class="fas fa-download"></i> Download
+                                                </a>
+                                            <?php else: ?>
+                                                <span class="badge badge-secondary mt-1 mb-1">Tidak ada file</span>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="text-center align-middle">
                                             <button type="button" data-toggle="modal" data-target="#ModalEditID<?= $row->id_ppid; ?>" class="btn btn-outline-warning mt-1 mb-1">
