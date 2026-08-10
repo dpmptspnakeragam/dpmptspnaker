@@ -61,11 +61,15 @@ class Ppid extends CI_controller
         // Perbaikan: Gunakan !empty untuk mengecek apakah ada file yang diunggah
         if (!empty($_FILES['file']['name'])) {
             $nmfile = "itss-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 $file = $this->upload->data('file_name');
@@ -105,11 +109,15 @@ class Ppid extends CI_controller
         // Perbaikan: Gunakan !empty untuk mengecek apakah ada file yang diunggah
         if (!empty($_FILES['file']['name'])) {
             $nmfile = "ib-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 $file = $this->upload->data('file_name');
@@ -149,11 +157,15 @@ class Ppid extends CI_controller
         // Perbaikan: Gunakan !empty untuk mengecek apakah ada file yang diunggah
         if (!empty($_FILES['file']['name'])) {
             $nmfile = "ism-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 $file = $this->upload->data('file_name');
@@ -193,11 +205,15 @@ class Ppid extends CI_controller
         // Perbaikan: Gunakan !empty untuk mengecek apakah ada file yang diunggah
         if (!empty($_FILES['file']['name'])) {
             $nmfile = "id-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 $file = $this->upload->data('file_name');
@@ -240,16 +256,20 @@ class Ppid extends CI_controller
 
         if (!empty($fileBaru)) {
             $nmfile = "itss-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 // Hapus file lama jika ada dan file lama bukan string kosong
-                if (!empty($fileLama) && file_exists('./assets/fileupload/' . $fileLama)) {
-                    unlink('./assets/fileupload/' . $fileLama);
+                if (!empty($fileLama) && file_exists(FCPATH . 'assets/fileupload/' . $fileLama)) {
+                    unlink(FCPATH . 'assets/fileupload/' . $fileLama);
                 }
                 $file = $this->upload->data('file_name');
             } else {
@@ -288,16 +308,20 @@ class Ppid extends CI_controller
 
         if (!empty($fileBaru)) {
             $nmfile = "ib-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 // Hapus file lama jika ada dan file lama bukan string kosong
-                if (!empty($fileLama) && file_exists('./assets/fileupload/' . $fileLama)) {
-                    unlink('./assets/fileupload/' . $fileLama);
+                if (!empty($fileLama) && file_exists(FCPATH . 'assets/fileupload/' . $fileLama)) {
+                    unlink(FCPATH . 'assets/fileupload/' . $fileLama);
                 }
                 $file = $this->upload->data('file_name');
             } else {
@@ -336,16 +360,20 @@ class Ppid extends CI_controller
 
         if (!empty($fileBaru)) {
             $nmfile = "ism-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 // Hapus file lama jika ada dan file lama bukan string kosong
-                if (!empty($fileLama) && file_exists('./assets/fileupload/' . $fileLama)) {
-                    unlink('./assets/fileupload/' . $fileLama);
+                if (!empty($fileLama) && file_exists(FCPATH . 'assets/fileupload/' . $fileLama)) {
+                    unlink(FCPATH . 'assets/fileupload/' . $fileLama);
                 }
                 $file = $this->upload->data('file_name');
             } else {
@@ -384,16 +412,20 @@ class Ppid extends CI_controller
 
         if (!empty($fileBaru)) {
             $nmfile = "id-" . time();
-            $config['upload_path'] = './assets/fileupload/';
+            $config['upload_path'] = FCPATH . 'assets/fileupload/';
             $config['allowed_types'] = 'pdf|doc|docx|xls|xlsx';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('file')) {
                 // Hapus file lama jika ada dan file lama bukan string kosong
-                if (!empty($fileLama) && file_exists('./assets/fileupload/' . $fileLama)) {
-                    unlink('./assets/fileupload/' . $fileLama);
+                if (!empty($fileLama) && file_exists(FCPATH . 'assets/fileupload/' . $fileLama)) {
+                    unlink(FCPATH . 'assets/fileupload/' . $fileLama);
                 }
                 $file = $this->upload->data('file_name');
             } else {
@@ -429,8 +461,8 @@ class Ppid extends CI_controller
         // Cek apakah data ditemukan sebelum lanjut hapus
         if ($row) {
             // Hapus file fisik jika ada
-            if (!empty($row->file) && file_exists("./assets/fileupload/$row->file")) {
-                unlink("./assets/fileupload/$row->file");
+            if (!empty($row->file) && file_exists(FCPATH . 'assets/fileupload/' . $row->file)) {
+                unlink(FCPATH . 'assets/fileupload/' . $row->file);
             }
 
             $result = $this->Model_ppid->delete($id);

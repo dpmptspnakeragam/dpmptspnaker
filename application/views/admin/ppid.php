@@ -36,7 +36,7 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/fileupload/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
+                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
                                                 <i class="fas fa-download"></i> Download
                                             </a>
                                         </td>
@@ -114,7 +114,7 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/fileupload/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
+                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
                                                 <i class="fas fa-download"></i> Download
                                             </a>
                                         </td>
@@ -192,7 +192,7 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/fileupload/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
+                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
                                                 <i class="fas fa-download"></i> Download
                                             </a>
                                         </td>
@@ -271,7 +271,7 @@
                                         <td class="text-center align-middle"><?= $count++; ?></td>
                                         <td class="text-center align-middle"><?= $row->judul; ?></td>
                                         <td class="text-center align-middle">
-                                            <a href="<?= base_url('assets/fileupload/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
+                                            <a href="<?= base_url('assets/ppid/' . $row->file); ?>" class="btn btn-outline-success mt-1 mb-1" download="<?= $row->file; ?>">
                                                 <i class="fas fa-download"></i> Download
                                             </a>
                                         </td>
