@@ -296,12 +296,7 @@
 								width="100%">OSS RBA
 						</a>
 					</div>
-					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
-						<a href="https://www.lapor.go.id/" class="pilih-pelayanan" target="_blank">
-							<img id="img-layanan" class="mb-2 img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>"
-								width="100%">Lapor.go.id
-						</a>
-					</div>
+
 					<div class="col col-sm-4 col-md-4 col-lg-4 col-6 display-4 mb-3">
 						<a href="https://simbg.pu.go.id/" class="pilih-pelayanan" target="_blank">
 							<img id="img-layanan" class="mb-2 img-layanan"
@@ -378,45 +373,73 @@
 <!-- close Investasi -->
 
 <!-- Pengaduan -->
-<section class="pengaduan bg-white" id="pengaduan">
-	<div class="container-fluid">
+<section class="pengaduan bg-white pb-5" id="pengaduan">
+	<div class="container-fluid px-lg-5">
+
+		<!-- Judul -->
 		<div class="row text-center">
-			<div class="col-lg-12 mt-4 ">
-				<h1 class="judul-pengaduan"><b>Pengaduan Online</b></h1>
+			<div class="col-lg-12 mt-5">
+				<h1 class="judul-pengaduan text-dark"><b>Pengaduan Online</b></h1>
 				<hr class="garis-judul">
 			</div>
 		</div>
+
 		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-12">
-				<img class="shadow mekanisme-pengaduan mb-4"
-					src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%">
-				<h4><strong>Info Kontak Pengaduan</strong></h4>
-				<p class="mt-0 mb-0"><i class="fab fa-whatsapp"></i> WhatsApp : <b>0853 7163 8593</b>
-					Atau <i class="far fa-arrow-alt-circle-right"></i>
-					<b>
-						<a href="https://wa.me/6285371638593?text=Assalamualaikum+Admin,+" target="_blank">
-							Klik Link WhatsApp Disini
-						</a>
-					</b>
-				</p>
-				<p class="mt-0"><i class="far fa-envelope"></i> Email : dpmptspagam@gmail.com</p>
+			<!-- SISI KIRI: Tombol Lapor & Info Kontak -->
+			<div class="col-lg-5 col-md-6 col-sm-12 mb-4 d-flex flex-column justify-content-center pr-lg-5">
+
+				<!-- <img class="shadow mekanisme-pengaduan mb-4" src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%"> -->
+
+				<!-- Tombol Lapor.go.id -->
+				<div class="mb-3 text-center">
+					<p class="text-muted mb-2">Sampaikan laporan Anda melalui kanal resmi nasional:</p>
+					<a href="https://www.lapor.go.id/" class="btn-lapor w-100" target="_blank">
+						<img id="img-layanan" class="img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>" alt="Lapor.go.id">
+						<span>Menuju Lapor.go.id <i class="fas fa-external-link-alt ml-1"></i></span>
+					</a>
+				</div>
+
+				<!-- Info Kontak Kotak (UX diperhalus) -->
+				<div class="kontak-box p-4 mt-2">
+					<h4 class="mb-4"><strong>Info Kontak Pengaduan</strong></h4>
+
+					<div class="d-flex align-items-center mb-3">
+						<i class="fab fa-whatsapp fa-2x text-success mr-3"></i>
+						<div>
+							<p class="mb-0 text-muted" style="font-size: 0.9rem;">WhatsApp</p>
+							<h5 class="mb-1"><b>0853 7163 8593</b></h5>
+							<a href="https://wa.me/6285371638593?text=Halo%20Admin%20Layanan%20Pengaduan%20DPMPTSP%20Kab.%20Agam.%20Saya%20butuh%20bantuan%20informasi%20/%20ingin%20melapor%20terkait%20..." target="_blank">
+								<b><i class="far fa-arrow-alt-circle-right"></i> Klik Disini untuk Chat</b>
+							</a>
+						</div>
+					</div>
+					<hr>
+					<div class="d-flex align-items-center">
+						<i class="far fa-envelope fa-2x text-danger mr-3"></i>
+						<div>
+							<p class="mb-0 text-muted" style="font-size: 0.9rem;">Email</p>
+							<h6 class="mb-0"><b>dpmptspagam@gmail.com</b></h6>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-lg-6 col-md-6 col-sm-12">
-				<div class="card shadow">
-					<div class=" card-header">
-						<p class="h2 text-center">Formulir Pengaduan Online <br> DPMPTSP Kab. Agam</p>
+
+			<!-- SISI KANAN: Formulir Pengaduan -->
+			<div class="col-lg-7 col-md-6 col-sm-12 mb-4">
+				<div class="card shadow border-0 rounded">
+					<div class="card-header bg-maroon py-3">
+						<h4 class="text-center mb-0">Formulir Pengaduan Online</h4>
 					</div>
 
 					<form method="post" enctype="multipart/form-data" action="<?= base_url('home/kirim_pengaduan'); ?>">
-						<div class="card-body" style="width: 100%; height: 380px; overflow-y: auto; ">
+						<!-- UX: Menambah max-height agar tidak terlalu sempit dan diberi class custom scrollbar -->
+						<div class="card-body form-scroll p-4" style="width: 100%; max-height: 450px; overflow-y: auto;">
 
-							<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-								value="<?= $this->security->get_csrf_hash(); ?>">
+							<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
 							<?php if ($this->session->flashdata('error_pengaduan')): ?>
-								<div class="alert alert-danger alert-dismissible fade show persistent-alert" role="alert"
-									data-alert-key="error_pengaduan">
-									<?= $this->session->flashdata('error_pengaduan'); ?>
+								<div class="alert alert-danger alert-dismissible fade show persistent-alert" role="alert" data-alert-key="error_pengaduan">
+									<i class="fas fa-exclamation-circle mr-1"></i> <?= $this->session->flashdata('error_pengaduan'); ?>
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
@@ -424,25 +447,20 @@
 							<?php endif; ?>
 
 							<?php if ($this->session->flashdata('berhasil_pengaduan')): ?>
-								<div class="alert alert-success alert-dismissible fade show persistent-alert" role="alert"
-									data-alert-key="berhasil_pengaduan">
-									<?= $this->session->flashdata('berhasil_pengaduan'); ?>
+								<div class="alert alert-success alert-dismissible fade show persistent-alert" role="alert" data-alert-key="berhasil_pengaduan">
+									<i class="fas fa-check-circle mr-1"></i> <?= $this->session->flashdata('berhasil_pengaduan'); ?>
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
 							<?php endif; ?>
 
-							<!-- Hapus Alert dengan klik tombol x (Close) -->
 							<script>
 								document.addEventListener('DOMContentLoaded', function() {
 									var alerts = document.querySelectorAll('.alert.persistent-alert');
-
 									alerts.forEach(function(alert) {
 										alert.querySelector('.close').addEventListener('click', function() {
 											var alertKey = alert.getAttribute('data-alert-key');
-
-											// Use AJAX to clear the flashdata
 											var xhr = new XMLHttpRequest();
 											xhr.open('POST', '<?= base_url('Home/clear_flashdata'); ?>', true);
 											xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -453,107 +471,89 @@
 							</script>
 
 							<div class="form-group">
-								<label for="nama">Nama</label>
+								<label for="nama" class="font-weight-bold">Nama Lengkap</label>
 								<div class="input-group">
-									<input name="nama" type="text" class="form-control" placeholder="Masukan Nama"
-										value="<?= set_value('nama'); ?>" required>
+									<input name="nama" type="text" class="form-control" placeholder="Masukan Nama Lengkap Anda" value="<?= set_value('nama'); ?>" required>
 									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fas fa-user-tag"></span>
-										</div>
+										<div class="input-group-text"><span class="fas fa-user-tag text-muted"></span></div>
 									</div>
 								</div>
 								<small class="text-danger"><?= form_error('nama'); ?></small>
 							</div>
+
 							<div class="form-group">
-								<label for="alamat">Alamat</label>
+								<label for="alamat" class="font-weight-bold">Alamat</label>
 								<div class="input-group">
-									<textarea name="alamat" id="alamat" class="form-control" rows="3"
-										placeholder="Masukan Alamat" required><?= set_value('alamat'); ?></textarea>
+									<textarea name="alamat" id="alamat" class="form-control" rows="2" placeholder="Masukan Alamat Lengkap" required><?= set_value('alamat'); ?></textarea>
 								</div>
 								<small class="text-danger"><?= form_error('alamat'); ?></small>
 							</div>
+
 							<div class="form-group">
-								<label for="hp">WhatsApp</label>
+								<label for="hp" class="font-weight-bold">No. WhatsApp</label>
 								<div class="input-group">
-									<input name="hp" type="number" class="form-control" placeholder="Masukan Whatsapp"
-										value="<?= set_value('hp'); ?>" required>
+									<input name="hp" type="number" class="form-control" placeholder="Contoh: 08123456789" value="<?= set_value('hp'); ?>" required>
 									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fab fa-whatsapp"></span>
-										</div>
+										<div class="input-group-text"><span class="fab fa-whatsapp text-muted"></span></div>
 									</div>
 								</div>
 								<small class="text-danger"><?= form_error('hp'); ?></small>
 							</div>
-							<!-- <div class="col-6">
-									<div class="form-group">
-										<label for="alamat">Alamat</label>
-										<div class="input-group">
-											<input name="alamat" type="text" class="form-control" placeholder="Masukan Alamat" value="<?= set_value('alamat'); ?>" required>
-											<div class="input-group-append">
-												<div class="input-group-text">
-													<span class="fas fa-map-marker"></span>
-												</div>
-											</div>
-										</div>
-										<small class="text-danger"><?= form_error('alamat'); ?></small>
-									</div>
-								</div> -->
+
 							<div class="form-group">
-								<label for="email">Email</label>
+								<label for="email" class="font-weight-bold">Email</label>
 								<div class="input-group">
-									<input name="email" type="email" class="form-control" placeholder="Masukan Email"
-										value="<?= set_value('email'); ?>" required>
+									<input name="email" type="email" class="form-control" placeholder="Masukan Alamat Email Aktif" value="<?= set_value('email'); ?>" required>
 									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fas fa-envelope"></span>
-										</div>
+										<div class="input-group-text"><span class="fas fa-envelope text-muted"></span></div>
 									</div>
 								</div>
 								<small class="text-danger"><?= form_error('email'); ?></small>
 							</div>
+
 							<div class="form-group">
-								<label for="lokasi_kejadian">Lokasi Kejadian</label>
+								<label for="lokasi_kejadian" class="font-weight-bold">Lokasi Kejadian</label>
 								<div class="input-group">
-									<input name="lokasi_kejadian" type="text" class="form-control"
-										placeholder="Masukan Lokasi Kejadian" required
-										value="<?= set_value('lokasi_kejadian'); ?>">
+									<input name="lokasi_kejadian" type="text" class="form-control" placeholder="Tempat Kejadian Perkara (TKP)" required value="<?= set_value('lokasi_kejadian'); ?>">
 									<div class="input-group-append">
-										<div class="input-group-text">
-											<span class="fas fa-map-marked-alt"></span>
-										</div>
+										<div class="input-group-text"><span class="fas fa-map-marked-alt text-muted"></span></div>
 									</div>
 								</div>
 								<small class="text-danger"><?= form_error('lokasi_kejadian'); ?></small>
 							</div>
-							<div class="form-group">
-								<label for="materi_pengaduan">Uraian Pengaduan</label>
+
+							<div class="form-group mb-0">
+								<label for="materi_pengaduan" class="font-weight-bold">Uraian Pengaduan</label>
 								<div class="input-group">
-									<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control"
-										cols="20" rows="3" placeholder="Masukan Uraian Pengaduan"
-										required><?= set_value('materi_pengaduan'); ?></textarea>
+									<textarea name="materi_pengaduan" id="materi_pengaduan" class="form-control" cols="20" rows="3" placeholder="Jelaskan secara detail pengaduan Anda" required><?= set_value('materi_pengaduan'); ?></textarea>
 								</div>
 								<small class="text-danger"><?= form_error('materi_pengaduan'); ?></small>
 							</div>
+
 						</div>
-						<div class="card-footer">
-							<button type="submit" class="tombol-pengaduan">
-								<i class="fa fa-file-import"></i>
-								Kirim Pengaduan
+
+						<div class="card-footer bg-white text-right py-3">
+							<button type="submit" class="btn-lg shadow-sm w-100 tombol-pengaduan">
+								<i class="fa fa-paper-plane mr-2"></i> Kirim Pengaduan Sekarang
 							</button>
 						</div>
 					</form>
 				</div>
 			</div>
-			<div class="col-lg-12 col-sm-12 mb-4 mt-4">
-				<button type="button" class="pilih-profil border-none" data-toggle="modal"
-					data-target="#ModalTrackingPengaduan"><i class="ikon fa fa-search" aria-hidden="true"></i> Tracking
-					Pengaduan</button>
+
+		</div>
+
+		<!-- SISI BAWAH: Tombol Tracking -->
+		<div class="row text-center mt-3">
+			<div class="col-12">
+				<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
+				<button type="button" class="pilih-profil border-none" data-toggle="modal" data-target="#ModalTrackingPengaduan">
+					<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
+				</button>
 			</div>
 		</div>
-	</div>
 
+	</div>
 </section>
 <!-- close pengaduan -->
 

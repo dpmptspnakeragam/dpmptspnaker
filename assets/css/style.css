@@ -541,6 +541,13 @@ a:hover {
 	padding: 10px;
 }
 
+/* Tambahan untuk mengatasi garis hitam saat diklik */
+.pilih-profil:focus,
+.pilih-profil:active {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
 .img-kabid {
 	height: 150px;
 	width: auto;
@@ -959,6 +966,59 @@ video {
 /*tutup naker*/
 
 /*pengaduan*/
+
+/* Styling untuk tombol Lapor.go.id agar terlihat seperti tombol interaktif */
+.btn-lapor {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: #ffffff;
+	border: 2px solid maroon;
+	/* Warna merah lapor.go.id */
+	border-radius: 12px;
+	padding: 20px;
+	text-decoration: none !important;
+	color: maroon;
+	font-weight: bold;
+	font-size: 1.1rem;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-lapor:hover {
+	background: maroon;
+	color: #ffffff;
+	transform: translateY(-5px);
+	box-shadow: 0 8px 15px rgba(128, 0, 128, 0.3);
+}
+
+.btn-lapor img.img-layanan {
+	max-width: 160px;
+	/* Ukuran proporsional */
+	border-radius: 8px;
+	margin-bottom: 15px;
+}
+
+/* Styling untuk Info Kontak agar berbentuk kotak yang rapi */
+.kontak-box {
+	background: #f8f9fa;
+	border-left: 5px solid maroon;
+	/* Aksen hijau untuk kontak */
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.kontak-box a {
+	text-decoration: none;
+	color: maroon;
+	transition: color 0.2s;
+}
+
+.kontak-box a:hover {
+	color: #510400;
+	text-decoration: underline;
+}
 
 .pengaduan {
 	min-height: 650px;
