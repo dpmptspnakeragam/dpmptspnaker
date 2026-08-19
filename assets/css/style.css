@@ -1429,6 +1429,12 @@ video {
 		padding: 6px;
 	}
 
+	.btn-tracking:focus,
+	.btn-tracking:active {
+		outline: none !important;
+		box-shadow: none !important;
+	}
+
 	/*tutup pelayanan*/
 
 	/*naker*/

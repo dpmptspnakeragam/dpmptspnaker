@@ -533,7 +533,7 @@
 						</div>
 
 						<div class="card-footer bg-white text-right py-3">
-							<button type="submit" class="btn-lg shadow-sm w-100 tombol-pengaduan">
+							<button type="submit" class="shadow-sm btn-lg tombol-pengaduan">
 								<i class="fa fa-paper-plane mr-2"></i> Kirim Pengaduan Sekarang
 							</button>
 						</div>
@@ -547,7 +547,7 @@
 		<div class="row text-center mt-3">
 			<div class="col-12">
 				<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
-				<button type="button" class="pilih-profil border-none" data-toggle="modal" data-target="#ModalTrackingPengaduan">
+				<button type="button" class="pilih-profil border-none w-100" data-toggle="modal" data-target="#ModalTrackingPengaduan">
 					<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
 				</button>
 			</div>

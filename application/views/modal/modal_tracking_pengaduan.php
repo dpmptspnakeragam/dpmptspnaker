@@ -1,55 +1,9 @@
-<!-- Modal -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-</script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxtransport-xdomainrequest/1.0.1/jquery.xdomainrequest.min.js"></script>
-<script type="text/javascript" language="javascript">
-    $(document).ready(function () {
-        $("#btn-tracking-pengaduan").click(function () {
-            var no_pengaduan = $("#no_pengaduan").val();
-            $.ajax({
-                url: '<?= base_url(); ?>home/tracking_pengaduan',
-                data: "no_pengaduan=" + no_pengaduan,
-                datatype: "JSON",
-                traditional: true,
-                beforeSend: function () {
-                    $(".spinner").css("display", "block");
-                    $("#display-pengaduan").css("display", "none");
-                    $("#display-pengaduan").empty();
-                },
-                success: function (data) {
-                    if (data === null) {
-                        $(".spinner").css("display", "none");
-                        $('#display-pengaduan').html('<p>Maaf, Data tidak ditemukan. Silahkan periksa kembali Nomor Pengaduan Anda. Terima Kasih.</p>')
-                    } else {
-                        var obj = jQuery.parseJSON(data)
-                        $(".spinner").css("display", "none");
-                        $("#display-pengaduan").css("display", "block");
-                        $('#display-pengaduan').html('<table><tr><td width="170px">No. Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].no_pengaduan + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Nama</td><td width="10px">:</td><td width="350px"><b>' + obj[0].nama + '</b></td><tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Alamat</td><td width="10px">:</td><td width="350px"><b>' + obj[0].alamat + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">No. HP</td><td width="10px">:</td><td width="350px"><b>' + obj[0].hp + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Email</td><td width="10px">:</td><td width="350px"><b>' + obj[0].email + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Jenis Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].jenis_pengaduan + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Lokasi Kejadian</td><td width="10px">:</td><td width="350px"><b>' + obj[0].lokasi_kejadian + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Waktu Kejadian</td><td width="10px">:</td><td width="350px"><b>' + obj[0].waktu_kejadian + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Materi Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].materi_pengaduan + '</b></td></tr>');
-                        $('#display-pengaduan').append('<tr><td width="170px">Status Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].status + '</b></td></tr></table>');
-                    }
-                },
-                error: function (error) {
-                    $('#display-pengaduan').html('<p>Maaf, Data tidak ditemukan. Silahkan periksa kembali Nomor Pengaduan Anda. Terima Kasih.</p>')
-                }
-            });
-        });
-    });
-</script>
 <div class="modal fade" id="ModalTrackingPengaduan" tabindex="-1" role="dialog" aria-labelledby="ModalPelayanan"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title display-4 judul-modal" id="LabelModalPelayanan">Tracking Pengaduan</h5>
+                <h5 class="modal-title display-4 judul-modal" id="LabelModalPelayanan"><i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan</h5>
                 <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

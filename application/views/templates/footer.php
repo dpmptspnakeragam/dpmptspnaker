@@ -13,6 +13,62 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"
   crossorigin="anonymous"></script>
 
+<!-- Tracking Pengaduan -->
+<script type="text/javascript" language="javascript">
+  $(document).ready(function() {
+    $("#btn-tracking-pengaduan").click(function() {
+      var no_pengaduan = $("#no_pengaduan").val();
+
+      // TAMBAHAN 1: Cek jika input kosong
+      if (no_pengaduan.trim() === "") {
+        $("#display-pengaduan").css("display", "block");
+        $('#display-pengaduan').html('<div class="alert alert-warning text-center m-0"><b>Perhatian!</b> Nomor Pengaduan tidak boleh kosong.</div>');
+        return false;
+      }
+
+      $.ajax({
+        url: '<?= base_url(); ?>home/tracking_pengaduan',
+        data: "no_pengaduan=" + no_pengaduan,
+        datatype: "JSON",
+        traditional: true,
+        beforeSend: function() {
+          $(".spinner").css("display", "block");
+          $("#display-pengaduan").css("display", "none");
+          $("#display-pengaduan").empty();
+        },
+        success: function(data) {
+          // TAMBAHAN 2: Menampilkan pesan jika data null atau tidak ada
+          if (data === null || data === "null" || data === "") {
+            $(".spinner").css("display", "none");
+            $("#display-pengaduan").css("display", "block");
+            $('#display-pengaduan').html('<div class="alert alert-danger text-center m-0"><b>Maaf, Data tidak ditemukan.</b><br>Silahkan periksa kembali Nomor Pengaduan Anda. Terima Kasih.</div>');
+          } else {
+            var obj = jQuery.parseJSON(data)
+            $(".spinner").css("display", "none");
+            $("#display-pengaduan").css("display", "block");
+            $('#display-pengaduan').html('<table><tr><td width="170px">No. Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].no_pengaduan + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Nama</td><td width="10px">:</td><td width="350px"><b>' + obj[0].nama + '</b></td><tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Alamat</td><td width="10px">:</td><td width="350px"><b>' + obj[0].alamat + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">No. HP</td><td width="10px">:</td><td width="350px"><b>' + obj[0].hp + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Email</td><td width="10px">:</td><td width="350px"><b>' + obj[0].email + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Jenis Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].jenis_pengaduan + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Lokasi Kejadian</td><td width="10px">:</td><td width="350px"><b>' + obj[0].lokasi_kejadian + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Waktu Kejadian</td><td width="10px">:</td><td width="350px"><b>' + obj[0].waktu_kejadian + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Materi Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].materi_pengaduan + '</b></td></tr>');
+            $('#display-pengaduan').append('<tr><td width="170px">Status Pengaduan</td><td width="10px">:</td><td width="350px"><b>' + obj[0].status + '</b></td></tr></table>');
+          }
+        },
+        error: function(error) {
+          // TAMBAHAN 3: Pesan jika server error
+          $(".spinner").css("display", "none");
+          $("#display-pengaduan").css("display", "block");
+          $('#display-pengaduan').html('<div class="alert alert-danger text-center m-0"><b>Terjadi Kesalahan Server.</b><br>Silahkan periksa kembali Nomor Pengaduan Anda. Terima Kasih.</div>');
+        }
+      });
+    });
+  });
+</script>
+
 <!-- Lihat Informasi -->
 <script>
   function eksekusiKlik(idBerita) {
