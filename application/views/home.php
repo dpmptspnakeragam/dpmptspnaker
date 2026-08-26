@@ -389,11 +389,9 @@
 			<div class="col-lg-5 col-md-6 col-sm-12 mb-4 pr-lg-5 d-flex flex-column">
 				<div class="kontak-box p-4 h-100 d-flex flex-column justify-content-between shadow">
 					<div>
-						<!-- <h4 class="mb-4"><strong>Info Kontak Pengaduan</strong></h4> -->
-
 						<!-- LAPOR.GO.ID -->
 						<div class="d-flex align-items-start mb-3">
-							<div class="d-flex justify-content-center align-items-center mr-3" style="width: 35px; min-width: 35px; pt-1">
+							<div class="d-flex justify-content-center align-items-center mr-3" style="width: 35px; min-width: 35px;">
 								<img id="img-layanan" class="img-layanan img-fluid" src="<?= base_url('assets/img/lp.jpg'); ?>" alt="Lapor.go.id" style="max-width: 100%; height: auto;">
 							</div>
 							<div>
@@ -417,6 +415,38 @@
 								<h5 class="mb-1"><b>0853 7163 8593</b></h5>
 								<a href="https://wa.me/6285371638593?text=Halo%20Admin%20Layanan%20Pengaduan%20DPMPTSP%20Kab.%20Agam.%20Saya%20butuh%20bantuan%20informasi%20/%20ingin%20melapor%20terkait%20..." target="_blank">
 									<b><i class="far fa-arrow-alt-circle-right"></i> Klik Disini untuk Chat</b>
+								</a>
+							</div>
+						</div>
+
+						<hr>
+
+						<!-- INSTAGRAM -->
+						<div class="d-flex align-items-start mb-3">
+							<div class="d-flex justify-content-center align-items-center mr-3" style="width: 35px; min-width: 35px;">
+								<i class="fab fa-instagram fa-2x" style="color: #e1306c;"></i>
+							</div>
+							<div>
+								<p class="mb-0 text-muted" style="font-size: 0.9rem;">Instagram</p>
+								<h5 class="mb-1"><b>@dpmptsp_kab.agam</b></h5>
+								<a href="https://www.instagram.com/dpmptsp_kab.agam/" target="_blank">
+									<b><i class="far fa-arrow-alt-circle-right"></i> Kunjungi Instagram</b>
+								</a>
+							</div>
+						</div>
+
+						<hr>
+
+						<!-- FACEBOOK -->
+						<div class="d-flex align-items-start mb-3">
+							<div class="d-flex justify-content-center align-items-center mr-3" style="width: 35px; min-width: 35px;">
+								<i class="fab fa-facebook fa-2x text-primary"></i>
+							</div>
+							<div>
+								<p class="mb-0 text-muted" style="font-size: 0.9rem;">Facebook</p>
+								<h5 class="mb-1"><b>DPMPTSP Kab. Agam</b></h5>
+								<a href="https://www.facebook.com/dpmptspkab.agam/" target="_blank">
+									<b><i class="far fa-arrow-alt-circle-right"></i> Kunjungi Facebook</b>
 								</a>
 							</div>
 						</div>
