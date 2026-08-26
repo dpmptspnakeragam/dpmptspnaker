@@ -326,7 +326,7 @@ class Home extends CI_Controller
 				// === Fallback SSL (port 465) ===
 				$config_ssl = [
 					'protocol' => 'smtp',
-					'smtp_host' => 'smtp.gmail.com',   // gunakan host tanpa prefix
+					'smtp_host' => 'smtp.gmail.com',
 					'smtp_port' => 465,
 					'smtp_user' => $smtp_user,
 					'smtp_pass' => $smtp_pass,

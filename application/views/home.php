@@ -440,8 +440,8 @@
 			<!-- SISI KANAN: Formulir Pengaduan & Tombol Tracking di Bawah Card -->
 			<div class="col-lg-7 col-md-6 col-sm-12 mb-4 d-flex flex-column justify-content-between">
 				<div class="card shadow border-0 rounded">
-					<div class="card-header bg-maroon py-3">
-						<h4 class="text-center mb-0">Formulir Pengaduan Online</h4>
+					<div class="card-header py-3">
+						<h4 class="text-center mb-0">Formulir Pengaduan</h4>
 					</div>
 
 					<form method="post" enctype="multipart/form-data" action="<?= base_url('home/kirim_pengaduan'); ?>">
