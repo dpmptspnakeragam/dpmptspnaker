@@ -373,7 +373,7 @@
 <!-- close Investasi -->
 
 <!-- Pengaduan -->
-<section class="pengaduan bg-white pb-4" id="pengaduan">
+<section class="pengaduan bg-white pb-3" id="pengaduan">
 	<div class="container-fluid px-lg-5">
 
 		<!-- Judul -->
@@ -384,55 +384,68 @@
 			</div>
 		</div>
 
-		<div class="row">
-			<!-- SISI KIRI: Tombol Lapor & Info Kontak -->
-			<div class="col-lg-5 col-md-6 col-sm-12 mb-4 d-flex flex-column pr-lg-5">
+		<div class="row align-items-stretch">
+			<!-- SISI KIRI: Info Kontak Pengaduan -->
+			<div class="col-lg-5 col-md-6 col-sm-12 mb-4 pr-lg-5 d-flex flex-column">
+				<div class="kontak-box p-4 h-100 d-flex flex-column justify-content-between shadow">
+					<div>
+						<h4 class="mb-4"><strong>Info Kontak Pengaduan</strong></h4>
 
-				<!-- <img class="shadow mekanisme-pengaduan mb-4" src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%"> -->
-
-				<!-- Info Kontak Kotak (UX diperhalus) -->
-				<div class="kontak-box p-4 mt-2">
-					<h4 class="mb-2"><strong>Info Kontak Pengaduan</strong></h4>
-					<hr>
-					<!-- Tombol Lapor.go.id -->
-					<div class="mb-3 text-center">
-						<a href="https://www.lapor.go.id/" class="btn-lapor w-100" target="_blank">
-							<img id="img-layanan" class="img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>" alt="Lapor.go.id">
-							<span>Menuju Lapor.go.id <i class="fas fa-external-link-alt ml-1"></i></span>
-						</a>
-					</div>
-					<hr>
-					<div class="d-flex align-items-center mb-3">
-						<i class="fab fa-whatsapp fa-2x text-success mr-3"></i>
-						<div>
-							<p class="mb-0 text-muted" style="font-size: 0.9rem;">WhatsApp</p>
-							<h5 class="mb-1"><b>0853 7163 8593</b></h5>
-							<a href="https://wa.me/6285371638593?text=Halo%20Admin%20Layanan%20Pengaduan%20DPMPTSP%20Kab.%20Agam.%20Saya%20butuh%20bantuan%20informasi%20/%20ingin%20melapor%20terkait%20..." target="_blank">
-								<b><i class="far fa-arrow-alt-circle-right"></i> Klik Disini untuk Chat</b>
-							</a>
+						<!-- LAPOR.GO.ID -->
+						<div class="d-flex align-items-start mb-3">
+							<div class="d-flex justify-content-center align-items-center mr-3" style="width: 35px; min-width: 35px; pt-1">
+								<img id="img-layanan" class="img-layanan img-fluid" src="<?= base_url('assets/img/lp.jpg'); ?>" alt="Lapor.go.id" style="max-width: 100%; height: auto;">
+							</div>
+							<div>
+								<p class="mb-0 text-muted" style="font-size: 0.9rem;">Website LAPOR!</p>
+								<h5 class="mb-1"><b>lapor.go.id</b></h5>
+								<a href="https://www.lapor.go.id/" target="_blank">
+									<b><i class="far fa-arrow-alt-circle-right"></i> Kirim via Lapor.go.id</b>
+								</a>
+							</div>
 						</div>
-					</div>
-					<hr>
-					<div class="d-flex align-items-center">
-						<i class="far fa-envelope fa-2x text-danger mr-3"></i>
-						<div>
-							<p class="mb-0 text-muted" style="font-size: 0.9rem;">Email</p>
-							<h6 class="mb-0"><b>dpmptspagam@gmail.com</b></h6>
+
+						<hr>
+
+						<!-- WHATSAPP -->
+						<div class="d-flex align-items-start mb-3">
+							<div class="d-flex justify-content-center align-items-center mr-3" style="width: 35px; min-width: 35px;">
+								<i class="fab fa-whatsapp fa-2x text-success"></i>
+							</div>
+							<div>
+								<p class="mb-0 text-muted" style="font-size: 0.9rem;">WhatsApp</p>
+								<h5 class="mb-1"><b>0853 7163 8593</b></h5>
+								<a href="https://wa.me/6285371638593?text=Halo%20Admin%20Layanan%20Pengaduan%20DPMPTSP%20Kab.%20Agam.%20Saya%20butuh%20bantuan%20informasi%20/%20ingin%20melapor%20terkait%20..." target="_blank">
+									<b><i class="far fa-arrow-alt-circle-right"></i> Klik Disini untuk Chat</b>
+								</a>
+							</div>
+						</div>
+
+						<hr>
+
+						<!-- EMAIL -->
+						<div class="d-flex align-items-start">
+							<div class="d-flex justify-content-center align-items-center mr-3" style="width: 35px; min-width: 35px;">
+								<i class="far fa-envelope fa-2x text-danger"></i>
+							</div>
+							<div>
+								<p class="mb-0 text-muted" style="font-size: 0.9rem;">Email</p>
+								<h6 class="mb-0 mt-1"><b>dpmptspagam@gmail.com</b></h6>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- SISI KANAN: Formulir Pengaduan -->
-			<div class="col-lg-7 col-md-6 col-sm-12">
+			<!-- SISI KANAN: Formulir Pengaduan & Tombol Tracking di Bawah Card -->
+			<div class="col-lg-7 col-md-6 col-sm-12 mb-4 d-flex flex-column justify-content-between">
 				<div class="card shadow border-0 rounded">
 					<div class="card-header bg-maroon py-3">
 						<h4 class="text-center mb-0">Formulir Pengaduan Online</h4>
 					</div>
 
 					<form method="post" enctype="multipart/form-data" action="<?= base_url('home/kirim_pengaduan'); ?>">
-						<!-- UX: Menambah max-height agar tidak terlalu sempit dan diberi class custom scrollbar -->
-						<div class="card-body form-scroll p-4" style="width: 100%; max-height: 450px; overflow-y: auto;">
+						<div class="card-body form-scroll p-4" style="width: 100%; max-height: 400px; overflow-y: auto;">
 
 							<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
@@ -532,25 +545,23 @@
 						</div>
 
 						<div class="card-footer bg-white text-right py-3">
-							<button type="submit" class="shadow-sm btn-lgcal tombol-pengaduan">
-								<i class="fa fa-paper-plane mr-2"></i> Kirim Pengaduan Sekarang
+							<button type="submit" class="shadow-sm btn-lg tombol-pengaduan">
+								<i class="fa fa-paper-plane"></i> Kirim Pengaduan Sekarang
 							</button>
 						</div>
 					</form>
 				</div>
 
-				<!-- SISI BAWAH: Tombol Tracking -->
-				<div class="row text-center mt-3">
-					<div class="col-12">
-						<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
-						<button type="button" class="pilih-profil border-none w-100" data-toggle="modal" data-target="#ModalTrackingPengaduan">
-							<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
-						</button>
-					</div>
+				<!-- TOMBOL TRACKING (Di Bawah Card Formulir) -->
+				<div class="mt-3 text-center">
+					<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
+					<button type="button" class="shadow-sm btn-lg tombol-pengaduan" data-toggle="modal" data-target="#ModalTrackingPengaduan">
+						<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
+					</button>
 				</div>
-
 			</div>
 		</div>
+
 	</div>
 </section>
 <!-- close pengaduan -->
