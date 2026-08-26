@@ -196,7 +196,7 @@ class Home extends CI_Controller
 
 	public function kirim_pengaduan()
 	{
-		// === Validasi Form ===
+		// 1. Validasi Input Form
 		$this->form_validation->set_rules('nama', 'Nama', 'required');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required');
 		$this->form_validation->set_rules('hp', 'Nomor WhatsApp', 'required|numeric|min_length[10]|max_length[15]');
@@ -204,63 +204,68 @@ class Home extends CI_Controller
 		$this->form_validation->set_rules('lokasi_kejadian', 'Lokasi Kejadian', 'required');
 		$this->form_validation->set_rules('materi_pengaduan', 'Uraian Pengaduan', 'required');
 
-		if ($this->form_validation->run() === TRUE) {
-			$unique_id = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
-			$formatted_date = date('Y-m-d H:i:s');
+		if ($this->form_validation->run() === FALSE) {
+			$this->session->set_flashdata('error_pengaduan', 'Pengaduan gagal disimpan. Perhatikan semua inputan!');
+			redirect('#pengaduan');
+			return;
+		}
 
-			$file_name = null;
+		// 2. Persiapan Data & ID Pengaduan
+		$unique_id = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
+		$formatted_date = date('Y-m-d H:i:s');
+		$file_name = null;
 
-			// === Upload File (opsional) ===
-			if (!empty($_FILES['file_pengaduan']['name'])) {
-				$cfgUp['upload_path'] = './assets/imgupload/';
-				$cfgUp['allowed_types'] = 'jpg|jpeg|png|pdf|docx';
-				$cfgUp['max_size'] = 22000;
-				$cfgUp['file_name'] = 'PENGADUAN_' . $unique_id . '_' . time();
+		// 3. Process Upload File (Jika ada)
+		if (!empty($_FILES['file_pengaduan']['name'])) {
+			$cfgUp['upload_path']   = './assets/imgupload/';
+			$cfgUp['allowed_types'] = 'jpg|jpeg|png|pdf|docx';
+			$cfgUp['max_size']      = 22000;
+			$cfgUp['file_name']     = 'PENGADUAN_' . $unique_id . '_' . time();
 
-				$this->load->library('upload', $cfgUp);
+			$this->load->library('upload', $cfgUp);
 
-				if (!$this->upload->do_upload('file_pengaduan')) {
-					$this->session->set_flashdata('error_pengaduan', $this->upload->display_errors());
-					redirect('#pengaduan');
-					return;
-				}
-
-				$file_mime = mime_content_type($_FILES['file_pengaduan']['tmp_name']);
-				$allowed_mimes = [
-					'image/jpeg',
-					'image/png',
-					'application/pdf',
-					'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-				];
-
-				if (!in_array($file_mime, $allowed_mimes)) {
-					@unlink($this->upload->data('full_path'));
-					$this->session->set_flashdata('error_pengaduan', 'Tipe file tidak diperbolehkan.');
-					redirect('#pengaduan');
-					return;
-				}
-
-				$file_name = $this->upload->data('file_name');
+			if (!$this->upload->do_upload('file_pengaduan')) {
+				$this->session->set_flashdata('error_pengaduan', $this->upload->display_errors());
+				redirect('#pengaduan');
+				return;
 			}
 
-			// === Simpan ke Database ===
-			$input = [
-				'no_pengaduan' => $unique_id,
-				'nama' => $this->input->post('nama', TRUE),
-				'alamat' => $this->input->post('alamat', TRUE),
-				'hp' => $this->input->post('hp', TRUE),
-				'email' => $this->input->post('email', TRUE),
-				'jenis_pengaduan' => 'Online',
-				'lokasi_kejadian' => $this->input->post('lokasi_kejadian', TRUE),
-				'waktu_kejadian' => $formatted_date,
-				'materi_pengaduan' => $this->input->post('materi_pengaduan', TRUE),
-				'file_pengaduan' => $file_name,
-				'status' => 'Proses'
+			$file_mime = mime_content_type($_FILES['file_pengaduan']['tmp_name']);
+			$allowed_mimes = [
+				'image/jpeg',
+				'image/png',
+				'application/pdf',
+				'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 			];
-			$this->Model_pengaduan->insert_pengaduan($input);
 
-			// === Persiapkan Email HTML ===
-			$message = '
+			if (!in_array($file_mime, $allowed_mimes)) {
+				@unlink($this->upload->data('full_path'));
+				$this->session->set_flashdata('error_pengaduan', 'Tipe file tidak diperbolehkan.');
+				redirect('#pengaduan');
+				return;
+			}
+
+			$file_name = $this->upload->data('file_name');
+		}
+
+		// 4. Simpan ke Database
+		$input = [
+			'no_pengaduan'     => $unique_id,
+			'nama'             => $this->input->post('nama', TRUE),
+			'alamat'           => $this->input->post('alamat', TRUE),
+			'hp'               => $this->input->post('hp', TRUE),
+			'email'            => $this->input->post('email', TRUE),
+			'jenis_pengaduan'  => 'Online',
+			'lokasi_kejadian'  => $this->input->post('lokasi_kejadian', TRUE),
+			'waktu_kejadian'   => $formatted_date,
+			'materi_pengaduan' => $this->input->post('materi_pengaduan', TRUE),
+			'file_pengaduan'   => $file_name,
+			'status'           => 'Proses'
+		];
+		$this->Model_pengaduan->insert_pengaduan($input);
+
+		// 5. Template Email HTML
+		$message = '
         <html><head><style>
           body {font-family:"Segoe UI",Arial,sans-serif;background:#f9f9f9;color:#333;line-height:1.6;}
           .container{background:#fff;border-radius:10px;padding:20px;max-width:600px;margin:auto;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
@@ -293,79 +298,39 @@ class Home extends CI_Controller
           </div>
         </body></html>';
 
-			// === Kirim Email (Coba TLS dulu) ===
-			$smtp_user = 'dpmptspagam@gmail.com';
-			$smtp_pass = 'wqwfcbbmtiadnnut';
+		// 6. Pengiriman Email via Config Global Library
+		$this->load->library('email');
+		$this->email->clear(TRUE); // Reset buffer
 
-			// load library (mengambil config/email.php jika ada), kita tetap set beberapa opsi tambahan
-			$this->load->library('email');
+		// Opsi tambahan untuk cegah kegagalan sertifikat SSL lokal
+		$this->email->initialize([
+			'smtp_conn_options' => [
+				'ssl' => [
+					'verify_peer'       => false,
+					'verify_peer_name'  => false,
+					'allow_self_signed' => true
+				]
+			]
+		]);
 
-			// pastikan header sesuai
-			$this->email->set_mailtype('html');
-			$this->email->set_newline("\r\n");
-			$this->email->set_crlf("\r\n");
+		$this->email->from('dpmptspagam@gmail.com', 'DPMPTSP Kabupaten Agam');
+		$this->email->to($input['email']);
+		$this->email->subject('Pengaduan Berhasil Dikirim - DPMPTSP Kabupaten Agam');
+		$this->email->message($message);
 
-			// pakai dari yang sama dengan smtp_user
-			$this->email->from($smtp_user, 'DPMPTSP Kabupaten Agam');
-			$this->email->to($input['email']);
-			$this->email->subject('Pengaduan Berhasil Dikirim - DPMPTSP Kabupaten Agam');
-			$this->email->message($message);
-
-			// coba kirim (config dari application/config/email.php yang seharusnya berisi tls:587)
-			if ($this->email->send()) {
-				$this->session->set_flashdata(
-					'berhasil_pengaduan',
-					"Pengaduan berhasil disimpan dengan Nomor <b>$unique_id</b>. Lakukan Tracking Pengaduan untuk mengetahui informasi lebih lanjut. Terima kasih!!"
-				);
-			} else {
-				// log debug TLS first attempt
-				log_message('error', "EMAIL TLS FAILED: " . $this->email->print_debugger());
-				// BERSIHKAN state email sebelum initialize ulang
-				$this->email->clear(TRUE);
-
-				// === Fallback SSL (port 465) ===
-				$config_ssl = [
-					'protocol' => 'smtp',
-					'smtp_host' => 'smtp.gmail.com',
-					'smtp_port' => 465,
-					'smtp_user' => $smtp_user,
-					'smtp_pass' => $smtp_pass,
-					'smtp_crypto' => 'ssl',
-					'mailtype' => 'html',
-					'charset' => 'utf-8',
-					'newline' => "\r\n",
-					'crlf' => "\r\n",
-					'wordwrap' => TRUE
-				];
-
-				$this->email->initialize($config_ssl);
-				$this->email->set_mailtype('html');
-				$this->email->set_newline("\r\n");
-				$this->email->set_crlf("\r\n");
-
-				$this->email->from($smtp_user, 'DPMPTSP Kabupaten Agam');
-				$this->email->to($input['email']);
-				$this->email->subject('Pengaduan Berhasil Dikirim - DPMPTSP Kabupaten Agam');
-				$this->email->message($message);
-
-				if ($this->email->send()) {
-					$this->session->set_flashdata(
-						'berhasil_pengaduan',
-						"Pengaduan berhasil disimpan dengan Nomor <b>$unique_id</b>. Email dikirim via fallback SSL. Terima kasih!!"
-					);
-				} else {
-					// log final debug - jangan tampilkan ini ke user, gunakan log untuk debugging
-					$debug = $this->email->print_debugger();
-					log_message('error', "EMAIL SSL FAILED: " . $debug);
-
-					$this->session->set_flashdata(
-						'error_pengaduan',
-						'Pengaduan berhasil disimpan tetapi email gagal dikirim. Mohon hubungi admin. (cek log untuk detail)'
-					);
-				}
-			}
+		if ($this->email->send()) {
+			$this->session->set_flashdata(
+				'berhasil_pengaduan',
+				"Pengaduan berhasil disimpan dengan Nomor <b>$unique_id</b>. Lakukan Tracking Pengaduan untuk mengetahui informasi lebih lanjut. Terima kasih!!"
+			);
 		} else {
-			$this->session->set_flashdata('error_pengaduan', 'Pengaduan gagal disimpan. Perhatikan semua inputan!!');
+			// Catat detail kesalahan ke log CodeIgniter (Log level ERROR)
+			log_message('error', "EMAIL FAILED: " . $this->email->print_debugger(['headers']));
+
+			$this->session->set_flashdata(
+				'berhasil_pengaduan',
+				"Pengaduan berhasil disimpan dengan Nomor <b>$unique_id</b>. Namun konfirmasi email gagal terkirim."
+			);
 		}
 
 		redirect('#pengaduan');

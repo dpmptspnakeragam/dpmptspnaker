@@ -450,7 +450,7 @@
 							<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
 							<?php if ($this->session->flashdata('error_pengaduan')): ?>
-								<div class="alert alert-danger alert-dismissible fade show persistent-alert" role="alert" data-alert-key="error_pengaduan">
+								<div class="alert no-auto-hide alert-danger alert-dismissible fade show persistent-alert" role="alert" data-alert-key="error_pengaduan">
 									<i class="fas fa-exclamation-circle mr-1"></i> <?= $this->session->flashdata('error_pengaduan'); ?>
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
@@ -459,7 +459,7 @@
 							<?php endif; ?>
 
 							<?php if ($this->session->flashdata('berhasil_pengaduan')): ?>
-								<div class="alert alert-success alert-dismissible fade show persistent-alert" role="alert" data-alert-key="berhasil_pengaduan">
+								<div class="alert no-auto-hide alert-success alert-dismissible fade show persistent-alert" role="alert" data-alert-key="berhasil_pengaduan">
 									<i class="fas fa-check-circle mr-1"></i> <?= $this->session->flashdata('berhasil_pengaduan'); ?>
 									<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
