@@ -294,8 +294,8 @@ class Home extends CI_Controller
         </body></html>';
 
 			// === Kirim Email (Coba TLS dulu) ===
-			$smtp_user = 'dpmptspagam@gmail.com';    // PASTIKAN SAMA DENGAN config/email.php
-			$smtp_pass = 'wqwfcbbmtiadnnut';       // Ganti App Password 16 digit
+			$smtp_user = 'dpmptspagam@gmail.com';
+			$smtp_pass = 'wqwfcbbmtiadnnut';
 
 			// load library (mengambil config/email.php jika ada), kita tetap set beberapa opsi tambahan
 			$this->load->library('email');

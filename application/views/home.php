@@ -389,7 +389,7 @@
 			<div class="col-lg-5 col-md-6 col-sm-12 mb-4 pr-lg-5 d-flex flex-column">
 				<div class="kontak-box p-4 h-100 d-flex flex-column justify-content-between shadow">
 					<div>
-						<h4 class="mb-4"><strong>Info Kontak Pengaduan</strong></h4>
+						<!-- <h4 class="mb-4"><strong>Info Kontak Pengaduan</strong></h4> -->
 
 						<!-- LAPOR.GO.ID -->
 						<div class="d-flex align-items-start mb-3">
