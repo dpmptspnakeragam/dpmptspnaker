@@ -550,15 +550,17 @@
 							</button>
 						</div>
 					</form>
+
+					<!-- TOMBOL TRACKING (Di Bawah Card Formulir) -->
+					<div class="mb-3 text-center">
+						<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
+						<button type="button" class="shadow-sm btn-lg tombol-pengaduan" data-toggle="modal" data-target="#ModalTrackingPengaduan" style="width: calc(100% - 2.3rem); display: inline-block;">
+							<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
+						</button>
+					</div>
+
 				</div>
 
-				<!-- TOMBOL TRACKING (Di Bawah Card Formulir) -->
-				<div class="mt-3 text-center">
-					<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
-					<button type="button" class="shadow-sm btn-lg tombol-pengaduan" data-toggle="modal" data-target="#ModalTrackingPengaduan" style="width: calc(100% - 2.3rem); display: inline-block;">
-						<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
-					</button>
-				</div>
 			</div>
 		</div>
 
