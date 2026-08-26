@@ -373,7 +373,7 @@
 <!-- close Investasi -->
 
 <!-- Pengaduan -->
-<section class="pengaduan bg-white pb-5" id="pengaduan">
+<section class="pengaduan bg-white pb-4" id="pengaduan">
 	<div class="container-fluid px-lg-5">
 
 		<!-- Judul -->
@@ -386,23 +386,22 @@
 
 		<div class="row">
 			<!-- SISI KIRI: Tombol Lapor & Info Kontak -->
-			<div class="col-lg-5 col-md-6 col-sm-12 mb-4 d-flex flex-column justify-content-center pr-lg-5">
+			<div class="col-lg-5 col-md-6 col-sm-12 mb-4 d-flex flex-column pr-lg-5">
 
 				<!-- <img class="shadow mekanisme-pengaduan mb-4" src="<?= base_url(); ?>assets/img/mekanisme_penanganan_pengaduan.png" alt="gambar" width="100%"> -->
 
-				<!-- Tombol Lapor.go.id -->
-				<div class="mb-3 text-center">
-					<p class="text-muted mb-2">Sampaikan laporan Anda melalui kanal resmi nasional:</p>
-					<a href="https://www.lapor.go.id/" class="btn-lapor w-100" target="_blank">
-						<img id="img-layanan" class="img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>" alt="Lapor.go.id">
-						<span>Menuju Lapor.go.id <i class="fas fa-external-link-alt ml-1"></i></span>
-					</a>
-				</div>
-
 				<!-- Info Kontak Kotak (UX diperhalus) -->
 				<div class="kontak-box p-4 mt-2">
-					<h4 class="mb-4"><strong>Info Kontak Pengaduan</strong></h4>
-
+					<h4 class="mb-2"><strong>Info Kontak Pengaduan</strong></h4>
+					<hr>
+					<!-- Tombol Lapor.go.id -->
+					<div class="mb-3 text-center">
+						<a href="https://www.lapor.go.id/" class="btn-lapor w-100" target="_blank">
+							<img id="img-layanan" class="img-layanan" src="<?= base_url('assets/img/lp.jpg'); ?>" alt="Lapor.go.id">
+							<span>Menuju Lapor.go.id <i class="fas fa-external-link-alt ml-1"></i></span>
+						</a>
+					</div>
+					<hr>
 					<div class="d-flex align-items-center mb-3">
 						<i class="fab fa-whatsapp fa-2x text-success mr-3"></i>
 						<div>
@@ -425,7 +424,7 @@
 			</div>
 
 			<!-- SISI KANAN: Formulir Pengaduan -->
-			<div class="col-lg-7 col-md-6 col-sm-12 mb-4">
+			<div class="col-lg-7 col-md-6 col-sm-12">
 				<div class="card shadow border-0 rounded">
 					<div class="card-header bg-maroon py-3">
 						<h4 class="text-center mb-0">Formulir Pengaduan Online</h4>
@@ -533,26 +532,25 @@
 						</div>
 
 						<div class="card-footer bg-white text-right py-3">
-							<button type="submit" class="shadow-sm btn-lg tombol-pengaduan">
+							<button type="submit" class="shadow-sm btn-lgcal tombol-pengaduan">
 								<i class="fa fa-paper-plane mr-2"></i> Kirim Pengaduan Sekarang
 							</button>
 						</div>
 					</form>
 				</div>
+
+				<!-- SISI BAWAH: Tombol Tracking -->
+				<div class="row text-center mt-3">
+					<div class="col-12">
+						<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
+						<button type="button" class="pilih-profil border-none w-100" data-toggle="modal" data-target="#ModalTrackingPengaduan">
+							<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
+						</button>
+					</div>
+				</div>
+
 			</div>
-
 		</div>
-
-		<!-- SISI BAWAH: Tombol Tracking -->
-		<div class="row text-center mt-3">
-			<div class="col-12">
-				<p class="text-muted mb-2">Sudah pernah membuat pengaduan? Cek statusnya disini:</p>
-				<button type="button" class="pilih-profil border-none w-100" data-toggle="modal" data-target="#ModalTrackingPengaduan">
-					<i class="ikon fa fa-search" aria-hidden="true"></i> Tracking Pengaduan
-				</button>
-			</div>
-		</div>
-
 	</div>
 </section>
 <!-- close pengaduan -->
