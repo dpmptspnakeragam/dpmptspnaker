@@ -196,59 +196,63 @@ class Home extends CI_Controller
 
 	public function kirim_pengaduan()
 	{
-		// 1. Validasi Input Form
-		$this->form_validation->set_rules('nama', 'Nama', 'required');
-		$this->form_validation->set_rules('alamat', 'Alamat', 'required');
+		// === 1. VALIDASI INPUT (Keamanan Anti-XSS & Injection) ===
+		$this->form_validation->set_rules('nama', 'Nama', 'required|trim|html_escape');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'required|trim|html_escape');
 		$this->form_validation->set_rules('hp', 'Nomor WhatsApp', 'required|numeric|min_length[10]|max_length[15]');
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-		$this->form_validation->set_rules('lokasi_kejadian', 'Lokasi Kejadian', 'required');
-		$this->form_validation->set_rules('materi_pengaduan', 'Uraian Pengaduan', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
+		$this->form_validation->set_rules('lokasi_kejadian', 'Lokasi Kejadian', 'required|trim|html_escape');
+		$this->form_validation->set_rules('materi_pengaduan', 'Uraian Pengaduan', 'required|trim|html_escape');
 
 		if ($this->form_validation->run() === FALSE) {
-			$this->session->set_flashdata('error_pengaduan', 'Pengaduan gagal disimpan. Perhatikan semua inputan!');
+			$this->session->set_flashdata('error_pengaduan', 'Pengaduan gagal disimpan. Periksa kembali inputan Anda!');
 			redirect('#pengaduan');
 			return;
 		}
 
-		// 2. Persiapan Data & ID Pengaduan
-		$unique_id = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
+		// === 2. PERSIAPAN DATA SECURE ===
+		$unique_id      = strtoupper(substr(bin2hex(random_bytes(3)), 0, 5));
 		$formatted_date = date('Y-m-d H:i:s');
-		$file_name = null;
+		$file_name      = null;
 
-		// 3. Process Upload File (Jika ada)
+		// === 3. UPLOAD FILE SECURE (Keamanan RCE & Executable File Bypass) ===
 		if (!empty($_FILES['file_pengaduan']['name'])) {
-			$cfgUp['upload_path']   = './assets/imgupload/';
-			$cfgUp['allowed_types'] = 'jpg|jpeg|png|pdf|docx';
-			$cfgUp['max_size']      = 22000;
-			$cfgUp['file_name']     = 'PENGADUAN_' . $unique_id . '_' . time();
+			$cfgUp['upload_path']      = './assets/imgupload/';
+			$cfgUp['allowed_types']    = 'jpg|jpeg|png|pdf|docx';
+			$cfgUp['max_size']         = 2048; // Maksimal 2MB untuk keamanan server
+			$cfgUp['encrypt_name']     = TRUE; // Mengacak nama file agar tidak bisa di-predict / RCE
+			$cfgUp['detect_mime']      = TRUE; // Proteksi MIME asli bawaan CodeIgniter
+			$cfgUp['file_ext_tolower'] = TRUE;
 
 			$this->load->library('upload', $cfgUp);
 
 			if (!$this->upload->do_upload('file_pengaduan')) {
-				$this->session->set_flashdata('error_pengaduan', $this->upload->display_errors());
+				$this->session->set_flashdata('error_pengaduan', strip_tags($this->upload->display_errors()));
 				redirect('#pengaduan');
 				return;
 			}
 
-			$file_mime = mime_content_type($_FILES['file_pengaduan']['tmp_name']);
-			$allowed_mimes = [
+			// Validasi Server-Side Strict MIME Type Check
+			$upload_data  = $this->upload->data();
+			$file_mime    = mime_content_type($upload_data['full_path']);
+			$allowed_mime = [
 				'image/jpeg',
 				'image/png',
 				'application/pdf',
 				'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 			];
 
-			if (!in_array($file_mime, $allowed_mimes)) {
-				@unlink($this->upload->data('full_path'));
-				$this->session->set_flashdata('error_pengaduan', 'Tipe file tidak diperbolehkan.');
+			if (!in_array($file_mime, $allowed_mime)) {
+				@unlink($upload_data['full_path']); // Hapus file berbahaya segera
+				$this->session->set_flashdata('error_pengaduan', 'Format file ilegal / berbahaya terdeteksi.');
 				redirect('#pengaduan');
 				return;
 			}
 
-			$file_name = $this->upload->data('file_name');
+			$file_name = $upload_data['file_name'];
 		}
 
-		// 4. Simpan ke Database
+		// === 4. SIMPAN KE DATABASE (Menggunakan XSS Filtering) ===
 		$input = [
 			'no_pengaduan'     => $unique_id,
 			'nama'             => $this->input->post('nama', TRUE),
@@ -264,7 +268,7 @@ class Home extends CI_Controller
 		];
 		$this->Model_pengaduan->insert_pengaduan($input);
 
-		// 5. Template Email HTML
+		// === 5. HTML EMAIL TEMPLATE ===
 		$message = '
         <html><head><style>
           body {font-family:"Segoe UI",Arial,sans-serif;background:#f9f9f9;color:#333;line-height:1.6;}
@@ -277,41 +281,30 @@ class Home extends CI_Controller
           <div class="container">
             <div class="header">Konfirmasi Pengaduan Anda 🙏</div>
             <div class="content">
-              <p>Halo <b>' . htmlspecialchars($input['nama']) . '</b>,</p>
+              <p>Halo <b>' . htmlspecialchars($input['nama'], ENT_QUOTES, 'UTF-8') . '</b>,</p>
               <p>Terima kasih sudah menyampaikan pengaduan melalui sistem kami.<br>
               Laporan Anda berhasil disimpan dengan detail:</p>
               <ul>
                 <li><b>Nomor Pengaduan:</b> ' . $unique_id . '</li>
-                <li><b>Lokasi Kejadian:</b> ' . htmlspecialchars($input['lokasi_kejadian']) . '</li>
-                <li><b>Uraian Pengaduan:</b> ' . htmlspecialchars($input['materi_pengaduan']) . '</li>
+                <li><b>Lokasi Kejadian:</b> ' . htmlspecialchars($input['lokasi_kejadian'], ENT_QUOTES, 'UTF-8') . '</li>
+                <li><b>Uraian Pengaduan:</b> ' . htmlspecialchars($input['materi_pengaduan'], ENT_QUOTES, 'UTF-8') . '</li>
                 <li><b>Tanggal:</b> ' . date("d F Y H:i") . '</li>
               </ul>
               <p>Untuk memantau perkembangan pengaduan, silakan klik tombol di bawah ini 👇</p>
               <a href="https://dpmptsp.agamkab.go.id#pengaduan" class="btn">Tracking Pengaduan</a>
-              <p>Terima kasih sudah peduli dan melapor kepada kami 🙌</p>
+              <p>Terima kasih telah melapor kepada kami 🙌</p>
             </div>
             <div class="footer">
-              Email ini otomatis dari sistem DPMPTSP Kabupaten Agam.<br>
-              Mohon tidak membalas langsung ke email ini 😊<br><br>
+              Email ini dikirim otomatis oleh sistem DPMPTSP Kabupaten Agam.<br>
+              Mohon tidak membalas langsung ke email ini.<br><br>
               &copy; ' . date("Y") . ' DPMPTSP Kabupaten Agam
             </div>
           </div>
         </body></html>';
 
-		// 6. Pengiriman Email via Config Global Library
+		// === 6. PROSES PENGIRIMAN EMAIL ===
 		$this->load->library('email');
-		$this->email->clear(TRUE); // Reset buffer
-
-		// Opsi tambahan untuk cegah kegagalan sertifikat SSL lokal
-		$this->email->initialize([
-			'smtp_conn_options' => [
-				'ssl' => [
-					'verify_peer'       => false,
-					'verify_peer_name'  => false,
-					'allow_self_signed' => true
-				]
-			]
-		]);
+		$this->email->clear(TRUE); // Mengosongkan buffer email sebelumnya
 
 		$this->email->from('dpmptspagam@gmail.com', 'DPMPTSP Kabupaten Agam');
 		$this->email->to($input['email']);
@@ -324,7 +317,7 @@ class Home extends CI_Controller
 				"Pengaduan berhasil disimpan dengan Nomor <b>$unique_id</b>. Lakukan Tracking Pengaduan untuk mengetahui informasi lebih lanjut. Terima kasih!!"
 			);
 		} else {
-			// Catat detail kesalahan ke log CodeIgniter (Log level ERROR)
+			// Log kesalahan internal tanpa mengekspos detail error ke publik
 			log_message('error', "EMAIL FAILED: " . $this->email->print_debugger(['headers']));
 
 			$this->session->set_flashdata(
