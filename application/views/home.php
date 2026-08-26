@@ -395,10 +395,10 @@
 								<img id="img-layanan" class="img-layanan img-fluid" src="<?= base_url('assets/img/lp.jpg'); ?>" alt="Lapor.go.id" style="max-width: 100%; height: auto;">
 							</div>
 							<div>
-								<p class="mb-0 text-muted" style="font-size: 0.9rem;">Website LAPOR!</p>
+								<p class="mb-0 text-muted" style="font-size: 0.9rem;">Website SP4N-LAPOR!</p>
 								<h5 class="mb-1"><b>lapor.go.id</b></h5>
 								<a href="https://www.lapor.go.id/" target="_blank">
-									<b><i class="far fa-arrow-alt-circle-right"></i> Kirim via Lapor.go.id</b>
+									<b><i class="far fa-arrow-alt-circle-right"></i> Kirim via lapor.go.id</b>
 								</a>
 							</div>
 						</div>
