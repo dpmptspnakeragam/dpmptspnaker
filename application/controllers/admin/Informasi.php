@@ -1,5 +1,7 @@
 <?php
-class Informasi extends CI_controller
+defined('BASEPATH') or exit('No direct script access allowed');
+
+class Informasi extends CI_Controller
 {
     public function __construct()
     {
@@ -21,10 +23,10 @@ class Informasi extends CI_controller
     public function index()
     {
         $data['informasi'] = $this->Model_informasi->tampil_data();
-        $data['idmax'] = $this->Model_informasi->idmax();
-        $data['kategori'] = $this->Model_informasi->kategori();
-        $data['home'] = 'Home';
-        $data['title'] = 'Informasi';
+        $data['idmax']     = $this->Model_informasi->idmax();
+        $data['kategori']  = $this->Model_informasi->kategori();
+        $data['home']      = 'Home';
+        $data['title']     = 'Informasi';
 
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);
@@ -39,47 +41,48 @@ class Informasi extends CI_controller
 
     public function tambah()
     {
-        $id_berita = $this->input->post('id', true);
+        $id_berita    = $this->input->post('id', true);
         $judul_berita = $this->input->post('judul_berita', true);
-        $tgl_berita = $this->input->post('tgl_berita', true);
-        $isi_berita = $this->input->post('isi_berita', true);
-        $id_kategori = $this->input->post('id_kategori', true);
+        $tgl_berita   = $this->input->post('tgl_berita', true);
+        $isi_berita   = $this->input->post('isi_berita', true);
+        $id_kategori  = $this->input->post('id_kategori', true);
 
-        $gambar_final = null; // Default jika tidak upload gambar
+        $gambar_final = null;
 
-        // Cek apakah ada file gambar diupload
         if (!empty($_FILES['gambar']['name'])) {
-            $nmfile = "berita-" . time();
-            $config['upload_path'] = './assets/imgupload/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name'] = $nmfile;
+            // Gunakan FCPATH untuk path absolut direktori utama proyek
+            $upload_path = FCPATH . 'assets/imgupload/';
 
-            // Pastikan folder ada
-            if (!is_dir($config['upload_path'])) {
-                mkdir($config['upload_path'], 0777, true);
+            if (!is_dir($upload_path)) {
+                mkdir($upload_path, 0777, true);
             }
 
-            $this->load->library('upload', $config);
+            $config['upload_path']   = $upload_path;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['file_name']     = "berita-" . time();
+
+            // Memuat dan menginisialisasi library upload
+            $this->load->library('upload');
+            $this->upload->initialize($config);
 
             if ($this->upload->do_upload('gambar')) {
                 $gambar_final = $this->upload->data('file_name');
             } else {
-                // Tangani error upload
-                $error = $this->upload->display_errors();
-                $this->session->set_flashdata('error', 'Upload gambar gagal: ' . strip_tags($error));
+                $error = $this->upload->display_errors('', '');
+                $this->session->set_flashdata('error', 'Upload gambar gagal: ' . $error);
                 redirect('admin/informasi');
                 return;
             }
         }
 
         $data = [
-            'id_berita'     => $id_berita,
-            'id_kategori'   => $id_kategori,
-            'judul_berita'  => $judul_berita,
-            'rangkuman'     => $judul_berita,
-            'isi_berita'    => $isi_berita,
-            'tgl_berita'    => $tgl_berita,
-            'gambar'        => $gambar_final
+            'id_berita'    => $id_berita,
+            'id_kategori'  => $id_kategori,
+            'judul_berita' => $judul_berita,
+            'rangkuman'    => $judul_berita,
+            'isi_berita'   => $isi_berita,
+            'tgl_berita'   => $tgl_berita,
+            'gambar'       => $gambar_final
         ];
 
         $result = $this->Model_informasi->input($data);
@@ -95,49 +98,54 @@ class Informasi extends CI_controller
 
     public function edit()
     {
-        $id_berita = $this->input->post('id', true);
+        $id_berita   = $this->input->post('id', true);
         $judul_berita = $this->input->post('judul_berita', true);
-        $tgl_berita = $this->input->post('tgl_berita', true);
-        // $rangkuman = $this->input->post('rangkuman', true);
-        $isi_berita = $this->input->post('isi_berita', true);
-        $id_kategori = $this->input->post('id_kategori', true);
-        $gambar_lama = $this->input->post('old', true); // Gambar lama yang disimpan sebelumnya
+        $tgl_berita   = $this->input->post('tgl_berita', true);
+        $isi_berita   = $this->input->post('isi_berita', true);
+        $id_kategori  = $this->input->post('id_kategori', true);
+        $gambar_lama  = $this->input->post('old', true);
 
-        // Periksa apakah ada gambar baru yang diunggah
+        $gambar_baru = $gambar_lama;
+
         if (!empty($_FILES['gambar']['name'])) {
-            $nmfile = "berita-" . time();
-            $config['upload_path'] = './assets/imgupload/';
-            $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name'] = $nmfile;
+            $upload_path = FCPATH . 'assets/imgupload/';
 
-            $this->load->library('upload', $config);
+            if (!is_dir($upload_path)) {
+                mkdir($upload_path, 0777, true);
+            }
+
+            $config['upload_path']   = $upload_path;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['file_name']     = "berita-" . time();
+
+            $this->load->library('upload');
+            $this->upload->initialize($config);
+
             if ($this->upload->do_upload('gambar')) {
                 $gambar_baru = $this->upload->data('file_name');
 
-                // Hapus gambar lama jika ada gambar baru
-                if (file_exists('./assets/imgupload/' . $gambar_lama) && $gambar_lama != '') {
-                    unlink('./assets/imgupload/' . $gambar_lama);
+                // Hapus gambar lama jika ada
+                $old_file_path = $upload_path . $gambar_lama;
+                if (!empty($gambar_lama) && file_exists($old_file_path) && is_file($old_file_path)) {
+                    unlink($old_file_path);
                 }
             } else {
-                // Jika upload gagal, tetap gunakan gambar lama
-                $gambar_baru = $gambar_lama;
+                $error = $this->upload->display_errors('', '');
+                $this->session->set_flashdata('error', 'Upload gambar baru gagal: ' . $error);
+                redirect('admin/informasi');
+                return;
             }
-        } else {
-            // Jika tidak ada gambar baru, gunakan gambar lama
-            $gambar_baru = $gambar_lama;
         }
 
-        // Data yang akan diperbarui
-        $data = array(
-            'id_kategori' => $id_kategori,
+        $data = [
+            'id_kategori'  => $id_kategori,
             'judul_berita' => $judul_berita,
-            'rangkuman' => $judul_berita,
-            'isi_berita' => $isi_berita,
-            'tgl_berita' => $tgl_berita,
-            'gambar' => $gambar_baru
-        );
+            'rangkuman'    => $judul_berita,
+            'isi_berita'   => $isi_berita,
+            'tgl_berita'   => $tgl_berita,
+            'gambar'       => $gambar_baru
+        ];
 
-        // Update data ke database
         $result = $this->Model_informasi->update($data, $id_berita);
 
         if ($result) {
@@ -146,20 +154,18 @@ class Informasi extends CI_controller
             $this->session->set_flashdata('error', 'Perbarui data gagal. Silakan coba lagi.');
         }
 
-        redirect('admin/informasi', 'refresh');
+        redirect('admin/informasi');
     }
-
 
     public function hapus($id_berita)
     {
         $this->db->where('id_berita', $id_berita);
         $query = $this->db->get('berita');
-        $row = $query->row();
+        $row   = $query->row();
 
         if ($row && !empty($row->gambar)) {
-            $file_path = "./assets/imgupload/" . $row->gambar;
+            $file_path = FCPATH . 'assets/imgupload/' . $row->gambar;
 
-            // Cek apakah file benar-benar ada dan bukan direktori
             if (file_exists($file_path) && is_file($file_path)) {
                 unlink($file_path);
             }
@@ -173,6 +179,6 @@ class Informasi extends CI_controller
             $this->session->set_flashdata('error', 'Penghapusan data gagal. Silahkan coba lagi.');
         }
 
-        redirect('admin/informasi', 'refresh');
+        redirect('admin/informasi');
     }
 }
