@@ -410,7 +410,7 @@ if (!isset($detail) || $detail === null) {
             <div class="ttd-kanan">
                 <span>Lubuk Basung, <?= date('d F Y'); ?><br>Petugas DPMPTSP,</span>
                 <div class="ttd-nama">
-                    <?= !empty($detail->petugas_penerima) ? strtoupper($detail->petugas_penerima) : '(................................................)'; ?>
+                    '(................................................)'
                 </div>
             </div>
         </div>
