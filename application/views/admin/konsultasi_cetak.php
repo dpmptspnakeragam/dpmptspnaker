@@ -100,12 +100,12 @@ if (!isset($detail) || $detail === null) {
         }
 
         .kop-teks .alamat {
-            font-size: 6pt;
+            font-size: 7pt;
             margin-top: 4px;
         }
 
         .kop-teks .kontak {
-            font-size: 6pt;
+            font-size: 7pt;
         }
 
         /* GARIS TEBAL TIPIS */
