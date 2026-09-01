@@ -80,6 +80,26 @@
                         </h3>
                     </div>
                     <div class="card-body p-0">
+
+                        <!-- ================= PENAMBAHAN FOTO PEMOHON ================= -->
+                        <div class="p-3 text-center bg-light border-bottom">
+                            <?php if (!empty($detail->foto_pemohon) && file_exists(FCPATH . 'assets/konsultasi/' . $detail->foto_pemohon)): ?>
+                                <a href="<?= base_url('assets/konsultasi/' . $detail->foto_pemohon); ?>" target="_blank" title="Klik untuk memperbesar">
+                                    <img src="<?= base_url('assets/konsultasi/' . $detail->foto_pemohon); ?>"
+                                        alt="Foto Pemohon"
+                                        class="img-thumbnail rounded shadow-sm"
+                                        style="max-height: 180px; width: auto; object-fit: cover;">
+                                </a>
+                                <div class="text-muted text-xs mt-1"><i class="fas fa-search-plus mr-1"></i> Klik foto untuk memperbesar</div>
+                            <?php else: ?>
+                                <div class="d-inline-block p-3 rounded-circle bg-secondary mb-1">
+                                    <i class="fas fa-user fa-3x text-white"></i>
+                                </div>
+                                <div class="text-muted text-xs">Foto pemohon tidak melampirkan foto</div>
+                            <?php endif; ?>
+                        </div>
+                        <!-- ================= END FOTO PEMOHON ================= -->
+
                         <table class="table table-sm table-striped mb-0">
                             <tbody>
                                 <tr>
@@ -153,13 +173,12 @@
                         <div class="form-group">
                             <label class="font-weight-semibold">Bidang / Tim Terkait (Disposisi) <span class="text-danger">*</span></label>
                             <select name="bidang_tujuan" class="form-control" required>
-                                <!-- Gunakan empty() untuk mengecek NULL atau string kosong, dan tambahkan 'disabled' -->
                                 <option value="" <?= empty($detail->bidang_tujuan) ? 'selected' : ''; ?> disabled>-- Pilih Bidang / FO --</option>
-
                                 <option value="Front Office (FO)" <?= ($detail->bidang_tujuan == 'Front Office (FO)') ? 'selected' : ''; ?>>Front Office (FO)</option>
                                 <option value="Bidang Pelayanan Perizinan" <?= ($detail->bidang_tujuan == 'Bidang Pelayanan Perizinan') ? 'selected' : ''; ?>>Bidang Pelayanan Perizinan</option>
                                 <option value="Bidang Penanaman Modal" <?= ($detail->bidang_tujuan == 'Bidang Penanaman Modal') ? 'selected' : ''; ?>>Bidang Penanaman Modal</option>
                                 <option value="Tim Teknis OPD" <?= ($detail->bidang_tujuan == 'Tim Teknis OPD') ? 'selected' : ''; ?>>Tim Teknis OPD</option>
+                                <option value="Petugas Konsultasi" <?= ($detail->bidang_tujuan == 'Petugas Konsultasi') ? 'selected' : ''; ?>>Petugas Konsultasi</option>
                             </select>
                         </div>
 
@@ -172,7 +191,6 @@
                         <div class="form-group border rounded p-3" style="background-color: #fcfcfc;">
                             <label class="font-weight-semibold mb-1">Status Laporan</label>
 
-                            <!-- Penambahan Informasi Status Saat Ini -->
                             <p class="text-sm mb-2 text-muted">
                                 Status tiket saat ini:
                                 <?php if ($detail->status === 'Menunggu'): ?>

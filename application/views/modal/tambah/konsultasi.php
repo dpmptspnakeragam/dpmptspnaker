@@ -1,6 +1,6 @@
 <!-- ================= MODAL TAMBAH KONSULTASI ================= -->
 <div class="modal fade" id="ModalTambahKonsultasi" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg"> <!-- Class diringkas agar bebas scroll -->
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-maroon text-white">
                 <h5 class="modal-title font-weight-bold" id="staticBackdropLabel"><i class="fas fa-plus-circle mr-2"></i>Tambah Data Konsultasi</h5>
@@ -110,6 +110,48 @@
                     <small class="text-muted">Format: JPG/PNG/PDF. Maksimal 5MB.</small>
                 </div>
 
+                <!-- ================= TAMBAHAN FITUR FOTO PEMOHON ================= -->
+                <div class="form-group">
+                    <label class="font-weight-semibold">Foto Pemohon <span class="text-muted font-weight-normal">(Opsional)</span></label>
+
+                    <div class="border p-3 rounded bg-white">
+                        <div class="btn-group btn-group-toggle mb-3 d-flex" data-toggle="buttons">
+                            <label class="btn btn-outline-secondary active w-50" id="btn-mode-webcam">
+                                <input type="radio" name="mode_foto" value="webcam" checked> <i class="fas fa-camera mr-1"></i> Ambil Kamera
+                            </label>
+                            <label class="btn btn-outline-secondary w-50" id="btn-mode-file">
+                                <input type="radio" name="mode_foto" value="file"> <i class="fas fa-upload mr-1"></i> Upload File
+                            </label>
+                        </div>
+
+                        <!-- Area Kamera Webcam -->
+                        <div id="area-webcam" class="text-center">
+                            <div class="embed-responsive embed-responsive-4by3 bg-dark rounded mb-2 mx-auto" style="max-width: 360px;">
+                                <video id="webcam-view" autoplay playsinline class="embed-responsive-item rounded" style="transform: scaleX(-1);"></video>
+                                <canvas id="webcam-canvas" style="display:none;"></canvas>
+                            </div>
+
+                            <!-- Preview Hasil Foto Kamera -->
+                            <div id="preview-webcam-box" class="mb-2" style="display: none;">
+                                <img id="preview-webcam-img" src="" class="img-thumbnail rounded" style="max-width: 250px;">
+                            </div>
+
+                            <button type="button" class="btn btn-sm btn-maroon" id="btn-capture"><i class="fas fa-camera mr-1"></i> Ambil Foto</button>
+                            <button type="button" class="btn btn-sm btn-warning" id="btn-retake" style="display: none;"><i class="fas fa-redo mr-1"></i> Foto Ulang</button>
+
+                            <!-- Hidden Input untuk Menyimpan Base64 Data Foto -->
+                            <input type="hidden" name="foto_webcam" id="foto_webcam">
+                        </div>
+
+                        <!-- Area Upload File Foto Biasa -->
+                        <div id="area-file" style="display: none;">
+                            <input type="file" name="foto_pemohon" id="foto_pemohon" class="form-control-file border p-1 rounded bg-white" accept=".jpg,.jpeg,.png">
+                            <small class="text-muted">Format: JPG/PNG. Maksimal 2MB.</small>
+                        </div>
+                    </div>
+                </div>
+                <!-- ================= END FITUR FOTO PEMOHON ================= -->
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kembali</button>
@@ -120,3 +162,120 @@
         </div>
     </div>
 </div>
+
+<!-- SCRIPT UNTUK KONTROL KAMERA -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const video = document.getElementById('webcam-view');
+        const canvas = document.getElementById('webcam-canvas');
+        const captureBtn = document.getElementById('btn-capture');
+        const retakeBtn = document.getElementById('btn-retake');
+        const previewBox = document.getElementById('preview-webcam-box');
+        const previewImg = document.getElementById('preview-webcam-img');
+        const fotoWebcamInput = document.getElementById('foto_webcam');
+
+        const areaWebcam = document.getElementById('area-webcam');
+        const areaFile = document.getElementById('area-file');
+        const btnModeWebcam = document.getElementById('btn-mode-webcam');
+        const btnModeFile = document.getElementById('btn-mode-file');
+
+        let mediaStream = null;
+
+        // Fungsi Mulai Kamera
+        function startCamera() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: false
+                    })
+                    .then(function(stream) {
+                        mediaStream = stream;
+                        video.srcObject = stream;
+                        video.play();
+                    })
+                    .catch(function(err) {
+                        console.log("Akses kamera ditolak/tidak tersedia: ", err);
+                        alert("Kamera tidak dapat diakses atau diizinkan. Silakan gunakan opsi Upload File.");
+                    });
+            }
+        }
+
+        // Fungsi Hentikan Kamera
+        function stopCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+        }
+
+        // Toggle Mode Webcam vs File Upload
+        btnModeWebcam.addEventListener('click', function() {
+            areaWebcam.style.display = 'block';
+            areaFile.style.display = 'none';
+            document.getElementById('foto_pemohon').value = '';
+            startCamera();
+        });
+
+        btnModeFile.addEventListener('click', function() {
+            areaWebcam.style.display = 'none';
+            areaFile.style.display = 'block';
+            fotoWebcamInput.value = '';
+            stopCamera();
+        });
+
+        // Jalankan kamera saat Modal Dibuka
+        $('#ModalTambahKonsultasi').on('shown.bs.modal', function() {
+            if (btnModeWebcam.classList.contains('active')) {
+                startCamera();
+            }
+        });
+
+        // Matikan kamera saat Modal Ditutup
+        $('#ModalTambahKonsultasi').on('hidden.bs.modal', function() {
+            stopCamera();
+            resetWebcamView();
+        });
+
+        // Ambil Gambar
+        captureBtn.addEventListener('click', function() {
+            canvas.width = video.videoWidth || 640;
+            canvas.height = video.videoHeight || 480;
+            const context = canvas.getContext('2d');
+
+            // OPTIONAL: Aktifkan 2 baris di bawah ini HANYA JIKA ingin hasil foto akhir JUGA TERBALIK (Mirror)
+            // context.translate(canvas.width, 0);
+            // context.scale(-1, 1);
+
+            // Tanpa 2 baris di atas, hasil foto yang disimpan adalah TAMPILAN ASLI (Teks KTP tidak terbalik)
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Convert canvas ke Data URL Base64
+            const dataUrl = canvas.toDataURL('image/jpeg');
+            fotoWebcamInput.value = dataUrl;
+            previewImg.src = dataUrl;
+
+            // Tampilan UI setelah capture
+            video.parentElement.style.display = 'none';
+            previewBox.style.display = 'block';
+            captureBtn.style.display = 'none';
+            retakeBtn.style.display = 'inline-block';
+
+            stopCamera();
+        });
+
+        // Foto Ulang (Retake)
+        retakeBtn.addEventListener('click', function() {
+            resetWebcamView();
+            startCamera();
+        });
+
+        function resetWebcamView() {
+            fotoWebcamInput.value = '';
+            previewImg.src = '';
+            previewBox.style.display = 'none';
+            video.parentElement.style.display = 'block';
+            captureBtn.style.display = 'inline-block';
+            retakeBtn.style.display = 'none';
+        }
+    });
+</script>
