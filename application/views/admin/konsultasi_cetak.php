@@ -412,6 +412,9 @@ if (!isset($detail) || $detail === null) {
                 <div class="ttd-nama">
                     (.......................................)
                 </div>
+                <!-- <div class="ttd-nama">
+                    <?= !empty($detail->petugas_penerima) ? strtoupper($detail->petugas_penerima) : '(................................................)'; ?>
+                </div> -->
             </div>
         </div>
 
