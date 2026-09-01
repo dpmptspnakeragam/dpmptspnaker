@@ -417,6 +417,7 @@ if (!isset($detail) || $detail === null) {
 
         <!-- FOOTER CATATAN SISTEM -->
         <div class="footer-sistem">
+            <?php date_default_timezone_set('Asia/Jakarta'); ?>
             <b>Catatan:</b> Dokumen ini dicetak secara otomatis melalui Sistem Informasi Pelayanan Terpadu DPMPTSP Kabupaten Agam. Dokumen ini sah dan valid sesuai dengan data yang diinputkan ke dalam sistem pada tanggal cetak <?= date('d/m/Y H:i:s'); ?> WIB.
         </div>
 
