@@ -42,10 +42,16 @@ class Konsultasi extends CI_Controller
 
         $this->load->library('upload');
 
+        // Pastikan folder target ada, jika belum buat secara otomatis
+        $target_dir = FCPATH . 'assets/konsultasi/';
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, TRUE);
+        }
+
         // 1. PROSES UPLOAD LAMPIRAN DOKUMEN (PDF/Gambar)
         $file_lampiran = NULL;
         if (!empty($_FILES['lampiran']['name'])) {
-            $config['upload_path']   = './assets/konsultasi/';
+            $config['upload_path']   = $target_dir; // Menggunakan FCPATH
             $config['allowed_types'] = 'jpg|jpeg|png|pdf';
             $config['max_size']      = 5048; // Max 5MB
             $config['encrypt_name']  = TRUE;
@@ -73,7 +79,9 @@ class Konsultasi extends CI_Controller
                 $image_base64 = base64_decode($image_parts[1]);
 
                 $nama_file_foto = 'foto_' . date('Ymd_His') . '_' . uniqid() . '.jpg';
-                $path_simpan    = './assets/konsultasi/' . $nama_file_foto;
+
+                // PENGGUNAAN FCPATH AGAR LOKASI PASTI AKURAT:
+                $path_simpan    = $target_dir . $nama_file_foto;
 
                 if (file_put_contents($path_simpan, $image_base64)) {
                     $foto_pemohon = $nama_file_foto;
@@ -81,7 +89,7 @@ class Konsultasi extends CI_Controller
             }
         } else if (!empty($_FILES['foto_pemohon']['name'])) {
             // Option B: JIKA MENGGUNAKAN UPLOAD FILE BIASA
-            $config_foto['upload_path']   = './assets/konsultasi/';
+            $config_foto['upload_path']   = $target_dir; // Menggunakan FCPATH
             $config_foto['allowed_types'] = 'jpg|jpeg|png';
             $config_foto['max_size']      = 2048; // Max 2MB
             $config_foto['encrypt_name']  = TRUE;
