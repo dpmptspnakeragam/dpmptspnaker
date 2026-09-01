@@ -174,11 +174,12 @@
                             <label class="font-weight-semibold">Bidang / Tim Terkait (Disposisi) <span class="text-danger">*</span></label>
                             <select name="bidang_tujuan" class="form-control" required>
                                 <option value="" <?= empty($detail->bidang_tujuan) ? 'selected' : ''; ?> disabled>-- Pilih Bidang / FO --</option>
-                                <option value="Front Office (FO)" <?= ($detail->bidang_tujuan == 'Front Office (FO)') ? 'selected' : ''; ?>>Front Office (FO)</option>
-                                <option value="Bidang Pelayanan Perizinan" <?= ($detail->bidang_tujuan == 'Bidang Pelayanan Perizinan') ? 'selected' : ''; ?>>Bidang Pelayanan Perizinan</option>
-                                <option value="Bidang Penanaman Modal" <?= ($detail->bidang_tujuan == 'Bidang Penanaman Modal') ? 'selected' : ''; ?>>Bidang Penanaman Modal</option>
-                                <option value="Tim Teknis OPD" <?= ($detail->bidang_tujuan == 'Tim Teknis OPD') ? 'selected' : ''; ?>>Tim Teknis OPD</option>
-                                <option value="Petugas Konsultasi" <?= ($detail->bidang_tujuan == 'Petugas Konsultasi') ? 'selected' : ''; ?>>Petugas Konsultasi</option>
+                                <option value="Front Office (FO) 1" <?= ($detail->bidang_tujuan == 'Front Office (FO) 1') ? 'selected' : ''; ?>>Front Office (FO) 1</option>
+                                <option value="Front Office (FO) 2" <?= ($detail->bidang_tujuan == 'Front Office (FO) 2') ? 'selected' : ''; ?>>Front Office (FO) 2</option>
+                                <option value="Front Office (FO) 3" <?= ($detail->bidang_tujuan == 'Front Office (FO) 3') ? 'selected' : ''; ?>>Front Office (FO) 3</option>
+                                <option value="Front Office (FO) 4" <?= ($detail->bidang_tujuan == 'Front Office (FO) 4') ? 'selected' : ''; ?>>Front Office (FO) 4</option>
+                                <option value="Front Office (FO) 5" <?= ($detail->bidang_tujuan == 'Front Office (FO) 5') ? 'selected' : ''; ?>>Front Office (FO) 5</option>
+                                <option value="Front Office (FO) 6" <?= ($detail->bidang_tujuan == 'Front Office (FO) 6') ? 'selected' : ''; ?>>Front Office (FO) 6</option>
                             </select>
                         </div>
 
