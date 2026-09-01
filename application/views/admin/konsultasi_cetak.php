@@ -410,7 +410,7 @@ if (!isset($detail) || $detail === null) {
             <div class="ttd-kanan">
                 <span>Lubuk Basung, <?= date('d F Y'); ?><br>Petugas DPMPTSP,</span>
                 <div class="ttd-nama">
-                    '(..............................................)'
+                    (.......................................)
                 </div>
             </div>
         </div>
