@@ -171,7 +171,7 @@
                         <input type="hidden" name="id_konsultasi" value="<?= $detail->id; ?>">
 
                         <div class="form-group">
-                            <label class="font-weight-semibold">Bidang / Tim Terkait (Disposisi) <span class="text-danger">*</span></label>
+                            <label class="font-weight-semibold select2">Bidang / Tim Terkait (Disposisi) <span class="text-danger">*</span></label>
                             <select name="bidang_tujuan" class="form-control" required>
                                 <option value="" <?= empty($detail->bidang_tujuan) ? 'selected' : ''; ?> disabled>-- Pilih Bidang / FO --</option>
                                 <option value="FO 1 (Pramita Guslianti, S.H.)" <?= ($detail->bidang_tujuan == 'FO 1 (Pramita Guslianti, S.H.)') ? 'selected' : ''; ?>>FO 1 (Pramita Guslianti, S.H.)</option>
