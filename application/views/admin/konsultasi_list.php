@@ -170,7 +170,7 @@ if (strpos($current_username, 'ptsp') !== false) {
                                                 <?php elseif ($is_input): ?>
                                                     <!-- Jika user bertipe Operator Input -->
                                                     <span class="badge badge-light text-muted border" title="Operator Input hanya dapat menambahkan data">
-                                                        <i class="fas fa-eye mr-1"></i>Lihat Data
+                                                        <i class="fas fa-lock mr-1"></i> Akses Terbatas
                                                     </span>
                                                 <?php else: ?>
                                                     <!-- Jika user Proses PTSP melihat data milik BLK (atau sebaliknya) -->
