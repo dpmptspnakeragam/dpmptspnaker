@@ -180,6 +180,9 @@
                                 <option value="FO 4 (Ade Oktabara)" <?= ($detail->bidang_tujuan == 'FO 4 (Ade Oktabara)') ? 'selected' : ''; ?>>FO 4 (Ade Oktabara)</option>
                                 <option value="FO 5 (Tiwi Fitria)" <?= ($detail->bidang_tujuan == 'FO 5 (Tiwi Fitria)') ? 'selected' : ''; ?>>FO 5 (Tiwi Fitria)</option>
                                 <option value="FO 6 (Achmad Refvha Alqadrie, S.Tr.I.P.)" <?= ($detail->bidang_tujuan == 'FO 6 (Achmad Refvha Alqadrie, S.Tr.I.P.)') ? 'selected' : ''; ?>>FO 6 (Achmad Refvha Alqadrie, S.Tr.I.P.)</option>
+                                <option value="FO 7 (Erina Andika Septia, A.Md.)" <?= ($detail->bidang_tujuan == 'FO 7 (Erina Andika Septia, A.Md.)') ? 'selected' : ''; ?>>FO 7 (Erina Andika Septia, A.Md.)</option>
+                                <option value="FO 8 (Deby Sinthia Rahmi, A.Md.T.)" <?= ($detail->bidang_tujuan == 'FO 8 (Deby Sinthia Rahmi, A.Md.T.)') ? 'selected' : ''; ?>>FO 8 (Deby Sinthia Rahmi, A.Md.T.)</option>
+                                <option value="FO 9 (Tatia Safitri)" <?= ($detail->bidang_tujuan == 'FO 9 (Tatia Safitri)') ? 'selected' : ''; ?>>FO 9 (Tatia Safitri)</option>
                             </select>
                         </div>
 
