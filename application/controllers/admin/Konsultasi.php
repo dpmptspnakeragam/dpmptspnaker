@@ -62,38 +62,6 @@ class Konsultasi extends CI_Controller
      * PRIVATE HELPER: Validasi apakah User berhak memproses/mengakses backend data tersebut
      */
     private function _check_access($detail)
-    {
-        $user_type = $this->_get_user_type();
-
-        // Admin bebas akses semua data
-        if ($user_type === 'ADMIN') {
-            return true;
-        }
-
-        // 1. Cek dari field petugas_penerima (Nama / Username penginput)
-        if (!empty($detail->petugas_penerima)) {
-            $penerima = strtolower($detail->petugas_penerima);
-            if ($user_type === 'PTSP' && strpos($penerima, 'ptsp') !== false) {
-                return true;
-            }
-            if ($user_type === 'BLK' && strpos($penerima, 'blk') !== false) {
-                return true;
-            }
-        }
-
-        // 2. Fallback: Cek dari field created_by (Username penginput)
-        $created_by = strtolower($detail->created_by ?? '');
-        if (!empty($created_by)) {
-            if ($user_type === 'PTSP' && strpos($created_by, 'ptsp') !== false) {
-                return true;
-            }
-            if ($user_type === 'BLK' && strpos($created_by, 'blk') !== false) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     public function index()
     {
@@ -185,7 +153,7 @@ class Konsultasi extends CI_Controller
             }
         }
 
-        // 3. SIMPAN DATA (Ditambahkan field created_by untuk presisi filter)
+        // 3. SIMPAN DATA
         $data = [
             'tanggal_masuk'    => date('Y-m-d H:i:s'),
             'nik'              => $this->input->post('nik', TRUE),
@@ -198,9 +166,10 @@ class Konsultasi extends CI_Controller
             'uraian'           => $this->input->post('uraian', TRUE),
             'lampiran'         => $file_lampiran,
             'foto_pemohon'     => $foto_pemohon,
-            'petugas_penerima' => $this->session->userdata('nama') ?? $this->session->userdata('username'),
-            'created_by'       => $this->session->userdata('username'), // PENTING: Untuk validasi unit penginput
+            // Gunakan gabungan nama & username jika ingin pencarian unit selalu akurat:
+            'petugas_penerima' => ($this->session->userdata('nama') ?? '') . ' (' . $this->session->userdata('username') . ')',
             'status'           => 'Menunggu'
+            // 'created_by' DIHAPUS agar tidak error lagi
         ];
 
         $hasil_simpan = $this->Model_konsultasi->simpan_data($data);
