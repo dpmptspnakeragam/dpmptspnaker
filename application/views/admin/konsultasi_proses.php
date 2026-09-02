@@ -170,6 +170,18 @@
                         <!-- Hidden ID -->
                         <input type="hidden" name="id_konsultasi" value="<?= $detail->id; ?>">
 
+                        <!-- <div class="form-group">
+                            <label class="font-weight-semibold">Bidang / Tim Terkait (Disposisi) <span class="text-danger">*</span></label>
+                            <select name="bidang_tujuan" class="form-control" required>
+                                <option value="" <?= empty($detail->bidang_tujuan) ? 'selected' : ''; ?> disabled>-- Pilih Bidang / FO --</option>
+                                <option value="FO 1 (Pramita Guslianti, S.H.)" <?= ($detail->bidang_tujuan == 'FO 1 (Pramita Guslianti, S.H.)') ? 'selected' : ''; ?>>Front Office FO 1</option>
+                                <option value="FO 2 (Hizbul Hamdi Algalib, S.Kom.)" <?= ($detail->bidang_tujuan == 'FO 2 (Hizbul Hamdi Algalib, S.Kom.)') ? 'selected' : ''; ?>>Front Office FO 2</option>
+                                <option value="FO 3 (Mellysa, S.T.)" <?= ($detail->bidang_tujuan == 'FO 3 (Mellysa, S.T.)') ? 'selected' : ''; ?>>Front Office FO 3</option>
+                                <option value="FO 4 (Ade Oktabara)" <?= ($detail->bidang_tujuan == 'FO 4 (Ade Oktabara)') ? 'selected' : ''; ?>>Front Office FO 4</option>
+                                <option value="FO 5 (Tiwi Fitria)" <?= ($detail->bidang_tujuan == 'FO 5 (Tiwi Fitria)') ? 'selected' : ''; ?>>Front Office FO 5</option>
+                                <option value="FO 6 (Achmad Refvha Alqadrie, S.Tr.I.P.)" <?= ($detail->bidang_tujuan == 'FO 6 (Achmad Refvha Alqadrie, S.Tr.I.P.)') ? 'selected' : ''; ?>>Front Office FO 6</option>
+                            </select>
+                        </div> -->
                         <div class="form-group">
                             <label class="font-weight-semibold">Bidang / Tim Terkait (Disposisi) <span class="text-danger">*</span></label>
                             <select name="bidang_tujuan" class="form-control" required>
