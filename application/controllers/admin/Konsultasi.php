@@ -62,6 +62,27 @@ class Konsultasi extends CI_Controller
      * PRIVATE HELPER: Validasi apakah User berhak memproses/mengakses backend data tersebut
      */
     private function _check_access($detail)
+    {
+        $user_type = $this->_get_user_type();
+
+        // Admin bebas akses semua data
+        if ($user_type === 'ADMIN') {
+            return true;
+        }
+
+        // Cek dari field petugas_penerima
+        if (!empty($detail->petugas_penerima)) {
+            $penerima = strtolower($detail->petugas_penerima);
+            if ($user_type === 'PTSP' && strpos($penerima, 'ptsp') !== false) {
+                return true;
+            }
+            if ($user_type === 'BLK' && strpos($penerima, 'blk') !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public function index()
     {
