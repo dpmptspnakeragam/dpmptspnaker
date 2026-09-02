@@ -8,10 +8,10 @@ class Konsultasi extends CI_Controller
         parent::__construct();
 
         if ($this->session->userdata('logged_in_utama') !== TRUE) {
-            redirect('login/sipadu');
+            redirect('login');
         }
 
-        $role_user = $this->session->userdata('role');
+        $role_user   = $this->session->userdata('role');
         $divisi_user = $this->session->userdata('divisi');
 
         $is_allowed = ($role_user === 'Administrator' || ($role_user === 'User' && $divisi_user === 'Konsultasi'));
@@ -23,9 +23,84 @@ class Konsultasi extends CI_Controller
         $this->load->model('Model_konsultasi');
     }
 
+    /**
+     * PRIVATE HELPER: Mengecek tipe unit user saat ini (PTSP, BLK, atau Admin)
+     */
+    private function _get_user_type()
+    {
+        $role     = $this->session->userdata('role');
+        $username = strtolower($this->session->userdata('username') ?? '');
+
+        if ($role === 'Administrator') {
+            return 'ADMIN';
+        }
+        if (strpos($username, 'ptsp') !== false) {
+            return 'PTSP';
+        }
+        if (strpos($username, 'blk') !== false) {
+            return 'BLK';
+        }
+
+        return 'ALL';
+    }
+
+    /**
+     * PRIVATE HELPER: Mengecek apakah user bertipe PROSES atau ADMIN
+     */
+    private function _is_proses_or_admin()
+    {
+        $role     = $this->session->userdata('role');
+        $username = strtolower($this->session->userdata('username') ?? '');
+
+        $is_admin  = ($role === 'Administrator');
+        $is_proses = (strpos($username, 'proses') !== false);
+
+        return ($is_admin || $is_proses);
+    }
+
+    /**
+     * PRIVATE HELPER: Validasi apakah User berhak memproses/mengakses backend data tersebut
+     */
+    private function _check_access($detail)
+    {
+        $user_type = $this->_get_user_type();
+
+        // Admin bebas akses semua data
+        if ($user_type === 'ADMIN') {
+            return true;
+        }
+
+        // 1. Cek dari field petugas_penerima (Nama / Username penginput)
+        if (!empty($detail->petugas_penerima)) {
+            $penerima = strtolower($detail->petugas_penerima);
+            if ($user_type === 'PTSP' && strpos($penerima, 'ptsp') !== false) {
+                return true;
+            }
+            if ($user_type === 'BLK' && strpos($penerima, 'blk') !== false) {
+                return true;
+            }
+        }
+
+        // 2. Fallback: Cek dari field created_by (Username penginput)
+        $created_by = strtolower($detail->created_by ?? '');
+        if (!empty($created_by)) {
+            if ($user_type === 'PTSP' && strpos($created_by, 'ptsp') !== false) {
+                return true;
+            }
+            if ($user_type === 'BLK' && strpos($created_by, 'blk') !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function index()
     {
-        $data['title'] = 'Layanan Konsultasi';
+        $data['title']      = 'Layanan Konsultasi';
+
+        // TAMPILKAN SELURUH DATA: Agar nomor tiket & urutan antrean terlihat utuh (0001, 0002, 0003...)
+        // Pembatasan tombol Aksi (Proses/Hapus/Buka) dikontrol langsung di View & Method Aksi.
         $data['konsultasi'] = $this->Model_konsultasi->get_all_konsultasi();
 
         $this->load->view('templates/admin_header', $data, FALSE);
@@ -38,28 +113,37 @@ class Konsultasi extends CI_Controller
 
     public function tambah()
     {
-        date_default_timezone_set('Asia/Jakarta');
+        // Proteksi Backend: Hanya User Input atau Admin yang boleh mengeksekusi method simpan
+        $username = strtolower($this->session->userdata('username') ?? '');
+        $role     = $this->session->userdata('role');
+        $is_input = (strpos($username, 'input') !== false || $role === 'Administrator');
 
+        if (!$is_input) {
+            $this->session->set_flashdata('error', 'Akses ditolak! Hanya Operator Input yang dapat menambah data.');
+            redirect('admin/konsultasi');
+            return;
+        }
+
+        date_default_timezone_set('Asia/Jakarta');
         $this->load->library('upload');
 
-        // Pastikan folder target ada, jika belum buat secara otomatis
         $target_dir = FCPATH . 'assets/konsultasi/';
         if (!is_dir($target_dir)) {
             mkdir($target_dir, 0777, TRUE);
         }
 
-        // 1. PROSES UPLOAD LAMPIRAN DOKUMEN (PDF/Gambar)
+        // 1. PROSES UPLOAD LAMPIRAN
         $file_lampiran = NULL;
         if (!empty($_FILES['lampiran']['name'])) {
-            $config['upload_path']   = $target_dir; // Menggunakan FCPATH
+            $config['upload_path']   = $target_dir;
             $config['allowed_types'] = 'jpg|jpeg|png|pdf';
-            $config['max_size']      = 5048; // Max 5MB
+            $config['max_size']      = 5048;
             $config['encrypt_name']  = TRUE;
 
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('lampiran')) {
-                $uploadData = $this->upload->data();
+                $uploadData    = $this->upload->data();
                 $file_lampiran = $uploadData['file_name'];
             } else {
                 $this->session->set_flashdata('error', 'Gagal upload lampiran: ' . $this->upload->display_errors('', ''));
@@ -68,19 +152,15 @@ class Konsultasi extends CI_Controller
             }
         }
 
-        // 2. PROSES FOTO PEMOHON (WEBCAM / UPLOAD FILE)
+        // 2. PROSES FOTO PEMOHON
         $foto_pemohon = NULL;
         $foto_webcam  = $this->input->post('foto_webcam');
 
         if (!empty($foto_webcam)) {
-            // Option A: JIKA MENGGUNAKAN WEBCAM (Base64 Data String)
             $image_parts = explode(";base64,", $foto_webcam);
             if (count($image_parts) == 2) {
-                $image_base64 = base64_decode($image_parts[1]);
-
+                $image_base64   = base64_decode($image_parts[1]);
                 $nama_file_foto = 'foto_' . date('Ymd_His') . '_' . uniqid() . '.jpg';
-
-                // PENGGUNAAN FCPATH AGAR LOKASI PASTI AKURAT:
                 $path_simpan    = $target_dir . $nama_file_foto;
 
                 if (file_put_contents($path_simpan, $image_base64)) {
@@ -88,16 +168,15 @@ class Konsultasi extends CI_Controller
                 }
             }
         } else if (!empty($_FILES['foto_pemohon']['name'])) {
-            // Option B: JIKA MENGGUNAKAN UPLOAD FILE BIASA
-            $config_foto['upload_path']   = $target_dir; // Menggunakan FCPATH
+            $config_foto['upload_path']   = $target_dir;
             $config_foto['allowed_types'] = 'jpg|jpeg|png';
-            $config_foto['max_size']      = 2048; // Max 2MB
+            $config_foto['max_size']      = 2048;
             $config_foto['encrypt_name']  = TRUE;
 
             $this->upload->initialize($config_foto);
 
             if ($this->upload->do_upload('foto_pemohon')) {
-                $uploadFoto = $this->upload->data();
+                $uploadFoto   = $this->upload->data();
                 $foto_pemohon = $uploadFoto['file_name'];
             } else {
                 $this->session->set_flashdata('error', 'Gagal upload foto pemohon: ' . $this->upload->display_errors('', ''));
@@ -106,7 +185,7 @@ class Konsultasi extends CI_Controller
             }
         }
 
-        // 3. SUSUN DATA UNTUK DISIMPAN KE DATABASE
+        // 3. SIMPAN DATA (Ditambahkan field created_by untuk presisi filter)
         $data = [
             'tanggal_masuk'    => date('Y-m-d H:i:s'),
             'nik'              => $this->input->post('nik', TRUE),
@@ -119,7 +198,8 @@ class Konsultasi extends CI_Controller
             'uraian'           => $this->input->post('uraian', TRUE),
             'lampiran'         => $file_lampiran,
             'foto_pemohon'     => $foto_pemohon,
-            'petugas_penerima' => $this->session->userdata('nama'),
+            'petugas_penerima' => $this->session->userdata('nama') ?? $this->session->userdata('username'),
+            'created_by'       => $this->session->userdata('username'), // PENTING: Untuk validasi unit penginput
             'status'           => 'Menunggu'
         ];
 
@@ -136,13 +216,30 @@ class Konsultasi extends CI_Controller
 
     public function proses($id)
     {
-        $data['title'] = 'Proses Konsultasi';
-        $data['detail'] = $this->Model_konsultasi->get_konsultasi_by_id($id);
+        // PERKETAT: Hanya User PROSES & ADMIN yang boleh buka halaman proses
+        if (!$this->_is_proses_or_admin()) {
+            $this->session->set_flashdata('error', 'Akses ditolak! Operator Input tidak memiliki akses ke halaman proses.');
+            redirect('admin/konsultasi');
+            return;
+        }
 
-        if (!$data['detail']) {
+        $detail = $this->Model_konsultasi->get_konsultasi_by_id($id);
+
+        if (!$detail) {
             $this->session->set_flashdata('error', 'Data konsultasi tidak ditemukan!');
             redirect('admin/konsultasi');
+            return;
         }
+
+        // VALIDASI AKSES UNIT: Cek apakah User Proses berhak mengedit data unit ini
+        if (!$this->_check_access($detail)) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki hak akses untuk memproses data dari unit lain!');
+            redirect('admin/konsultasi');
+            return;
+        }
+
+        $data['title']  = 'Proses Konsultasi';
+        $data['detail'] = $detail;
 
         $this->load->view('templates/admin_header', $data, FALSE);
         $this->load->view('templates/admin_navbar', $data, FALSE);
@@ -153,16 +250,31 @@ class Konsultasi extends CI_Controller
 
     public function simpan_proses()
     {
+        // PERKETAT: Hanya User PROSES & ADMIN
+        if (!$this->_is_proses_or_admin()) {
+            $this->session->set_flashdata('error', 'Akses ditolak! Anda tidak memiliki akses untuk memproses.');
+            redirect('admin/konsultasi');
+            return;
+        }
+
         date_default_timezone_set('Asia/Jakarta');
 
-        $id = $this->input->post('id_konsultasi', TRUE);
+        $id          = $this->input->post('id_konsultasi', TRUE);
         $status_baru = $this->input->post('status', TRUE);
 
+        $detail = $this->Model_konsultasi->get_konsultasi_by_id($id);
+
+        // VALIDASI AKSES
+        if (!$detail || !$this->_check_access($detail)) {
+            $this->session->set_flashdata('error', 'Akses ditolak! Anda tidak berhak memproses data ini.');
+            redirect('admin/konsultasi');
+            return;
+        }
+
         $data = [
-            'bidang_tujuan'    => $this->input->post('bidang_tujuan', TRUE),
-            'tindak_lanjut'    => $this->input->post('tindak_lanjut', TRUE),
-            'status'           => $status_baru,
-            'petugas_penerima' => $this->session->userdata('nama')
+            'bidang_tujuan' => $this->input->post('bidang_tujuan', TRUE),
+            'tindak_lanjut' => $this->input->post('tindak_lanjut', TRUE),
+            'status'        => $status_baru,
         ];
 
         if (in_array($status_baru, ['Selesai', 'Ditolak'])) {
@@ -174,40 +286,53 @@ class Konsultasi extends CI_Controller
         redirect('admin/konsultasi/proses/' . $id);
     }
 
-    // E. Menghapus Data Konsultasi (Lengkap dengan Unlink Foto & Lampiran)
     public function hapus($id)
     {
-        $detail = $this->Model_konsultasi->get_konsultasi_by_id($id);
-        if ($detail) {
-            // 1. Hapus berkas lampiran jika ada
-            if (!empty($detail->lampiran) && file_exists('./assets/konsultasi/' . $detail->lampiran)) {
-                unlink('./assets/konsultasi/' . $detail->lampiran);
-            }
-
-            // 2. Hapus berkas foto pemohon jika ada
-            if (!empty($detail->foto_pemohon) && file_exists('./assets/konsultasi/' . $detail->foto_pemohon)) {
-                unlink('./assets/konsultasi/' . $detail->foto_pemohon);
-            }
-
-            // 3. Hapus record dari database
-            $this->Model_konsultasi->delete_konsultasi($id);
-            $this->session->set_flashdata('success', 'Data konsultasi beserta file berkas berhasil dihapus!');
-        } else {
-            $this->session->set_flashdata('error', 'Data tidak ditemukan!');
+        // PERKETAT: Hanya User PROSES & ADMIN
+        if (!$this->_is_proses_or_admin()) {
+            $this->session->set_flashdata('error', 'Akses ditolak! Operator Input tidak diperbolehkan menghapus data.');
+            redirect('admin/konsultasi');
+            return;
         }
+
+        $detail = $this->Model_konsultasi->get_konsultasi_by_id($id);
+
+        // VALIDASI AKSES UNIT
+        if (!$detail || !$this->_check_access($detail)) {
+            $this->session->set_flashdata('error', 'Akses ditolak! Anda tidak berhak menghapus data ini.');
+            redirect('admin/konsultasi');
+            return;
+        }
+
+        // 1. Hapus berkas lampiran
+        if (!empty($detail->lampiran) && file_exists('./assets/konsultasi/' . $detail->lampiran)) {
+            unlink('./assets/konsultasi/' . $detail->lampiran);
+        }
+
+        // 2. Hapus berkas foto
+        if (!empty($detail->foto_pemohon) && file_exists('./assets/konsultasi/' . $detail->foto_pemohon)) {
+            unlink('./assets/konsultasi/' . $detail->foto_pemohon);
+        }
+
+        // 3. Hapus data
+        $this->Model_konsultasi->delete_konsultasi($id);
+        $this->session->set_flashdata('success', 'Data konsultasi berhasil dihapus!');
 
         redirect('admin/konsultasi');
     }
 
     public function cetak($id)
     {
-        $data['title'] = 'Cetak Bukti Konsultasi';
-        $data['detail'] = $this->Model_konsultasi->get_konsultasi_by_id($id);
+        $detail = $this->Model_konsultasi->get_konsultasi_by_id($id);
 
-        if (!$data['detail']) {
-            $this->session->set_flashdata('error', 'Data tidak ditemukan!');
+        if (!$detail || !$this->_check_access($detail)) {
+            $this->session->set_flashdata('error', 'Data tidak ditemukan atau Anda tidak memiliki hak akses!');
             redirect('admin/konsultasi');
+            return;
         }
+
+        $data['title']  = 'Cetak Bukti Konsultasi';
+        $data['detail'] = $detail;
 
         $this->load->view('admin/konsultasi_cetak', $data);
     }
