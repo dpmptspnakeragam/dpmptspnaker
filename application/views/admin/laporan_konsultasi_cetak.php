@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
-        /* PENGATURAN DASAR CETAK */
+        /* 1. ATUR MARGIN KERTAS FISIK SAAT DICETAK */
         @page {
             size: A4 landscape;
-            /* Diset Landscape agar tabel rekap luas dan rapi */
-            margin: 0;
+            /* Margin atas-bawah 15mm memberi jarak aman agar tidak menempel ke tepi kertas */
+            margin: 15mm 15mm 15mm 15mm;
         }
 
         body {
@@ -27,7 +27,7 @@
             color: #000;
         }
 
-        /* EFEK KERTAS DI LAYAR KOMPUTER */
+        /* TAMPILAN KERTAS DI LAYAR MONITOR */
         .sheet {
             background: white;
             width: 297mm;
@@ -120,7 +120,7 @@
             margin-top: 2px;
         }
 
-        /* TABEL REKAPITULASI */
+        /* TABEL REKAPITULASI & CEGAH TERPOTONG */
         .tabel-laporan {
             width: 100%;
             border-collapse: collapse;
@@ -143,6 +143,21 @@
             text-transform: uppercase;
         }
 
+        /* Mencegah 1 baris terbelah horizontal di antara 2 halaman */
+        .tabel-laporan tr {
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+        }
+
+        /* Header tabel muncul kembali otomatis di halaman kedua dst */
+        .tabel-laporan thead {
+            display: table-header-group;
+        }
+
+        .tabel-laporan tbody {
+            display: table-row-group;
+        }
+
         .text-center {
             text-align: center;
         }
@@ -160,7 +175,8 @@
             width: 100%;
             margin-top: 20px;
             display: table;
-            page-break-inside: avoid;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
         }
 
         .ttd-kiri,
@@ -187,6 +203,8 @@
             color: #555;
             text-align: justify;
             font-style: italic;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
         }
 
         /* TOMBOL (HANYA DI LAYAR) */
@@ -228,17 +246,19 @@
             background: #c82333;
         }
 
-        /* PENGATURAN CETAK (PRINT) */
+        /* PENGATURAN SPESIFIK CETAK (PRINT) */
         @media print {
             body {
                 background: transparent;
             }
 
+            /* Hapus batasan tinggi, margin, dan padding sheet agar mengikuti aturan @page */
             .sheet {
-                width: 100%;
-                margin: 0;
-                box-shadow: none;
-                padding: 10mm 15mm;
+                width: 100% !important;
+                min-height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
             }
 
             .layar-kontrol {
