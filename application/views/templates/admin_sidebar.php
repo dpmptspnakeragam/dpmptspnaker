@@ -345,11 +345,17 @@ $action = isset($action) ? $action : '';
 
 				<!-- ================= MENU KONSULTASI (Hanya Administrator & Divisi Konsultasi) ================= -->
 				<?php
-				$role = $this->session->userdata('role');
-				$divisi = $this->session->userdata('divisi');
+				$role     = $this->session->userdata('role');
+				$divisi   = $this->session->userdata('divisi');
+				$username = strtolower($this->session->userdata('username') ?? '');
+
+				// Deteksi Role Khusus: Admin dan User Proses
+				$is_admin  = ($role === 'Administrator');
+				$is_proses = (strpos($username, 'proses') !== false); // ID 7 (proses ptsp) & ID 9 (proses blk)
 
 				if ($role === 'Administrator' || $divisi === 'Konsultasi'):
-					$is_kons_open = in_array($this->uri->segment(2), ['konsultasi', 'standar_pelayanan', 'sop']);
+					// Tambahkan 'laporan_konsultasi' ke array segmen URL agar menu tetap kebuka saat di halaman laporan
+					$is_kons_open = in_array($this->uri->segment(2), ['konsultasi', 'laporan_konsultasi', 'standar_pelayanan', 'sop']);
 				?>
 					<li class="nav-item <?= $is_kons_open ? 'menu-open' : ''; ?>">
 						<a href="#" class="nav-link <?= $is_kons_open ? 'active' : ''; ?>">
@@ -360,12 +366,23 @@ $action = isset($action) ? $action : '';
 							</p>
 						</a>
 						<ul class="nav nav-treeview">
+							<!-- SUBMENU 1: Data Konsultasi (Dapat dilihat oleh SEMUA: Input, Proses, Admin) -->
 							<li class="nav-item">
 								<a href="<?= base_url('admin/konsultasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'konsultasi' ? 'active' : ''; ?>">
 									<i class="<?= $this->uri->segment(2) == 'konsultasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'konsultasi' ? 'text-maroon' : ''; ?>"></i>
 									<p>Data Konsultasi</p>
 								</a>
 							</li>
+
+							<!-- SUBMENU 2: Laporan Konsultasi (HANYA UNTUK USER PROSES & ADMINISTRATOR) -->
+							<?php if ($is_proses || $is_admin): ?>
+								<li class="nav-item">
+									<a href="<?= base_url('admin/laporan_konsultasi'); ?>" class="nav-link <?= $this->uri->segment(2) == 'laporan_konsultasi' ? 'active' : ''; ?>">
+										<i class="<?= $this->uri->segment(2) == 'laporan_konsultasi' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'laporan_konsultasi' ? 'text-maroon' : ''; ?>"></i>
+										<p>Laporan Konsultasi</p>
+									</a>
+								</li>
+							<?php endif; ?>
 						</ul>
 					</li>
 				<?php endif; ?>
