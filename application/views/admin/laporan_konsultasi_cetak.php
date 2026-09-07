@@ -376,7 +376,7 @@
         <!-- FOOTER CATATAN SISTEM -->
         <div class="footer-sistem">
             <?php date_default_timezone_set('Asia/Jakarta'); ?>
-            <b>Catatan:</b> Laporan ini dicetak secara otomatis melalui Sistem Informasi Pelayanan Terpadu DPMPTSP Kabupaten Agam pada tanggal <?= date('d/m/Y H:i:s'); ?> WIB. Dokumen ini merupakan rekapitulasi data resmi yang tersimpan di dalam sistem.
+            <b>Catatan:</b> Laporan ini dicetak secara otomatis melalui Sistem Konsultasi Perizinan dan Pengaduan (SIZIDAN) DPMPTSP Kabupaten Agam pada tanggal <?= date('d/m/Y H:i:s'); ?> WIB. Dokumen ini merupakan rekapitulasi data resmi yang tersimpan di dalam sistem.
         </div>
 
     </div>
