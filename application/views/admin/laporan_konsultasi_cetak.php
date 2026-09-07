@@ -366,7 +366,9 @@
             <div class="ttd-kanan">
                 <span>Lubuk Basung, <?= date('d F Y'); ?><br>Petugas Penanggung Jawab,</span>
                 <div class="ttd-nama">
-                    <?= strtoupper($this->session->userdata('nama') ?? $this->session->userdata('username')); ?>
+                    <!-- <?= strtoupper($this->session->userdata('nama') ?? $this->session->userdata('username')); ?> -->
+                    <br>
+                    ___________________________________
                 </div>
             </div>
         </div>
