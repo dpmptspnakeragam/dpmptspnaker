@@ -298,8 +298,8 @@ $action = isset($action) ? $action : '';
 					</li>
 
 					<!-- Survei -->
-					<li class="nav-item <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'menu-open' : ''; ?>">
-						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm']) ? 'active' : ''; ?>">
+					<li class="nav-item <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm', 'dataskmpanrb']) ? 'menu-open' : ''; ?>">
+						<a href="" class="nav-link <?= in_array($this->uri->segment(2), ['qr_survei', 'skm', 'spkp_antikorupsi', 'dataikm', 'dataskmpanrb']) ? 'active' : ''; ?>">
 							<i class="nav-icon fas fa-poll"></i>
 							<p>
 								Survei
@@ -329,6 +329,12 @@ $action = isset($action) ? $action : '';
 								<a href="<?= base_url('admin/dataikm'); ?>" class="nav-link <?= $this->uri->segment(2) == 'dataikm' ? 'active' : ''; ?>">
 									<i class="<?= $this->uri->segment(2) == 'dataikm' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'dataikm' ? 'text-maroon' : ''; ?>"></i>
 									<p>Data IKM Tahunan</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="<?= base_url('admin/dataskmpanrb'); ?>" class="nav-link <?= $this->uri->segment(2) == 'dataskmpanrb' ? 'active' : ''; ?>">
+									<i class="<?= $this->uri->segment(2) == 'dataskmpanrb' ? 'fas' : 'far'; ?> fa-circle nav-icon <?= $this->uri->segment(2) == 'dataskmpanrb' ? 'text-maroon' : ''; ?>"></i>
+									<p>Data SKM Panrb</p>
 								</a>
 							</li>
 						</ul>
