@@ -46,7 +46,7 @@
                 <h3 class="card-title"><i class="fas fa-filter"></i> Filter Periode SKM</h3>
             </div>
             <div class="card-body">
-                <form method="GET" action="<?= base_url('admin/dataskmpanrb'); ?>" class="form-inline">
+                <form method="GET" action="<?= base_url('admin/data_skm_panrb'); ?>" class="form-inline">
                     <div class="form-group mr-2">
                         <label for="startDate" class="mr-2">Mulai:</label>
                         <input type="text" name="startDate" id="startDate" class="form-control" value="<?= $startDate; ?>" placeholder="DD-MM-YYYY" required>
@@ -58,7 +58,7 @@
                     <button type="submit" class="btn btn-primary mr-2">
                         <i class="fas fa-search"></i> Tampilkan
                     </button>
-                    <a href="<?= base_url('admin/dataskmpanrb'); ?>" class="btn btn-default" title="Kembali ke Default Semester Otomatis">
+                    <a href="<?= base_url('admin/data_skm_panrb'); ?>" class="btn btn-default" title="Kembali ke Default Semester Otomatis">
                         <i class="fas fa-sync-alt"></i> Semester Aktif
                     </a>
                 </form>
