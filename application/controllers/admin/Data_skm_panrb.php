@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class DataSKMPanrb extends CI_Controller
+class Data_skm_panrb extends CI_Controller
 {
     public function __construct()
     {
