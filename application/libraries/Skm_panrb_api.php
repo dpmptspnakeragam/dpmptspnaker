@@ -14,9 +14,6 @@ class Skm_panrb_api
         $this->base_url  = 'https://skm.go.id/api/v3';
     }
 
-    /**
-     * Helper utama cURL untuk seluruh request
-     */
     private function request($endpoint, $method = 'GET', $data = [])
     {
         $url = $this->base_url . '/' . ltrim($endpoint, '/');
@@ -30,158 +27,62 @@ class Skm_panrb_api
         $options = [
             CURLOPT_URL            => $url,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_TIMEOUT        => 30,
             CURLOPT_HTTPHEADER     => [
                 'Authorization: ' . $this->api_token,
                 'Accept: application/json',
-                'Content-Type: application/json',
-                'User-Agent: Mozilla/5.0'
+                'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
             ],
-            CURLOPT_TIMEOUT        => 15,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => 0
         ];
 
         if ($method === 'POST') {
             $options[CURLOPT_POST]       = true;
             $options[CURLOPT_POSTFIELDS] = json_encode($data);
+            $options[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
         }
 
         curl_setopt_array($ch, $options);
 
         $response  = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_err  = curl_error($ch);
         curl_close($ch);
 
-        $result = json_decode($response, true);
+        if ($curl_err) {
+            return ['code' => 500, 'message' => 'cURL Error: ' . $curl_err, 'data' => []];
+        }
 
-        // Fallback otomatis jika cURL offline/maintenance
-        if ($http_code != 200 || json_last_error() !== JSON_ERROR_NONE || !isset($result['code']) || $result['code'] != 200) {
-            return $this->get_mock_fallback($endpoint, $data);
+        $result = json_decode(trim($response), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'code'    => $http_code,
+                'message' => 'Response bukan JSON valid',
+                'raw'     => $response,
+                'data'    => []
+            ];
         }
 
         return $result;
     }
 
-    // 1. Method getListSurvei
-    public function get_list_survey($startDate, $endDate)
+    public function get_list_survey($startDate = '', $endDate = '')
     {
-        return $this->request('get-list-survey', 'GET', [
-            'startDate' => $startDate,
-            'endDate'   => $endDate
-        ]);
+        $params = [];
+        if (!empty($startDate)) $params['startDate'] = $startDate; // Format: DD-MM-YYYY
+        if (!empty($endDate))   $params['endDate']   = $endDate;   // Format: DD-MM-YYYY
+
+        return $this->request('get-list-survey', 'GET', $params);
     }
 
-    // 2. Method getDetailSurvei
-    public function get_detail_survey($survey_id)
+    public function get_nilai_hasil_survey($startDate = '', $endDate = '')
     {
-        return $this->request('get-detail-survey', 'GET', [
-            'survey_id' => $survey_id
-        ]);
-    }
+        $params = [];
+        if (!empty($startDate)) $params['startDate'] = $startDate;
+        if (!empty($endDate))   $params['endDate']   = $endDate;
 
-    // 3. Method postJawabanSurvei
-    public function post_jawaban_survey($data_jawaban)
-    {
-        return $this->request('post-jawaban-survey', 'POST', $data_jawaban);
-    }
-
-    // 4. Method getNilaiHasilSurvei
-    public function get_nilai_hasil_survey($startDate, $endDate)
-    {
-        return $this->request('get-nilai-hasil-survey', 'GET', [
-            'startDate' => $startDate,
-            'endDate'   => $endDate
-        ]);
-    }
-
-    // 5. Method getJawabanHasilSurvei
-    public function get_jawaban_hasil_survey($startDate, $endDate, $survey_id = null)
-    {
-        $params = [
-            'startDate' => $startDate,
-            'endDate'   => $endDate
-        ];
-        if ($survey_id) {
-            $params['survey_id'] = $survey_id;
-        }
-
-        return $this->request('get-jawaban-hasil-survey', 'GET', $params);
-    }
-
-    /**
-     * Mockup Fallback Data Riil DPMPTSP Agam (371 Responden Level 1)
-     */
-    private function get_mock_fallback($endpoint, $params)
-    {
-        switch ($endpoint) {
-            case 'get-detail-survey':
-                return [
-                    "code" => 200,
-                    "message" => "Data Detail Unsur SKM DPMPTSP Agam",
-                    "data" => [
-                        "survey_id" => $params['survey_id'] ?? "SKM-AGAM-L1",
-                        "nama_survey" => "Survei Kepuasan Masyarakat DPMPTSP Agam",
-                        "unsur_penilaian" => [
-                            "U1" => "Persyaratan Pelayanan",
-                            "U2" => "Sistem, Mekanisme, dan Prosedur",
-                            "U3" => "Waktu Penyelesaian",
-                            "U4" => "Biaya/Tarif",
-                            "U5" => "Produk Spesifikasi Jenis Pelayanan",
-                            "U6" => "Kompetensi Pelaksana",
-                            "U7" => "Perilaku Pelaksana",
-                            "U8" => "Penanganan Pengaduan",
-                            "U9" => "Sarana dan Prasarana"
-                        ]
-                    ]
-                ];
-
-            case 'get-nilai-hasil-survey':
-                return [
-                    "code" => 200,
-                    "message" => "Nilai Hasil SKM DPMPTSP Agam",
-                    "data" => [
-                        "total_responden" => 371,
-                        "ikm_skala_4"     => 3.54,
-                        "ikm_skala_100"   => 88.50,
-                        "mutu_pelayanan"  => "A",
-                        "kinerja"         => "Sangat Baik"
-                    ]
-                ];
-
-            case 'get-jawaban-hasil-survey':
-                return [
-                    "code" => 200,
-                    "message" => "Raw Data Jawaban Responden",
-                    "data" => [
-                        [
-                            "id_responden" => 1,
-                            "tanggal"      => date('Y-m-d H:i:s'),
-                            "jenis_kelamin" => "L",
-                            "pendidikan"   => "S1",
-                            "pekerjaan"    => "Wiraswasta",
-                            "layanan"      => "Perizinan Berusaha (NIB)",
-                            "nilai_unsur"  => ["U1" => 4, "U2" => 4, "U3" => 3, "U4" => 4, "U5" => 4, "U6" => 4, "U7" => 4, "U8" => 4, "U9" => 4]
-                        ]
-                    ]
-                ];
-
-            default: // get-list-survey
-                return [
-                    "code" => 200,
-                    "message" => "Daftar Survei DPMPTSP Agam (Level 1)",
-                    "data" => [
-                        [
-                            "id"              => 1,
-                            "survey_id"       => "SKM-AGAM-L1",
-                            "nama_survey"     => "Survei Kepuasan Masyarakat DPMPTSP Kab. Agam",
-                            "tanggal_mulai"   => date('Y-m-d', strtotime($params['startDate'] ?? date('01-m-Y'))),
-                            "tanggal_selesai" => date('Y-m-d', strtotime($params['endDate'] ?? date('t-m-Y'))),
-                            "total_responden" => 371,
-                            "rata_rata_nilai" => 88.50,
-                            "status"          => "completed"
-                        ]
-                    ]
-                ];
-        }
+        return $this->request('get-nilai-hasil-survey', 'GET', $params);
     }
 }
