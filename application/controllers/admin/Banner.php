@@ -39,58 +39,45 @@ class Banner extends CI_controller
         $id_banner = $this->input->post('id', true);
         $teks      = $this->input->post('teks', true);
 
-        $gambar = null;
+        $gambar = "";
 
         // =========================
-        // UPLOAD GAMBAR
+        // CEK UPLOAD GAMBAR
         // =========================
         if (!empty($_FILES['gambar']['name'])) {
 
-            // Path folder upload
-            $upload_path = FCPATH . 'assets/imgupload/';
+            $nmfile = "banner-" . time();
 
-            // Pastikan folder upload tersedia
-            if (!is_dir($upload_path)) {
-                $this->session->set_flashdata(
-                    'error',
-                    'Folder upload tidak ditemukan: ' . $upload_path
-                );
-
-                redirect('admin/banner', 'refresh');
-            }
-
-            // Pastikan folder bisa ditulis
-            if (!is_writable($upload_path)) {
-                $this->session->set_flashdata(
-                    'error',
-                    'Folder upload tidak memiliki izin untuk ditulis.'
-                );
-
-                redirect('admin/banner', 'refresh');
-            }
-
-            // Konfigurasi upload
-            $config['upload_path']   = $upload_path;
+            $config['upload_path']   = FCPATH . 'assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name']     = 'banner-' . time();
+            $config['file_name']     = $nmfile;
             $config['overwrite']     = false;
 
-            $this->load->library('upload', $config);
+            // =========================
+            // LOAD / INITIALIZE UPLOAD
+            // =========================
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
-            // Proses upload
+            // =========================
+            // PROSES UPLOAD
+            // =========================
             if ($this->upload->do_upload('gambar')) {
 
-                $upload_data = $this->upload->data();
-                $gambar      = $upload_data['file_name'];
+                $gambar = $this->upload->data('file_name');
             } else {
 
                 $this->session->set_flashdata(
                     'error',
                     'Upload foto gagal: ' .
-                        strip_tags($this->upload->display_errors())
+                        $this->upload->display_errors('', '')
                 );
 
                 redirect('admin/banner', 'refresh');
+                return;
             }
         }
 
@@ -104,7 +91,7 @@ class Banner extends CI_controller
         );
 
         // =========================
-        // SIMPAN DATA
+        // SIMPAN DATABASE
         // =========================
         $result = $this->Model_banner->input($data);
 
@@ -116,8 +103,8 @@ class Banner extends CI_controller
             );
         } else {
 
-            // Jika database gagal tetapi gambar sudah terupload,
-            // hapus gambar agar tidak menjadi file sampah.
+            // Jika database gagal, hapus file yang
+            // sudah berhasil diupload
             if (!empty($gambar)) {
 
                 $file_gambar = FCPATH . 'assets/imgupload/' . $gambar;
@@ -129,13 +116,12 @@ class Banner extends CI_controller
 
             $this->session->set_flashdata(
                 'error',
-                'Penyimpanan data gagal. Silakan coba lagi.'
+                'Penyimpanan data gagal. Silahkan coba lagi.'
             );
         }
 
         redirect('admin/banner', 'refresh');
     }
-
 
     public function edit()
     {
@@ -146,42 +132,25 @@ class Banner extends CI_controller
         $gambar = $gambar_lama;
 
         // =========================
-        // CEK APAKAH ADA GAMBAR BARU
+        // CEK GAMBAR BARU
         // =========================
         if (!empty($_FILES['gambar']['name'])) {
 
-            // Path folder upload
-            $upload_path = FCPATH . 'assets/imgupload/';
+            $nmfile = "banner-" . time();
 
-            // Pastikan folder upload tersedia
-            if (!is_dir($upload_path)) {
-
-                $this->session->set_flashdata(
-                    'error',
-                    'Folder upload tidak ditemukan: ' . $upload_path
-                );
-
-                redirect('admin/banner', 'refresh');
-            }
-
-            // Pastikan folder bisa ditulis
-            if (!is_writable($upload_path)) {
-
-                $this->session->set_flashdata(
-                    'error',
-                    'Folder upload tidak memiliki izin untuk ditulis.'
-                );
-
-                redirect('admin/banner', 'refresh');
-            }
-
-            // Konfigurasi upload
-            $config['upload_path']   = $upload_path;
+            $config['upload_path']   = FCPATH . 'assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name']     = 'banner-' . time();
+            $config['file_name']     = $nmfile;
             $config['overwrite']     = false;
 
-            $this->load->library('upload', $config);
+            // =========================
+            // LOAD / INITIALIZE UPLOAD
+            // =========================
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             // =========================
             // UPLOAD GAMBAR BARU
@@ -189,14 +158,15 @@ class Banner extends CI_controller
             if ($this->upload->do_upload('gambar')) {
 
                 $upload_data = $this->upload->data();
-                $gambar      = $upload_data['file_name'];
+
+                $gambar = $upload_data['file_name'];
 
                 // =========================
                 // HAPUS GAMBAR LAMA
                 // =========================
                 if (!empty($gambar_lama)) {
 
-                    $file_lama = $upload_path . $gambar_lama;
+                    $file_lama = FCPATH . 'assets/imgupload/' . $gambar_lama;
 
                     if (file_exists($file_lama)) {
                         unlink($file_lama);
@@ -207,15 +177,16 @@ class Banner extends CI_controller
                 $this->session->set_flashdata(
                     'error',
                     'Upload foto gagal: ' .
-                        strip_tags($this->upload->display_errors())
+                        $this->upload->display_errors('', '')
                 );
 
                 redirect('admin/banner', 'refresh');
+                return;
             }
         }
 
         // =========================
-        // DATA YANG AKAN DIUPDATE
+        // DATA UPDATE
         // =========================
         $data = array(
             'id_banner' => $id_banner,
@@ -236,31 +207,19 @@ class Banner extends CI_controller
             );
         } else {
 
-            // Kalau database gagal dan ada gambar baru,
-            // hapus gambar baru supaya tidak jadi sampah.
-            if (!empty($_FILES['gambar']['name']) && !empty($gambar)) {
-
-                $file_baru = $upload_path . $gambar;
-
-                if (file_exists($file_baru)) {
-                    unlink($file_baru);
-                }
-            }
+            $this->session->set_flashdata(
+                'error',
+                'Perbarui data gagal. Silahkan coba lagi.'
+            );
 
             log_message(
                 'error',
-                'Gagal memperbarui banner: ' . json_encode($data)
-            );
-
-            $this->session->set_flashdata(
-                'error',
-                'Perbarui data gagal. Silakan coba lagi.'
+                'Gagal update banner: ' . json_encode($data)
             );
         }
 
         redirect('admin/banner', 'refresh');
     }
-
 
     public function hapus($id_banner)
     {
@@ -272,33 +231,45 @@ class Banner extends CI_controller
         $row   = $query->row();
 
         // =========================
-        // HAPUS FILE GAMBAR
+        // CEK DATA
         // =========================
-        if ($row && !empty($row->gambar)) {
+        if ($row) {
 
-            $file_gambar = FCPATH . 'assets/imgupload/' . $row->gambar;
+            // =========================
+            // HAPUS FILE GAMBAR
+            // =========================
+            if (!empty($row->gambar)) {
 
-            if (file_exists($file_gambar)) {
-                unlink($file_gambar);
+                $file_gambar = FCPATH . 'assets/imgupload/' . $row->gambar;
+
+                if (file_exists($file_gambar)) {
+                    unlink($file_gambar);
+                }
             }
-        }
 
-        // =========================
-        // HAPUS DATA DATABASE
-        // =========================
-        $result = $this->Model_banner->delete($id_banner);
+            // =========================
+            // HAPUS DATA DATABASE
+            // =========================
+            $result = $this->Model_banner->delete($id_banner);
 
-        if ($result) {
+            if ($result) {
 
-            $this->session->set_flashdata(
-                'success',
-                'Data Banner berhasil dihapus.'
-            );
+                $this->session->set_flashdata(
+                    'success',
+                    'Data Banner berhasil dihapus.'
+                );
+            } else {
+
+                $this->session->set_flashdata(
+                    'error',
+                    'Penghapusan data gagal. Silahkan coba lagi.'
+                );
+            }
         } else {
 
             $this->session->set_flashdata(
                 'error',
-                'Penghapusan data gagal. Silakan coba lagi.'
+                'Data Banner tidak ditemukan.'
             );
         }
 
