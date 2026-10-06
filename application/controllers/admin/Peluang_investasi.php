@@ -44,11 +44,15 @@ class Peluang_investasi extends CI_controller
 
         if (!empty($gambar)) {
             $nmfile = "peluang-investasi-" . time();
-            $config['upload_path']   = './assets/imgupload/';
+            $config['upload_path']   = FCPATH . './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name']     = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('gambar')) {
                 $file_name = $this->upload->data('file_name');
@@ -88,16 +92,20 @@ class Peluang_investasi extends CI_controller
         // Proses penggantian gambar jika ada file baru
         if (!empty($_FILES['gambar']['name'])) {
             $nmfile = "peluang-investasi-" . time();
-            $config['upload_path'] = './assets/imgupload/';
+            $config['upload_path'] = FCPATH . './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('gambar')) {
                 // Hapus gambar lama jika ada
-                if (!empty($old_gambar) && file_exists('./assets/imgupload/' . $old_gambar)) {
-                    unlink('./assets/imgupload/' . $old_gambar);
+                if (!empty($old_gambar) && file_exists(FCPATH . './assets/imgupload/' . $old_gambar)) {
+                    unlink(FCPATH . './assets/imgupload/' . $old_gambar);
                 }
 
                 // Gunakan nama file gambar baru
@@ -133,7 +141,7 @@ class Peluang_investasi extends CI_controller
         $query = $this->db->get('peluang_investasi');
         $row = $query->row();
 
-        unlink("./assets/imgupload/$row->gambar");
+        unlink(FCPATH . "./assets/imgupload/$row->gambar");
 
         $result = $this->Model_peluang_investasi->delete($id_investasi);
 
