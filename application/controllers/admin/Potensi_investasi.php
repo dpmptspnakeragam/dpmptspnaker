@@ -36,28 +36,38 @@ class Potensi_investasi extends CI_controller
 
     public function tambah()
     {
-        $id_investasi = $this->input->post('id', true);
+        $id_investasi   = $this->input->post('id', true);
         $nama_investasi = $this->input->post('nama_investasi', true);
-        $gambar = $_FILES['gambar']['name'];
-        $deskripsi = $this->input->post('deskripsi', true);
+        $deskripsi      = $this->input->post('deskripsi', true);
+        $gambar         = $_FILES['gambar']['name'];
+        $file_name      = null;
 
-        if ($gambar = '') {
-        } else {
+        if (!empty($gambar)) {
             $nmfile = "potensi-investasi-" . time();
-            $config['upload_path'] = './assets/imgupload/';
+            $config['upload_path']   = FCPATH . './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['file_name'] = $nmfile;
+            $config['file_name']     = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
+
             if ($this->upload->do_upload('gambar')) {
-                $gambar = $this->upload->data('file_name');
+                $file_name = $this->upload->data('file_name');
+            } else {
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('admin/potensi_investasi', 'refresh');
+                return;
             }
         }
+
         $data = array(
-            'id_investasi' => $id_investasi,
+            'id_investasi'   => $id_investasi,
             'nama_investasi' => $nama_investasi,
-            'deskripsi' => $deskripsi,
-            'gambar' => $gambar
+            'deskripsi'      => $deskripsi,
+            'gambar'         => $file_name
         );
 
         $result = $this->Model_potensi_investasi->input($data);
@@ -82,16 +92,20 @@ class Potensi_investasi extends CI_controller
         // Proses penggantian gambar jika ada file baru
         if (!empty($_FILES['gambar']['name'])) {
             $nmfile = "potensi-investasi-" . time();
-            $config['upload_path'] = './assets/imgupload/';
+            $config['upload_path'] = FCPATH . './assets/imgupload/';
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['file_name'] = $nmfile;
 
-            $this->load->library('upload', $config);
+            if (!isset($this->upload)) {
+                $this->load->library('upload', $config);
+            } else {
+                $this->upload->initialize($config);
+            }
 
             if ($this->upload->do_upload('gambar')) {
                 // Hapus gambar lama jika ada
-                if (!empty($old_gambar) && file_exists('./assets/imgupload/' . $old_gambar)) {
-                    unlink('./assets/imgupload/' . $old_gambar);
+                if (!empty($old_gambar) && file_exists(FCPATH . './assets/imgupload/' . $old_gambar)) {
+                    unlink(FCPATH . './assets/imgupload/' . $old_gambar);
                 }
 
                 // Gunakan nama file gambar baru
@@ -99,7 +113,7 @@ class Potensi_investasi extends CI_controller
             } else {
                 // Jika gagal upload, tetap gunakan gambar lama
                 $this->session->set_flashdata('error', 'Gagal mengunggah gambar baru. Pastikan format file sesuai.');
-                redirect('admin/peluang_investasi', 'refresh');
+                redirect('admin/potensi_investasi', 'refresh');
             }
         }
 
@@ -127,8 +141,7 @@ class Potensi_investasi extends CI_controller
         $query = $this->db->get('potensi_investasi');
         $row = $query->row();
 
-        unlink("./assets/imgupload/$row->gambar");
-
+        unlink(FCPATH . "./assets/imgupload/$row->gambar");
 
         $result = $this->Model_potensi_investasi->delete($id_investasi);
 
