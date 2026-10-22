@@ -96,7 +96,13 @@ class Laporan_konsultasi extends CI_Controller
         $data['status']      = $status;
         $data['unit_filter'] = $unit_filter;
 
-        $data['laporan'] = $this->Model_laporan_konsultasi->get_laporan($tgl_mulai, $tgl_selesai, $status, $unit_filter);
+        $$data['laporan'] = $this->Model_laporan_konsultasi->get_laporan(
+            $tgl_mulai,
+            $tgl_selesai,
+            $status,
+            $unit_filter,
+            'ASC'
+        );
 
         $this->load->view('admin/laporan_konsultasi_cetak', $data);
     }

@@ -146,6 +146,7 @@
 						<option value="Konsultasi">Petugas Konsultasi</option>
 						<option value="Pengaduan">Petugas Pengaduan</option>
 						<option value="Aset">Petugas Aset</option>
+						<option value="Administrasi">Petugas Administrasi</option>
 					</select>
 				</div>
 
@@ -212,6 +213,7 @@
 								<option value="Konsultasi" <?= ($row->divisi == 'Konsultasi') ? 'selected' : ''; ?>>Petugas Konsultasi</option>
 								<option value="Pengaduan" <?= ($row->divisi == 'Pengaduan') ? 'selected' : ''; ?>>Petugas Pengaduan</option>
 								<option value="Aset" <?= ($row->divisi == 'Aset') ? 'selected' : ''; ?>>Petugas Aset</option>
+								<option value="Administrasi" <?= ($row->divisi == 'Administrasi') ? 'selected' : ''; ?>>Petugas Administrasi</option>
 							</select>
 						</div>
 
