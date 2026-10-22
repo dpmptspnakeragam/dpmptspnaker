@@ -81,14 +81,23 @@ class Laporan_konsultasi extends CI_Controller
         $this->load->view('templates/admin_footer', $data, FALSE);
     }
 
+
     public function cetak()
     {
         $tgl_mulai   = $this->input->get('tgl_mulai', TRUE);
         $tgl_selesai = $this->input->get('tgl_selesai', TRUE);
-        $status      = $this->input->get('status', TRUE);
+        $status      = $this->input->get('status', TRUE) ?? 'semua';
 
         $user_unit   = $this->_get_user_unit();
-        $unit_filter = ($user_unit === 'ALL') ? ($this->input->get('unit', TRUE) ?? 'ALL') : $user_unit;
+        $unit_filter = ($user_unit === 'ALL')
+            ? ($this->input->get('unit', TRUE) ?? 'ALL')
+            : $user_unit;
+
+        // Validasi tanggal
+        if (empty($tgl_mulai) || empty($tgl_selesai)) {
+            show_error('Silakan pilih tanggal mulai dan tanggal selesai.', 400);
+            return;
+        }
 
         $data['title']       = 'Cetak Laporan Konsultasi';
         $data['tgl_mulai']   = $tgl_mulai;
@@ -96,7 +105,8 @@ class Laporan_konsultasi extends CI_Controller
         $data['status']      = $status;
         $data['unit_filter'] = $unit_filter;
 
-        $$data['laporan'] = $this->Model_laporan_konsultasi->get_laporan(
+        // Cetak dari data terlama ke terbaru
+        $data['laporan'] = $this->Model_laporan_konsultasi->get_laporan(
             $tgl_mulai,
             $tgl_selesai,
             $status,
