@@ -93,7 +93,6 @@ class Laporan_konsultasi extends CI_Controller
             ? ($this->input->get('unit', TRUE) ?? 'ALL')
             : $user_unit;
 
-        // Validasi tanggal
         if (empty($tgl_mulai) || empty($tgl_selesai)) {
             show_error('Silakan pilih tanggal mulai dan tanggal selesai.', 400);
             return;
