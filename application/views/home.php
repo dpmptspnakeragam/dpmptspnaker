@@ -793,7 +793,7 @@
 	<div class="container-fluid">
 		<div class="row text-center">
 			<div class="col-lg-12 mt-4 ">
-				<h1 class="judul-pengaduan"><b>Info Grafik</b></h1>
+				<h1 class="judul-pengaduan"><b>Infografis</b></h1>
 				<hr class="garis-judul">
 			</div>
 		</div>
@@ -1401,7 +1401,7 @@
 
 
 			<div class="card-header text-center border-bottom border-top">
-				<h5 class="mt-2">OSS RBA</h5>
+				<h5 class="mt-2">Perizinan Berusaha</h5>
 			</div>
 			<div class="text-center mt-3">
 				<span>Periode <br>
