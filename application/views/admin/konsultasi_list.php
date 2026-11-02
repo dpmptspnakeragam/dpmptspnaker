@@ -239,3 +239,45 @@ if (strpos($current_username, 'ptsp') !== false) {
 
     <?php endforeach; ?>
 <?php endif; ?>
+
+<script>
+    $(document).ready(function() {
+        // 1. Inisialisasi DataTables dengan limit default 10 baris
+        $('#TabelData1').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "Semua"]
+            ],
+            "language": {
+                "lengthMenu": "Tampilkan _MENU_ data per halaman",
+                "zeroRecords": "Data tidak ditemukan",
+                "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+                "infoEmpty": "Tidak ada data tersedia",
+                "infoFiltered": "(disaring dari _MAX_ total data)",
+                "search": "Cari:",
+                "paginate": {
+                    "first": "Pertama",
+                    "last": "Terakhir",
+                    "next": "Selanjutnya",
+                    "previous": "Sebelumnya"
+                }
+            }
+        });
+
+        // 2. Skrip Modal Hapus Dinamis (Tunggal)
+        $(document).on('click', '.btn-hapus-trigger', function() {
+            var nama = $(this).data('nama');
+            var tiket = $(this).data('tiket');
+            var url = $(this).data('url');
+
+            // Masukkan data ke dalam elemen modal
+            $('#nama-pemohon-hapus').text(nama);
+            $('#tiket-hapus').text(tiket);
+            $('#btn-eksekusi-hapus').attr('href', url);
+
+            // Tampilkan modal
+            $('#ModalHapusGlobal').modal('show');
+        });
+    });
+</script>
