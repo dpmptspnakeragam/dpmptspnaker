@@ -183,6 +183,7 @@
                                 <option value="FO 7 (Erina Andika Septia, A.Md.)" <?= ($detail->bidang_tujuan == 'FO 7 (Erina Andika Septia, A.Md.)') ? 'selected' : ''; ?>>FO 7 (Erina Andika Septia, A.Md.)</option>
                                 <option value="FO 8 (Deby Sinthia Rahmi, A.Md.T.)" <?= ($detail->bidang_tujuan == 'FO 8 (Deby Sinthia Rahmi, A.Md.T.)') ? 'selected' : ''; ?>>FO 8 (Deby Sinthia Rahmi, A.Md.T.)</option>
                                 <option value="FO 9 (Tatia Safitri)" <?= ($detail->bidang_tujuan == 'FO 9 (Tatia Safitri)') ? 'selected' : ''; ?>>FO 9 (Tatia Safitri)</option>
+                                <option value="FO 10 (Zetna Fitri)" <?= ($detail->bidang_tujuan == 'FO 10 (Zetna Fitri)') ? 'selected' : ''; ?>>FO 10 (Zetna Fitri)</option>
                             </select>
                         </div>
 
